@@ -1,0 +1,21 @@
+{
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.aromaPrinciple": "[sine][blue]A clean template is ready for a new run.[/blue][/sine]",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.banter.alive.endTurnPing": "Turn complete.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.banter.dead.endTurnPing": "I am out for now.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.cardsModifierDescription": "Template Character cards can now appear in rewards and shops.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.cardsModifierTitle": "Template Cards",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.defeatMessage": "The template still needs a little tuning.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.description": "A sample character used to verify the RitsuLib template project.\nReplace this text with your own character concept after copying the template.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.eventDeathPrevention": "Template Character keeps going.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.flavor": "A clean template waiting to become a new adventure.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.goldMonologue": "This gold is enough to start testing.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.possessiveAdjective": "their",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.pronounObject": "them",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.pronounPossessive": "theirs",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.pronounSubject": "they",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.selectMessage": "Template Character is ready.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.title": "Template Character",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.titleObject": "Template Character",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.unlockText": "Complete a run as [pink]{Prerequisite}[/pink] to unlock this character.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CHEVAL_GRAND_SLAY_CHARACTER.victoryMessage": "Template verification complete."
+}

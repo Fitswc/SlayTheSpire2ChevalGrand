@@ -1,0 +1,8 @@
+{
+  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_STRIKE.title": "Template Strike",
+  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_STRIKE.description": "Deal {Damage:diff()} damage.",
+  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_STRIKE.smartDescription": "Deal {Damage:diff()} damage.",
+  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_DEFEND.title": "Template Defend",
+  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_DEFEND.description": "Gain {Block:diff()} Block.",
+  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_DEFEND.smartDescription": "Gain {Block:diff()} Block."
+}

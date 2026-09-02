@@ -1,0 +1,19 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChevalGrandSlay", "ChevalGrandSlay\ChevalGrandSlay.csproj", "{BEF4ECF1-02AF-4AEE-8713-59A9C9A6351F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		ExportDebug|Any CPU = ExportDebug|Any CPU
+		ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BEF4ECF1-02AF-4AEE-8713-59A9C9A6351F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEF4ECF1-02AF-4AEE-8713-59A9C9A6351F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEF4ECF1-02AF-4AEE-8713-59A9C9A6351F}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{BEF4ECF1-02AF-4AEE-8713-59A9C9A6351F}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{BEF4ECF1-02AF-4AEE-8713-59A9C9A6351F}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{BEF4ECF1-02AF-4AEE-8713-59A9C9A6351F}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal
