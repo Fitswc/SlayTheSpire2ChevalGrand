@@ -36,7 +36,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Krafs.Publicizer" Version="2.2.1" PrivateAssets="all"/>
+        <PackageReference Include="Krafs.Publicizer" Version="2.3.2" PrivateAssets="all" />
         <!-- 主线 RitsuLib（STS2 0.105.0+），跟踪 NuGet 最新版本。兼容分支和 manifest 版本对齐规则见 README。 -->
         <PackageReference Include="STS2.RitsuLib.Compat.0.107.1" Version="*" GeneratePathProperty="true"/>
         <!-- 这里我们针对正式版开发，于是使用正式版的RitsuLib，更改后请执行Restore Nuget包 -->

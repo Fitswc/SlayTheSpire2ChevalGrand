@@ -33,6 +33,12 @@ public sealed class ChevalGrandSlaySwitchStance : ModCardTemplate
     [
         new CardsVar(2)
     ];
+    
+    // 固有：战斗开始时，这张牌会进入起始手牌。
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        CardKeyword.Innate
+    ];
 
     // 卡图资源。
     // 如果你按这行代码写，文件名就对应 ChevalGrandSlay/images/cards/ChevalGrandSlayStrike.png。
