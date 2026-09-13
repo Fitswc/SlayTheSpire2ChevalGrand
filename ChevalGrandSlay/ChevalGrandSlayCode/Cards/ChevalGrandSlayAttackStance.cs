@@ -32,7 +32,7 @@ public sealed class ChevalGrandSlayAttackStance : ModCardTemplate
             .Execute(choiceContext);
 
         // 2. 检查防御姿态的蓄力转化
-        var defensePower = Owner.Creature.GetPower<ChevalGrandDefenseStancePower>();
+        var defensePower = Owner.Creature.GetPower<ChevalGrandSlayDefenseStancePower>();
         if (defensePower != null)
         {
             int storedBlockDmg = defensePower.Amount;

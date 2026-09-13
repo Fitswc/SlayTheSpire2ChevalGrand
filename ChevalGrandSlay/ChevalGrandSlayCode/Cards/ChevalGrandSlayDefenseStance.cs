@@ -32,9 +32,9 @@ public sealed class ChevalGrandSlayDefenseStance : ModCardTemplate
         await PowerCmd.Remove<ChevalGrandAttackStancePower>(Owner.Creature);
 
         // 进入防御姿态（已有则不重复刷新）
-        if (!Owner.Creature.HasPower<ChevalGrandDefenseStancePower>())
+        if (!Owner.Creature.HasPower<ChevalGrandSlayDefenseStancePower>())
         {
-            await PowerCmd.Apply<ChevalGrandDefenseStancePower>(choiceContext, Owner.Creature, 0, Owner.Creature, this);
+            await PowerCmd.Apply<ChevalGrandSlayDefenseStancePower>(choiceContext, Owner.Creature, 0, Owner.Creature, this);
         }
     }
 
