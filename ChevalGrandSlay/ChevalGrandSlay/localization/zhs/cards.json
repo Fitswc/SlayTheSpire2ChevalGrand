@@ -1,8 +1,17 @@
 {
-  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_STRIKE.title": "模板打击",
+  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_STRIKE.title": "打击",
   "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_STRIKE.description": "造成 {Damage:diff()} 点伤害。",
   "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_STRIKE.smartDescription": "造成 {Damage:diff()} 点伤害。",
-  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_DEFEND.title": "模板防御",
+  
+  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_DEFEND.title": "防御",
   "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_DEFEND.description": "获得 {Block:diff()} 点格挡。",
-  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_DEFEND.smartDescription": "获得 {Block:diff()} 点格挡。"
+  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_DEFEND.smartDescription": "获得 {Block:diff()} 点格挡。",
+  
+  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_SWITCH_STANCE.title": "切换姿态",
+  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_SWITCH_STANCE.description": "若处于[gold]防御姿态[/gold]或[gold]进攻姿态[/gold]，切换为另一种姿态。\n抽 {Cards:diff()} 张牌，弃掉1张牌。",
+  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_SWITCH_STANCE.smartDescription": "若处于[gold]防御姿态[/gold]或[gold]进攻姿态[/gold]，切换为另一种姿态。\n抽 {Cards:diff()} 张牌，弃掉1张牌。",
+
+  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_FORWARD_A_STEP.title": "迈出一步",
+  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_FORWARD_A_STEP.description": "若造成 {Damage:diff()} 点伤害\n获得 {Block:diff()} 点格挡。",
+  "CHEVAL_GRAND_SLAY_CARD_CHEVAL_GRAND_SLAY_FORWARD_A_STEP.smartDescription": "若造成 {Damage:diff()} 点伤害\n获得 {Block:diff()} 点格挡。"
 }

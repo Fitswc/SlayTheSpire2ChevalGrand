@@ -38,13 +38,28 @@ public sealed class ChevalGrandSlayRelic : ModRelicTemplate
         // 大图标（原版 256x256）。
         BigIconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png");
 
-    // 每回合开始时，加一费。
+    // 回合开始时，进入防御姿态
     // 这里使用 DynamicVars.Energy.IntValue，保证效果和本地化显示保持一致。
+    public override async Task AfterRoomEntered(AbstractRoom room)
+    {
+        if (room is CombatRoom)
+        {
+            await PowerCmd.Apply<ChevalGrandSlayDefenseStancePower>(
+                new ThrowingPlayerChoiceContext(),
+                Owner.Creature,
+                1m,
+                Owner.Creature,
+                null
+            );
+        }
+    }
+
+    //首次切换姿态+1费
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
         CardModel? cardSource)
     {
         if (!_hasGrantedEnergy && power.Owner == Owner.Creature &&
-            amount > 0 && power is ChevalGrandSlayDefenseStancePower or ChevalGrandAttackStancePower)
+            amount > 0 && cardSource != null && power is ChevalGrandSlayDefenseStancePower or ChevalGrandAttackStancePower)
         {
             _hasGrantedEnergy = true;
             await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
