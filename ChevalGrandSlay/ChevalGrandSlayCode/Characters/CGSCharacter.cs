@@ -8,8 +8,8 @@ using STS2RitsuLib.Scaffolding.Godot;
 namespace ChevalGrandSlay.Characters;
 
 [RegisterCharacter]
-public sealed class ChevalGrandSlayCharacter : ModCharacterTemplate<ChevalGrandSlayCardPool, ChevalGrandSlayRelicPool,
-    ChevalGrandSlayPotionPool>
+public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPool,
+    CGSPotionPool>
 {
     public static readonly Color ThemeColor = new(0.42f, 0.65f, 0.72f);
 

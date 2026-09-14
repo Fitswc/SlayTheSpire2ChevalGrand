@@ -3,10 +3,10 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Characters;
 
-public sealed class ChevalGrandSlayRelicPool : TypeListRelicPoolModel
+public sealed class CGSRelicPool : TypeListRelicPoolModel
 {
     public override string EnergyColorName => "ChevalGrandSlay";
-    public override Color LabOutlineColor => ChevalGrandSlayCharacter.ThemeColor;
+    public override Color LabOutlineColor => CGSCharacter.ThemeColor;
 
     // 遗物实验室和文本也会读取池子的能量图标路径。
     // 资源路径以 res:// 开头，并且要能在 PCK 内找到对应文件。

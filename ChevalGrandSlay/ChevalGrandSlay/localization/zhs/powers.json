@@ -1,0 +1,17 @@
+{
+  "CHEVAL_GRAND_SLAY_POWER_CHEVAL_GRAND_ATTACK_STANCE_POWER.title": "进攻姿态",
+  "CHEVAL_GRAND_SLAY_POWER_CHEVAL_GRAND_ATTACK_STANCE_POWER.description": "你的攻击牌造成的伤害增加[blue]2[/blue]点。",
+  "CHEVAL_GRAND_SLAY_POWER_CHEVAL_GRAND_ATTACK_STANCE_POWER.smartDescription": "你的攻击牌造成的伤害增加[blue]2[/blue]点。",
+
+  "CHEVAL_GRAND_SLAY_POWER_CGS_DEFENSE_STANCE_POWER.title": "防御姿态",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_DEFENSE_STANCE_POWER.description": "你的卡牌提供的[gold]格挡[/gold]增加[blue]2[/blue]点。\n敌方回合结束时，获得等同于你剩余[gold]格挡[/gold]的蓄力值。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_DEFENSE_STANCE_POWER.smartDescription": "你的卡牌提供的[gold]格挡[/gold]增加[blue]2[/blue]点。\n敌方回合结束时，获得等同于你剩余[gold]格挡[/gold]的蓄力值。",
+
+  "CHEVAL_GRAND_SLAY_POWER_CHEVAL_GRAND_SLAY_ACCUMULATE_STRENGTH.title": "蓄力",
+  "CHEVAL_GRAND_SLAY_POWER_CHEVAL_GRAND_SLAY_ACCUMULATE_STRENGTH.description": "记录由[gold]防御姿态[/gold]积累的蓄力值。",
+  "CHEVAL_GRAND_SLAY_POWER_CHEVAL_GRAND_SLAY_ACCUMULATE_STRENGTH.smartDescription": "当前拥有[blue]{Amount}[/blue]点蓄力值。",
+
+  "CHEVAL_GRAND_SLAY_POWER_CGS_COUNTER_POWER.title": "反击",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_COUNTER_POWER.description": "下一次因攻击伤害失去[gold]格挡[/gold]时，对随机敌人造成[blue]4[/blue]点伤害。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_COUNTER_POWER.smartDescription": "下一次因攻击伤害失去[gold]格挡[/gold]时，对随机敌人造成[blue]4[/blue]点伤害。"
+}

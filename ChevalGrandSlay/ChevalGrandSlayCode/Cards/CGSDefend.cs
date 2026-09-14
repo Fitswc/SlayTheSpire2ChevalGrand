@@ -10,9 +10,9 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 // 防御牌和打击一样注册到角色卡池，并作为 4 张初始卡加入角色卡组。
-[RegisterCard(typeof(ChevalGrandSlayCardPool))]
-[RegisterCharacterStarterCard(typeof(ChevalGrandSlayCharacter), 4)]
-public sealed class ChevalGrandSlayDefend : ModCardTemplate
+[RegisterCard(typeof(CGSCardPool))]
+[RegisterCharacterStarterCard(typeof(CGSCharacter), 4)]
+public sealed class CGSDefend : ModCardTemplate
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -45,7 +45,7 @@ public sealed class ChevalGrandSlayDefend : ModCardTemplate
         new BlockVar(5m, ValueProp.Move)
     ];
 
-    public ChevalGrandSlayDefend() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSDefend() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
     }
 

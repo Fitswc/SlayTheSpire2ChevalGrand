@@ -14,9 +14,9 @@ namespace ChevalGrandSlay.Relics;
 
 // RegisterRelic 会把遗物注册进指定遗物池。
 // RegisterCharacterStarterRelic 会把它作为 ChevalGrandSlayCharacter 的初始遗物。
-[RegisterRelic(typeof(ChevalGrandSlayRelicPool))]
-[RegisterCharacterStarterRelic(typeof(ChevalGrandSlayCharacter))]
-public sealed class ChevalGrandSlayRelic : ModRelicTemplate
+[RegisterRelic(typeof(CGSRelicPool))]
+[RegisterCharacterStarterRelic(typeof(CGSCharacter))]
+public sealed class CGSStartRelic : ModRelicTemplate
 {
     // 稀有度。
     public override RelicRarity Rarity => RelicRarity.Common;
@@ -44,7 +44,7 @@ public sealed class ChevalGrandSlayRelic : ModRelicTemplate
     {
         if (room is CombatRoom)
         {
-            await PowerCmd.Apply<ChevalGrandSlayDefenseStancePower>(
+            await PowerCmd.Apply<CGSDefenseStancePower>(
                 new ThrowingPlayerChoiceContext(),
                 Owner.Creature,
                 1m,
@@ -59,7 +59,7 @@ public sealed class ChevalGrandSlayRelic : ModRelicTemplate
         CardModel? cardSource)
     {
         if (!_hasGrantedEnergy && power.Owner == Owner.Creature &&
-            amount > 0 && cardSource != null && power is ChevalGrandSlayDefenseStancePower or ChevalGrandAttackStancePower)
+            amount > 0 && cardSource != null && power is CGSDefenseStancePower or ChevalGrandAttackStancePower)
         {
             _hasGrantedEnergy = true;
             await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);

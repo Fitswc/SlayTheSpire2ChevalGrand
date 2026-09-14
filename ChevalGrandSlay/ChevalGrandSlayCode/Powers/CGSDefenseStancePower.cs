@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Powers;
 
 [RegisterPower]
-public class ChevalGrandSlayDefenseStancePower : ModPowerTemplate
+public class CGSDefenseStancePower : ModPowerTemplate
 {
     // 类型，Buff或Debuff
     public override PowerType Type => PowerType.Buff;
@@ -49,7 +49,12 @@ public class ChevalGrandSlayDefenseStancePower : ModPowerTemplate
         {
             var remainingBlock = Owner.Block;
             // 将未消耗的格挡转化为姿态蓄力值
-            await PowerCmd.ModifyAmount(choiceContext, this, remainingBlock, Owner, null);
+            await PowerCmd.Apply<ChevalGrandSlayAccumulateStrength>(
+                choiceContext,
+                Owner,
+                remainingBlock,
+                Owner,
+                null);
         }
     }
 }

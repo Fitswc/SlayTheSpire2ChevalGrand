@@ -1,4 +1,4 @@
-using MegaCrit.Sts2.Core.Commands;
+﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -11,12 +11,12 @@ namespace ChevalGrandSlay.Cards;
 
 // RegisterCard 会把这张牌交给 RitsuLib 自动注册。
 // RegisterCharacterStarterCard 会把它追加进 ChevalGrandSlayCharacter 的初始卡组。
-[RegisterCard(typeof(ChevalGrandSlayCardPool))]
-[RegisterCharacterStarterCard(typeof(ChevalGrandSlayCharacter), 4)]
-public sealed class ChevalGrandSlayStrike : ModCardTemplate
+[RegisterCard(typeof(CGSCardPool))]
+[RegisterCharacterStarterCard(typeof(CGSCharacter), 1)]
+public sealed class CGSForwardAStep : ModCardTemplate
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 1;
+    private const int BaseEnergyCost = 2;
 
     // 卡牌类型。
     private const CardType CardKind = CardType.Attack;
@@ -31,7 +31,7 @@ public sealed class ChevalGrandSlayStrike : ModCardTemplate
     private const bool ShowInCardLibrary = true;
 
     // 卡图资源。
-    // 如果你按这行代码写，文件名就对应 ChevalGrandSlay/images/cards/ChevalGrandSlayStrike.png。
+    // 如果你按这行代码写，文件名就对应 ChevalGrandSlay/images/cards/CGSForwardAStep.png。
     // 这里的 res://ChevalGrandSlay/... 是 Godot 资源路径，对应的是你的资源文件夹名字。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
@@ -40,12 +40,13 @@ public sealed class ChevalGrandSlayStrike : ModCardTemplate
     // 添加一个 DamageVar 意为指定卡牌的基础伤害是多少；它会自动绑定到本地化里的 {Damage:diff()} 占位符。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(6, ValueProp.Move)
+        new DamageVar(8m, ValueProp.Move),
+        new BlockVar(4m, ValueProp.Move),
     ];
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Strike };
 
-    public ChevalGrandSlayStrike() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSForwardAStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
     }
 
@@ -60,11 +61,14 @@ public sealed class ChevalGrandSlayStrike : ModCardTemplate
             .FromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
+
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
     }
 
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3);
+        DynamicVars.Damage.UpgradeValueBy(2);
+        DynamicVars.Block.UpgradeValueBy(2);
     }
 }
