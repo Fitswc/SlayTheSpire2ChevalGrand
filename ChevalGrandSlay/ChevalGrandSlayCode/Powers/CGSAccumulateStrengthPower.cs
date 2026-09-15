@@ -5,7 +5,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Powers;
 
 [RegisterPower]
-public class ChevalGrandSlayAccumulateStrength : ModPowerTemplate
+public class CGSAccumulateStrength : ModPowerTemplate
 {
     // 类型，Buff或Debuff
     public override PowerType Type => PowerType.Buff;

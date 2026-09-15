@@ -59,7 +59,7 @@ public sealed class CGSStartRelic : ModRelicTemplate
         CardModel? cardSource)
     {
         if (!_hasGrantedEnergy && power.Owner == Owner.Creature &&
-            amount > 0 && cardSource != null && power is CGSDefenseStancePower or ChevalGrandAttackStancePower)
+            amount > 0 && cardSource != null && power is CGSDefenseStancePower or CGSAttackStancePower)
         {
             _hasGrantedEnergy = true;
             await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);

@@ -49,7 +49,7 @@ public class CGSDefenseStancePower : ModPowerTemplate
         {
             var remainingBlock = Owner.Block;
             // 将未消耗的格挡转化为姿态蓄力值
-            await PowerCmd.Apply<ChevalGrandSlayAccumulateStrength>(
+            await PowerCmd.Apply<CGSAccumulateStrength>(
                 choiceContext,
                 Owner,
                 remainingBlock,

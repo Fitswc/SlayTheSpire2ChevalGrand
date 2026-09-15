@@ -9,7 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Powers;
 
 [RegisterPower]
-public sealed class ChevalGrandAttackStancePower : ModPowerTemplate
+public sealed class CGSAttackStancePower : ModPowerTemplate
 {
     // 类型，Buff或Debuff
     public override PowerType Type => PowerType.Buff;

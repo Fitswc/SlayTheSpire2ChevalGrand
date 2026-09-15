@@ -55,9 +55,9 @@ public sealed class CGSReorganizeThePace : ModCardTemplate
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
-        if (Owner.Creature.HasPower<ChevalGrandAttackStancePower>())
+        if (Owner.Creature.HasPower<CGSAttackStancePower>())
         {
-            await PowerCmd.Remove<ChevalGrandAttackStancePower>(Owner.Creature);
+            await PowerCmd.Remove<CGSAttackStancePower>(Owner.Creature);
             await PowerCmd.Apply<CGSDefenseStancePower>(
                 choiceContext,
                 Owner.Creature,

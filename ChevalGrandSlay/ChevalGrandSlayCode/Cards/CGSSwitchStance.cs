@@ -61,7 +61,7 @@ public sealed class CGSSwitchStance : ModCardTemplate
         if (Owner.Creature.HasPower<CGSDefenseStancePower>())
         {
             await PowerCmd.Remove<CGSDefenseStancePower>(Owner.Creature);
-            await PowerCmd.Apply<ChevalGrandAttackStancePower>(
+            await PowerCmd.Apply<CGSAttackStancePower>(
                 choiceContext,
                 Owner.Creature,
                 1m,
@@ -70,9 +70,9 @@ public sealed class CGSSwitchStance : ModCardTemplate
             );
         }
 
-        else if (Owner.Creature.HasPower<ChevalGrandAttackStancePower>())
+        else if (Owner.Creature.HasPower<CGSAttackStancePower>())
         {
-            await PowerCmd.Remove<ChevalGrandAttackStancePower>(Owner.Creature);
+            await PowerCmd.Remove<CGSAttackStancePower>(Owner.Creature);
             await PowerCmd.Apply<CGSDefenseStancePower>(
                 choiceContext,
                 Owner.Creature,
@@ -118,7 +118,7 @@ public sealed class CGSSwitchStance : ModCardTemplate
             {
                 isDefense = true;
             }
-            else if (Owner.Creature.HasPower<ChevalGrandAttackStancePower>())
+            else if (Owner.Creature.HasPower<CGSAttackStancePower>())
             {
                 isAttack = true;
             }

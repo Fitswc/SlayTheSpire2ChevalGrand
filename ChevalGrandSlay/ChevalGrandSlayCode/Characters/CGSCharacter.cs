@@ -11,7 +11,7 @@ namespace ChevalGrandSlay.Characters;
 public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPool,
     CGSPotionPool>
 {
-    public static readonly Color ThemeColor = new(0.42f, 0.65f, 0.72f);
+    public static readonly Color ThemeColor = new(0.39f, 0.76f, 0.76f);
 
     private const string SceneRoot = $"{Entry.ResPath}/scenes/characters";
     private const string ImageRoot = $"{Entry.ResPath}/images/characters";
