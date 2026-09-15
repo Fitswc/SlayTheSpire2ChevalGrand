@@ -1,9 +1,12 @@
 using Godot;
+using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Entities.Characters;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Godot;
+using STS2RitsuLib.Scaffolding.Visuals.StateMachine;
 
 namespace ChevalGrandSlay.Characters;
 
@@ -14,10 +17,11 @@ public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPoo
     public static readonly Color ThemeColor = new(0.39f, 0.76f, 0.76f);
 
     private const string SceneRoot = $"{Entry.ResPath}/scenes/characters";
+    private const string SceneRootMerchant = $"{Entry.ResPath}/scenes/merchant/characters";
     private const string ImageRoot = $"{Entry.ResPath}/images/characters";
     private const string CharacterScenePath = $"{SceneRoot}/ChevalGrandSlay_character.tscn";
     private const string EnergyCounterScenePath = $"{SceneRoot}/ChevalGrandSlay_energy_counter.tscn";
-    private const string MerchantScenePath = $"{SceneRoot}/ChevalGrandSlay_merchant.tscn";
+    private const string MerchantScenePath = $"{SceneRootMerchant}/ChevalGrandSlay_merchant.tscn";
     private const string RestSiteScenePath = $"{SceneRoot}/ChevalGrandSlay_rest_site.tscn";
     private const string CharacterSelectBgScenePath = $"{SceneRoot}/ChevalGrandSlay_character_select_bg.tscn";
 
@@ -61,7 +65,44 @@ public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPoo
             // 人物选择图标-锁定状态。
             CharacterSelectLockedIconPath: $"{ImageRoot}/ChevalGrandSlay_character_select_locked.png",
             // 地图上的角色标记图标、表情轮盘上的角色头像。
-            MapMarkerPath: $"{ImageRoot}/ChevalGrandSlay_map_marker.png"));
+            MapMarkerPath: $"{ImageRoot}/ChevalGrandSlay_map_marker.png"
+        ),
+        Vfx: new(
+            // 卡牌拖尾场景。
+            // TrailPath: "res://scenes/vfx/card_trail_ironclad.tscn"
+        ),
+        Audio: new(
+            // 攻击音效
+            // AttackSfx: null,
+            // 施法音效
+            // CastSfx: null,
+            // 死亡音效
+            // DeathSfx: null,
+            // 角色选择音效
+            // CharacterSelectSfx: null,
+            // 过渡音效
+            // CharacterTransitionSfx: "event:/sfx/ui/wipe_ironclad"
+        ),
+        Multiplayer: new(
+            // 多人模式-手指。
+            // ArmPointingTexturePath: null,
+            // 多人模式剪刀石头布-石头。
+            // ArmRockTexturePath: null,
+            // 多人模式剪刀石头布-布。
+            // ArmPaperTexturePath: null,
+            // 多人模式剪刀石头布-剪刀。
+            // ArmScissorsTexturePath: null
+        )
+        // 其余如果有需要自行取消注释使用
+        // Spine: null,
+        // WorldProceduralVisuals: null,
+        // 以下为让遗物根据你的人物展现不同的图像资源，在列表里添加即可
+        // VanillaCardVisualOverrides: [],
+        // VanillaRelicVisualOverrides: [
+        //     new (CharacterOwnedVanillaRelicModelId.YummyCookie, new("res://icon.svg")) // 美味饼干覆盖
+        // ],
+        // VanillaPotionVisualOverrides: []
+    );
 
     // 某个字段没写时，RitsuLib 会从占位角色配置里补齐。
     public override string? PlaceholderCharacterId => "ironclad";
@@ -80,6 +121,28 @@ public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPoo
         return RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(
             CharacterScenePath);
     }
+    
+    // 进入商店后，由状态机启动并循环播放动画。
+    protected override ModAnimStateMachine? SetupCustomMerchantAnimationStateMachine(
+        Node merchantRoot,
+        CharacterModel character)
+    {
+        // RitsuLib 会在商店场景外面增加一层 Node2D，因此 SpineSprite 不一定是直接子节点，使用递归寻找节点。
+        Node? spineNode = merchantRoot.FindChild("SpineSprite", recursive: true, owned: false);
+
+        if (spineNode == null)
+        {
+            throw new InvalidOperationException(
+                "The SpineSprite node cannot be found in the store scene. Please check ChevalGrandSlay merchant.tscn.");
+        }
+
+        return ModAnimStateMachineBuilder.Create()
+            .AddState("relaxed_loop", true)
+            .AsInitial()
+            .Done()
+            .BuildSpine(new MegaSprite(spineNode));
+    }
+    
 
     // 攻击建筑师的攻击特效列表。
     public override List<string> GetArchitectAttackVfx()

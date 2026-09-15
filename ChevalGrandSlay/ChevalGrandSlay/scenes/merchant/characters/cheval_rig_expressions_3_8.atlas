@@ -1,0 +1,285 @@
+
+cheval_rig_expressions_3_8.png
+size: 4085,4044
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Chest
+  rotate: true
+  xy: 836, 2365
+  size: 643, 1061
+  orig: 643, 1061
+  offset: 0, 0
+  index: -1
+Chest-Ribbon
+  rotate: true
+  xy: 1758, 3868
+  size: 174, 177
+  orig: 174, 177
+  offset: 0, 0
+  index: -1
+Head
+  rotate: true
+  xy: 2, 2542
+  size: 669, 832
+  orig: 669, 833
+  offset: 0, 0
+  index: -1
+L-Arm
+  rotate: false
+  xy: 2, 3300
+  size: 421, 370
+  orig: 421, 386
+  offset: 0, 16
+  index: -1
+L-Arm D
+  rotate: true
+  xy: 3488, 3411
+  size: 367, 430
+  orig: 367, 430
+  offset: 0, 0
+  index: -1
+L-Arm D Hand
+  rotate: false
+  xy: 2184, 3860
+  size: 216, 182
+  orig: 216, 182
+  offset: 0, 0
+  index: -1
+L-Ear
+  rotate: true
+  xy: 1580, 3890
+  size: 152, 176
+  orig: 152, 176
+  offset: 0, 0
+  index: -1
+L-Hair
+  rotate: true
+  xy: 430, 3939
+  size: 103, 280
+  orig: 103, 280
+  offset: 0, 0
+  index: -1
+L-Leg
+  rotate: true
+  xy: 1546, 3010
+  size: 492, 596
+  orig: 492, 596
+  offset: 0, 0
+  index: -1
+L-Leg D
+  rotate: true
+  xy: 1008, 1342
+  size: 783, 1310
+  orig: 783, 1310
+  offset: 0, 0
+  index: -1
+L-Tachi
+  rotate: false
+  xy: 2, 241
+  size: 1490, 1099
+  orig: 1490, 1099
+  offset: 0, 0
+  index: -1
+LEyes-base
+  rotate: false
+  xy: 214, 3968
+  size: 83, 74
+  orig: 224, 76
+  offset: 141, 0
+  index: -1
+MEC_L_arm
+  rotate: true
+  xy: 1233, 3585
+  size: 303, 512
+  orig: 303, 513
+  offset: 0, 0
+  index: -1
+MEC_L_arm_u
+  rotate: true
+  xy: 712, 3919
+  size: 123, 204
+  orig: 123, 204
+  offset: 0, 0
+  index: -1
+MEC_L_leg
+  rotate: true
+  xy: 2144, 2842
+  size: 567, 1343
+  orig: 567, 1343
+  offset: 0, 0
+  index: -1
+MEC_R_arm
+  rotate: true
+  xy: 2, 3672
+  size: 265, 661
+  orig: 265, 661
+  offset: 0, 0
+  index: -1
+MEC_R_leg
+  rotate: true
+  xy: 2213, 3459
+  size: 319, 1273
+  orig: 319, 1273
+  offset: 0, 0
+  index: -1
+MEC_pelvis
+  rotate: false
+  xy: 425, 3213
+  size: 553, 417
+  orig: 553, 417
+  offset: 0, 0
+  index: -1
+R-Arm
+  rotate: true
+  xy: 665, 3632
+  size: 276, 566
+  orig: 276, 566
+  offset: 0, 0
+  index: -1
+R-ArmD
+  rotate: true
+  xy: 1747, 3504
+  size: 354, 464
+  orig: 354, 464
+  offset: 0, 0
+  index: -1
+R-ArmD Hand
+  rotate: true
+  xy: 1937, 3866
+  size: 176, 245
+  orig: 176, 245
+  offset: 0, 0
+  index: -1
+R-Ear
+  rotate: true
+  xy: 1373, 3904
+  size: 138, 205
+  orig: 138, 205
+  offset: 0, 0
+  index: -1
+R-Hair
+  rotate: true
+  xy: 918, 3910
+  size: 132, 453
+  orig: 132, 453
+  offset: 0, 0
+  index: -1
+R-Leg
+  rotate: true
+  xy: 980, 3136
+  size: 447, 564
+  orig: 447, 564
+  offset: 0, 0
+  index: -1
+R-Leg D
+  rotate: true
+  xy: 1899, 2127
+  size: 713, 1306
+  orig: 713, 1306
+  offset: 0, 0
+  index: -1
+R-Tachi
+  rotate: false
+  xy: 2320, 1190
+  size: 1617, 928
+  orig: 1618, 929
+  offset: 1, 1
+  index: -1
+Reyebase
+  rotate: false
+  xy: 299, 3957
+  size: 129, 85
+  orig: 264, 95
+  offset: 0, 10
+  index: -1
+Ribbon
+  rotate: true
+  xy: 3483, 3780
+  size: 262, 600
+  orig: 262, 600
+  offset: 0, 0
+  index: -1
+Tails
+  rotate: true
+  xy: 2, 1631
+  size: 732, 1004
+  orig: 732, 1004
+  offset: 0, 0
+  index: -1
+cast_attack
+  rotate: false
+  xy: 3196, 3782
+  size: 285, 260
+  orig: 285, 260
+  offset: 0, 0
+  index: -1
+die
+  rotate: false
+  xy: 2917, 3786
+  size: 277, 256
+  orig: 281, 256
+  offset: 4, 0
+  index: -1
+eyelipL
+  rotate: false
+  xy: 2, 4000
+  size: 79, 42
+  orig: 79, 42
+  offset: 0, 0
+  index: -1
+eyelipR
+  rotate: false
+  xy: 83, 3986
+  size: 129, 56
+  orig: 129, 56
+  offset: 0, 0
+  index: -1
+hurt
+  rotate: false
+  xy: 2402, 3813
+  size: 267, 229
+  orig: 267, 230
+  offset: 0, 0
+  index: -1
+neutral
+  rotate: true
+  xy: 2671, 3807
+  size: 235, 244
+  orig: 235, 244
+  offset: 0, 0
+  index: -1
+pelvis
+  rotate: false
+  xy: 3207, 2120
+  size: 845, 720
+  orig: 845, 789
+  offset: 0, 0
+  index: -1
+rcapu
+  rotate: false
+  xy: 1494, 2
+  size: 1729, 1186
+  orig: 1729, 1186
+  offset: 0, 0
+  index: -1
+
+cheval_rig_expressions_3_82.png
+size: 3911,2587
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L cap
+  rotate: true
+  xy: 1980, 475
+  size: 2110, 1929
+  orig: 2110, 1930
+  offset: 0, 1
+  index: -1
+Rcap
+  rotate: true
+  xy: 2, 2
+  size: 2583, 1976
+  orig: 2583, 1976
+  offset: 0, 0
+  index: -1

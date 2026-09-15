@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6idi7k8hkkpu"]
+
+[ext_resource type="SpineSkeletonDataResource" uid="uid://cw1b0ujodbfjw" path="res://ChevalGrandSlay/scenes/merchant/characters/cheval_grand_character_merchant.tres" id="1_7onu6"]
+
+[node name="ChevalGrandSlayMerchant" type="Node2D"]
+
+[node name="SpineSprite" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("1_7onu6")
+preview_skin = "Default"
+preview_animation = "relaxed_loop"
+preview_frame = false
+preview_time = 0.0
+scale = Vector2(0.4, 0.4)

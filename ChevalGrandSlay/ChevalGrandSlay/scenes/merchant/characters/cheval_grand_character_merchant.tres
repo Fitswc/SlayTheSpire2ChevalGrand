@@ -1,0 +1,8 @@
+[gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3 uid="uid://cw1b0ujodbfjw"]
+
+[ext_resource type="SpineAtlasResource" uid="uid://cfpmc6pgysjim" path="res://ChevalGrandSlay/scenes/merchant/characters/cheval_rig_expressions_3_8.atlas" id="1_6eu52"]
+[ext_resource type="SpineSkeletonFileResource" uid="uid://b8y7no6rxq4it" path="res://ChevalGrandSlay/scenes/merchant/characters/cheval_rig_expressions_3_8.skel" id="2_e5kc8"]
+
+[resource]
+atlas_res = ExtResource("1_6eu52")
+skeleton_file_res = ExtResource("2_e5kc8")
