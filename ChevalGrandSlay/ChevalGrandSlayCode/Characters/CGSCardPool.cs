@@ -7,7 +7,7 @@ namespace ChevalGrandSlay.Characters;
 public sealed class CGSCardPool : TypeListCardPoolModel
 {
     private static readonly Material? PoolFrameTintMaterial =
-        MaterialUtils.CreateReplaceHueShaderMaterial(0.42f, 0.65f, 0.72f);
+        MaterialUtils.CreateReplaceHueShaderMaterial(0.4f, 0.76f, 0.76f);
     //MaterialUtils.CreateRgbShaderMaterial(0.42f, 0.65f, 0.72f);
 
     // Title 和 EnergyColorName 是池子的稳定标识，不是玩家看到的角色名。
@@ -24,13 +24,13 @@ public sealed class CGSCardPool : TypeListCardPoolModel
     // 卡池的主题色。
     public override Color DeckEntryCardColor => CGSCharacter.ThemeColor;
     // 能量表盘文字轮廓颜色
-    public override Color EnergyOutlineColor => new(0.5f, 0.5f, 1f);
+    public override Color EnergyOutlineColor => new(0.4f, 0.76f, 0.76f);
     
 //    Color is rgb(100, 195, 193) 1.
     // rgb(79, 157, 216) 2.
 
     // 根据你使用的卡框决定使用哪个Material
-    private static readonly Material? _poolFrameMaterial = MaterialUtils.CreateReplaceHueShaderMaterial(0.31f, 0.62f, 0.85f); // 如果你使用原版卡框，使用这个直接替换色调。
+    private static readonly Material? _poolFrameMaterial = MaterialUtils.CreateReplaceHueShaderMaterial(0.4f, 0.76f, 0.76f); // 如果你使用原版卡框，使用这个直接替换色调。
     // private static readonly Material? _poolFrameMaterial = MaterialUtils.CreateRgbShaderMaterial(0.5f, 0.5f, 1f); // 使用原版卡框替换色调。除非你的版本没有CreateReplaceHueShaderMaterial函数，否则应使用上面那种
     // private static readonly Material? _poolFrameMaterial = MaterialUtils.CreateUnmodulatedHsvShaderMaterial(); // 如果你是自定义卡框，使用这个
     public override Material? PoolFrameMaterial => _poolFrameMaterial;

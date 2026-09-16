@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Characters;
 public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPool,
     CGSPotionPool>
 {
-    public static readonly Color ThemeColor = new(0.39f, 0.76f, 0.76f);
+    public static readonly Color ThemeColor = new(0.4f, 0.76f, 0.76f);
 
     private const string SceneRoot = $"{Entry.ResPath}/scenes/characters";
     private const string SceneRootMerchant = $"{Entry.ResPath}/scenes/merchant/characters";
@@ -55,12 +55,16 @@ public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPoo
             // 篝火休息场景。
             RestSiteAnimPath: RestSiteScenePath),
         Ui: new CharacterUiAssetSet(
+            // 游戏左上角头像、角色统计页头像、每日挑战角色头像。
+            IconPath: $"{Entry.ResPath}/scenes/icons/ChevalGrandSlay_character_icon.tscn",
             // 人物头像路径。
             IconTexturePath: $"{ImageRoot}/ChevalGrandSlay_character_icon.png",
             // 人物头像轮廓。
             IconOutlineTexturePath: $"{ImageRoot}/ChevalGrandSlay_character_icon_outline.png",
             // 人物选择背景。
             CharacterSelectBgPath: CharacterSelectBgScenePath,
+            // 人物过渡动画
+            CharacterSelectTransitionPath: $"{Entry.ResPath}/scenes/transition/ChevalGrandSlay_transition.tres",
             // 人物选择图标。
             CharacterSelectIconPath: $"{ImageRoot}/ChevalGrandSlay_character_select.png",
             // 人物选择图标-锁定状态。
@@ -78,11 +82,11 @@ public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPoo
             // 施法音效
             // CastSfx: null,
             // 死亡音效
-            // DeathSfx: null,
+            DeathSfx: "event:/ChevalGrandSlaySFX/SFX/CGSSDeath",
             // 角色选择音效
-            // CharacterSelectSfx: null,
+            CharacterSelectSfx: "event:/ChevalGrandSlaySFX/SFX/CGSSIntroduce",
             // 过渡音效
-            // CharacterTransitionSfx: "event:/sfx/ui/wipe_ironclad"
+            CharacterTransitionSfx: "event:/ChevalGrandSlaySFX/SFX/CGSSTransition"
         ),
         Multiplayer: new(
             // 多人模式-手指。
