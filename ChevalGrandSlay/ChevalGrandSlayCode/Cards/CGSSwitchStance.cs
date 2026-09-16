@@ -1,11 +1,11 @@
-﻿using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using ChevalGrandSlay.Characters;
+﻿using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -60,7 +60,7 @@ public sealed class CGSSwitchStance : ModCardTemplate
     {
         if (Owner.Creature.HasPower<CGSDefenseStancePower>())
         {
-            await PowerCmd.Remove<CGSDefenseStancePower>(Owner.Creature);
+//            await PowerCmd.Remove<CGSDefenseStancePower>(Owner.Creature);
             await PowerCmd.Apply<CGSAttackStancePower>(
                 choiceContext,
                 Owner.Creature,

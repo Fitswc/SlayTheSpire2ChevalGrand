@@ -1,4 +1,6 @@
-﻿using MegaCrit.Sts2.Core.Entities.Cards;
+﻿using ChevalGrandSlay.Cards;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
@@ -34,5 +36,24 @@ public sealed class CGSAttackStancePower : ModPowerTemplate
         }
 
         return 2m;
+    }
+    
+    public override async Task AfterApplied(
+        Creature? applier, CardModel? cardSource)
+    {
+        if (Owner.HasPower<CGSDefenseStancePower>() && Owner.Player is { } player)
+        {
+            // 确认是防御转进攻，由进攻姿态统一移除防御姿态。
+            await PowerCmd.Remove<CGSDefenseStancePower>(Owner);
+
+            // 生成一张牌加入手牌。
+            await CardPileCmd.AddToCombatAndPreview<CGSFatalBlow>(Owner, PileType.Hand, 1, player);
+
+            // 清除指定能力。
+            if (Owner.HasPower<CGSAccumulateStrength>())
+            {
+                await PowerCmd.Remove<CGSAccumulateStrength>(Owner);
+            }
+        }
     }
 }

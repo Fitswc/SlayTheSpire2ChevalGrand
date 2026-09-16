@@ -45,16 +45,20 @@ public class CGSDefenseStancePower : ModPowerTemplate
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side,
         IEnumerable<Creature> participants)
     {
-        if (side == CombatSide.Enemy && Owner.Block > 0)
+        if (Owner.HasPower<CGSAnUnyieldingResponsePower>())
         {
-            var remainingBlock = Owner.Block;
-            // 将未消耗的格挡转化为姿态蓄力值
-            await PowerCmd.Apply<CGSAccumulateStrength>(
-                choiceContext,
-                Owner,
-                remainingBlock,
-                Owner,
-                null);
+            if (side == CombatSide.Enemy && Owner.Block > 0)
+            {
+                var remainingBlock = Owner.Block;
+                // 将未消耗的格挡转化为姿态蓄力值
+                await PowerCmd.Apply<CGSAccumulateStrength>(
+                    choiceContext,
+                    Owner,
+                    remainingBlock,
+                    Owner,
+                    null
+                );
+            }
         }
     }
 }

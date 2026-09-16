@@ -36,6 +36,9 @@ public partial class Entry
         
         FmodStudioDeferredBankRegistration.RegisterBank($"{ResPath}/audios/ChevalGrandSlaySFX.bank");
         FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings($"{ResPath}/audios/GUIDs.txt");
+        
+        //Patch
+        CharacterSelectAudio.Install();
 
         Logger.Info("ChevalGrandMod initialized.");
     }

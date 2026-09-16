@@ -4,8 +4,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -16,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSFatalBlow : ModCardTemplate
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 1;
+    private const int BaseEnergyCost = 0;
 
     // 卡牌类型。
     private const CardType CardKind = CardType.Attack;
@@ -24,11 +22,25 @@ public sealed class CGSFatalBlow : ModCardTemplate
     // 卡牌稀有度。
     private const CardRarity CardRarityValue = CardRarity.Token;
 
-    // 目标类型（AnyEnemy 表示任意敌人）。
+    // 构造时的默认目标；实际目标由下方属性根据能力决定。
     private const TargetType CardTarget = TargetType.AnyEnemy;
+    public override TargetType TargetType
+    {
+        get
+        {
+            if (Owner != null && Owner.Creature.HasPower<CGSSuperbContinuousPower>())
+            {
+                return TargetType.AllEnemies;
+            }
+
+            return TargetType.AnyEnemy;
+        }
+    }
 
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = false;
+    
+    public override int MaxUpgradeLevel => 0;
 
     // 卡图资源。
     // 这里的 res://ChevalGrandSlay/... 是 Godot 资源路径，对应的是你的资源文件夹名字。
@@ -57,19 +69,26 @@ public sealed class CGSFatalBlow : ModCardTemplate
     // 打出时的效果逻辑。
     // 尖塔2使用了 async 和 await 来控制效果逻辑顺序执行，和尖塔1的 action 类似。
     // DamageCmd.Attack 会按当前 DynamicVars.Damage 的值造成攻击伤害。
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    protected override async Task OnPlay(
+        PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        var damage = DynamicVars["BlowValue"].BaseValue;
 
-        await DamageCmd.Attack(DynamicVars["BlowValue"].BaseValue)
-            .FromCard(this)
-            .Targeting(cardPlay.Target)
-            .Execute(choiceContext);
-    }
+        if (Owner.Creature.HasPower<CGSSuperbContinuousPower>())
+        {
+            await DamageCmd.Attack(damage)
+                .FromCard(this)
+                .TargetingAllOpponents(CombatState)
+                .Execute(choiceContext);
+        }
+        else
+        {
+            ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-    // 升级后的效果逻辑。
-    protected override void OnUpgrade()
-    {
-       //Do Nothing
+            await DamageCmd.Attack(damage)
+                .FromCard(this)
+                .Targeting(cardPlay.Target)
+                .Execute(choiceContext);
+        }
     }
 }
