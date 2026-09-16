@@ -78,6 +78,5 @@ public sealed class CGSDisrupTheFormation : ModCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3);
-        DynamicVars.Block.UpgradeValueBy(3);
     }
 }

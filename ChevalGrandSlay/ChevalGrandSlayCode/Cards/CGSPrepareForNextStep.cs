@@ -81,7 +81,7 @@ public sealed class CGSPrepareForNextStep : ModCardTemplate
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(3m);
+        DynamicVars.Block.UpgradeValueBy(3m);
         DynamicVars["BlockNextTurn"].UpgradeValueBy(5m);
         EnergyCost.UpgradeBy(-1);
     }
