@@ -18,11 +18,12 @@ public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPoo
 
     private const string SceneRoot = $"{Entry.ResPath}/scenes/characters";
     private const string SceneRootMerchant = $"{Entry.ResPath}/scenes/merchant/characters";
+    private const string SceneRootRest = $"{Entry.ResPath}/scenes/rest_site";
     private const string ImageRoot = $"{Entry.ResPath}/images/characters";
     private const string CharacterScenePath = $"{SceneRoot}/ChevalGrandSlay_character.tscn";
     private const string EnergyCounterScenePath = $"{SceneRoot}/ChevalGrandSlay_energy_counter.tscn";
     private const string MerchantScenePath = $"{SceneRootMerchant}/ChevalGrandSlay_merchant.tscn";
-    private const string RestSiteScenePath = $"{SceneRoot}/ChevalGrandSlay_rest_site.tscn";
+    private const string RestSiteScenePath = $"{SceneRootRest}/ChevalGrandSlay_rest_site.tscn";
     private const string CharacterSelectBgScenePath = $"{SceneRoot}/ChevalGrandSlay_character_select_bg.tscn";
 
     // 角色名称颜色。

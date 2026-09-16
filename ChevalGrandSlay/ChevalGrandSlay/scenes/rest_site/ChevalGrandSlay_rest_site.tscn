@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://bi724ie6chrw"]
+
+[ext_resource type="SpineSkeletonDataResource" uid="uid://8cu3dbxkrx81" path="res://ChevalGrandSlay/scenes/rest_site/ChevalGrandSlay_rest_site.tres" id="1_w4cph"]
+
+[node name="ChevalGrandSlayRestSite" type="Node2D"]
+
+[node name="SpineSprite" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("1_w4cph")
+preview_skin = "Default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0
+position = Vector2(-58.000004, 5)
+scale = Vector2(0.15, 0.15)
+
+[node name="ControlRoot" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SelectionReticle" type="Control" parent="ControlRoot"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = -199.0
+offset_top = -240.0
+offset_right = 166.0
+offset_bottom = 186.0
+
+[node name="Hitbox" type="Control" parent="ControlRoot"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = -198.0
+offset_top = -241.0
+offset_right = 168.0
+offset_bottom = 186.0
+
+[node name="ThoughtBubbleRight" type="Control" parent="ControlRoot"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = 106.0
+offset_top = -203.0
+offset_right = 106.0
+offset_bottom = -203.0
+
+[node name="ThoughtBubbleLeft" type="Control" parent="ControlRoot"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = -61.0
+offset_top = -203.0
+offset_right = -61.0
+offset_bottom = -203.0
