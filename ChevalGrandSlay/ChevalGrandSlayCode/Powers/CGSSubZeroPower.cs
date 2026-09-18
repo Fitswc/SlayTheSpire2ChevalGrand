@@ -25,7 +25,9 @@ public sealed class CGSSubZeroPower : ModPowerTemplate
         CombatSide side,
         IEnumerable<Creature> participants)
     {
-        if (side != CombatSide.Player || !participants.Contains(Owner) || !Owner.HasPower<CGSDefenseStancePower>())
+        if (side == CombatSide.Player &&
+            participants.Contains(Owner) &&
+            Owner.HasPower<CGSDefenseStancePower>())
         {
             Flash();
             await CreatureCmd.GainBlock(

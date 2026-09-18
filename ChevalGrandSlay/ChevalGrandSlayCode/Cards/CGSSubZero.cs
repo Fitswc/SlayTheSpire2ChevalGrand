@@ -3,6 +3,7 @@ using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -68,6 +69,30 @@ public sealed class CGSSubZero : ModCardTemplate
         {
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
         }
+    }
+
+    protected override void AddExtraArgsToDescription(LocString description)
+    {
+        base.AddExtraArgsToDescription(description);
+
+        var isDefense = false;
+        var isAttack = false;
+
+        // 图鉴中的原型以及尚未分配拥有者的卡牌显示完整说明。
+        if (IsMutable && Owner != null)
+        {
+            if (Owner.Creature.HasPower<CGSDefenseStancePower>())
+            {
+                isDefense = true;
+            }
+            else if (Owner.Creature.HasPower<CGSAttackStancePower>())
+            {
+                isAttack = true;
+            }
+        }
+
+        description.Add("IsDefense", isDefense);
+        description.Add("IsAttack", isAttack);
     }
 
     // 升级后的效果逻辑。

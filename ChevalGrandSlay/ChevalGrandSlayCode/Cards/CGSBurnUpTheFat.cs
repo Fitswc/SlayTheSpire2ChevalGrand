@@ -3,6 +3,7 @@ using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -95,6 +96,31 @@ public sealed class CGSBurnUpTheFat : ModCardTemplate
             DynamicVars.Weak.BaseValue,
             creature,
             this);
+    }
+    
+    protected override void AddExtraArgsToDescription(LocString description)
+    {
+        base.AddExtraArgsToDescription(description);
+
+        var isDefense = false;
+        var isAttack = false;
+
+        // 图鉴中的卡牌可能没有拥有者，需要先检查。
+        if (IsMutable)
+        {
+            if (Owner.Creature.HasPower<CGSDefenseStancePower>())
+            {
+                isDefense = true;
+            }
+            else if (Owner.Creature.HasPower<CGSAttackStancePower>())
+            {
+                isAttack = true;
+            }
+        }
+
+        // 把检查结果传给本地化。
+        description.Add("IsDefense", isDefense);
+        description.Add("IsAttack", isAttack);
     }
 
     // 升级后的效果逻辑。
