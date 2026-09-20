@@ -3,6 +3,7 @@ using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -34,6 +35,16 @@ public sealed class CGSSuperbContinuous : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.None };
+    
+    protected override void AddExtraArgsToDescription(LocString description)
+    {
+        base.AddExtraArgsToDescription(description);
+
+        description.Add(
+            "DeterminationIcon",
+            SecondaryResourceText.GetIconTag(
+                CGSDetermination.CGSDeterminationId));
+    }
 
     public CGSSuperbContinuous() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {

@@ -1,6 +1,7 @@
 ﻿using ChevalGrandSlay.Characters;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -37,6 +38,16 @@ public sealed class CGSIMustArrive : ModCardTemplate
     [
         CardKeyword.Exhaust
     ];
+    
+    protected override void AddExtraArgsToDescription(LocString description)
+    {
+        base.AddExtraArgsToDescription(description);
+
+        description.Add(
+            "DeterminationIcon",
+            SecondaryResourceText.GetIconTag(
+                CGSDetermination.CGSDeterminationId));
+    }
 
     public CGSIMustArrive() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {

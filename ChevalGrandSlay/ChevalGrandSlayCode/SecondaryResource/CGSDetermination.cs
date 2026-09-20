@@ -1,4 +1,5 @@
 ﻿using ChevalGrandSlay;
+using ChevalGrandSlay.Characters;
 using Godot;
 using STS2RitsuLib;
 using STS2RitsuLib.Combat.SecondaryResources;
@@ -18,8 +19,8 @@ public static class CGSDetermination
             baseMaxAmount: null,
             turnStartPolicy: SecondaryResourceTurnStartPolicy.None,
             persistencePolicy: SecondaryResourcePersistencePolicy.Combat,
-            smallIconPath: $"{Entry.ResPath}/images/resources/rage_small.png",
-            largeIconPath: $"{Entry.ResPath}/images/resources/rage_large.png"
+            smallIconPath: $"{Entry.ResPath}/images/resources/CGSDetermination_small.png",
+            largeIconPath: $"{Entry.ResPath}/images/resources/CGSDetermination_large.png"
         ));
         CGSDeterminationId = CGSDeterminationResource.Id;
         
@@ -63,5 +64,7 @@ public static class CGSDetermination
             },
             ctx => ctx.Node.Refresh(ctx)
         );
+        
+        registry.AlwaysShowInCombatUiForCharacter<CGSCharacter>(CGSDeterminationId);
     }
 }

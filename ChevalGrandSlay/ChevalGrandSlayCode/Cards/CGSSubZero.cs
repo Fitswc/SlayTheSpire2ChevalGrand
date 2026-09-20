@@ -45,12 +45,13 @@ public sealed class CGSSubZero : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(9m, ValueProp.Move),
-        new DynamicVar("EndTurnBlock", 9m)
+        new DynamicVar("EndTurnBlock", 9m),
+        SecondaryResourceVars.For("CGSDetermination", CGSDetermination.CGSDeterminationId, 10m)
     ];
 
     public CGSSubZero() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        this.SecondaryCosts().Set(CGSDetermination.CGSDeterminationId, 10);
+        this.SecondaryCosts().Set(CGSDetermination.CGSDeterminationId, DynamicVars["CGSDetermination"].IntValue);
     }
 
     // 打出时的效果逻辑，这里是获得格挡。

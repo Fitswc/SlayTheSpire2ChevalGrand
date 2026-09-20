@@ -2,6 +2,7 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -38,6 +39,16 @@ public sealed class CGSBurnUpTheFat : ModCardTemplate
     [
         new PowerVar<WeakPower>(6m)
     ];
+
+    protected override void AddExtraArgsToDescription(LocString description)
+    {
+        base.AddExtraArgsToDescription(description);
+
+        description.Add(
+            "DeterminationIcon",
+            SecondaryResourceText.GetIconTag(
+                CGSDetermination.CGSDeterminationId));
+    }
 
     // 卡图资源。
     // 如果你按这行代码写，文件名就对应 ChevalGrandSlay/images/cards/ChevalGrandSlayDefend.png。

@@ -42,11 +42,12 @@ public sealed class CGSReorganizeThePace : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(15m, ValueProp.Move),
+        SecondaryResourceVars.For("CGSDetermination", CGSDetermination.CGSDeterminationId, 2m)
     ];
 
     public CGSReorganizeThePace() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        this.SecondaryCosts().Set(CGSDetermination.CGSDeterminationId, 2);
+        this.SecondaryCosts().Set(CGSDetermination.CGSDeterminationId, DynamicVars["CGSDetermination"].IntValue);
     }
 
     // 打出时的效果逻辑，这里是获得格挡。

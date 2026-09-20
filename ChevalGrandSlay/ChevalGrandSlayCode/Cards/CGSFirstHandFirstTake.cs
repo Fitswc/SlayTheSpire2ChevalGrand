@@ -29,7 +29,8 @@ public sealed class CGSFirstHandFirstTake : ModCardTemplate
     
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Determination", 6m),
+        //new DynamicVar("Determination", 6m),
+        SecondaryResourceVars.For("CGSDetermination", CGSDetermination.CGSDeterminationId, 6m),
         new CardsVar(1)
     ];
 
@@ -55,7 +56,7 @@ public sealed class CGSFirstHandFirstTake : ModCardTemplate
         await SecondaryResourceCmd.Gain(
             Owner,
             CGSDetermination.CGSDeterminationId,
-            DynamicVars["Determination"].IntValue,
+            DynamicVars["CGSDetermination"].IntValue,
             this);
 
         await CardPileCmd.Draw(

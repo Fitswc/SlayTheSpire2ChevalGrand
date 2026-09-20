@@ -45,7 +45,8 @@ public sealed class CGSPrefectDefend : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("StartTurnBlock", 12m),
-        new BlockVar(12m, ValueProp.Move)
+        new BlockVar(12m, ValueProp.Move),
+        SecondaryResourceVars.For("CGSDetermination", CGSDetermination.CGSDeterminationId, 10m)
     ];
     
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
@@ -55,7 +56,7 @@ public sealed class CGSPrefectDefend : ModCardTemplate
 
     public CGSPrefectDefend() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        this.SecondaryCosts().Set(CGSDetermination.CGSDeterminationId, 10);
+        this.SecondaryCosts().Set(CGSDetermination.CGSDeterminationId, DynamicVars["CGSDetermination"].IntValue);
     }
 
     // 打出时的效果逻辑，这里是获得格挡。
