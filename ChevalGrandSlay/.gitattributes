@@ -46,3 +46,6 @@
 *.jsonc linguist-language=JSON linguist-detectable=true
 *.json5 linguist-language=JSON5 linguist-detectable=true
 
+*.tres linguist-language=GDScript
+*.tscn linguist-language=GDScript
+
