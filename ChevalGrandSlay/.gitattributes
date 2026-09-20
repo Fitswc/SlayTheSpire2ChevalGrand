@@ -1,2 +1,48 @@
-# Normalize EOL for all files that Git considers text files.
-* text=auto eol=lf
+# Windows 批处理使用 CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# 图片
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+
+# 音频
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.bank binary
+
+# Godot / Spine 二进制资源
+*.pck binary
+*.res binary
+*.scn binary
+*.skel binary
+
+# 程序、压缩包与表格
+*.dll binary
+*.exe binary
+*.pdb binary
+*.zip binary
+*.xlsx binary
+
+# Auto detect text files and perform LF normalization
+*          text=auto
+
+*.cs text diff=csharp linguist-language=C#
+*.cshtml text diff=html linguist-language=HTML+Razor
+*.csx text diff=csharp linguist-language=C#
+*.sln text eol=crlf
+*.slnx text eol=crlf
+*.csproj text eol=crlf
+
+# 语法：<匹配模式> linguist-language=<Linguist 语言名>
+*.gdshader linguist-language=GLSL
+*.shader   linguist-language=GLSL
+
+*.json  linguist-language=JSON linguist-detectable=true
+*.jsonc linguist-language=JSON linguist-detectable=true
+*.json5 linguist-language=JSON5 linguist-detectable=true
+
