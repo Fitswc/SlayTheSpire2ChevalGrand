@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -49,30 +50,27 @@ public sealed class CGSPrefectDefend : ModCardTemplate
     
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
-        CardKeyword.Exhaust
+        
     ];
 
     public CGSPrefectDefend() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
+        this.SecondaryCosts().Set(CGSDetermination.CGSDeterminationId, 10);
     }
 
     // 打出时的效果逻辑，这里是获得格挡。
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (Owner.Creature.HasPower<CGSDefenseStancePower>())
-        {
             await PowerCmd.Apply<CGSPerfectDefendPower>(
                 choiceContext,
                 Owner.Creature,
                 DynamicVars["StartTurnBlock"].BaseValue,
                 Owner.Creature,
                 this);
-        }
-        else
-        {
+            
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        }
+        
     }
 
     // 升级后的效果逻辑。

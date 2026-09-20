@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSAnUnyieldingResponse : ModCardTemplate
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 2;
+    private const int BaseEnergyCost = 3;
 
     // 卡牌类型。
     private const CardType CardKind = CardType.Power;
@@ -38,6 +38,11 @@ public sealed class CGSAnUnyieldingResponse : ModCardTemplate
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.None};
     
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        CardKeyword.Exhaust,
+    ];
+    
 
     public CGSAnUnyieldingResponse() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
@@ -46,19 +51,6 @@ public sealed class CGSAnUnyieldingResponse : ModCardTemplate
     // 打出时的效果逻辑，这里是获得格挡。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-
-        if (Owner.Creature.HasPower<CGSAttackStancePower>())
-        {
-            await PowerCmd.Remove<CGSAttackStancePower>(Owner.Creature);
-            await PowerCmd.Apply<CGSDefenseStancePower>(
-                choiceContext,
-                Owner.Creature,
-                1m,
-                Owner.Creature,
-                this
-            );
-        }
-
         await PowerCmd.Apply<CGSAnUnyieldingResponsePower>(
             choiceContext,
             Owner.Creature,
@@ -67,5 +59,11 @@ public sealed class CGSAnUnyieldingResponse : ModCardTemplate
             this
         );
 
+    }
+    
+    // 升级后的效果逻辑。
+    protected override void OnUpgrade()
+    {
+        EnergyCost.UpgradeBy(-1);
     }
 }

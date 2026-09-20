@@ -1,9 +1,9 @@
 ﻿using ChevalGrandSlay.Characters;
-using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -29,6 +29,7 @@ public sealed class CGSFirstHandFirstTake : ModCardTemplate
     
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
+        new DynamicVar("Determination", 6m),
         new CardsVar(1)
     ];
 
@@ -47,30 +48,26 @@ public sealed class CGSFirstHandFirstTake : ModCardTemplate
 
     // 打出时的效果逻辑。
     // 尖塔2使用了 async 和 await 来控制效果逻辑顺序执行，和尖塔1的 action 类似。
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    protected override async Task OnPlay(
+        PlayerChoiceContext choiceContext,
+        CardPlay cardPlay)
     {
-        if (Owner.Creature.HasPower<CGSDefenseStancePower>())
-        {
-//            await PowerCmd.Remove<CGSDefenseStancePower>(Owner.Creature);
-            await PowerCmd.Apply<CGSAttackStancePower>(
-                choiceContext,
-                Owner.Creature,
-                1m,
-                Owner.Creature,
-                this
-            );
-        }
+        await SecondaryResourceCmd.Gain(
+            Owner,
+            CGSDetermination.CGSDeterminationId,
+            DynamicVars["Determination"].IntValue,
+            this);
 
         await CardPileCmd.Draw(
             choiceContext,
             DynamicVars.Cards.BaseValue,
-            Owner
-        );
+            Owner);
     }
 
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
+        DynamicVars["Determination"].UpgradeValueBy(2m);
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }

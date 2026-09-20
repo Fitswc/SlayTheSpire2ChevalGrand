@@ -1,11 +1,11 @@
 ﻿using ChevalGrandSlay.Characters;
-using ChevalGrandSlay.Powers;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -50,49 +50,27 @@ public sealed class CGSSubZero : ModCardTemplate
 
     public CGSSubZero() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
+        this.SecondaryCosts().Set(CGSDetermination.CGSDeterminationId, 10);
     }
 
     // 打出时的效果逻辑，这里是获得格挡。
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (Owner.Creature.HasPower<CGSDefenseStancePower>())
+        var selectedCards = await CardSelectCmd.FromHandForDiscard(
+            choiceContext,
+            Owner,
+            new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1),
+            null,
+            this
+        );
+        
+        var selectedCard = selectedCards.FirstOrDefault();
+
+        if (selectedCard != null)
         {
-            await PowerCmd.Apply<CGSSubZeroPower>(
-                choiceContext,
-                Owner.Creature,
-                DynamicVars["EndTurnBlock"].BaseValue,
-                Owner.Creature,
-                this);
+            await CardCmd.Discard(choiceContext, selectedCard);
         }
-        else
-        {
-            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        }
-    }
-
-    protected override void AddExtraArgsToDescription(LocString description)
-    {
-        base.AddExtraArgsToDescription(description);
-
-        var isDefense = false;
-        var isAttack = false;
-
-        // 图鉴中的原型以及尚未分配拥有者的卡牌显示完整说明。
-        if (IsMutable && Owner != null)
-        {
-            if (Owner.Creature.HasPower<CGSDefenseStancePower>())
-            {
-                isDefense = true;
-            }
-            else if (Owner.Creature.HasPower<CGSAttackStancePower>())
-            {
-                isAttack = true;
-            }
-        }
-
-        description.Add("IsDefense", isDefense);
-        description.Add("IsAttack", isAttack);
     }
 
     // 升级后的效果逻辑。

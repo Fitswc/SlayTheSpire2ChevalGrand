@@ -36,12 +36,12 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_STEADY_PACE.smartDescription": "获得 {Block:diff()} 点[gold]格挡[/gold]\n若你已有至少8点[gold]格挡[/gold]，改为获得 {EnhancedBlock:diff()} 点[gold]格挡[/gold]",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_AN_UNYIELDING_RESPONSE.title": "不屈的回应",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_AN_UNYIELDING_RESPONSE.description": "若处于[gold]进攻姿态[/gold]，切换为[gold]防御姿态[/gold]\n此后，敌方回合结束时，将你的剩余[gold]格挡[/gold]转化为等量蓄力",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_AN_UNYIELDING_RESPONSE.smartDescription": "若处于[gold]进攻姿态[/gold]，切换为[gold]防御姿态[/gold]\n此后，敌方回合结束时，将你的剩余[gold]格挡[/gold]转化为等量蓄力",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_AN_UNYIELDING_RESPONSE.description": "敌方回合结束时，获得等同于剩余[gold]格挡[/gold]的[gold]决意[/gold]",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_AN_UNYIELDING_RESPONSE.smartDescription": "敌方回合结束时，获得等同于剩余[gold]格挡[/gold]的[gold]决意[/gold]",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_BURN_UP_THE_FAT.title": "燃烧脂肪",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_BURN_UP_THE_FAT.description": "失去[gold]全部格挡[/gold]\n{IsDefense:将失去的[gold]N层格挡[/gold]转化为N层蓄力\n切换为[gold]进攻姿态[/gold] | {IsAttack:造成失去[gold]格挡[/gold]层数的伤害 | 若处于[gold]防御姿态[/gold]，将失去的[gold]格挡[/gold]转化为等量蓄力，切换为[gold]进攻姿态[/gold]；否则对目标造成失去[gold]格挡[/gold]层数的伤害}}\n获得 {WeakPower:diff()} 层[gold]虚弱[/gold]",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_BURN_UP_THE_FAT.smartDescription": "失去[gold]全部格挡[/gold]\n{IsDefense:将失去的[gold]N层格挡[/gold]转化为N层蓄力\n切换为[gold]进攻姿态[/gold] | {IsAttack:造成失去[gold]格挡[/gold]层数的伤害 | 若处于[gold]防御姿态[/gold]，将失去的[gold]格挡[/gold]转化为等量蓄力，切换为[gold]进攻姿态[/gold]；否则对目标造成失去[gold]格挡[/gold]层数的伤害}}\n获得 {WeakPower:diff()} 层[gold]虚弱[/gold]",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_BURN_UP_THE_FAT.description": "至少需要 1 点[gold]决意[/gold]\n消耗全部[gold]决意[/gold]，获得等量[gold]格挡[/gold]\n获得 {WeakPower:diff()} 层[gold]虚弱[/gold]",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_BURN_UP_THE_FAT.smartDescription": "至少需要 1 点[gold]决意[/gold]\n消耗全部[gold]决意[/gold]，获得等量[gold]格挡[/gold]\n获得 {WeakPower:diff()} 层[gold]虚弱[/gold]",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_CAPABLE_OF_BOTH_OFFENSE_AND_DEFENSE.title": "攻守兼备",
   "CHEVAL_GRAND_SLAY_CARD_CGS_CAPABLE_OF_BOTH_OFFENSE_AND_DEFENSE.description": "若处于[gold]防御姿态[/gold]，获得等同于当前蓄力值的[gold]格挡[/gold]\n若处于[gold]进攻姿态[/gold]，获得 {Charge:diff()} 点蓄力，并切换为[gold]防御姿态[/gold]",
@@ -60,8 +60,8 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_FIRST_HAND_FIRST_TAKE.smartDescription": "抽{Cards:diff()}张牌\n若处于[gold]防御姿态[/gold]，切换为[gold]进攻姿态[/gold]",
 
   "CHEVAL_GRAND_SLAY_CARD_CGSI_MUST_ARRIVE.title": "我必抵达",
-  "CHEVAL_GRAND_SLAY_CARD_CGSI_MUST_ARRIVE.description": "使当前蓄力值翻倍\n若未处于[gold]进攻姿态[/gold]，切换为[gold]进攻姿态[/gold]",
-  "CHEVAL_GRAND_SLAY_CARD_CGSI_MUST_ARRIVE.smartDescription": "使当前蓄力值翻倍\n若未处于[gold]进攻姿态[/gold]，切换为[gold]进攻姿态[/gold]",
+  "CHEVAL_GRAND_SLAY_CARD_CGSI_MUST_ARRIVE.description": "使当前[gold]决意[/gold]翻倍\n若未处于[gold]进攻姿态[/gold]，切换为[gold]进攻姿态[/gold]",
+  "CHEVAL_GRAND_SLAY_CARD_CGSI_MUST_ARRIVE.smartDescription": "使当前[gold]决意[/gold]翻倍\n若未处于[gold]进攻姿态[/gold]，切换为[gold]进攻姿态[/gold]",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_NEVER_STEP_BEHIND.title": "绝不落后",
   "CHEVAL_GRAND_SLAY_CARD_CGS_NEVER_STEP_BEHIND.description": "获得 {Block:diff()} 点[gold]格挡[/gold]\n对所有敌人施加 {WeakPower:diff()} 层[gold]虚弱[/gold]",

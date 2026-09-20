@@ -1,11 +1,11 @@
 ﻿using ChevalGrandSlay.Characters;
-using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -48,79 +48,43 @@ public sealed class CGSBurnUpTheFat : ModCardTemplate
 
     public CGSBurnUpTheFat() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
+        // 必须支付 1 点，不足时无法打出。
+        this.SecondaryResourceUses().Require(
+            "determination_required",
+            CGSDetermination.CGSDeterminationId,
+            1);
+
+        // 在必需支付之外，按每份 1 点继续消耗剩余决意。
+        this.SecondaryResourceUses().SpendExtra(
+            "determination_extra",
+            CGSDetermination.CGSDeterminationId,
+            perStackAmount: 1,
+            maxStacks: null);
     }
 
     // 打出时的效果逻辑，这里是获得格挡。
     protected override async Task OnPlay(
-        PlayerChoiceContext choiceContext, CardPlay cardPlay)
+        PlayerChoiceContext choiceContext,
+        CardPlay cardPlay)
     {
-        var creature = Owner.Creature;
-        var ownedBlock = Owner.Creature.Block;
+        int spent = cardPlay.SecondaryResources()
+            .Spent(CGSDetermination.CGSDeterminationId);
 
-        // 清空当前格挡。
-        if (creature.Block > 0)
+        if (spent > 0)
         {
-            await CreatureCmd.LoseBlock(creature, creature.Block);
-        }
-        
-        // 退出防御姿态。
-        if (creature.HasPower<CGSDefenseStancePower>())
-        {
-            await PowerCmd.Apply<CGSAccumulateStrength>(
-                choiceContext,
+            await CreatureCmd.GainBlock(
                 Owner.Creature,
-                ownedBlock,
-                Owner.Creature,
-                this
-            );
-
-            //await PowerCmd.Remove<CGSDefenseStancePower>(creature);
-            await PowerCmd.Apply<CGSAttackStancePower>(
-                choiceContext, creature, 1m, creature, this);
-        }
-        
-        else
-        {
-            ArgumentNullException.ThrowIfNull(cardPlay.Target);
-
-            await DamageCmd.Attack(ownedBlock)
-                .FromCard(this)
-                .Targeting(cardPlay.Target)
-                .Execute(choiceContext);
+                spent,
+                ValueProp.Unpowered,
+                cardPlay);
         }
 
-        // 对自己施加虚弱。
         await PowerCmd.Apply<WeakPower>(
             choiceContext,
-            creature,
+            Owner.Creature,
             DynamicVars.Weak.BaseValue,
-            creature,
+            Owner.Creature,
             this);
-    }
-    
-    protected override void AddExtraArgsToDescription(LocString description)
-    {
-        base.AddExtraArgsToDescription(description);
-
-        var isDefense = false;
-        var isAttack = false;
-
-        // 图鉴中的卡牌可能没有拥有者，需要先检查。
-        if (IsMutable)
-        {
-            if (Owner.Creature.HasPower<CGSDefenseStancePower>())
-            {
-                isDefense = true;
-            }
-            else if (Owner.Creature.HasPower<CGSAttackStancePower>())
-            {
-                isAttack = true;
-            }
-        }
-
-        // 把检查结果传给本地化。
-        description.Add("IsDefense", isDefense);
-        description.Add("IsAttack", isAttack);
     }
 
     // 升级后的效果逻辑。

@@ -1,10 +1,8 @@
 ﻿using ChevalGrandSlay.Characters;
-using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -32,7 +30,7 @@ public sealed class CGSSwitchStance : ModCardTemplate
     
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new CardsVar(2)
+        new CardsVar(1)
     ];
     
     // 固有：战斗开始时，这张牌会进入起始手牌。
@@ -58,30 +56,7 @@ public sealed class CGSSwitchStance : ModCardTemplate
     // 尖塔2使用了 async 和 await 来控制效果逻辑顺序执行，和尖塔1的 action 类似。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (Owner.Creature.HasPower<CGSDefenseStancePower>())
-        {
-//            await PowerCmd.Remove<CGSDefenseStancePower>(Owner.Creature);
-            await PowerCmd.Apply<CGSAttackStancePower>(
-                choiceContext,
-                Owner.Creature,
-                1m,
-                Owner.Creature,
-                this
-            );
-        }
-
-        else if (Owner.Creature.HasPower<CGSAttackStancePower>())
-        {
-            await PowerCmd.Remove<CGSAttackStancePower>(Owner.Creature);
-            await PowerCmd.Apply<CGSDefenseStancePower>(
-                choiceContext,
-                Owner.Creature,
-                1m,
-                Owner.Creature,
-                this
-            );
-        }
-
+        
         var drawCards = await CardPileCmd.Draw(
             choiceContext,
             DynamicVars.Cards.BaseValue,
@@ -92,7 +67,7 @@ public sealed class CGSSwitchStance : ModCardTemplate
             choiceContext,
             Owner,
             new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1),
-            card => drawCards.Contains(card),
+            null,
             this
         );
         
@@ -104,30 +79,6 @@ public sealed class CGSSwitchStance : ModCardTemplate
         }
     }
     
-    protected override void AddExtraArgsToDescription(LocString description)
-    {
-        base.AddExtraArgsToDescription(description);
-
-        var isDefense = false;
-        var isAttack = false;
-
-        // 图鉴中的卡牌可能没有拥有者，需要先检查。
-        if (IsMutable)
-        {
-            if (Owner.Creature.HasPower<CGSDefenseStancePower>())
-            {
-                isDefense = true;
-            }
-            else if (Owner.Creature.HasPower<CGSAttackStancePower>())
-            {
-                isAttack = true;
-            }
-        }
-
-        // 把检查结果传给本地化。
-        description.Add("IsDefense", isDefense);
-        description.Add("IsAttack", isAttack);
-    }
 
     // 升级后的效果逻辑。
     protected override void OnUpgrade()

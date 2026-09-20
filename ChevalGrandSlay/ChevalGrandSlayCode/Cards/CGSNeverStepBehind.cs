@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -43,7 +44,7 @@ public sealed class CGSNeverStepBehind : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(20m, ValueProp.Move),
-        new PowerVar<WeakPower>(1m)
+        new PowerVar<WeakPower>(2m)
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
@@ -54,6 +55,7 @@ public sealed class CGSNeverStepBehind : ModCardTemplate
 
     public CGSNeverStepBehind() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
+        this.SecondaryCosts().Set(CGSDetermination.CGSDeterminationId, 10);
     }
 
     // 打出时的效果逻辑，这里是获得格挡。
@@ -75,6 +77,6 @@ public sealed class CGSNeverStepBehind : ModCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(6m);
-        DynamicVars.Weak.UpgradeValueBy(3m);
+        DynamicVars.Weak.UpgradeValueBy(2m);
     }
 }

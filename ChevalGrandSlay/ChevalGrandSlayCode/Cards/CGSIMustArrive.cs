@@ -1,8 +1,7 @@
 ﻿using ChevalGrandSlay.Characters;
-using ChevalGrandSlay.Powers;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -33,6 +32,11 @@ public sealed class CGSIMustArrive : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.None };
+    
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        CardKeyword.Exhaust
+    ];
 
     public CGSIMustArrive() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
@@ -43,37 +47,15 @@ public sealed class CGSIMustArrive : ModCardTemplate
         PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var creature = Owner.Creature;
-        var charge = creature.GetPowerAmount<CGSAccumulateStrength>();
+        int determination = SecondaryResourceCmd.Get(
+            Owner, CGSDetermination.CGSDeterminationId);
 
-        // 增加与现有蓄力相同的层数，实现翻倍。
-        if (charge > 0)
-        {
-            await PowerCmd.Apply<CGSAccumulateStrength>(
-                choiceContext,
-                creature,
-                charge,
-                creature,
-                this);
-        }
-        
-        /*
-        // 移除防御姿态，避免两种姿态同时存在。
-        if (creature.HasPower<CGSDefenseStancePower>())
-        {
-            await PowerCmd.Remove<CGSDefenseStancePower>(creature);
-        }
-        */
-
-        // 已经处于进攻姿态时，无须重复施加。
-        if (!creature.HasPower<CGSAttackStancePower>())
-        {
-            await PowerCmd.Apply<CGSAttackStancePower>(
-                choiceContext,
-                creature,
-                1m,
-                creature,
-                this);
-        }
+        // 增加与当前决意相同的数量，实现翻倍。
+        await SecondaryResourceCmd.Gain(
+            Owner,
+            CGSDetermination.CGSDeterminationId,
+            determination,
+            this);
     }
 
     // 升级后的效果逻辑。

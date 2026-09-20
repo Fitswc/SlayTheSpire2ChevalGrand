@@ -39,6 +39,9 @@ public partial class Entry
         
         //Patch
         CharacterSelectAudio.Install();
+        
+        //SecondaryResource
+        CGSDetermination.Register();
 
         Logger.Info("ChevalGrandMod initialized.");
     }

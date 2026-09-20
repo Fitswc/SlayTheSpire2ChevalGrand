@@ -1,11 +1,11 @@
 {
-  "CHEVAL_GRAND_SLAY_POWER_CHEVAL_GRAND_ATTACK_STANCE_POWER.title": "进攻姿态",
-  "CHEVAL_GRAND_SLAY_POWER_CHEVAL_GRAND_ATTACK_STANCE_POWER.description": "你的攻击牌造成的伤害增加[blue]2[/blue]点。",
-  "CHEVAL_GRAND_SLAY_POWER_CHEVAL_GRAND_ATTACK_STANCE_POWER.smartDescription": "你的攻击牌造成的伤害增加[blue]2[/blue]点。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_ATTACK_STANCE_POWER.title": "进攻姿态",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_ATTACK_STANCE_POWER.description": "你的攻击牌造成的伤害增加[blue]20%[/blue]，你从卡牌获得的[gold]格挡[/gold]减少[blue]10%[/blue]。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_ATTACK_STANCE_POWER.smartDescription": "你的攻击牌造成的伤害增加[blue]20%[/blue]，你从卡牌获得的[gold]格挡[/gold]减少[blue]10%[/blue]。",
 
   "CHEVAL_GRAND_SLAY_POWER_CGS_DEFENSE_STANCE_POWER.title": "防御姿态",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_DEFENSE_STANCE_POWER.description": "你的卡牌提供的[gold]格挡[/gold]增加[blue]2[/blue]点。\n敌方回合结束时，获得等同于你剩余[gold]格挡[/gold]的蓄力值。",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_DEFENSE_STANCE_POWER.smartDescription": "你的卡牌提供的[gold]格挡[/gold]增加[blue]2[/blue]点。\n敌方回合结束时，获得等同于你剩余[gold]格挡[/gold]的蓄力值。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_DEFENSE_STANCE_POWER.description": "你的攻击牌造成的伤害减少[blue]20%[/blue]，你从卡牌获得的[gold]格挡[/gold]增加[blue]10%[/blue]。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_DEFENSE_STANCE_POWER.smartDescription": "你的攻击牌造成的伤害减少[blue]20%[/blue]，你从卡牌获得的[gold]格挡[/gold]增加[blue]10%[/blue]。\n若拥有[gold]不屈的回应[/gold]，敌方回合结束时获得等同于剩余[gold]格挡[/gold]的蓄力值。",
 
   "CHEVAL_GRAND_SLAY_POWER_CHEVAL_GRAND_SLAY_ACCUMULATE_STRENGTH.title": "蓄力",
   "CHEVAL_GRAND_SLAY_POWER_CHEVAL_GRAND_SLAY_ACCUMULATE_STRENGTH.description": "记录由[gold]防御姿态[/gold]积累的蓄力值。",

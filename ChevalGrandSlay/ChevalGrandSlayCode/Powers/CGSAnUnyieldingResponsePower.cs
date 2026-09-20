@@ -1,4 +1,8 @@
-﻿using MegaCrit.Sts2.Core.Entities.Powers;
+﻿using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -20,6 +24,20 @@ public class CGSAnUnyieldingResponsePower : ModPowerTemplate
         IconPath: $"{Entry.ResPath}/images/powers/test_power.png",
         BigIconPath: $"{Entry.ResPath}/images/powers/test_power.png"
     );
-    
-    //Nothing
+
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side,
+        IEnumerable<Creature> participants)
+    {
+        if (side == CombatSide.Enemy && Owner.Block > 0 && Owner.Player is { } player)
+        {
+            int remainingBlock = (int)Owner.Block;
+            // 根据剩余格挡获得等量决意。
+            await SecondaryResourceCmd.Gain(
+                player,
+                CGSDetermination.CGSDeterminationId,
+                remainingBlock,
+                this
+            );
+        }
+    }
 }

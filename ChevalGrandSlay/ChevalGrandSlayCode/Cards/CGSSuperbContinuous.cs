@@ -3,6 +3,7 @@ using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -36,20 +37,39 @@ public sealed class CGSSuperbContinuous : ModCardTemplate
 
     public CGSSuperbContinuous() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
+        
     }
 
     // 打出时的效果逻辑，这里是获得格挡。
     protected override async Task OnPlay(
-        PlayerChoiceContext choiceContext, CardPlay cardPlay)
+        PlayerChoiceContext choiceContext,
+        CardPlay cardPlay)
     {
-        await PowerCmd.Apply<CGSSuperbContinuousPower>(
-            choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        int currentDetermination = SecondaryResourceCmd.Get(
+            Owner, CGSDetermination.CGSDeterminationId);
 
-        if (!Owner.Creature.HasPower<CGSAttackStancePower>())
+        await SecondaryResourceCmd.Spend(
+            Owner,
+            CGSDetermination.CGSDeterminationId,
+            currentDetermination);
+
+        // 只有升级后的卡牌才赋予群攻效果。
+        if (IsUpgraded)
         {
-            await PowerCmd.Apply<CGSAttackStancePower>(
-                choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+            await PowerCmd.Apply<CGSSuperbContinuousPower>(
+                choiceContext,
+                Owner.Creature,
+                1m,
+                Owner.Creature,
+                this);
         }
+
+        // 无论是否升级，都生成一张 FatalBlow。
+        await CardPileCmd.AddToCombatAndPreview<CGSFatalBlow>(
+            Owner.Creature,
+            PileType.Hand,
+            1,
+            Owner);
     }
 
     // 升级后的效果逻辑。

@@ -16,6 +16,7 @@ public sealed class CGSPerfectDefendPower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
+    private int _remainingBlockTurns = 2;
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: $"{Entry.ResPath}/images/powers/test_power.png",
@@ -27,11 +28,22 @@ public sealed class CGSPerfectDefendPower : ModPowerTemplate
         IReadOnlyList<Creature> participants,
         ICombatState combatState)
     {
-        if (side != CombatSide.Player || !participants.Contains(Owner) || !Owner.HasPower<CGSDefenseStancePower>())
-            return;
+        if (side == CombatSide.Player &&
+            participants.Contains(Owner) &&
+            _remainingBlockTurns > 0)
+        {
+            await CreatureCmd.GainBlock(
+                Owner,
+                Amount,
+                ValueProp.Unpowered,
+                null);
 
-        await CreatureCmd.GainBlock(
-            Owner, Amount, ValueProp.Unpowered, null);
+            _remainingBlockTurns--;
+        }
+        if (_remainingBlockTurns == 0)
+        {
+            await PowerCmd.Remove(this);
+        }
     }
 
     public override async Task AfterDamageReceived(
