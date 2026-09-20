@@ -13,5 +13,26 @@
 
   "CHEVAL_GRAND_SLAY_POWER_CGS_COUNTER_POWER.title": "反击",
   "CHEVAL_GRAND_SLAY_POWER_CGS_COUNTER_POWER.description": "下一次因攻击伤害失去[gold]格挡[/gold]时，对随机敌人造成[blue]4[/blue]点伤害。",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_COUNTER_POWER.smartDescription": "下一次因攻击伤害失去[gold]格挡[/gold]时，对随机敌人造成[blue]4[/blue]点伤害。"
+  "CHEVAL_GRAND_SLAY_POWER_CGS_COUNTER_POWER.smartDescription": "下一次因攻击伤害失去[gold]格挡[/gold]时，对随机敌人造成[blue]4[/blue]点伤害。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_DAILY_EFFORT_POWER.title": "积日之功",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_DAILY_EFFORT_POWER.description": "每个自己的回合开始时，获得{Amount}点[gold]决意[/gold]。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_DAILY_EFFORT_POWER.smartDescription": "每个自己的回合开始时，获得{Amount}点[gold]决意[/gold]。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_SINGLE_STRIKE_WILL_POWER.title": "一击之志",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_SINGLE_STRIKE_WILL_POWER.description": "你的回合结束时，若恰好打出1张攻击牌，获得{Amount}点[gold]决意[/gold]。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_SINGLE_STRIKE_WILL_POWER.smartDescription": "你的回合结束时，若恰好打出1张攻击牌，获得{Amount}点[gold]决意[/gold]。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_MEASURED_MIND_POWER.title": "心中有数",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_MEASURED_MIND_POWER.description": "每个自己的回合，首次通过攻击牌消耗[gold]决意[/gold]后，抽{Amount}张牌。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_MEASURED_MIND_POWER.smartDescription": "每个自己的回合，首次通过攻击牌消耗[gold]决意[/gold]后，抽{Amount}张牌。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_SAVE_WITHOUT_SPENDING_POWER.title": "留待下一步",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_SAVE_WITHOUT_SPENDING_POWER.description": "本回合结束时，若本回合没有消耗决意，下回合获得{Amount}点额外[energy:1]。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_SAVE_WITHOUT_SPENDING_POWER.smartDescription": "本回合结束时，若本回合没有消耗决意，下回合获得{Amount}点额外[energy:1]。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_SAVE_WITHOUT_ATTACK_POWER.title": "留待下一步+",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_SAVE_WITHOUT_ATTACK_POWER.description": "本回合结束时，若本回合未打出攻击牌，下回合获得{Amount}点额外[energy:1]。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_SAVE_WITHOUT_ATTACK_POWER.smartDescription": "本回合结束时，若本回合未打出攻击牌，下回合获得{Amount}点额外[energy:1]。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_UNWAVERING_STEP_POWER.title": "重步不乱",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_UNWAVERING_STEP_POWER.description": "每个自己的回合，首次打出基础费用至少为2的攻击牌后，获得{Amount}点[gold]格挡[/gold]。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_UNWAVERING_STEP_POWER.smartDescription": "每个自己的回合，首次打出基础费用至少为2的攻击牌后，获得{Amount}点[gold]格挡[/gold]。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_SUB_ZERO_POWER.title": "冰点",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_SUB_ZERO_POWER.description": "在你的回合结束时，获得{Amount}点[gold]格挡[/gold]。剩余{Turns}回合。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_SUB_ZERO_POWER.smartDescription": "在你的回合结束时，获得{Amount}点[gold]格挡[/gold]。剩余{Turns}回合。"
 }

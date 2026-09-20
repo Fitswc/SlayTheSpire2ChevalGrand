@@ -68,7 +68,7 @@ public sealed class CGSFirstHandFirstTake : ModCardTemplate
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars["Determination"].UpgradeValueBy(2m);
+        DynamicVars["CGSDetermination"].UpgradeValueBy(2m);
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }

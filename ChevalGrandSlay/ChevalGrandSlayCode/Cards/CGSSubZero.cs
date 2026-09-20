@@ -1,4 +1,5 @@
 ﻿using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -9,7 +10,7 @@ using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
-//稳固步调
+// 冰点
 
 namespace ChevalGrandSlay.Cards;
 
@@ -44,8 +45,7 @@ public sealed class CGSSubZero : ModCardTemplate
     // BlockVar 会绑定到本地化里的 {Block:diff()}，升级时文本会自动显示差值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(9m, ValueProp.Move),
-        new DynamicVar("EndTurnBlock", 9m),
+        new BlockVar(12m, ValueProp.Unpowered),
         SecondaryResourceVars.For("CGSDetermination", CGSDetermination.CGSDeterminationId, 10m)
     ];
 
@@ -54,7 +54,7 @@ public sealed class CGSSubZero : ModCardTemplate
         this.SecondaryCosts().Set(CGSDetermination.CGSDeterminationId, DynamicVars["CGSDetermination"].IntValue);
     }
 
-    // 打出时的效果逻辑，这里是获得格挡。
+    // 先弃牌，再获得持续三个己方回合的格挡效果。
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -65,20 +65,22 @@ public sealed class CGSSubZero : ModCardTemplate
             null,
             this
         );
-        
+
         var selectedCard = selectedCards.FirstOrDefault();
 
         if (selectedCard != null)
         {
             await CardCmd.Discard(choiceContext, selectedCard);
         }
+
+        await PowerCmd.Apply<CGSSubZeroPower>(
+            choiceContext, Owner.Creature, DynamicVars.Block.BaseValue, Owner.Creature, this);
     }
 
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(3m);
-        DynamicVars["EndTurnBlock"].UpgradeValueBy(3m);
+        DynamicVars.Block.UpgradeValueBy(4m);
         EnergyCost.UpgradeBy(-1);
     }
 }

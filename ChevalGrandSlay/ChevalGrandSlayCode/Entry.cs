@@ -32,6 +32,8 @@ public partial class Entry
 
         // 自动注册扫描会读取当前程序集里的 RegisterCard/RegisterRelic 等 attribute。
         // 新增内容类后，只要 attribute 写对，通常不需要在入口里手动逐个注册。
+        // 卡牌构造时需要有效的资源标识。
+        CGSDetermination.Register();
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
         
         FmodStudioDeferredBankRegistration.RegisterBank($"{ResPath}/audios/ChevalGrandSlaySFX.bank");
@@ -40,8 +42,6 @@ public partial class Entry
         //Patch
         CharacterSelectAudio.Install();
         
-        //SecondaryResource
-        CGSDetermination.Register();
 
         Logger.Info("ChevalGrandMod initialized.");
     }
