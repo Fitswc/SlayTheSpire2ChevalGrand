@@ -15,7 +15,6 @@ namespace ChevalGrandSlay.Cards;
 // RegisterCard 会把这张牌交给 RitsuLib 自动注册。
 // RegisterCharacterStarterCard 会把它追加进 ChevalGrandSlayCharacter 的初始卡组。
 [RegisterCard(typeof(CGSCardPool))]
-[RegisterCharacterStarterCard(typeof(CGSCharacter), 1)]
 public sealed class CGSDisrupTheFormation : ModCardTemplate
 {
     // 基础耗能。

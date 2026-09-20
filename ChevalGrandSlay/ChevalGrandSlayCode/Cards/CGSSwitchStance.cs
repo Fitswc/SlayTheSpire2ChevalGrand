@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -14,7 +15,7 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSSwitchStance : ModCardTemplate
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 0;
+    private const int BaseEnergyCost = 1;
 
     // 卡牌类型。
     private const CardType CardKind = CardType.Skill;
@@ -33,11 +34,6 @@ public sealed class CGSSwitchStance : ModCardTemplate
         new CardsVar(1)
     ];
     
-    // 固有：战斗开始时，这张牌会进入起始手牌。
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-    [
-        CardKeyword.Innate
-    ];
 
     // 卡图资源。
     // 如果你按这行代码写，文件名就对应 ChevalGrandSlay/images/cards/ChevalGrandSlayStrike.png。
@@ -77,6 +73,8 @@ public sealed class CGSSwitchStance : ModCardTemplate
         {
             await CardCmd.Discard(choiceContext, selectedCard);
         }
+        
+        await SecondaryResourceCmd.Gain(Owner, CGSDetermination.CGSDeterminationId, 2);
     }
     
 

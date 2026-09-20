@@ -6,6 +6,8 @@ using STS2RitsuLib.Combat.SecondaryResources;
 
 public static class CGSDetermination
 {
+    private const string LocalId = "CGSDetermination";
+
     public static SecondaryResourceDefinition CGSDeterminationResource { get; private set; } = null!;
     public static string CGSDeterminationId { get; private set; } = string.Empty;
 
@@ -14,7 +16,7 @@ public static class CGSDetermination
         var registry = RitsuLibFramework.GetSecondaryResourceRegistry(Entry.ModId);
 
         // 无上限，每场开始清零，战斗内存储。
-        CGSDeterminationResource = registry.Register("CGSDetermination", new SecondaryResourceDefinition(
+        CGSDeterminationResource = registry.Register(LocalId, new SecondaryResourceDefinition(
             defaultAmount: 0,
             baseMaxAmount: null,
             turnStartPolicy: SecondaryResourceTurnStartPolicy.None,
@@ -23,7 +25,7 @@ public static class CGSDetermination
             largeIconPath: $"{Entry.ResPath}/images/resources/CGSDetermination_large.png"
         ));
         CGSDeterminationId = CGSDeterminationResource.Id;
-        
+
         registry.RegisterCombatUi(
             "CGSDetermination_combat_counter",
             parent =>
@@ -56,6 +58,10 @@ public static class CGSDetermination
                 {
                     IconSize = new Vector2(48, 48),
                     FontSize = 24,
+                    // 额外消耗显示本次合计支付量，而不是每份费用。
+                    FormatCost = line => line.IsExtraSpend
+                        ? line.AmountToSpend.ToString()
+                        : line.CostsX ? "X" : line.Cost.ToString(),
                 });
                 // 自由指定位置。例如这里我们找到能量图标的位置，放在它旁边
                 var energyIcon = parent.GetNode<TextureRect>("%EnergyIcon");
@@ -64,7 +70,8 @@ public static class CGSDetermination
             },
             ctx => ctx.Node.Refresh(ctx)
         );
-        
-        registry.AlwaysShowInCombatUiForCharacter<CGSCharacter>(CGSDeterminationId);
+
+        // 注册可见性规则需要局部 ID；完整资源 ID 仅用于查询和增减资源。
+        registry.AlwaysShowInCombatUiForCharacter<CGSCharacter>(LocalId);
     }
 }

@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -21,7 +22,18 @@ public sealed class CGSHeavyStep : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(8m, ValueProp.Move),
-        new DynamicVar("SpendLimit", 4m)
+        new DynamicVar("SpendLimit", 4m),
+        ModCardVars.ComputedDamage("TotalDamage", 8m, card =>
+        {
+            if (card == null)
+                return 8m;
+
+            // 与资源费用图标使用同一支付计划，包含消耗上限和支付修正。
+            int spent = SecondaryResourcePaymentResolver.Plan(card).Lines
+                .Where(line => line.ResourceId == CGSDetermination.CGSDeterminationId)
+                .Sum(line => line.AmountToSpend);
+            return card.DynamicVars.Damage.BaseValue + 2m * spent;
+        }, ValueProp.Move)
     ];
 
     public CGSHeavyStep() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy, true)

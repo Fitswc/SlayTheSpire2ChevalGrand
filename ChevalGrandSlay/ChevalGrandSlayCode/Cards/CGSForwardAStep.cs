@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using ChevalGrandSlay.Characters;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -48,6 +49,7 @@ public sealed class CGSForwardAStep : ModCardTemplate
 
     public CGSForwardAStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
+        this.SecondaryCosts().Set(CGSDetermination.CGSDeterminationId, 2);
     }
 
     // 打出时的效果逻辑。
