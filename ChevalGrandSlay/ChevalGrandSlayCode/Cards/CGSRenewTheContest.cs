@@ -1,5 +1,5 @@
-using ChevalGrandSlay.CardPiles;
 using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -28,7 +28,7 @@ public sealed class CGSRenewTheContest : ModCardTemplate
 
     public CGSRenewTheContest() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self, true)
     {
-        this.SecondaryResourceUses().Require("determination", CGSDetermination.CGSDeterminationId, 12);
+        this.SecondaryResourceUses().Require("CGSDetermination", CGSDetermination.CGSDeterminationId, 12);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -48,13 +48,13 @@ public sealed class CGSRenewTheContest : ModCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars[DeterminationCostVarName].UpgradeValueBy(-3m);
-        this.SecondaryResourceUses().Require("determination", CGSDetermination.CGSDeterminationId, 9);
+        this.SecondaryResourceUses().Require("CGSDetermination", CGSDetermination.CGSDeterminationId, 9);
     }
 
     protected override void AfterDowngraded()
     {
         base.AfterDowngraded();
-        this.SecondaryResourceUses().Require("determination", CGSDetermination.CGSDeterminationId, 12);
+        this.SecondaryResourceUses().Require("CGSDetermination", CGSDetermination.CGSDeterminationId, 12);
     }
 
     private List<CardModel> GetCandidates()
@@ -62,7 +62,7 @@ public sealed class CGSRenewTheContest : ModCardTemplate
         if (Owner == null)
             return [];
 
-        return CGSFatePile.PileType.GetPile(Owner).Cards
+        return Entry.CGSFatePile.GetPile(Owner).Cards
             .OfType<CGSLimitedUseCard>()
             .Where(card => card.Type == CardType.Attack && card.RemainingUses == 0)
             .Cast<CardModel>()
