@@ -74,6 +74,7 @@ public sealed class CGSRenewTheContest : ModCardTemplate
     private static bool IsCandidate(CardModel card)
     {
         return card is CGSLimitedUseCard limitedUseCard &&
+               card.DeckVersion is not null &&
                limitedUseCard.Type == CardType.Attack &&
                limitedUseCard.RemainingUses < limitedUseCard.MaximumUses;
     }

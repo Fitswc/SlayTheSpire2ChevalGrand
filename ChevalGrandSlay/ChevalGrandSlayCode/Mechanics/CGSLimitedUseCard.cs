@@ -32,6 +32,11 @@ public abstract class CGSLimitedUseCard : ModCardTemplate
         RestoreUses(1);
     }
 
+    public void ConsumeAllUses()
+    {
+        DynamicVars[UsesVarName].BaseValue = 0m;
+    }
+
     public void RestoreUses(int amount)
     {
         var uses = DynamicVars[UsesVarName];

@@ -1,47 +1,46 @@
 using ChevalGrandSlay.Characters;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 凿开破绽
+// 重振锋芒
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSBreakTheOpening : ModCardTemplate
+public sealed class CGSRegainTheEdge : ModCardTemplate
 {
-    // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [
-        new DamageVar(7m, ValueProp.Move),
-        new PowerVar<VulnerablePower>(2m)
-    ];
+        [new DamageVar(7m, ValueProp.Move), new DynamicVar("Cleanse", 1m)];
 
-    public CGSBreakTheOpening() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy, true)
-    {
-        this.SecondaryResourceUses().Require("determination", CGSDetermination.CGSDeterminationId, 6);
-    }
+    public CGSRegainTheEdge() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy, true) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        for (int i = 0; i < DynamicVars["Cleanse"].IntValue; i++)
+        {
+            var debuff = Owner.Creature.Powers.FirstOrDefault(power =>
+                power.Type == PowerType.Debuff && power.Amount > 0);
+            if (debuff is null)
+                break;
+            await PowerCmd.ModifyAmount(choiceContext, debuff, -1m, Owner.Creature, this);
+        }
+
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target,
-            DynamicVars["VulnerablePower"].BaseValue, Owner.Creature, this);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this).Targeting(cardPlay.Target).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Damage"].UpgradeValueBy(3m);
-        DynamicVars["VulnerablePower"].UpgradeValueBy(1m);
+        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars["Cleanse"].UpgradeValueBy(1m);
     }
 }
