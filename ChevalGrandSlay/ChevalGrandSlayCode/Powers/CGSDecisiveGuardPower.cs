@@ -19,10 +19,11 @@ public sealed class CGSDecisiveGuardPower : ModPowerTemplate
     public override PowerStackType StackType => PowerStackType.Single;
     public override PowerAssetProfile AssetProfile => new();
     private int _cost;
+
     public override decimal ModifyHpLostAfterOsty(Creature target, decimal hpLoss, ValueProp props,
-        Creature dealer, CardModel? cardSource)
+        Creature? dealer, CardModel? cardSource)
     {
-        if (target != Owner || !dealer.IsEnemy || !props.IsPoweredAttack() ||
+        if (target != Owner || dealer?.IsEnemy != true || !props.IsPoweredAttack() ||
             CombatState?.CurrentSide != CombatSide.Enemy || hpLoss <= 0m || _cost > 0)
             return hpLoss;
         int cost = (int)Math.Ceiling(hpLoss / 2m);
@@ -31,6 +32,7 @@ public sealed class CGSDecisiveGuardPower : ModPowerTemplate
         _cost = cost;
         return 0m;
     }
+
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target,
         DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
@@ -39,6 +41,7 @@ public sealed class CGSDecisiveGuardPower : ModPowerTemplate
         _cost = 0;
         await PowerCmd.Remove(this);
     }
+
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side,
         IEnumerable<Creature> participants)
     {

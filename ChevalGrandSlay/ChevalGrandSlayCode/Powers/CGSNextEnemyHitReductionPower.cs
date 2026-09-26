@@ -19,10 +19,10 @@ public sealed class CGSNextEnemyHitReductionPower : ModPowerTemplate
 
     private bool _reducedHit;
 
-    public override decimal ModifyDamageAdditive(Creature target, decimal damage, ValueProp props,
-        Creature dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditive(Creature? target, decimal damage, ValueProp props,
+        Creature? dealer, CardModel? cardSource)
     {
-        if (target != Owner || !dealer.IsEnemy || !props.IsPoweredAttack() ||
+        if (target != Owner || dealer?.IsEnemy != true || !props.IsPoweredAttack() ||
             CombatState?.CurrentSide != CombatSide.Enemy || _reducedHit)
             return 0m;
 

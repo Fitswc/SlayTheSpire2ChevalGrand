@@ -25,18 +25,18 @@ public sealed class CGSPrepareForNextStep : ModCardTemplate
 
     // 目标类型
     private const TargetType CardTarget = TargetType.Self;
-    
+
     public override bool GainsBlock => true;
 
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(6m, ValueProp.Move),
         new BlockVar("BlockNextTurn", 10m, ValueProp.Move)
     ];
-    
+
     // 卡图资源。
     // 如果你按这行代码写，文件名就对应 ChevalGrandSlay/images/cards/ChevalGrandSlayStrike.png。
     // 这里的 res://ChevalGrandSlay/... 是 Godot 资源路径，对应的是你的资源文件夹名字。
@@ -47,7 +47,6 @@ public sealed class CGSPrepareForNextStep : ModCardTemplate
 
     public CGSPrepareForNextStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        
     }
 
     // 打出时的效果逻辑。
@@ -55,11 +54,12 @@ public sealed class CGSPrepareForNextStep : ModCardTemplate
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        var combatState = CombatState ?? throw new InvalidOperationException("The card requires an active combat.");
         var nextBlock = (BlockVar)DynamicVars["BlockNextTurn"];
 
         // 按打出时的状态计算下回合格挡，包含敏捷、姿态等修正。
         var nextAmount = Hook.ModifyBlock(
-            CombatState,
+            combatState,
             Owner.Creature,
             nextBlock.BaseValue,
             nextBlock.Props,

@@ -52,7 +52,7 @@ public sealed class CGSNeverStepBehind : ModCardTemplate
     [
         CardKeyword.Exhaust
     ];
-    
+
 
     public CGSNeverStepBehind() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
@@ -63,12 +63,13 @@ public sealed class CGSNeverStepBehind : ModCardTemplate
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        var combatState = CombatState ?? throw new InvalidOperationException("The card requires an active combat.");
         await CreatureCmd.GainBlock(
             Owner.Creature, DynamicVars.Block, cardPlay);
 
         await PowerCmd.Apply<WeakPower>(
             choiceContext,
-            CombatState.HittableEnemies,
+            combatState.HittableEnemies,
             DynamicVars.Weak.BaseValue,
             Owner.Creature,
             this);

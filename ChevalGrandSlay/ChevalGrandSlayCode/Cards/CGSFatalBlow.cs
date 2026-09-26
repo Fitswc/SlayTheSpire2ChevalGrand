@@ -25,6 +25,7 @@ public sealed class CGSFatalBlow : ModCardTemplate
 
     // 构造时的默认目标；实际目标由下方属性根据能力决定。
     private const TargetType CardTarget = TargetType.AnyEnemy;
+
     public override TargetType TargetType
     {
         get
@@ -40,7 +41,7 @@ public sealed class CGSFatalBlow : ModCardTemplate
 
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = false;
-    
+
     public override int MaxUpgradeLevel => 0;
 
     // 卡图资源。
@@ -91,9 +92,10 @@ public sealed class CGSFatalBlow : ModCardTemplate
 
         if (Owner.Creature.HasPower<CGSSuperbContinuousPower>())
         {
+            var combatState = CombatState ?? throw new InvalidOperationException("The card requires an active combat.");
             await DamageCmd.Attack(damage)
                 .FromCard(this)
-                .TargetingAllOpponents(CombatState)
+                .TargetingAllOpponents(combatState)
                 .Execute(choiceContext);
         }
         else
