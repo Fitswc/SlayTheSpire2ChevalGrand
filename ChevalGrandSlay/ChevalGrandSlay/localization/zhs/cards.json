@@ -212,7 +212,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_MOMENTUM_UNSPENT.description": "每个自己的回合开始时，获得{Determination:diff()}点[gold]决意[/gold]。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_MOMENTUM_UNSPENT.smartDescription": "每个自己的回合开始时，获得{Determination:diff()}点[gold]决意[/gold]。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_RENEW_THE_CONTEST.title": "再续胜负",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_RENEW_THE_CONTEST.description": "消耗{DeterminationCost:diff()}点[gold]决意[/gold]。\n从命运牌堆选择1张次数耗尽的攻击牌，恢复1次并将其移入弃牌堆。",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_RENEW_THE_CONTEST.smartDescription": "消耗{DeterminationCost:diff()}点[gold]决意[/gold]。\n从命运牌堆选择1张次数耗尽的攻击牌，恢复1次并将其移入弃牌堆。",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_RENEW_THE_CONTEST.selectionScreenPrompt": "选择1张次数耗尽的攻击牌恢复1次。"
+  "CHEVAL_GRAND_SLAY_CARD_CGS_RENEW_THE_CONTEST.description": "消耗{DeterminationCost:diff()}点[gold]决意[/gold]。\n选择手中1张剩余次数低于上限的有限次数攻击牌，使其恢复至多2次使用次数。\n抽{Cards:diff()}张牌。",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_RENEW_THE_CONTEST.smartDescription": "消耗{DeterminationCost:diff()}点[gold]决意[/gold]。\n选择手中1张剩余次数低于上限的有限次数攻击牌，使其恢复至多2次使用次数。\n抽{Cards:diff()}张牌。",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_RENEW_THE_CONTEST.selectionScreenPrompt": "选择1张剩余次数低于上限的有限次数攻击牌。"
 }

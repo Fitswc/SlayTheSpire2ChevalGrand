@@ -22,9 +22,15 @@ public sealed class CGSRenewTheContest : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar(DeterminationCostVarName, 12m)];
+    [
+        new DynamicVar(DeterminationCostVarName, 12m),
+        new CardsVar(1)
+    ];
 
-    protected override bool IsPlayable => base.IsPlayable && GetCandidates().Count > 0;
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [CardKeyword.Exhaust];
+
+    protected override bool IsPlayable => base.IsPlayable && GetCandidates().Count != 0;
 
     public CGSRenewTheContest() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self, true)
     {
@@ -33,16 +39,16 @@ public sealed class CGSRenewTheContest : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var selected = await CardSelectCmd.FromSimpleGrid(
+        var selected = await CardSelectCmd.FromHand(
             choiceContext,
-            GetCandidates(),
             Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1));
+            new CardSelectorPrefs(SelectionScreenPrompt, 1),
+            IsCandidate,
+            this);
         foreach (var card in selected.OfType<CGSLimitedUseCard>())
-        {
-            card.RestoreUse();
-            await CardPileCmd.Add(card, PileType.Discard);
-        }
+            card.RestoreUses(2);
+
+        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
 
     protected override void OnUpgrade()
@@ -62,10 +68,13 @@ public sealed class CGSRenewTheContest : ModCardTemplate
         if (Owner == null)
             return [];
 
-        return Entry.CGSFatePile.GetPile(Owner).Cards
-            .OfType<CGSLimitedUseCard>()
-            .Where(card => card.Type == CardType.Attack && card.RemainingUses == 0)
-            .Cast<CardModel>()
-            .ToList();
+        return PileType.Hand.GetPile(Owner).Cards.Where(IsCandidate).ToList();
+    }
+
+    private static bool IsCandidate(CardModel card)
+    {
+        return card is CGSLimitedUseCard limitedUseCard &&
+               limitedUseCard.Type == CardType.Attack &&
+               limitedUseCard.RemainingUses < limitedUseCard.MaximumUses;
     }
 }
