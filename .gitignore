@@ -4,6 +4,10 @@ obj/
 .idea/
 .godot/
 .codex
+.cache
+.unsaved
+.user
+
 *.DotSettings
 *.DotSettings.user
 

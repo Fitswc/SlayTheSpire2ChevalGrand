@@ -1,0 +1,29 @@
+# Normalize text in Git; keep source assets that are not mergeable as binary.
+* text=auto
+
+# FMOD Studio project data and Spine atlas descriptions are text.
+*.fspro text eol=lf
+*.xml text eol=lf
+*.atlas text eol=lf
+
+# Authoring assets and runtime media are binary.
+*.spine binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.wav binary
+*.aif binary
+*.aiff binary
+*.flac binary
+*.mp3 binary
+*.ogg binary
+*.bank binary
+*.skel binary
+*.pck binary
+*.res binary
+*.scn binary
+
+# Keep the solution file consistent on Windows.
+*.sln text eol=crlf
