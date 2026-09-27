@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
+using ChevalGrandSlay.Powers;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Mechanics;
@@ -23,6 +24,8 @@ public abstract class CGSLimitedUseCard : ModCardTemplate
 
     protected void ConsumeUse(CardPlay cardPlay)
     {
+        if (Owner.Creature.Powers.OfType<CGSOldPactPower>().Any(power => power.TryPreserveUse(cardPlay)))
+            return;
         var uses = DynamicVars[UsesVarName];
         uses.BaseValue = Math.Max(0m, uses.BaseValue - 1m);
     }
@@ -35,6 +38,12 @@ public abstract class CGSLimitedUseCard : ModCardTemplate
     public void ConsumeAllUses()
     {
         DynamicVars[UsesVarName].BaseValue = 0m;
+    }
+
+    public void SpendUses(int amount)
+    {
+        var uses = DynamicVars[UsesVarName];
+        uses.BaseValue = Math.Max(0m, uses.BaseValue - Math.Max(0, amount));
     }
 
     public void RestoreUses(int amount)

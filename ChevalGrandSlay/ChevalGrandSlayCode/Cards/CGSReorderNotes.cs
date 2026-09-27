@@ -1,0 +1,28 @@
+using ChevalGrandSlay.Characters;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
+
+namespace ChevalGrandSlay.Cards;
+
+// 重整手札
+[RegisterCard(typeof(CGSCardPool))]
+public sealed class CGSReorderNotes : ModCardTemplate
+{
+    public override CardAssetProfile AssetProfile => new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("HandSize", 4m)];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    public CGSReorderNotes() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self, true) { }
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        int needed = Math.Max(0, DynamicVars["HandSize"].IntValue - PileType.Hand.GetPile(Owner).Cards.Count);
+        if (needed > 0) await CardPileCmd.Draw(choiceContext, needed, Owner);
+    }
+
+    protected override void OnUpgrade() => DynamicVars["HandSize"].UpgradeValueBy(1m);
+}

@@ -18,19 +18,21 @@ public sealed class CGSRapidCombination : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(4m, ValueProp.Move)];
+        [
+            new DamageVar(4m, ValueProp.Move)
+        ];
 
     public CGSRapidCombination() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy, true)
     {
+        this.SecondaryResourceUses().SpendIfAvailable("ExtraHit", CGSDetermination.CGSDeterminationId, 4);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        int hitCount = 2;
-        if (await SecondaryResourceCmd.Spend(Owner, CGSDetermination.CGSDeterminationId, 4))
-            hitCount++;
 
+        int hitCount = cardPlay.SecondaryResources().Activated("ExtraHit") ? 3 : 2;
+        
         for (int i = 0; i < hitCount; i++)
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)

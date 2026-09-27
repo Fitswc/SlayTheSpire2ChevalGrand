@@ -48,7 +48,11 @@ public sealed class CGSSuperbContinuous : ModCardTemplate
 
     public CGSSuperbContinuous() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        
+        this.SecondaryResourceUses().SpendExtra(
+            "AllDetermination",
+            CGSDetermination.CGSDeterminationId,
+            perStackAmount: 1,
+            maxStacks: null);
     }
 
     // 打出时的效果逻辑，这里是获得格挡。
@@ -56,14 +60,7 @@ public sealed class CGSSuperbContinuous : ModCardTemplate
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay)
     {
-        int currentDetermination = SecondaryResourceCmd.Get(
-            Owner, CGSDetermination.CGSDeterminationId);
-
-        await SecondaryResourceCmd.Spend(
-            Owner,
-            CGSDetermination.CGSDeterminationId,
-            currentDetermination);
-
+        
         // 只有升级后的卡牌才赋予群攻效果。
         if (IsUpgraded)
         {

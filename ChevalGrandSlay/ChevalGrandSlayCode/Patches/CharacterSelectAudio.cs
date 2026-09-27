@@ -1,10 +1,11 @@
-﻿using Godot;
-using HarmonyLib;
-using MegaCrit.Sts2.Core.Combat;
+﻿using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect;
+using STS2RitsuLib;
 using STS2RitsuLib.Audio;
+using STS2RitsuLib.Patching.Core;
+using STS2RitsuLib.Patching.Models;
 
 namespace ChevalGrandSlay;
 
@@ -16,37 +17,50 @@ internal static class CharacterSelectAudio
     private const string Transition =
         "event:/ChevalGrandSlaySFX/SFX/CGSSTransition";
 
-    private static GodotObject? _introInstance;
+    private static AudioEventHandle? _introHandle;
 
     public static void Install()
     {
-        var harmony = new Harmony($"{Entry.ModId}.CharacterSelectAudio");
+        var patcher = RitsuLibFramework.CreatePatcher(Entry.ModId, "CharacterSelectAudio");
+        patcher.RegisterPatch<PlayIntroPatch>();
+        patcher.RegisterPatch<StopIntroPatch>();
 
-        // 接管 SfxCmd.Play(string, float) 中的介绍语音。
-        harmony.Patch(
-            AccessTools.Method(
+        if (!patcher.PatchAll())
+            throw new InvalidOperationException("Failed to install character select audio patches.");
+    }
+
+    private sealed class PlayIntroPatch : IPatchMethod
+    {
+        public static string PatchId => "CGS_character_select_intro_play";
+        public static string Description => "Control character introduction audio";
+        public static bool IsCritical => true;
+
+        public static ModPatchTarget[] GetTargets() =>
+        [
+            PatchTarget.Method(
                 typeof(SfxCmd),
                 nameof(SfxCmd.Play),
-                new[] { typeof(string), typeof(float) }),
-            prefix: new HarmonyMethod(
-                typeof(CharacterSelectAudio),
-                nameof(BeforePlay)));
+                typeof(string), typeof(float))
+        ];
 
-        // 在界面操作之前停止介绍语音。
-        foreach (var method in new[]
-                 {
-                     "SelectCharacter",
-                     "OnLocalCharacterChangedForRandom",
-                     "OnEmbarkPressed",
-                     "OnSubmenuClosed"
-                 })
-        {
-            harmony.Patch(
-                AccessTools.Method(typeof(NCharacterSelectScreen), method),
-                prefix: new HarmonyMethod(
-                    typeof(CharacterSelectAudio),
-                    nameof(StopIntro)));
-        }
+        public static bool Prefix(string sfx, float volume) => BeforePlay(sfx, volume);
+    }
+
+    private sealed class StopIntroPatch : IPatchMethod
+    {
+        public static string PatchId => "character_select_intro_stop";
+        public static string Description => "Stop introduction audio on screen actions";
+        public static bool IsCritical => true;
+
+        public static ModPatchTarget[] GetTargets() =>
+        [
+            PatchTarget.Method<NCharacterSelectScreen>("SelectCharacter"),
+            PatchTarget.Method<NCharacterSelectScreen>("OnLocalCharacterChangedForRandom"),
+            PatchTarget.Method<NCharacterSelectScreen>("OnEmbarkPressed"),
+            PatchTarget.Method<NCharacterSelectScreen>("OnSubmenuClosed")
+        ];
+
+        public static void Prefix() => StopIntro();
     }
 
     private static bool BeforePlay(string sfx, float volume)
@@ -68,16 +82,17 @@ internal static class CharacterSelectAudio
         if (NonInteractiveMode.IsActive || CombatManager.Instance.IsEnding)
             return false;
 
-        _introInstance = FmodStudioEventInstances.TryCreate(sfx);
-        if (_introInstance == null)
+        _introHandle = FmodStudioEventInstances.TryCreateHandle(
+            AudioSource.Event(sfx), new AudioPlaybackOptions());
+        if (_introHandle == null)
         {
             Entry.Logger.Info("The character introduction audio instance cannot be created.");
             return false;
         }
 
-        _introInstance.Call("set_volume", volume);
+        _introHandle.TrySetVolume(volume);
 
-        if (!FmodStudioEventInstances.TryStart(_introInstance))
+        if (!_introHandle.TryPlay())
             StopIntro();
 
         // 禁止原方法再次播放，避免同一句播放两次。
@@ -86,13 +101,13 @@ internal static class CharacterSelectAudio
 
     private static void StopIntro()
     {
-        var instance = _introInstance;
-        _introInstance = null;
+        var handle = _introHandle;
+        _introHandle = null;
 
-        if (instance == null || !GodotObject.IsInstanceValid(instance))
+        if (handle == null)
             return;
 
-        FmodStudioEventInstances.TryStop(instance, allowFadeOut: false);
-        FmodStudioEventInstances.TryRelease(instance);
+        handle.TryStop(allowFadeOut: false);
+        handle.TryRelease();
     }
 }

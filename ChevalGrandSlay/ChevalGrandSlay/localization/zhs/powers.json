@@ -70,5 +70,17 @@
   "CHEVAL_GRAND_SLAY_POWER_CGS_ENEMY_ATTACK_LOSS_CAP_POWER.smartDescription": "敌方行动结束前，敌人攻击造成的生命损失累计至多{Amount}点。",
   "CHEVAL_GRAND_SLAY_POWER_CGS_FIRST_STRIKE_TWICE_POWER.title": "倾注一式",
   "CHEVAL_GRAND_SLAY_POWER_CGS_FIRST_STRIKE_TWICE_POWER.description": "所选攻击牌首次攻击额外结算一次。",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_FIRST_STRIKE_TWICE_POWER.smartDescription": "所选攻击牌首次攻击额外结算一次。"
+  "CHEVAL_GRAND_SLAY_POWER_CGS_FIRST_STRIKE_TWICE_POWER.smartDescription": "所选攻击牌首次攻击额外结算一次。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_ENERGY_RESERVE_POWER.title": "留有余裕",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_ENERGY_RESERVE_POWER.description": "回合结束时保存至多{Amount}点未用能量，在下次能量补充后获得。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_ENERGY_RESERVE_POWER.smartDescription": "回合结束时保存至多{Amount}点未用能量，在下次能量补充后获得。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_WIDE_VIEW_POWER.title": "宽阔视野",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_WIDE_VIEW_POWER.description": "手牌上限增加{Amount}，每回合正常抽牌数增加1。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_WIDE_VIEW_POWER.smartDescription": "手牌上限增加{Amount}，每回合正常抽牌数增加1。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_OVERFLOW_ECHO_POWER.title": "余威及远",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_OVERFLOW_ECHO_POWER.description": "每回合首次击杀敌人时，将至多{Amount}点溢出伤害转移给另一名随机敌人。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_OVERFLOW_ECHO_POWER.smartDescription": "每回合首次击杀敌人时，将至多{Amount}点溢出伤害转移给另一名随机敌人。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_OLD_PACT_POWER.title": "旧约重启",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_OLD_PACT_POWER.description": "每个你的回合，首次正常打出原有限次牌时，该牌减一费且不消耗次数。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_OLD_PACT_POWER.smartDescription": "每个你的回合，首次正常打出原有限次牌时，该牌减一费且不消耗次数。"
 }
