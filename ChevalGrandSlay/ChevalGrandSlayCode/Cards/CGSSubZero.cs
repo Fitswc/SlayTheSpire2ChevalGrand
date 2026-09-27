@@ -21,7 +21,7 @@ public sealed class CGSSubZero : ModCardTemplate
     private const int BaseEnergyCost = 2;
 
     // 卡牌类型。
-    private const CardType CardKind = CardType.Power;
+    private const CardType CardKind = CardType.Skill;
 
     // 卡牌稀有度。
     private const CardRarity CardRarityValue = CardRarity.Rare;

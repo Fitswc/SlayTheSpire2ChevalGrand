@@ -13,6 +13,7 @@ public sealed class CGSResistWeakFrailPower : ModPowerTemplate
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     public override PowerAssetProfile AssetProfile => new();
+    
     public override bool TryModifyPowerAmountReceived(PowerModel power, Creature target,
         decimal amount, Creature? applier, out decimal modified)
     {

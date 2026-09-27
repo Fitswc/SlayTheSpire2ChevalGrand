@@ -28,7 +28,7 @@ public sealed class CGSAnUnyieldingResponse : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
     
-    public override int MaxUpgradeLevel => 0;
+    //public override int MaxUpgradeLevel => 0;
     
 
     // 卡图资源。

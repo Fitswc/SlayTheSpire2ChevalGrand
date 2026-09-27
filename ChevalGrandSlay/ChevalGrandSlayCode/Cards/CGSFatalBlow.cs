@@ -4,8 +4,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using STS2RitsuLib.Cards.DynamicVars;
-using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -53,22 +51,10 @@ public sealed class CGSFatalBlow : ModCardTemplate
     // 添加一个 DamageVar 意为指定卡牌的基础伤害是多少；它会自动绑定到本地化里的 {Damage:diff()} 占位符。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        ModCardVars.Computed("BlowValue", 0, card =>
-        {
-            decimal damage = 0m;
-            if (card != null)
-            {
-                damage = card.DynamicVars["BlowValue"].BaseValue;
-                if (card.IsMutable && card.Owner != null)
-                {
-                    damage += SecondaryResourceCmd.Get(
-                        card.Owner, CGSDetermination.CGSDeterminationId);
-                }
-            }
-
-            return damage;
-        }),
+        new DynamicVar("BlowValue", 0m),
     ];
+
+    public void SetDamage(decimal damage) => DynamicVars["BlowValue"].BaseValue = damage;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
@@ -88,7 +74,7 @@ public sealed class CGSFatalBlow : ModCardTemplate
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var damage = ((ComputedDynamicVar)DynamicVars["BlowValue"]).Calculate();
+        var damage = DynamicVars["BlowValue"].BaseValue;
 
         if (Owner.Creature.HasPower<CGSSuperbContinuousPower>())
         {

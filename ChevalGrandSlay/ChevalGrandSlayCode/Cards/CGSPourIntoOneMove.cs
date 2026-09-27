@@ -22,7 +22,7 @@ public sealed class CGSPourIntoOneMove : ModCardTemplate
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
-                                          PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
+        PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
 
     public CGSPourIntoOneMove() : base(1, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy, true)
     {
@@ -34,8 +34,6 @@ public sealed class CGSPourIntoOneMove : ModCardTemplate
         var selected = await CardSelectCmd.FromHand(choiceContext, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1), IsCandidate, this);
         if (selected.FirstOrDefault() is not CGSLimitedUseCard attack) return;
-        if (IsUpgraded)
-            await PlayerCmd.LoseEnergy(attack.EnergyCost.GetAmountToSpend(), Owner);
         attack.ConsumeAllUses();
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var power = await PowerCmd.Apply<CGSFirstStrikeTwicePower>(choiceContext, Owner.Creature,
@@ -54,8 +52,6 @@ public sealed class CGSPourIntoOneMove : ModCardTemplate
 
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 
-    private bool IsCandidate(CardModel card) =>
-        card is CGSLimitedUseCard { RemainingUses: >= 2 } && card.Type == CardType.Attack &&
-        (!IsUpgraded || (Owner.PlayerCombatState is { } state &&
-                         card.EnergyCost.GetAmountToSpend() <= state.Energy));
+    private static bool IsCandidate(CardModel card) =>
+        card is CGSLimitedUseCard { RemainingUses: >= 2 } && card.Type == CardType.Attack;
 }

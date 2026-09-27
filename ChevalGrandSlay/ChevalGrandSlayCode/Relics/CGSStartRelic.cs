@@ -1,8 +1,9 @@
 using ChevalGrandSlay.Characters;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -33,18 +34,17 @@ public sealed class CGSStartRelic : ModRelicTemplate
         // 大图标（原版 256x256）。
         BigIconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png");
 
-    // 进入战斗，加一费
-    // 这里使用 DynamicVars.Energy.IntValue，保证效果和本地化显示保持一致。
-    public override async Task AfterRoomEntered(AbstractRoom room)
+    // 回合开始时能量已重置，只在每场战斗的第一回合给予额外能量。
+    public override async Task AfterSideTurnStart(
+        CombatSide side,
+        IReadOnlyList<Creature> participants,
+        ICombatState combatState)
     {
-        if (room is CombatRoom)
-        {
-            await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
-        }
-    }
-    
-    public override Task AfterCombatEnd(CombatRoom room)
-    {
-        return Task.CompletedTask;
+        if (side != CombatSide.Player ||
+            !participants.Contains(Owner.Creature) ||
+            Owner.PlayerCombatState?.TurnNumber != 1)
+            return;
+
+        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
     }
 }

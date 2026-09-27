@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -18,7 +19,7 @@ public sealed class CGSSuperbContinuous : ModCardTemplate
     private const int BaseEnergyCost = 1;
 
     // 卡牌类型。
-    private const CardType CardKind = CardType.Power;
+    private const CardType CardKind = CardType.Skill;
 
     // 卡牌稀有度。
     private const CardRarity CardRarityValue = CardRarity.Rare;
@@ -35,7 +36,7 @@ public sealed class CGSSuperbContinuous : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.None };
-    
+
     protected override void AddExtraArgsToDescription(LocString description)
     {
         base.AddExtraArgsToDescription(description);
@@ -48,6 +49,10 @@ public sealed class CGSSuperbContinuous : ModCardTemplate
 
     public CGSSuperbContinuous() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
+        this.SecondaryResourceUses().Require(
+            "MinimumDetermination",
+            CGSDetermination.CGSDeterminationId,
+            1);
         this.SecondaryResourceUses().SpendExtra(
             "AllDetermination",
             CGSDetermination.CGSDeterminationId,
@@ -60,7 +65,7 @@ public sealed class CGSSuperbContinuous : ModCardTemplate
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay)
     {
-        
+
         // 只有升级后的卡牌才赋予群攻效果。
         if (IsUpgraded)
         {
@@ -72,17 +77,16 @@ public sealed class CGSSuperbContinuous : ModCardTemplate
                 this);
         }
 
-        // 无论是否升级，都生成一张 FatalBlow。
-        await CardPileCmd.AddToCombatAndPreview<CGSFatalBlow>(
-            Owner.Creature,
-            PileType.Hand,
-            1,
-            Owner);
+        // 将本次支付的决意存入生成牌，避免支付后读取到 0。
+        int spent = cardPlay.SecondaryResources().Spent(CGSDetermination.CGSDeterminationId);
+        var fatalBlow = (CGSFatalBlow)ModelDb.Card<CGSFatalBlow>().MutableClone();
+        fatalBlow.SetDamage(spent);
+        await CardPileCmd.AddGeneratedCardToCombat(fatalBlow, PileType.Hand, Owner);
     }
 
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-       EnergyCost.UpgradeBy(-1);
+        EnergyCost.UpgradeBy(-1);
     }
 }

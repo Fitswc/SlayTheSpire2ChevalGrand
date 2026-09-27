@@ -16,7 +16,7 @@ public sealed class CGSBorrowForceEscape : ModCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Reduction", 1m)];
-    public CGSBorrowForceEscape() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self, true)
+    public CGSBorrowForceEscape() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self, true)
     {
         this.SecondaryResourceUses().Require("determination", CGSDetermination.CGSDeterminationId, 10);
     }
