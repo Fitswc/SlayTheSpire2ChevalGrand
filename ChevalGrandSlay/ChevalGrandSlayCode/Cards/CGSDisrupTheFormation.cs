@@ -1,19 +1,21 @@
+﻿using ChevalGrandSlay.Characters;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using ChevalGrandSlay.Characters;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+
+//扰乱阵型
 
 namespace ChevalGrandSlay.Cards;
 
 // RegisterCard 会把这张牌交给 RitsuLib 自动注册。
 // RegisterCharacterStarterCard 会把它追加进 ChevalGrandSlayCharacter 的初始卡组。
 [RegisterCard(typeof(CGSCardPool))]
-[RegisterCharacterStarterCard(typeof(CGSCharacter), 5)]
-public sealed class CGSStrike : ModCardTemplate
+public sealed class CGSDisrupTheFormation : ModCardTemplate
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -22,7 +24,7 @@ public sealed class CGSStrike : ModCardTemplate
     private const CardType CardKind = CardType.Attack;
 
     // 卡牌稀有度。
-    private const CardRarity CardRarityValue = CardRarity.Basic;
+    private const CardRarity CardRarityValue = CardRarity.Uncommon;
 
     // 目标类型（AnyEnemy 表示任意敌人）。
     private const TargetType CardTarget = TargetType.AnyEnemy;
@@ -31,7 +33,7 @@ public sealed class CGSStrike : ModCardTemplate
     private const bool ShowInCardLibrary = true;
 
     // 卡图资源。
-    // 如果你按这行代码写，文件名就对应 ChevalGrandSlay/images/cards/ChevalGrandSlayStrike.png。
+    // 如果你按这行代码写，文件名就对应 ChevalGrandSlay/images/cards/CGSDisrupTheFormation.png。
     // 这里的 res://ChevalGrandSlay/... 是 Godot 资源路径，对应的是你的资源文件夹名字。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
@@ -40,12 +42,13 @@ public sealed class CGSStrike : ModCardTemplate
     // 添加一个 DamageVar 意为指定卡牌的基础伤害是多少；它会自动绑定到本地化里的 {Damage:diff()} 占位符。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(6, ValueProp.Move)
+        new DamageVar(6m, ValueProp.Move),
+        new PowerVar<WeakPower>(2m)
     ];
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Strike };
 
-    public CGSStrike() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSDisrupTheFormation() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
     }
 
@@ -60,6 +63,14 @@ public sealed class CGSStrike : ModCardTemplate
             .FromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
+
+        await PowerCmd.Apply<WeakPower>(
+            choiceContext,
+            cardPlay.Target,
+            DynamicVars.Weak.BaseValue,
+            Owner.Creature,
+            this
+        );
     }
 
     // 升级后的效果逻辑。
