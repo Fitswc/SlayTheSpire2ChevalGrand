@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using ChevalGrandSlay.Powers;
 
 namespace ChevalGrandSlay.Cards;
 
@@ -33,57 +34,5 @@ public sealed class CGSNoRegretsEnding : ModCardTemplate
     protected override void OnUpgrade()
     {
 
-    }
-}
-
-[RegisterPower]
-public sealed class CGSNoRegretsEndingPower : ModPowerTemplate
-{
-    private int _triggeredTurn = -1;
-    private bool _boostNextAttack;
-    private CardModel? _triggeringCard;
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
-    public override PowerAssetProfile AssetProfile => new();
-
-    public override Task AfterCardChangedPiles(CardModel card, PileType previousPile, AbstractModel? source)
-    {
-        if (card.Owner == Owner.Player && card.Type == CardType.Attack &&
-            card.DynamicVars.ContainsKey("Uses") && previousPile != Entry.CGSFatePile &&
-            card.Pile?.Type == Entry.CGSFatePile &&
-            Owner.Player?.PlayerCombatState is { } state && _triggeredTurn != state.TurnNumber)
-        {
-            _triggeredTurn = state.TurnNumber;
-            _boostNextAttack = true;
-            _triggeringCard = card;
-        }
-        return Task.CompletedTask;
-    }
-
-    public override decimal ModifyDamageAdditive(Creature? target, decimal damage, ValueProp props,
-        Creature? dealer, CardModel? cardSource)
-    {
-        if (_boostNextAttack && cardSource?.Type == CardType.Attack && cardSource.Owner == Owner.Player)
-            return Amount;
-        return 0m;
-    }
-
-    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        if (_boostNextAttack && cardPlay.Card != _triggeringCard &&
-            cardPlay.Card.Type == CardType.Attack && cardPlay.Card.Owner == Owner.Player)
-            _boostNextAttack = false;
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side,
-        IEnumerable<Creature> participants)
-    {
-        if (side == CombatSide.Player && participants.Contains(Owner))
-        {
-            _boostNextAttack = false;
-            _triggeringCard = null;
-        }
-        return Task.CompletedTask;
     }
 }

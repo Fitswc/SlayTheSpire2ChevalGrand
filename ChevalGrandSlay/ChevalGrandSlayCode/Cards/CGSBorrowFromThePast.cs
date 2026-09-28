@@ -1,4 +1,5 @@
 using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -16,6 +17,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 // 过往借力
+//TODO:Rewrite
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSBorrowFromThePast : ModCardTemplate
 {
@@ -38,18 +40,4 @@ public sealed class CGSBorrowFromThePast : ModCardTemplate
 
 }
 
-[RegisterPower]
-public sealed class CGSBorrowFromThePastPower : ModPowerTemplate
-{
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
-    public override PowerAssetProfile AssetProfile => new();
-
-    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
-    {
-        if (player != Owner.Player) return;
-        var block = Math.Min(Entry.CGSFatePile.GetPile(player).Cards.Count, (int)Amount);
-        if (block > 0) await CreatureCmd.GainBlock(Owner, block, ValueProp.Move, null);
-    }
-}
 

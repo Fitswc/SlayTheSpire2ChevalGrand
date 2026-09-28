@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Combat;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Mechanics;
+using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -54,31 +55,5 @@ public sealed class CGSMeasuredAdvanceAndRetreat : ModCardTemplate
             return;
         var uses = DynamicVars["Uses"];
         uses.BaseValue = Math.Max(0m, uses.BaseValue - 1m);
-    }
-}
-
-[RegisterPower]
-public sealed class CGSEnemyAttackLossCapPower : ModPowerTemplate
-{
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Single;
-    public override PowerAssetProfile AssetProfile => new();
-    private decimal _lost;
-
-    public override decimal ModifyHpLostAfterOsty(Creature target, decimal hpLoss, ValueProp props,
-        Creature? dealer, CardModel? cardSource)
-    {
-        if (target != Owner || dealer?.IsEnemy != true || !props.IsPoweredAttack() ||
-            CombatState?.CurrentSide != CombatSide.Enemy) return hpLoss;
-        decimal allowed = Math.Max(0m, Amount - _lost);
-        decimal actual = Math.Min(hpLoss, allowed);
-        _lost += actual;
-        return actual;
-    }
-
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side,
-        IEnumerable<Creature> participants)
-    {
-        if (side == CombatSide.Enemy) await PowerCmd.Remove(this);
     }
 }

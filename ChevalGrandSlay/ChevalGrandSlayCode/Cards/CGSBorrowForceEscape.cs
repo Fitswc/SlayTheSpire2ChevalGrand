@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -25,20 +26,4 @@ public sealed class CGSBorrowForceEscape : ModCardTemplate
         await PowerCmd.Apply<CGSResistWeakFrailPower>(choiceContext, Owner.Creature,
             DynamicVars["Reduction"].BaseValue, Owner.Creature, this);
     protected override void OnUpgrade() => DynamicVars["Reduction"].UpgradeValueBy(1m);
-}
-
-[RegisterPower]
-public sealed class CGSResistWeakFrailPower : ModPowerTemplate
-{
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
-    public override PowerAssetProfile AssetProfile => new();
-
-    public override bool TryModifyPowerAmountReceived(PowerModel power, Creature target,
-        decimal amount, Creature? applier, out decimal modified)
-    {
-        modified = target == Owner && amount > 0m &&
-            (power is WeakPower or FrailPower) ? Math.Max(0m, amount - Amount) : amount;
-        return modified != amount;
-    }
 }

@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Mechanics;
+using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -74,23 +75,5 @@ public sealed class CGSPourIntoOneMove : ModCardTemplate
             return;
         var uses = DynamicVars["Uses"];
         uses.BaseValue = Math.Max(0m, uses.BaseValue - 1m);
-    }
-}
-
-[RegisterPower]
-public sealed class CGSFirstStrikeTwicePower : ModPowerTemplate
-{
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Single;
-    public override PowerAssetProfile AssetProfile => new();
-    protected override bool IsVisibleInternal => false;
-    private CardModel? _attack;
-    private bool _used;
-    public void SetAttack(CardModel attack) => _attack = attack;
-    public override int ModifyAttackHitCount(AttackCommand command, int count)
-    {
-        if (_used || command.ModelSource != _attack) return count;
-        _used = true;
-        return count + 1;
     }
 }

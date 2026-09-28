@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using ChevalGrandSlay.Powers;
 
 namespace ChevalGrandSlay.Cards;
 
@@ -27,18 +28,4 @@ public sealed class CGSSuppressTheirSpirit : ModCardTemplate
         await PowerCmd.Apply<CGSNoPositivePower>(choiceContext, cardPlay.Target, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
-}
-
-[RegisterPower]
-public sealed class CGSNoPositivePower : ModPowerTemplate
-{
-    public override PowerType Type => PowerType.Debuff;
-    public override PowerStackType StackType => PowerStackType.Single;
-    public override PowerAssetProfile AssetProfile => new();
-    public override bool TryModifyPowerAmountReceived(PowerModel power, Creature target,
-        decimal amount, Creature? applier, out decimal modified)
-    {
-        modified = target == Owner && power.Type == PowerType.Buff && amount > 0m ? 0m : amount;
-        return modified != amount;
-    }
 }

@@ -2,10 +2,12 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -25,7 +27,7 @@ public sealed class CGSCutOffRetreat : ModCardTemplate
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this)
             .Targeting(cardPlay.Target).Execute(choiceContext);
-        await PowerCmd.Apply<CGSNoBlockGainPower>(choiceContext, cardPlay.Target, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<NoBlockPower>(choiceContext, cardPlay.Target, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade()
     {
@@ -44,14 +46,4 @@ public sealed class CGSCutOffRetreat : ModCardTemplate
         var uses = DynamicVars["Uses"];
         uses.BaseValue = Math.Max(0m, uses.BaseValue - 1m);
     }
-}
-
-[RegisterPower]
-public sealed class CGSNoBlockGainPower : ModPowerTemplate
-{
-    public override PowerType Type => PowerType.Debuff;
-    public override PowerStackType StackType => PowerStackType.Single;
-    public override PowerAssetProfile AssetProfile => new();
-    public override decimal ModifyBlockMultiplicative(Creature target, decimal block, ValueProp props,
-        CardModel? cardSource, CardPlay? cardPlay) => target == Owner ? 0m : 1m;
 }

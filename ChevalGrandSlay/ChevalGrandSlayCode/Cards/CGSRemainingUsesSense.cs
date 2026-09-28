@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using ChevalGrandSlay.Powers;
 
 namespace ChevalGrandSlay.Cards;
 
@@ -37,23 +38,3 @@ public sealed class CGSRemainingUsesSense : ModCardTemplate
 
 
 }
-
-[RegisterPower]
-public sealed class CGSRemainingUsesSensePower : ModPowerTemplate
-{
-    private int _triggeredTurn = -1;
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
-    public override PowerAssetProfile AssetProfile => new();
-
-    public override async Task AfterCardChangedPiles(CardModel card, PileType previousPile, AbstractModel? source)
-    {
-        if (card.Owner != Owner.Player || previousPile == Entry.CGSFatePile ||
-            card.Pile?.Type != Entry.CGSFatePile || CombatState?.CurrentSide != CombatSide.Player ||
-            Owner.Player?.PlayerCombatState is not { } state || _triggeredTurn == state.TurnNumber)
-            return;
-        _triggeredTurn = state.TurnNumber;
-        await PlayerCmd.GainEnergy(Amount, Owner.Player);
-    }
-}
-

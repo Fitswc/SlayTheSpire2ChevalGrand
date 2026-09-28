@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Combat;
 using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -56,22 +57,4 @@ public sealed class CGSAbandonBlockAdvance : ModCardTemplate
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
-}
-
-[RegisterPower]
-public sealed class CGSNoRetaliationPower : ModPowerTemplate
-{
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Single;
-    public override PowerAssetProfile AssetProfile => new();
-    protected override bool IsVisibleInternal => false;
-
-    public override decimal ModifyHpLostAfterOsty(Creature target, decimal hpLoss, ValueProp props,
-        Creature? dealer, CardModel? cardSource)
-    {
-        return target == Owner && dealer?.IsEnemy == true && CombatState?.CurrentSide == CombatSide.Player &&
-               !props.IsPoweredAttack()
-            ? 0m
-            : hpLoss;
-    }
 }

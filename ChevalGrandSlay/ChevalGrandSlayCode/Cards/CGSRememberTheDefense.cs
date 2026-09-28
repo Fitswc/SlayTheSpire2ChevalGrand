@@ -1,5 +1,6 @@
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Mechanics;
+using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;

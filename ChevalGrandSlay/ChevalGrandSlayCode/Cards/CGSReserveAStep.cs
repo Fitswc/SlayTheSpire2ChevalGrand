@@ -1,4 +1,5 @@
 using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -57,40 +58,5 @@ public sealed class CGSReserveAStep : ModCardTemplate
             return;
         var uses = DynamicVars["Uses"];
         uses.BaseValue = Math.Max(0m, uses.BaseValue - 1m);
-    }
-}
-
-[RegisterPower]
-public sealed class CGSReserveAStepPower : ModPowerTemplate
-{
-    private CardModel? _card;
-    private int _turn;
-    private bool _used;
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Single;
-    public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
-    public override PowerAssetProfile AssetProfile => new();
-    protected override bool IsVisibleInternal => false;
-
-    public void SetCard(CardModel card, int turn)
-    {
-        _card = card;
-        _turn = turn;
-        _used = false;
-    }
-
-    public bool TryPreserve(CardModel card)
-    {
-        if (_used || _card != card || Owner.Player?.PlayerCombatState?.TurnNumber != _turn)
-            return false;
-        _used = true;
-        return true;
-    }
-
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side,
-        IEnumerable<Creature> participants)
-    {
-        if (side == CombatSide.Player && participants.Contains(Owner))
-            await PowerCmd.Remove(this);
     }
 }
