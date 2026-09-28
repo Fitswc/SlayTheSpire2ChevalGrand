@@ -1,5 +1,5 @@
 using ChevalGrandSlay.Characters;
-using ChevalGrandSlay.Powers;
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -55,7 +55,7 @@ public sealed class CGSWaitAndSee : ModCardTemplate
     // 尖塔2使用了 async 和 await 来控制效果逻辑顺序执行，和尖塔1的 action 类似。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ConsumeUse();
+        CGSConsumeUse.Consume(this);
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
         var drawCards = await CardPileCmd.Draw(
@@ -91,11 +91,4 @@ public sealed class CGSWaitAndSee : ModCardTemplate
     protected override PileType GetResultPileTypeForCardPlay() =>
         DynamicVars["Uses"].IntValue <= 0 ? Entry.CGSFatePile : base.GetResultPileTypeForCardPlay();
 
-    private void ConsumeUse()
-    {
-        if (Owner.Creature.Powers.OfType<CGSReserveAStepPower>().Any(power => power.TryPreserve(this)))
-            return;
-        var uses = DynamicVars["Uses"];
-        uses.BaseValue = Math.Max(0m, uses.BaseValue - 1m);
-    }
 }

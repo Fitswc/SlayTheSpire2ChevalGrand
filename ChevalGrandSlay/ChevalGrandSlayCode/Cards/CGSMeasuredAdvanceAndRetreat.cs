@@ -1,8 +1,3 @@
-using MegaCrit.Sts2.Core.ValueProps;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Combat;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Mechanics;
 using ChevalGrandSlay.Powers;
@@ -34,7 +29,7 @@ public sealed class CGSMeasuredAdvanceAndRetreat : ModCardTemplate
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ConsumeUse();
+        CGSConsumeUse.Consume(this);
         await PowerCmd.Apply<CGSEnemyAttackLossCapPower>(choiceContext, Owner.Creature,
             DynamicVars["LossCap"].BaseValue, Owner.Creature, this);
     }
@@ -49,11 +44,4 @@ public sealed class CGSMeasuredAdvanceAndRetreat : ModCardTemplate
     protected override PileType GetResultPileTypeForCardPlay() =>
         DynamicVars["Uses"].IntValue <= 0 ? Entry.CGSFatePile : base.GetResultPileTypeForCardPlay();
 
-    private void ConsumeUse()
-    {
-        if (Owner.Creature.Powers.OfType<CGSReserveAStepPower>().Any(power => power.TryPreserve(this)))
-            return;
-        var uses = DynamicVars["Uses"];
-        uses.BaseValue = Math.Max(0m, uses.BaseValue - 1m);
-    }
 }

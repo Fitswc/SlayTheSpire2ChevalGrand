@@ -1,5 +1,5 @@
 using ChevalGrandSlay.Characters;
-using ChevalGrandSlay.Powers;
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -52,7 +52,7 @@ public sealed class CGSReorganizeThePace : ModCardTemplate
     // 打出时的效果逻辑，这里是获得格挡。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ConsumeUse();
+        CGSConsumeUse.Consume(this);
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
     }
 
@@ -67,11 +67,4 @@ public sealed class CGSReorganizeThePace : ModCardTemplate
     protected override PileType GetResultPileTypeForCardPlay() =>
         DynamicVars["Uses"].IntValue <= 0 ? Entry.CGSFatePile : base.GetResultPileTypeForCardPlay();
 
-    private void ConsumeUse()
-    {
-        if (Owner.Creature.Powers.OfType<CGSReserveAStepPower>().Any(power => power.TryPreserve(this)))
-            return;
-        var uses = DynamicVars["Uses"];
-        uses.BaseValue = Math.Max(0m, uses.BaseValue - 1m);
-    }
 }

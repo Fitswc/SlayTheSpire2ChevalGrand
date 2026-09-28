@@ -1,7 +1,3 @@
-using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;

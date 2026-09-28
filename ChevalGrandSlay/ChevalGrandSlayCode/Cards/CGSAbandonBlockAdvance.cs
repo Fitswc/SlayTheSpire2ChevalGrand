@@ -1,7 +1,3 @@
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Combat;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
@@ -16,27 +12,40 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 // 舍垒突进
+//TODO:Rewrite
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSAbandonBlockAdvance : ModCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(9m, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DamageVar(9m, ValueProp.Move)
+    ];
 
-    public CGSAbandonBlockAdvance() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy, true) { }
+    public CGSAbandonBlockAdvance() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        
         bool spentBlock = false;
+        
         if (Owner.Creature.Block >= 4)
         {
-            var choice = await CardSelectCmd.FromSimpleGrid(choiceContext, [this], Owner,
-                new CardSelectorPrefs(SelectionScreenPrompt, 0, 1));
+            var choice = await CardSelectCmd.FromSimpleGrid(
+                choiceContext, 
+                [this], 
+                Owner,
+                new CardSelectorPrefs(SelectionScreenPrompt, 0, 1)
+                );
+            
             spentBlock = choice.Any();
         }
+        
         if (spentBlock)
             await CreatureCmd.LoseBlock(Owner.Creature, 4m);
 

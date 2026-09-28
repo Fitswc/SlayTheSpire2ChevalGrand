@@ -1,5 +1,5 @@
 using ChevalGrandSlay.Characters;
-using ChevalGrandSlay.Powers;
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -23,7 +23,7 @@ public sealed class CGSCorrectTheFormation : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ConsumeUse();
+        CGSConsumeUse.Consume(this);
         var cards = PileType.Draw.GetPile(Owner).Cards.Take(DynamicVars["Look"].IntValue).ToList();
         int minimum = IsUpgraded ? 0 : Math.Min(2, cards.Count);
         if (cards.Count == 0) return;
@@ -48,11 +48,4 @@ public sealed class CGSCorrectTheFormation : ModCardTemplate
     protected override PileType GetResultPileTypeForCardPlay() =>
         DynamicVars["Uses"].IntValue <= 0 ? Entry.CGSFatePile : base.GetResultPileTypeForCardPlay();
 
-    private void ConsumeUse()
-    {
-        if (Owner.Creature.Powers.OfType<CGSReserveAStepPower>().Any(power => power.TryPreserve(this)))
-            return;
-        var uses = DynamicVars["Uses"];
-        uses.BaseValue = Math.Max(0m, uses.BaseValue - 1m);
-    }
 }

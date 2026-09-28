@@ -1,5 +1,5 @@
 using ChevalGrandSlay.Characters;
-using ChevalGrandSlay.Powers;
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -11,6 +11,8 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 // 瞄准终点
+//LastEdit in 1:28 2026/9/29
+//TODO: Check && Rewrite possibility
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSAimForTheFinish : ModCardTemplate
 {
@@ -19,22 +21,36 @@ public sealed class CGSAimForTheFinish : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m)];
+    [
+        new DynamicVar("Uses", 2m),
+        new DynamicVar("MaxUses", 2m)
+    ];
 
     public CGSAimForTheFinish() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ConsumeUse();
+        CGSConsumeUse.Consume(this);
+        
         var candidates = PileType.Draw.GetPile(Owner).Cards
             .Concat(PileType.Discard.GetPile(Owner).Cards)
             .Where(card => card.Type == CardType.Skill).ToList();
+
         if (candidates.Count == 0)
+        {
             return;
-        var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1));
+        }
+        
+        var selected = await CardSelectCmd.FromSimpleGrid(
+            choiceContext,
+            candidates,
+            Owner,
+            new CardSelectorPrefs(SelectionScreenPrompt, 1)
+            );
+        
         foreach (var card in selected)
         {
             await CardPileCmd.Add(card, PileType.Hand);
@@ -49,19 +65,6 @@ public sealed class CGSAimForTheFinish : ModCardTemplate
         EnergyCost.UpgradeBy(-1);
     }
 
-    protected override void AfterDowngraded()
-    {
-        base.AfterDowngraded();
-    }
-
     protected override PileType GetResultPileTypeForCardPlay() =>
         DynamicVars["Uses"].IntValue <= 0 ? Entry.CGSFatePile : base.GetResultPileTypeForCardPlay();
-
-    private void ConsumeUse()
-    {
-        if (Owner.Creature.Powers.OfType<CGSReserveAStepPower>().Any(power => power.TryPreserve(this)))
-            return;
-        var uses = DynamicVars["Uses"];
-        uses.BaseValue = Math.Max(0m, uses.BaseValue - 1m);
-    }
 }
