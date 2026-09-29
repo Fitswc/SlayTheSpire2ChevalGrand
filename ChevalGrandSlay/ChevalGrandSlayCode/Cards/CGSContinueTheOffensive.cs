@@ -1,5 +1,5 @@
 using ChevalGrandSlay.Characters;
-using ChevalGrandSlay.Powers;
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -30,10 +30,7 @@ public sealed class CGSContinueTheOffensive : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (!Owner.Creature.Powers.OfType<CGSReserveAStepPower>().Any(power => power.TryPreserve(this)))
-        {
-            DynamicVars["Uses"].BaseValue = Math.Max(0m, DynamicVars["Uses"].BaseValue - 1m);
-        }
+        CGSConsumeUse.Consume(this);
         
         var candidates = PileType.Draw.GetPile(Owner).Cards.ToList();
         if (candidates.Count == 0)
@@ -62,5 +59,5 @@ public sealed class CGSContinueTheOffensive : ModCardTemplate
     }
 
     protected override PileType GetResultPileTypeForCardPlay() =>
-        DynamicVars["Uses"].IntValue <= 0 ? Entry.CGSFatePile : base.GetResultPileTypeForCardPlay();
+        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
 }

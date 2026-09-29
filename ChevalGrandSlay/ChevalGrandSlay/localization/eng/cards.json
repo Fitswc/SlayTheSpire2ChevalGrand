@@ -1,8 +1,6 @@
 {
   "CHEVAL_GRAND_SLAY_CARD_CGS_AIM_FOR_THE_FINISH.selectionScreenPrompt": "Choose a Skill to add to your hand",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ABANDON_BLOCK_ADVANCE.selectionScreenPrompt": "Select this card to spend 4 Block",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_ABANDON_EDGE_PROTECT_POSITION.selectionScreenPrompt": "Choose a limited use Attack to move to the Fate pile",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_ABANDON_WALL_SEIZE_INITIATIVE.selectionScreenPrompt": "Choose a limited use Skill to move to the Fate pile",
   "CHEVAL_GRAND_SLAY_CARD_CGS_AROUND_THE_BEND.selectionScreenPrompt": "Choose a card in your hand to reduce its cost this turn",
   "CHEVAL_GRAND_SLAY_CARD_CGS_BALANCE_THE_WEIGHT.selectionScreenPrompt": "Choose cards to adjust their costs",
   "CHEVAL_GRAND_SLAY_CARD_CGS_BRIEF_REST_RESTART.selectionScreenPrompt": "Choose a card from the Fate pile to restore a use",
@@ -17,8 +15,6 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_OLD_WALL_NEW_EDGE.selectionScreenPrompt": "Select this card to spend Block and increase damage",
   "CHEVAL_GRAND_SLAY_CARD_CGS_POUR_INTO_ONE_MOVE.selectionScreenPrompt": "Choose a limited use Attack to play immediately",
   "CHEVAL_GRAND_SLAY_CARD_CGS_PREPARE_EARLY.selectionScreenPrompt": "Choose up to 2 cards from your draw pile to Upgrade",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_REMEMBER_THE_DEFENSE.selectionScreenPrompt": "Choose a limited use defensive Skill to move to the Fate pile",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_REMEMBER_THE_EDGE.selectionScreenPrompt": "Choose a limited use Attack to move to the Fate pile",
   "CHEVAL_GRAND_SLAY_CARD_CGS_RENEW_THE_CONTEST.selectionScreenPrompt": "Choose an Attack from the Fate pile to add to your hand",
   "CHEVAL_GRAND_SLAY_CARD_CGS_REPLAN_THE_ROUTE.selectionScreenPrompt": "Choose up to 3 cards from your discard pile to shuffle into your draw pile",
   "CHEVAL_GRAND_SLAY_CARD_CGS_RESERVE_A_STEP.selectionScreenPrompt": "Choose a limited use card to preserve its next use this turn",
@@ -26,5 +22,11 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_REVIEW_THE_PACE.selectionScreenPrompt": "Choose a card to Retain at the end of this turn",
   "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.selectionScreenPrompt": "Choose 1 or 2 cards from the Fate pile to restore a use",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_THE_OLD_PAGE.selectionScreenPrompt": "Choose a limited use card with at least 2 uses remaining",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_YIELD_THE_TRACK.selectionScreenPrompt": "Choose a card that meets the cost requirement to discard"
+  "CHEVAL_GRAND_SLAY_CARD_CGS_YIELD_THE_TRACK.selectionScreenPrompt": "Choose a card that meets the cost requirement to discard",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.title": "All Out",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.description": "Choose another limited use card in your hand and play it N times for free, where N is its remaining uses when chosen. Each play randomly targets an enemy if needed.\nUses remaining: {Uses:diff()}",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.smartDescription": "Choose another limited use card in your hand and play it N times for free, where N is its remaining uses when chosen. Each play randomly targets an enemy if needed.\nUses remaining: {Uses:diff()}",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.baseEffect": "Choose another limited use card in your hand and play it N times for free, where N is its remaining uses when chosen. Each play randomly targets an enemy if needed.",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.upgradedEffect": "Choose another limited use card in your hand and play it N times for free, where N is its remaining uses when chosen. Each play randomly targets an enemy if needed.",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.selectionScreenPrompt": "Choose a limited use card to play for each remaining use"
 }

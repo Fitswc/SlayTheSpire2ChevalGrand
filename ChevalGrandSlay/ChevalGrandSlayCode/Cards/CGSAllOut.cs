@@ -5,18 +5,16 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 瞄准终点
-//LastEdit in 1:28 2026/9/29
-//TODO: Check && Rewrite possibility
+// 全力以赴
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSAimForTheFinish : ModCardTemplate
+public sealed class CGSAllOut : ModCardTemplate
 {
-    // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
@@ -26,44 +24,35 @@ public sealed class CGSAimForTheFinish : ModCardTemplate
         new DynamicVar("MaxUses", 2m)
     ];
 
-    public CGSAimForTheFinish() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
-    {
-        
-    }
+    protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
+        PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
+
+    public CGSAllOut() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
-        
-        var candidates = PileType.Draw.GetPile(Owner).Cards
-            .Concat(PileType.Discard.GetPile(Owner).Cards).ToList();
 
-        if (candidates.Count == 0)
-        {
+        var selected = await CardSelectCmd.FromHand(
+            choiceContext, Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1), IsCandidate, this);
+        if (selected.FirstOrDefault() is not { } card)
             return;
-        }
-        
-        var selected = await CardSelectCmd.FromSimpleGrid(
-            choiceContext,
-            candidates,
-            Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1)
-            );
-        
-        foreach (var card in selected)
-        {
-            await CardPileCmd.Add(card, PileType.Hand);
-            card.EnergyCost.AddThisTurn(-1);
-        }
+
+        // Fix the play count before the selected card consumes any of its uses.
+        int playCount = card.DynamicVars["Uses"].IntValue;
+        for (int i = 0; i < playCount; i++)
+            await CardCmd.AutoPlay(choiceContext, card, null);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
-        EnergyCost.UpgradeBy(-1);
+        EnergyCost.UpgradeBy(-2);
     }
 
     protected override PileType GetResultPileTypeForCardPlay() =>
         CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+
+    private bool IsCandidate(CardModel card) =>
+        card != this && card.DynamicVars.ContainsKey("MaxUses") &&
+        card.DynamicVars.TryGetValue("Uses", out var uses) && uses.IntValue > 0;
 }

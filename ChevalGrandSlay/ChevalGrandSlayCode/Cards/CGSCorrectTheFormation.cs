@@ -59,6 +59,6 @@ public sealed class CGSCorrectTheFormation : ModCardTemplate
     }
 
     protected override PileType GetResultPileTypeForCardPlay() =>
-        DynamicVars["Uses"].IntValue <= 0 ? Entry.CGSFatePile : base.GetResultPileTypeForCardPlay();
+        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
 
 }

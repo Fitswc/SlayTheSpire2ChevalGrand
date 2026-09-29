@@ -3,7 +3,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -17,20 +16,21 @@ public sealed class CGSSportsDrinkSupply : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
     ];
 
     public CGSSportsDrinkSupply() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self, true) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        var combatState = CombatState ?? throw new InvalidOperationException("The card requires an active combat.");
         int count = IsUpgraded ? 3 : 2;
         for (int i = 0; i < count; i++)
         {
-            var drink = (CardModel)ModelDb.Card<CGSEnergyDrink>().MutableClone();
-            drink.Owner = Owner;
-            await CardPileCmd.Add(drink, PileType.Hand);
+            var drink = combatState.CreateCard<CGSEnergyDrink>(Owner);
+            await CardPileCmd.AddGeneratedCardToCombat(drink, PileType.Hand, Owner);
         }
     }
 

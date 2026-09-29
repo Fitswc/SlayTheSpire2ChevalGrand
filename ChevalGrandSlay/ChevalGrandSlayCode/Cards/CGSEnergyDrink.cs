@@ -16,6 +16,11 @@ public sealed class CGSEnergyDrink : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     
+    public override IEnumerable<CardKeyword> CanonicalKeywords => 
+    [
+        CardKeyword.Exhaust
+    ];
+    
     protected override IEnumerable<DynamicVar> CanonicalVars => [];
 
     public CGSEnergyDrink() : base(0, CardType.Skill, CardRarity.None, TargetType.Self, true)
