@@ -36,8 +36,7 @@ public sealed class CGSAimForTheFinish : ModCardTemplate
         CGSConsumeUse.Consume(this);
         
         var candidates = PileType.Draw.GetPile(Owner).Cards
-            .Concat(PileType.Discard.GetPile(Owner).Cards)
-            .Where(card => card.Type == CardType.Skill).ToList();
+            .Concat(PileType.Discard.GetPile(Owner).Cards).ToList();
 
         if (candidates.Count == 0)
         {

@@ -36,7 +36,7 @@ public sealed class CGSRewriteFate : ModCardTemplate
         var candidates = Entry.CGSFatePile.GetPile(Owner).Cards.Where(card => card.DynamicVars.ContainsKey("Uses")).ToList();
         if (candidates.Count == 0) return;
         var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 0, Math.Min(2, candidates.Count)));
+            new CardSelectorPrefs(SelectionScreenPrompt, 1, Math.Min(2, candidates.Count)));
         foreach (var card in selected)
         {
             var uses = card.DynamicVars["Uses"];
