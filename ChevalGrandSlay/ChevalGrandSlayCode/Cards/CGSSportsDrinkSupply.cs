@@ -10,13 +10,16 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 // 运动饮料补给
+//TODO:Rewrite
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSSportsDrinkSupply : ModCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+    ];
 
     public CGSSportsDrinkSupply() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self, true) { }
 

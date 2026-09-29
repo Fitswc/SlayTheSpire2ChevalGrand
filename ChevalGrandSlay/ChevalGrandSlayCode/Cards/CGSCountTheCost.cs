@@ -17,18 +17,30 @@ public sealed class CGSCountTheCost : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m), new CardsVar(2)];
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+    [
+        new DynamicVar("Uses", 2m), 
+        new DynamicVar("MaxUses", 2m), 
+        new CardsVar(2)
+    ];
 
-    public CGSCountTheCost() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true) { }
+    public CGSCountTheCost() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var player = Owner ?? throw new InvalidOperationException("This card needs an owner.");
+        
         CGSConsumeUse.Consume(this);
 
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, player);
         if (player.PlayerCombatState is { } state && _fateEnteredTurn == state.TurnNumber)
+        {
             await PlayerCmd.GainEnergy(1m, player);
+        }
     }
 
     protected override void OnUpgrade()

@@ -22,7 +22,11 @@ public sealed class CGSUnwindMomentum : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(5m, ValueProp.Move), new PowerVar<WeakPower>(3m), new DynamicVar("HitReduction", 4m)];
+        [
+            new BlockVar(5m, ValueProp.Move), 
+            new PowerVar<WeakPower>(3m), 
+            new DynamicVar("HitReduction", 4m)
+        ];
 
     protected override void AddExtraArgsToDescription(LocString description)
     {
@@ -35,7 +39,10 @@ public sealed class CGSUnwindMomentum : ModCardTemplate
         description.Add("Effect", effect);
     }
 
-    public CGSUnwindMomentum() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy, true) { }
+    public CGSUnwindMomentum() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

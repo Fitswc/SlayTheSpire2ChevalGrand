@@ -12,11 +12,23 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSReschedule : ModCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(2)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override CardAssetProfile AssetProfile => new(
+        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+    [
+        new CardsVar(2)
+    ];
+    
+    public override IEnumerable<CardKeyword> CanonicalKeywords => 
+        [
+            CardKeyword.Exhaust
+        ];
 
-    public CGSReschedule() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true) { }
+    public CGSReschedule() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

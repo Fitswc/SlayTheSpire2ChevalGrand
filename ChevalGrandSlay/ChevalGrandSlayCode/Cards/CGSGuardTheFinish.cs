@@ -17,9 +17,19 @@ public sealed class CGSGuardTheFinish : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Uses", 3m), new DynamicVar("MaxUses", 3m), new BlockVar(9m, ValueProp.Move), new DynamicVar("BonusBlock", 4m)];
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+        [
+            new DynamicVar("Uses", 3m), 
+            new DynamicVar("MaxUses", 3m), 
+            new BlockVar(9m, ValueProp.Move), 
+            new DynamicVar("BonusBlock", 4m)
+        ];
 
-    public CGSGuardTheFinish() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true) { }
+    public CGSGuardTheFinish() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -27,7 +37,9 @@ public sealed class CGSGuardTheFinish : ModCardTemplate
 
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
         if (Entry.CGSFatePile.GetPile(Owner).Cards.Count >= 2)
+        {
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars["BonusBlock"].BaseValue, ValueProp.Move, cardPlay);
+        }
     }
 
     protected override void OnUpgrade()

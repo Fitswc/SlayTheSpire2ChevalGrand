@@ -19,12 +19,14 @@ public sealed class CGSRapidCombination : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Uses", 3m), new DynamicVar("MaxUses", 3m),
+        new DynamicVar("Uses", 3m), 
+        new DynamicVar("MaxUses", 3m),
         new DamageVar(4m, ValueProp.Move)
     ];
 
     public CGSRapidCombination() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

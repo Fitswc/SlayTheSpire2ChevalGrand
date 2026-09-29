@@ -15,22 +15,40 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSCorrectTheFormation : ModCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m), new DynamicVar("Look", 4m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+    [
+        new DynamicVar("Uses", 2m), 
+        new DynamicVar("MaxUses", 2m), 
+        new DynamicVar("Look", 4m)
+    ];
 
     public CGSCorrectTheFormation() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
+        
         var cards = PileType.Draw.GetPile(Owner).Cards.Take(DynamicVars["Look"].IntValue).ToList();
         int minimum = IsUpgraded ? 0 : Math.Min(2, cards.Count);
-        if (cards.Count == 0) return;
-        var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, cards, Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, minimum, Math.Min(2, cards.Count)));
+        if (cards.Count == 0)
+        {
+            return;
+        }
+        
+        var selected = await CardSelectCmd.FromSimpleGrid(
+            choiceContext, 
+            cards, 
+            Owner,
+            new CardSelectorPrefs(SelectionScreenPrompt, minimum, Math.Min(2, cards.Count))
+            );
+
         foreach (var card in cards.Where(selected.Contains))
+        {
             await CardPileCmd.Add(card, PileType.Draw, CardPilePosition.Bottom);
+        }
     }
 
     protected override void OnUpgrade()
@@ -38,11 +56,6 @@ public sealed class CGSCorrectTheFormation : ModCardTemplate
         DynamicVars["Uses"].UpgradeValueBy(1m);
         DynamicVars["MaxUses"].UpgradeValueBy(1m);
         DynamicVars["Look"].UpgradeValueBy(2m);
-    }
-
-    protected override void AfterDowngraded()
-    {
-        base.AfterDowngraded();
     }
 
     protected override PileType GetResultPileTypeForCardPlay() =>

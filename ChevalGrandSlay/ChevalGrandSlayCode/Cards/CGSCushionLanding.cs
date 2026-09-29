@@ -18,18 +18,30 @@ public sealed class CGSCushionLanding : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Uses", 3m), new DynamicVar("MaxUses", 3m), new BlockVar(6m, ValueProp.Move)];
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+        [
+            new DynamicVar("Uses", 3m), 
+            new DynamicVar("MaxUses", 3m), 
+            new BlockVar(6m, ValueProp.Move)
+        ];
 
-    public CGSCushionLanding() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self, true) { }
+    public CGSCushionLanding() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var player = Owner ?? throw new InvalidOperationException("This card needs an owner.");
+        
         CGSConsumeUse.Consume(this);
 
         await CreatureCmd.GainBlock(player.Creature, DynamicVars.Block, cardPlay);
         if (player.PlayerCombatState is { } state && _fateEnteredTurn == state.TurnNumber)
+        {
             await CardPileCmd.Draw(choiceContext, 1m, player);
+        }
     }
 
     protected override void OnUpgrade()

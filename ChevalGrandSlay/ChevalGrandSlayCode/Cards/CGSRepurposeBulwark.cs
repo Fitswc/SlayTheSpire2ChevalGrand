@@ -19,9 +19,16 @@ public sealed class CGSRepurposeBulwark : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Uses", 3m), new DynamicVar("MaxUses", 3m), new DynamicVar("BlockLimit", 9m)];
+        [
+            new DynamicVar("Uses", 3m), 
+            new DynamicVar("MaxUses", 3m), 
+            new DynamicVar("BlockLimit", 9m)
+        ];
 
-    public CGSRepurposeBulwark() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy, true) { }
+    public CGSRepurposeBulwark() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -29,7 +36,9 @@ public sealed class CGSRepurposeBulwark : ModCardTemplate
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         int removed = Math.Min(cardPlay.Target.Block, DynamicVars["BlockLimit"].IntValue);
         if (removed <= 0)
+        {
             return;
+        }
 
         await CreatureCmd.LoseBlock(cardPlay.Target, removed);
         await CreatureCmd.GainBlock(Owner.Creature, removed, ValueProp.Move, cardPlay);

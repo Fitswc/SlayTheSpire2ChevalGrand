@@ -20,7 +20,8 @@ public sealed class CGSDoubleTempo : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(4m, ValueProp.Move),
-        new DynamicVar("Uses", 3m), new DynamicVar("MaxUses", 3m)
+        new DynamicVar("Uses", 3m),
+        new DynamicVar("MaxUses", 3m)
     ];
 
     public CGSDoubleTempo() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)

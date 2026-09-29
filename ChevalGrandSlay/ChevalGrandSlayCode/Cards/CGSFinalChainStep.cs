@@ -20,16 +20,19 @@ public sealed class CGSFinalChainStep : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(6m, ValueProp.Move),
-        new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m)
+        new DynamicVar("Uses", 2m), 
+        new DynamicVar("MaxUses", 2m)
     ];
 
     public CGSFinalChainStep() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
+        
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         int hitCount = CGSAttackChain.CountAttacksPlayedThisTurn(Owner, CombatState, cardPlay) >= 3 ? 4 : 2;
         for (int i = 0; i < hitCount; i++)

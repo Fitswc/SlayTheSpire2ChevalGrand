@@ -19,15 +19,21 @@ public sealed class CGSEarthshakingStep : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Uses", 1m), new DynamicVar("MaxUses", 1m), new DamageVar(28m, ValueProp.Move)];
+        [
+            new DynamicVar("Uses", 1m), 
+            new DynamicVar("MaxUses", 1m), 
+            new DamageVar(28m, ValueProp.Move)
+        ];
 
     public CGSEarthshakingStep() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
+        
         ArgumentNullException.ThrowIfNull(CombatState);
         // 一次支付，伤害命令负责对全部敌人结算。
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)

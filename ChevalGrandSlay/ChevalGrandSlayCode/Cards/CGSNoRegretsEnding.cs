@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 // 无悔落幕
+//TODO:Rewrite
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSNoRegretsEnding : ModCardTemplate
 {

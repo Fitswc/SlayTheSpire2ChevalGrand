@@ -25,11 +25,13 @@ public sealed class CGSRelentlessPursuit : ModCardTemplate
 
     public CGSRelentlessPursuit() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        
         decimal damage = DynamicVars.Damage.BaseValue;
         if (CGSAttackChain.CountAttacksPlayedThisTurn(Owner, CombatState, cardPlay) >= 1)
             damage += DynamicVars["BonusDamage"].BaseValue;

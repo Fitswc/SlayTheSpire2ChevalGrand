@@ -25,7 +25,10 @@ public sealed class CGSReturnMarker : ModCardTemplate
         new DynamicVar("Discount", 1m)
     ];
 
-    public CGSReturnMarker() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true) { }
+    public CGSReturnMarker() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

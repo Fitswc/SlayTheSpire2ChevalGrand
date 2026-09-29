@@ -19,10 +19,13 @@ public sealed class CGSWinningRhythm : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar(PowerDamageVarName, 3m)];
+        [
+            new DynamicVar(PowerDamageVarName, 3m)
+        ];
 
     public CGSWinningRhythm() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

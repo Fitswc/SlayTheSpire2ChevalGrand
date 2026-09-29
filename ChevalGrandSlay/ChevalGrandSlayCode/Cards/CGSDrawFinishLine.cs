@@ -17,9 +17,17 @@ public sealed class CGSDrawFinishLine : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m), new CardsVar(1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+        [
+            new DynamicVar("Uses", 2m),
+            new DynamicVar("MaxUses", 2m),
+            new CardsVar(1)
+        ];
 
-    public CGSDrawFinishLine() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true) { }
+    public CGSDrawFinishLine() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -27,8 +35,12 @@ public sealed class CGSDrawFinishLine : ModCardTemplate
 
         var selected = await CardSelectCmd.FromHand(choiceContext, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1),
-            card => card != this && card.DynamicVars.ContainsKey("Uses") && card.DynamicVars["Uses"].IntValue > 0, this);
-        if (selected.FirstOrDefault() is not { } card) return;
+            selectedCard => selectedCard != this && selectedCard.DynamicVars.ContainsKey("Uses") && selectedCard.DynamicVars["Uses"].IntValue > 0, this);
+        if (selected.FirstOrDefault() is not { } card)
+        {
+            return;
+        }
+        
         card.DynamicVars["Uses"].BaseValue = 0m;
         await CardPileCmd.Add(card, Entry.CGSFatePile);
         await PlayerCmd.GainEnergy(2m, Owner);

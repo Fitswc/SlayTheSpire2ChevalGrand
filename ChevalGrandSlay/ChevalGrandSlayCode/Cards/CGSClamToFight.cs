@@ -47,6 +47,7 @@ public sealed class CGSClamToFight : ModCardTemplate
 
     public CGSClamToFight() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
+        
     }
 
     // 打出时的效果逻辑，这里是获得格挡。

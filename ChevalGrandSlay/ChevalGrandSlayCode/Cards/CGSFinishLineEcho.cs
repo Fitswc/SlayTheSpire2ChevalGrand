@@ -16,15 +16,21 @@ public sealed class CGSFinishLineEcho : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("EchoDamage", 5m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+        [
+            new DynamicVar("EchoDamage", 5m)
+        ];
 
-    public CGSFinishLineEcho() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self, true) { }
+    public CGSFinishLineEcho() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var power = await PowerCmd.Apply<CGSFinishLineEchoPower>(choiceContext, Owner.Creature,
             DynamicVars["EchoDamage"].BaseValue, Owner.Creature, this);
-        power?.SetTurns(IsUpgraded ? 3 : 2);
+        power?.SetTurns(IsUpgraded ? 3 : 2); //TODO:Rewrite
     }
 
     protected override void OnUpgrade()

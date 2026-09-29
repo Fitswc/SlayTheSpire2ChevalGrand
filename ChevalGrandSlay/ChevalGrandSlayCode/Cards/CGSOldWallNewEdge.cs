@@ -15,17 +15,29 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSOldWallNewEdge : ModCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Uses", 3m), new DynamicVar("MaxUses", 3m), new DamageVar(8m, ValueProp.Move), new DynamicVar("BlockSpent", 12m)];
+    public override CardAssetProfile AssetProfile => new(
+        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+        [
+            new DynamicVar("Uses", 3m),
+            new DynamicVar("MaxUses", 3m),
+            new DamageVar(8m, ValueProp.Move),
+            new DynamicVar("BlockSpent", 12m)
+        ];
+    
     public CGSOldWallNewEdge() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
+        
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         decimal spent = 0m;
+        
         if (Owner.Creature.Block > 0)
         {
             var choice = await CardSelectCmd.FromSimpleGrid(choiceContext, [this], Owner,
@@ -33,9 +45,13 @@ public sealed class CGSOldWallNewEdge : ModCardTemplate
             if (choice.Any())
                 spent = Math.Min(Owner.Creature.Block, DynamicVars["BlockSpent"].BaseValue);
         }
-        if (spent > 0) await CreatureCmd.LoseBlock(Owner.Creature, spent);
+        if (spent > 0)
+        {
+            await CreatureCmd.LoseBlock(Owner.Creature, spent);
+        }
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue + spent)
             .FromCard(this).Targeting(cardPlay.Target).Execute(choiceContext);
+        
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this).Targeting(cardPlay.Target).Execute(choiceContext);
     }

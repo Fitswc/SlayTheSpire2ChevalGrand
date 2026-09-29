@@ -19,17 +19,20 @@ public sealed class CGSMeasuredAdvanceAndRetreat : ModCardTemplate
     
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m), 
+            new DynamicVar("Uses", 2m), 
+            new DynamicVar("MaxUses", 2m), 
             new DynamicVar("LossCap", 12m)
         ];
     
     public CGSMeasuredAdvanceAndRetreat() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self, true)
     {
+        
     }
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
+        
         await PowerCmd.Apply<CGSEnemyAttackLossCapPower>(choiceContext, Owner.Creature,
             DynamicVars["LossCap"].BaseValue, Owner.Creature, this);
     }

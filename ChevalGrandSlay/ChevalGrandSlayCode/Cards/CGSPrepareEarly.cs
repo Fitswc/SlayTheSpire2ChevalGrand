@@ -13,21 +13,39 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSPrepareEarly : ModCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override CardAssetProfile AssetProfile => new(
+        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+    
+    public override IEnumerable<CardKeyword> CanonicalKeywords => 
+        [
+            CardKeyword.Exhaust
+        ];
 
-    public CGSPrepareEarly() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self, true) { }
+    public CGSPrepareEarly() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var candidates = PileType.Draw.GetPile(Owner).Cards.Where(CanUpgrade).ToList();
-        if (candidates.Count == 0) return;
+        if (candidates.Count == 0)
+        {
+            return;
+        }
+        
         var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 0, Math.Min(2, candidates.Count)));
         foreach (var card in selected)
+        {
             CardCmd.Upgrade(card);
+        }
     }
 
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+    protected override void OnUpgrade()
+    {
+        EnergyCost.UpgradeBy(-1);
+    }
+    
     private static bool CanUpgrade(CardModel card) => card.CurrentUpgradeLevel < card.MaxUpgradeLevel;
 }

@@ -21,25 +21,36 @@ public sealed class CGSLongSprint : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [CardKeyword.Retain];
+        [
+            CardKeyword.Retain
+        ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [new DynamicVar("Uses", 3m), new DynamicVar("MaxUses", 3m), 
+    [
+        new DynamicVar("Uses", 3m), 
+        new DynamicVar("MaxUses", 3m), 
         new DamageVar(16m, ValueProp.Move),
         new DynamicVar("RetainedDamage", 8m)
     ];
 
     public CGSLongSprint() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
+        
         bool retainedLastTurn = _lastRetainedTurn == Owner.PlayerCombatState!.TurnNumber - 1;
+        
         decimal damage = DynamicVars.Damage.BaseValue;
+
         if (retainedLastTurn)
+        {
             damage += DynamicVars["RetainedDamage"].BaseValue;
+        }
+        
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(damage)
             .FromCard(this).Targeting(cardPlay.Target).Execute(choiceContext);

@@ -33,7 +33,8 @@ public sealed class CGSWaitAndSee : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m),
+        new DynamicVar("Uses", 2m), 
+        new DynamicVar("MaxUses", 2m),
         new CardsVar(2),
         new BlockVar(7m, ValueProp.Move),
     ];

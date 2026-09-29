@@ -13,13 +13,27 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSBorrowForceEscape : ModCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Reduction", 1m)];
+    public override CardAssetProfile AssetProfile => new(
+        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+    [
+        new DynamicVar("Reduction", 1m)
+    ];
+    
     public CGSBorrowForceEscape() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self, true)
     {
+        
     }
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) =>
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
         await PowerCmd.Apply<CGSResistWeakFrailPower>(choiceContext, Owner.Creature,
             DynamicVars["Reduction"].BaseValue, Owner.Creature, this);
-    protected override void OnUpgrade() => DynamicVars["Reduction"].UpgradeValueBy(1m);
+    }
+    
+    protected override void OnUpgrade()
+    {
+        DynamicVars["Reduction"].UpgradeValueBy(1m);
+    }
 }

@@ -44,7 +44,8 @@ public sealed class CGSNoConcession : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(6m, ValueProp.Move),
-        new DynamicVar("CounterDamage", 9m), new DynamicVar("CounterCharges", 1m)
+        new DynamicVar("CounterDamage", 9m), 
+        new DynamicVar("CounterCharges", 1m)
     ];
 
     public CGSNoConcession() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
@@ -63,6 +64,7 @@ public sealed class CGSNoConcession : ModCardTemplate
             DynamicVars["CounterDamage"].BaseValue,
             Owner.Creature,
             this);
+        
         Owner.Creature.Powers.OfType<CGSFullBlockCounterPower>().FirstOrDefault()
             ?.SetCharges(DynamicVars["CounterCharges"].IntValue);
     }

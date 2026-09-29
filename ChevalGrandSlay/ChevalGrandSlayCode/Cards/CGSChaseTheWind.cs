@@ -21,16 +21,19 @@ public sealed class CGSChaseTheWind : ModCardTemplate
     [
         new DamageVar(8m, ValueProp.Move),
         new CardsVar(1),
-        new DynamicVar("Uses", 3m), new DynamicVar("MaxUses", 3m)
+        new DynamicVar("Uses", 3m), 
+        new DynamicVar("MaxUses", 3m)
     ];
 
     public CGSChaseTheWind() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
+        
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)

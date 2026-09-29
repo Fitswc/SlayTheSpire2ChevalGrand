@@ -10,13 +10,16 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 // 再起一程
+//TODO:Rewrite
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRestartTheJourney : ModCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+    ];
 
     public CGSRestartTheJourney() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self, true) { }
 

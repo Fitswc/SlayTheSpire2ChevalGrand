@@ -21,9 +21,14 @@ public sealed class CGSRenewTheOldPact : ModCardTemplate
 
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) =>
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
         await PowerCmd.Apply<CGSOldPactPower>(choiceContext, Owner.Creature,
             IsUpgraded ? 2m : 1m, Owner.Creature, this);
+    }
 
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+    protected override void OnUpgrade()
+    {
+        EnergyCost.UpgradeBy(-1);
+    }
 }

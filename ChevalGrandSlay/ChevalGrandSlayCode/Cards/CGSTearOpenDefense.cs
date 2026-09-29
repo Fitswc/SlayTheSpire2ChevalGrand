@@ -21,7 +21,8 @@ public sealed class CGSTearOpenDefense : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m), 
+    [new DynamicVar("Uses", 2m), 
+        new DynamicVar("MaxUses", 2m), 
         new DamageVar(5m, ValueProp.Move),
         new PowerVar<VulnerablePower>(1m),
         new DynamicVar(FirstAttackVulnerableVarName, 1m)
@@ -29,6 +30,7 @@ public sealed class CGSTearOpenDefense : ModCardTemplate
 
     public CGSTearOpenDefense() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -45,6 +47,7 @@ public sealed class CGSTearOpenDefense : ModCardTemplate
         decimal vulnerable = DynamicVars.Vulnerable.BaseValue;
         if (isFirstAttack)
             vulnerable += DynamicVars[FirstAttackVulnerableVarName].BaseValue;
+        
         await PowerCmd.Apply<VulnerablePower>(
             choiceContext,
             cardPlay.Target,

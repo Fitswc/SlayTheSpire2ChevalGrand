@@ -21,15 +21,21 @@ public sealed class CGSChainStep : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Uses", 3m), new DynamicVar("MaxUses", 3m), new DamageVar(7m, ValueProp.Move)];
+        [
+            new DynamicVar("Uses", 3m), 
+            new DynamicVar("MaxUses", 3m), 
+            new DamageVar(7m, ValueProp.Move)
+        ];
 
     public CGSChainStep() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
+        
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this).Targeting(cardPlay.Target).Execute(choiceContext);

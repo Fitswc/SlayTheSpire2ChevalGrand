@@ -17,10 +17,13 @@ public sealed class CGSFlowingAssault : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new CardsVar(1)];
+        [
+            new CardsVar(1)
+        ];
 
     public CGSFlowingAssault() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

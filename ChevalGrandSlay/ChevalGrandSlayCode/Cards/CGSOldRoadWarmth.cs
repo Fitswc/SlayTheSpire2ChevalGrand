@@ -17,7 +17,11 @@ public sealed class CGSOldRoadWarmth : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(4m, ValueProp.Move)];
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+        [
+            new BlockVar(4m, ValueProp.Move)
+        ];
 
     public CGSOldRoadWarmth() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self, true) { }
 

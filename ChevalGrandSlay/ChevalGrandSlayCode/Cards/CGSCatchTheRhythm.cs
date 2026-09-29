@@ -18,19 +18,27 @@ public sealed class CGSCatchTheRhythm : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Uses", 3m), new DynamicVar("MaxUses", 3m), new CardsVar(2)];
+        [
+            new DynamicVar("Uses", 3m), 
+            new DynamicVar("MaxUses", 3m), 
+            new CardsVar(2)
+        ];
 
     public CGSCatchTheRhythm() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
+        
         bool hasPreviousAttack = CGSAttackChain.CountAttacksPlayedThisTurn(Owner, CombatState) >= 1;
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
         if (hasPreviousAttack)
+        {
             return;
+        }
 
         var selected = await CardSelectCmd.FromHandForDiscard(
             choiceContext,
@@ -38,8 +46,11 @@ public sealed class CGSCatchTheRhythm : ModCardTemplate
             new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1),
             null,
             this);
+        
         foreach (var card in selected)
+        {
             await CardCmd.Discard(choiceContext, card);
+        }
     }
 
     protected override void OnUpgrade()

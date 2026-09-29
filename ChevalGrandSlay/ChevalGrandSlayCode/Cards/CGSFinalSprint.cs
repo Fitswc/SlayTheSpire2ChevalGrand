@@ -17,9 +17,18 @@ public sealed class CGSFinalSprint : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m), new DamageVar(14m, ValueProp.Move), new DynamicVar("FateBonusCap", 8m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+        [
+            new DynamicVar("Uses", 2m), 
+            new DynamicVar("MaxUses", 2m),
+            new DamageVar(14m, ValueProp.Move), 
+            new DynamicVar("FateBonusCap", 8m)
+        ];
 
-    public CGSFinalSprint() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies, true) { }
+    public CGSFinalSprint() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -28,6 +37,7 @@ public sealed class CGSFinalSprint : ModCardTemplate
         ArgumentNullException.ThrowIfNull(CombatState);
         int cardsInFate = Entry.CGSFatePile.GetPile(Owner).Cards.Count;
         decimal bonus = Math.Min(cardsInFate * 2m, DynamicVars["FateBonusCap"].BaseValue);
+        //TODO: Check
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this)
             .TargetingAllOpponents(CombatState).Execute(choiceContext);
     }

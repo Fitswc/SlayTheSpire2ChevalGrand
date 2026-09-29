@@ -17,9 +17,17 @@ public sealed class CGSRewriteFate : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Uses", 1m), new DynamicVar("MaxUses", 1m), ];
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+        [
+            new DynamicVar("Uses", 1m),
+            new DynamicVar("MaxUses", 1m)
+        ];
 
-    public CGSRewriteFate() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self, true) { }
+    public CGSRewriteFate() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

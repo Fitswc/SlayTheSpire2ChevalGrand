@@ -20,21 +20,32 @@ public sealed class CGSBreakTheOpening : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [new DynamicVar("Uses", 3m), new DynamicVar("MaxUses", 3m), 
+    [
+        new DynamicVar("Uses", 3m), 
+        new DynamicVar("MaxUses", 3m), 
         new DamageVar(7m, ValueProp.Move),
         new PowerVar<VulnerablePower>(2m)
     ];
 
     public CGSBreakTheOpening() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
+        
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target,
-            DynamicVars["VulnerablePower"].BaseValue, Owner.Creature, this);
+        
+        await PowerCmd.Apply<VulnerablePower>(
+            choiceContext, 
+            cardPlay.Target,
+            DynamicVars["VulnerablePower"].BaseValue, 
+            Owner.Creature, 
+            this
+            );
+        
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this).Targeting(cardPlay.Target).Execute(choiceContext);
     }

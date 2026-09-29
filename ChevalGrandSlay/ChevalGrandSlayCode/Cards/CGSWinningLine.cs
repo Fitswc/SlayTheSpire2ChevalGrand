@@ -23,7 +23,8 @@ public sealed class CGSWinningLine : ModCardTemplate
     [
         new DamageVar(10m, ValueProp.Move),
         new DynamicVar(BonusDamageVarName, 4m),
-        new DynamicVar("Uses", 3m), new DynamicVar("MaxUses", 3m)
+        new DynamicVar("Uses", 3m), 
+        new DynamicVar("MaxUses", 3m)
     ];
 
     public CGSWinningLine() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
@@ -33,7 +34,10 @@ public sealed class CGSWinningLine : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
+        
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        
+        
         int previousAttacks = Math.Min(4, CGSAttackChain.CountAttacksPlayedThisTurn(Owner, CombatState, cardPlay));
         decimal damage = DynamicVars.Damage.BaseValue +
                          previousAttacks * DynamicVars[BonusDamageVarName].BaseValue;

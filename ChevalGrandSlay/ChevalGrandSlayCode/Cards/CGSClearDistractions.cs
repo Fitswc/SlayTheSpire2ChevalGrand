@@ -13,7 +13,9 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSClearDistractions : ModCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+    public override CardAssetProfile AssetProfile => new(
+        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+    
     protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
         PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
 
@@ -23,11 +25,19 @@ public sealed class CGSClearDistractions : ModCardTemplate
     {
         var selected = await CardSelectCmd.FromHand(choiceContext, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1), IsCandidate, this);
-        if (selected.FirstOrDefault() is not { } card) return;
+        if (selected.FirstOrDefault() is not { } card)
+        {
+            return;
+        }
+        
         await CardCmd.Exhaust(choiceContext, card);
         await CardPileCmd.Draw(choiceContext, 1m, Owner);
     }
 
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+    protected override void OnUpgrade()
+    {
+        EnergyCost.UpgradeBy(-1);
+    }
+    
     private static bool IsCandidate(CardModel card) => card.Type is CardType.Status or CardType.Curse;
 }

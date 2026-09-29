@@ -19,25 +19,41 @@ public sealed class CGSPourIntoOneMove : ModCardTemplate
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [
+            new DynamicVar("Uses", 2m),
+            new DynamicVar("MaxUses", 2m)
+        ];
 
     protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
         PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
 
     public CGSPourIntoOneMove() : base(1, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
-        var selected = await CardSelectCmd.FromHand(choiceContext, Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1), IsCandidate, this);
-        if (selected.FirstOrDefault() is not { } attack) return;
+        
+        var selected = await CardSelectCmd.FromHand(
+            choiceContext,
+            Owner,
+            new CardSelectorPrefs(SelectionScreenPrompt, 1), 
+            IsCandidate, 
+            this);
+        
+        if (selected.FirstOrDefault() is not { } attack)
+        {
+            return;
+        }
+        
         var cost = attack.EnergyCost.GetWithModifiers(CostModifiers.All);
         await PlayerCmd.LoseEnergy(cost, Owner);
         attack.DynamicVars["Uses"].BaseValue -= 1m;
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        
         var power = await PowerCmd.Apply<CGSFirstStrikeTwicePower>(choiceContext, Owner.Creature,
             1m, Owner.Creature, this);
         power?.SetAttack(attack);

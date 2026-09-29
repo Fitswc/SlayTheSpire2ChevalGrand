@@ -19,13 +19,22 @@ public sealed class CGSRegainTheEdge : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Uses", 3m), new DynamicVar("MaxUses", 3m), new DamageVar(7m, ValueProp.Move), new DynamicVar("Cleanse", 1m)];
+        [
+            new DynamicVar("Uses", 3m), 
+            new DynamicVar("MaxUses", 3m),
+            new DamageVar(7m, ValueProp.Move),
+            new DynamicVar("Cleanse", 1m)
+        ];
 
-    public CGSRegainTheEdge() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy, true) { }
+    public CGSRegainTheEdge() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
+        
         for (int i = 0; i < DynamicVars["Cleanse"].IntValue; i++)
         {
             var debuff = Owner.Creature.Powers.FirstOrDefault(power =>
@@ -36,6 +45,7 @@ public sealed class CGSRegainTheEdge : ModCardTemplate
         }
 
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this).Targeting(cardPlay.Target).Execute(choiceContext);
     }

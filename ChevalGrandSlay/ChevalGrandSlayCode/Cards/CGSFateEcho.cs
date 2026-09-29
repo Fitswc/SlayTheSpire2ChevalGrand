@@ -17,7 +17,13 @@ public sealed class CGSFateEcho : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m), new CardsVar(1)];
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+        [
+            new DynamicVar("Uses", 2m), 
+            new DynamicVar("MaxUses", 2m), 
+            new CardsVar(1)
+        ];
 
     public CGSFateEcho() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true) { }
 
@@ -49,8 +55,6 @@ public sealed class CGSFateEcho : ModCardTemplate
 
     protected override PileType GetResultPileTypeForCardPlay() =>
         DynamicVars["Uses"].IntValue <= 0 ? Entry.CGSFatePile : base.GetResultPileTypeForCardPlay();
-
-
-
+    
 }
 

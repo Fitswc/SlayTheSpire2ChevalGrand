@@ -16,21 +16,35 @@ public sealed class CGSSpreadTheOpening : ModCardTemplate
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Transfer", 1m)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+        [
+            new DynamicVar("Transfer", 1m)
+        ];
+    
+    public override IEnumerable<CardKeyword> CanonicalKeywords => 
+        [
+            CardKeyword.Exhaust
+        ];
 
     public CGSSpreadTheOpening() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        
         var vulnerable = cardPlay.Target.Powers.OfType<VulnerablePower>().FirstOrDefault();
         decimal amount = Math.Min(Math.Max(0m, vulnerable?.Amount ?? 0m), DynamicVars["Transfer"].BaseValue);
-        if (amount == 0m || vulnerable is null) return;
+        if (amount == 0m || vulnerable is null)
+        {
+            return;
+        }
+        
         await PowerCmd.ModifyAmount(choiceContext, vulnerable, -amount, Owner.Creature, this);
         var combatState = CombatState ?? throw new InvalidOperationException("The card requires an active combat.");
+        
         foreach (var enemy in combatState.HittableEnemies.Where(enemy => enemy != cardPlay.Target).ToArray())
             await PowerCmd.Apply<VulnerablePower>(choiceContext, enemy, amount, Owner.Creature, this);
     }

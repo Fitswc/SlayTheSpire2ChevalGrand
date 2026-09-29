@@ -19,9 +19,18 @@ public sealed class CGSReserveAStep : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Uses", 3m), new DynamicVar("MaxUses", 3m), new BlockVar(5m, ValueProp.Move)];
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+        [
+            new DynamicVar("Uses", 3m), 
+            new DynamicVar("MaxUses", 3m), 
+            new BlockVar(5m, ValueProp.Move)
+        ];
 
-    public CGSReserveAStep() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self, true) { }
+    public CGSReserveAStep() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -29,11 +38,16 @@ public sealed class CGSReserveAStep : ModCardTemplate
 
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
         var candidates = PileType.Hand.GetPile(Owner).Cards
-            .Where(card => card != this && card.DynamicVars.ContainsKey("Uses") && card.DynamicVars["Uses"].IntValue > 0)
+            .Where(candidatesCard => candidatesCard != this && candidatesCard.DynamicVars.ContainsKey("Uses") && candidatesCard.DynamicVars["Uses"].IntValue > 0)
             .ToList();
-        if (candidates.Count == 0) return;
+        if (candidates.Count == 0)
+        {
+            return;
+        }
+        
         var selected = await CardSelectCmd.FromHand(choiceContext, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1), candidates.Contains, this);
+        
         if (selected.FirstOrDefault() is { } card)
         {
             var power = await PowerCmd.Apply<CGSReserveAStepPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);

@@ -10,13 +10,16 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 // 并肩转身
+//TODO:Rewrite
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSTurnTogether : ModCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+    ];
 
     public CGSTurnTogether() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self, true) { }
 

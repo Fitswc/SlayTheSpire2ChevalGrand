@@ -16,17 +16,28 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRememberTheEdge : ModCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+    public override CardAssetProfile AssetProfile => new(
+        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+    
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m), new PowerVar<StrengthPower>(2m)];
+        [
+            new DynamicVar("Uses", 2m), 
+            new DynamicVar("MaxUses", 2m),
+            new PowerVar<StrengthPower>(2m)
+        ];
+    
     protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
         PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
+    
     public CGSRememberTheEdge() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self, true)
     {
+        
     }
+    
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
+        
         var selected = await CardSelectCmd.FromHand(choiceContext, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1), IsCandidate, this);
         if (selected.FirstOrDefault() is not { } card) return;
@@ -35,7 +46,11 @@ public sealed class CGSRememberTheEdge : ModCardTemplate
         await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature,
             DynamicVars["StrengthPower"].BaseValue, Owner.Creature, this);
     }
-    protected override void OnUpgrade() => DynamicVars["StrengthPower"].UpgradeValueBy(1m);
+
+    protected override void OnUpgrade()
+    {
+        DynamicVars["StrengthPower"].UpgradeValueBy(1m);
+    }
 
     protected override PileType GetResultPileTypeForCardPlay() =>
         DynamicVars["Uses"].IntValue <= 0 ? Entry.CGSFatePile : base.GetResultPileTypeForCardPlay();

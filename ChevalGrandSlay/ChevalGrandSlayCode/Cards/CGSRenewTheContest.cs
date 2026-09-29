@@ -19,17 +19,23 @@ public sealed class CGSRenewTheContest : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m), new DynamicVar("Restore", 1m)];
+        [
+            new DynamicVar("Uses", 2m),
+            new DynamicVar("MaxUses", 2m), 
+            new DynamicVar("Restore", 1m)
+        ];
 
     protected override bool IsPlayable => base.IsPlayable && GetCandidates().Count != 0;
 
     public CGSRenewTheContest() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
+        
         var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, GetCandidates(), Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1));
         if (selected.FirstOrDefault() is not { } card) return;
@@ -44,11 +50,6 @@ public sealed class CGSRenewTheContest : ModCardTemplate
         DynamicVars["Uses"].UpgradeValueBy(1m);
         DynamicVars["MaxUses"].UpgradeValueBy(1m);
         DynamicVars["Restore"].UpgradeValueBy(1m);
-    }
-
-    protected override void AfterDowngraded()
-    {
-        base.AfterDowngraded();
     }
 
     private List<CardModel> GetCandidates()

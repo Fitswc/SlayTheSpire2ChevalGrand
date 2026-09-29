@@ -14,9 +14,16 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSReplanTheRoute : ModCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+    public override CardAssetProfile AssetProfile => new(
+        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+    
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Uses", 3m), new DynamicVar("MaxUses", 3m), new DynamicVar("ShuffleCount", 3m), new CardsVar(1)];
+        [
+            new DynamicVar("Uses", 3m), 
+            new DynamicVar("MaxUses", 3m), 
+            new DynamicVar("ShuffleCount", 3m), 
+            new CardsVar(1)
+        ];
 
     public CGSReplanTheRoute() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
     {
@@ -32,7 +39,9 @@ public sealed class CGSReplanTheRoute : ModCardTemplate
                 new CardSelectorPrefs(SelectionScreenPrompt, 0,
                     Math.Min(DynamicVars["ShuffleCount"].IntValue, discarded.Count)));
             foreach (var card in selected)
+            {
                 await CardPileCmd.Add(card, PileType.Draw, CardPilePosition.Random);
+            }
         }
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }

@@ -17,10 +17,13 @@ public sealed class CGSSmoothBreathing : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new CardsVar(2)];
+        [
+            new CardsVar(2)
+        ];
 
     public CGSSmoothBreathing() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

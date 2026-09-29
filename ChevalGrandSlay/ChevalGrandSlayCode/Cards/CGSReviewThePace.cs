@@ -27,6 +27,7 @@ public sealed class CGSReviewThePace : ModCardTemplate
 
     public CGSReviewThePace() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -36,7 +37,9 @@ public sealed class CGSReviewThePace : ModCardTemplate
         var retained = await CardSelectCmd.FromHand(choiceContext, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1), null, this);
         foreach (var card in retained)
+        {
             card.GiveSingleTurnRetain();
+        }
     }
 
     protected override void OnUpgrade()

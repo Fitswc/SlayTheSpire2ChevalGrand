@@ -18,13 +18,15 @@ public sealed class CGSWinningShift : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Uses", 1m), new DynamicVar("MaxUses", 1m),
+        new DynamicVar("Uses", 1m), 
+        new DynamicVar("MaxUses", 1m),
         new EnergyVar(2),
         new CardsVar(1)
     ];
 
     public CGSWinningShift() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self, true)
     {
+        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

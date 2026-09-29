@@ -15,12 +15,24 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSCutOffRetreat : ModCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m), new DamageVar(8m, ValueProp.Move)];
-    public CGSCutOffRetreat() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy, true) { }
+    public override CardAssetProfile AssetProfile => new(
+        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+        [
+            new DynamicVar("Uses", 2m), 
+            new DynamicVar("MaxUses", 2m), 
+            new DamageVar(8m, ValueProp.Move)
+        ];
+
+    public CGSCutOffRetreat() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy, true)
+    {
+        
+    }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
+        
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this)
             .Targeting(cardPlay.Target).Execute(choiceContext);

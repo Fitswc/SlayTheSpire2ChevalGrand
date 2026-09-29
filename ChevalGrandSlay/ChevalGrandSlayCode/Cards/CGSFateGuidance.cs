@@ -17,22 +17,41 @@ public sealed class CGSFateGuidance : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m), new DynamicVar("Restore", 1m)];
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+    [
+        new DynamicVar("Uses", 2m), 
+        new DynamicVar("MaxUses", 2m), 
+        new DynamicVar("Restore", 1m)
+    ];
 
-    public CGSFateGuidance() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self, true) { }
+    public CGSFateGuidance() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self, true)
+    {
+        
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
 
-        var candidates = Entry.CGSFatePile.GetPile(Owner).Cards.Where(card => card.DynamicVars.ContainsKey("Uses")).ToList();
-        if (candidates.Count == 0) return;
+        var candidates = Entry.CGSFatePile.GetPile(Owner).Cards
+            .Where(targetCard => targetCard.DynamicVars.ContainsKey("Uses"))
+            .ToList();
+        
+        if (candidates.Count == 0)
+        {
+            return;
+        }
+        
         var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1));
-        if (selected.FirstOrDefault() is not { } card) return;
+        
+        if (selected.FirstOrDefault() is not { } card)
+        {
+            return;
+        }
         var uses = card.DynamicVars["Uses"];
-        uses.BaseValue = Math.Min(card.DynamicVars["MaxUses"].BaseValue,
-            uses.BaseValue + DynamicVars["Restore"].BaseValue);
+        uses.BaseValue = Math.Min(card.DynamicVars["MaxUses"].BaseValue, uses.BaseValue + DynamicVars["Restore"].BaseValue);
         await CardPileCmd.Add(card, PileType.Hand);
         card.EnergyCost.AddThisTurn(-1);
     }
@@ -46,8 +65,6 @@ public sealed class CGSFateGuidance : ModCardTemplate
 
     protected override PileType GetResultPileTypeForCardPlay() =>
         DynamicVars["Uses"].IntValue <= 0 ? Entry.CGSFatePile : base.GetResultPileTypeForCardPlay();
-
-
-
+    
 }
 
