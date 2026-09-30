@@ -18,7 +18,8 @@ public sealed class CGSFinishLineEcho : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar("EchoDamage", 5m)
+            new DynamicVar("EchoDamage", 5m),
+            new DynamicVar("Turns", 2m)
         ];
 
     public CGSFinishLineEcho() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self, true)
@@ -30,7 +31,8 @@ public sealed class CGSFinishLineEcho : ModCardTemplate
     {
         var power = await PowerCmd.Apply<CGSFinishLineEchoPower>(choiceContext, Owner.Creature,
             DynamicVars["EchoDamage"].BaseValue, Owner.Creature, this);
-        power?.SetTurns(IsUpgraded ? 3 : 2); //TODO:Rewrite
+//        power?.SetTurns(IsUpgraded ? 3 : 2); 
+        power?.SetTurns(DynamicVars["Turns"].IntValue);
     }
 
     protected override void OnUpgrade()

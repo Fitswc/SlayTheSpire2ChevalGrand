@@ -11,8 +11,6 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 // 瞄准终点
-//LastEdit in 1:28 2026/9/29
-//TODO: Check && Rewrite possibility
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSAimForTheFinish : ModCardTemplate
 {

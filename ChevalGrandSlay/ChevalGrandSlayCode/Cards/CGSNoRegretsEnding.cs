@@ -10,25 +10,27 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 // 无悔落幕
-//TODO:Rewrite
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSNoRegretsEnding : ModCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+        [
+            new DynamicVar("PowerStacks", 8m)
+        ];
 
     public CGSNoRegretsEnding() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self, true) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<CGSNoRegretsEndingPower>(choiceContext, Owner.Creature,
-            IsUpgraded ? 12m : 8m, Owner.Creature, this);
+            DynamicVars["PowerStacks"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-
+        DynamicVars["PowerStacks"].UpgradeValueBy(4m);
     }
 }

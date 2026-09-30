@@ -10,7 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 // 并肩转身
-//TODO:Rewrite
+//TODO:Check && Verify
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSTurnTogether : ModCardTemplate
 {
@@ -18,7 +18,9 @@ public sealed class CGSTurnTogether : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+    [
+        new DynamicVar("PowerStacks", 1m)
     ];
 
     public CGSTurnTogether() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self, true) { }
@@ -26,11 +28,11 @@ public sealed class CGSTurnTogether : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<CGSTurnTogetherPower>(choiceContext, Owner.Creature,
-            IsUpgraded ? 3m : 0m, Owner.Creature, this);
+            DynamicVars["PowerStacks"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-
+        DynamicVars["PowerStacks"].UpgradeValueBy(2m);
     }
 }

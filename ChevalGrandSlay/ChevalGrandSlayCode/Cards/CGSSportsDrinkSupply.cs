@@ -9,7 +9,6 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 // 运动饮料补给
-//TODO:Rewrite
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSSportsDrinkSupply : ModCardTemplate
 {
@@ -19,6 +18,7 @@ public sealed class CGSSportsDrinkSupply : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
+        new DynamicVar("CardNumber", 2m)
     ];
 
     public CGSSportsDrinkSupply() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self, true) { }
@@ -26,8 +26,8 @@ public sealed class CGSSportsDrinkSupply : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var combatState = CombatState ?? throw new InvalidOperationException("The card requires an active combat.");
-        int count = IsUpgraded ? 3 : 2;
-        for (int i = 0; i < count; i++)
+//        int count = IsUpgraded ? 3 : 2;
+        for (int i = 0; i < DynamicVars["CardNumber"].IntValue; i++)
         {
             var drink = combatState.CreateCard<CGSEnergyDrink>(Owner);
             await CardPileCmd.AddGeneratedCardToCombat(drink, PileType.Hand, Owner);
@@ -36,6 +36,6 @@ public sealed class CGSSportsDrinkSupply : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-
+        DynamicVars["CardNumber"].UpgradeValueBy(1m);
     }
 }

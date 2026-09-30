@@ -10,7 +10,6 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 // 弥补空白
-//TODO: Rewrite
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSFillTheGap : ModCardTemplate
 {
@@ -18,19 +17,23 @@ public sealed class CGSFillTheGap : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-    
+        new DynamicVar("PowerStack", 1m)
     ];
 
     public CGSFillTheGap() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self, true) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<CGSFillTheGapPower>(choiceContext, Owner.Creature,
-            IsUpgraded ? 2m : 1m, Owner.Creature, this);
+        await PowerCmd.Apply<CGSFillTheGapPower>(
+            choiceContext, 
+            Owner.Creature,
+            DynamicVars["PowerStack"].BaseValue, 
+            Owner.Creature, 
+            this);
     }
 
     protected override void OnUpgrade()
     {
-
+       DynamicVars["PowerStack"].UpgradeValueBy(1m);
     }
 }

@@ -1,13 +1,10 @@
-using ChevalGrandSlay.Characters;
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -51,7 +48,7 @@ public sealed class CGSTurnTogetherPower : ModPowerTemplate
         while (_pendingDraws-- > 0)
         {
             await CardPileCmd.Draw(choiceContext, 1m, Owner.Player!);
-            if (Amount > 0m)
+            if (Amount >= 3m)
                 await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Move, null);
         }
         _pendingDraws = 0;

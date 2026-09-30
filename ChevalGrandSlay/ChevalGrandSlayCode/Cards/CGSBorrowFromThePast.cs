@@ -10,26 +10,29 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 // 过往借力
-//TODO:Rewrite
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSBorrowFromThePast : ModCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+    [
+        new DynamicVar("PowerStack", 6m)
+    ];
 
     public CGSBorrowFromThePast() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self, true) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<CGSBorrowFromThePastPower>(choiceContext, Owner.Creature,
-            IsUpgraded ? 9m : 6m, Owner.Creature, this);
+            DynamicVars["PowerStack"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-
+        DynamicVars["PowerStack"].UpgradeValueBy(3m);
     }
 
 
