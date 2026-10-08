@@ -684,9 +684,9 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_THE_OLD_PAGE.selectionScreenPrompt": "选择1张至少剩余2次的有限次数牌",
   "CHEVAL_GRAND_SLAY_CARD_CGS_YIELD_THE_TRACK.selectionScreenPrompt": "选择1张符合费用要求的手牌丢弃",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.title": "全力以赴",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.description": "选择手中另1张仍有次数的有限次数牌，免费打出N次（N为选择时该牌的剩余次数）。需要指定单个敌人时，随机选择目标。\n剩余次数：{Uses:diff()}",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.smartDescription": "选择手中另1张仍有次数的有限次数牌，免费打出N次（N为选择时该牌的剩余次数）。需要指定单个敌人时，随机选择目标。\n剩余次数：{Uses:diff()}",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.baseEffect": "选择手中另1张仍有次数的有限次数牌，免费打出N次（N为选择时该牌的剩余次数）。需要指定单个敌人时，随机选择目标。",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.upgradedEffect": "选择手中另1张仍有次数的有限次数牌，免费打出N次（N为选择时该牌的剩余次数）。需要指定单个敌人时，随机选择目标。",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.description": "选择手中另1张仍有次数的有限次数牌，免费打出剩余次数。\n剩余次数：{Uses:diff()}",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.smartDescription": "选择手中另1张仍有次数的有限次数牌，免费打出剩余次数。\n剩余次数：{Uses:diff()}",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.baseEffect": "选择手中另1张仍有次数的有限次数牌，免费打出剩余次数。",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.upgradedEffect": "选择手中另1张仍有次数的有限次数牌，免费打出剩余次数。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.selectionScreenPrompt": "选择1张有限次数牌，按剩余次数免费打出"
 }

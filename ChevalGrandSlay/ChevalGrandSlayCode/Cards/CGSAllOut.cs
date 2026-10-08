@@ -24,8 +24,8 @@ public sealed class CGSAllOut : ModCardTemplate
         new DynamicVar("MaxUses", 2m)
     ];
 
-    protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
-        PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
+//    protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
+//        PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
 
     public CGSAllOut() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true) { }
 

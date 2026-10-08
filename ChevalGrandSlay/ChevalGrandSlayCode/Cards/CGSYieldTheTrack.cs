@@ -27,8 +27,8 @@ public sealed class CGSYieldTheTrack : ModCardTemplate
             CardKeyword.Exhaust
         ];
     
-    protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
-        PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
+    //protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
+    //    PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
 
     public CGSYieldTheTrack() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self, true)
     {

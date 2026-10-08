@@ -25,8 +25,8 @@ public sealed class CGSPourIntoOneMove : ModCardTemplate
             new DynamicVar("MaxUses", 2m)
         ];
 
-    protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
-        PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
+    //protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
+    //    PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
 
     public CGSPourIntoOneMove() : base(1, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy, true)
     {

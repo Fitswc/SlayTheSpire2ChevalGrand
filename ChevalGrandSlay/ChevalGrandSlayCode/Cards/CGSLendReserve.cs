@@ -26,8 +26,8 @@ public sealed class CGSLendReserve : ModCardTemplate
             new DynamicVar("Restore", 1m)
         ];
 
-    protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
-        PileType.Hand.GetPile(Owner).Cards.Count(card => card != this && card.DynamicVars.ContainsKey("Uses")) >= 2;
+    //protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
+    //    PileType.Hand.GetPile(Owner).Cards.Count(card => card != this && card.DynamicVars.ContainsKey("Uses")) >= 2;
     
     public CGSLendReserve() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
     {

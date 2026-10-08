@@ -27,8 +27,8 @@ public sealed class CGSTurnTheOldPage : ModCardTemplate
             CardKeyword.Exhaust
         ];
 
-    protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
-        PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
+    //protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
+    //   PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
 
     
     public CGSTurnTheOldPage() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)

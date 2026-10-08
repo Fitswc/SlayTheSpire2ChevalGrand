@@ -22,9 +22,9 @@ public sealed class CGSBalanceTheWeight : ModCardTemplate
         CardKeyword.Exhaust
     ];
     
-    protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
-        PileType.Hand.GetPile(Owner).Cards.Count(card => card != this) >= 2 &&
-        PileType.Hand.GetPile(Owner).Cards.Any(CanDiscount);
+    //protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
+    //    PileType.Hand.GetPile(Owner).Cards.Count(card => card != this) >= 2 &&
+    //    PileType.Hand.GetPile(Owner).Cards.Any(CanDiscount);
 
     public CGSBalanceTheWeight() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
     {

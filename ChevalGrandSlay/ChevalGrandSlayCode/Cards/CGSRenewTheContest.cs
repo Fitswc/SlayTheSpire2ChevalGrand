@@ -25,7 +25,7 @@ public sealed class CGSRenewTheContest : ModCardTemplate
             new DynamicVar("Restore", 1m)
         ];
 
-    protected override bool IsPlayable => base.IsPlayable && GetCandidates().Count != 0;
+    //protected override bool IsPlayable => base.IsPlayable && GetCandidates().Count != 0;
 
     public CGSRenewTheContest() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self, true)
     {
