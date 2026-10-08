@@ -10,7 +10,6 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 // 余次感知
-//TODO:Rewrite
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRemainingUsesSense : ModCardTemplate
 {
@@ -19,7 +18,7 @@ public sealed class CGSRemainingUsesSense : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     protected override IEnumerable<DynamicVar> CanonicalVars => 
     [
-        
+        new DynamicVar("PowerStacks", 1m)
     ];
 
     public CGSRemainingUsesSense() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self, true)
@@ -30,12 +29,13 @@ public sealed class CGSRemainingUsesSense : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<CGSRemainingUsesSensePower>(choiceContext, Owner.Creature,
-            IsUpgraded ? 2m : 1m, Owner.Creature, this);
+            DynamicVars["PowerStacks"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
         EnergyCost.UpgradeBy(-1);
+        DynamicVars["PowerStacks"].UpgradeValueBy(1m);
     }
 
 

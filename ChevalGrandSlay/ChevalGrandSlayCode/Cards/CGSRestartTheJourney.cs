@@ -9,8 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 再起一程
-//TODO:Rewrite
+// 再起一程xsd
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRestartTheJourney : ModCardTemplate
 {
@@ -18,7 +17,9 @@ public sealed class CGSRestartTheJourney : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+    [
+        new DynamicVar("PowerStacks", 2m)
     ];
 
     public CGSRestartTheJourney() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self, true) { }
@@ -26,11 +27,11 @@ public sealed class CGSRestartTheJourney : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<CGSRestartTheJourneyPower>(choiceContext, Owner.Creature,
-            IsUpgraded ? 3m : 2m, Owner.Creature, this);
+            DynamicVars["PowerStacks"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-
+        DynamicVars["PowerStacks"].UpgradeValueBy(1m);
     }
 }
