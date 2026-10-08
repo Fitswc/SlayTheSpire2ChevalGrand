@@ -11,7 +11,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 穿过弯道
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSAroundTheBend : ModCardTemplate
+public sealed class CGSAroundTheBend : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
@@ -60,4 +60,3 @@ public sealed class CGSAroundTheBend : ModCardTemplate
     }
 
 }
-

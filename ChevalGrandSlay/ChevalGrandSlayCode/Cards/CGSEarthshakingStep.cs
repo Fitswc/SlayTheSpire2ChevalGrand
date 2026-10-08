@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 震地踏击
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSEarthshakingStep : ModCardTemplate
+public sealed class CGSEarthshakingStep : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(

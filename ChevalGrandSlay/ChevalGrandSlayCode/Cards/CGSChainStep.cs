@@ -13,7 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 连踏
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSChainStep : ModCardTemplate
+public sealed class CGSChainStep : CGSStaminaCardTemplate
 {
     private int _discountedTurn = -1;
 

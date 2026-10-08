@@ -13,7 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 撕开防线
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSTearOpenDefense : ModCardTemplate
+public sealed class CGSTearOpenDefense : CGSStaminaCardTemplate
 {
     private const string FirstAttackVulnerableVarName = "FirstAttackVulnerable";
 

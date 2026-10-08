@@ -13,7 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 截断退路
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSCutOffRetreat : ModCardTemplate
+public sealed class CGSCutOffRetreat : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

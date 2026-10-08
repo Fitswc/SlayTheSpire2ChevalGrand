@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 化守为锋
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSTurnDefenseToEdge : ModCardTemplate
+public sealed class CGSTurnDefenseToEdge : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

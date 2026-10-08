@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 疾步连打
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSRapidCombination : ModCardTemplate
+public sealed class CGSRapidCombination : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

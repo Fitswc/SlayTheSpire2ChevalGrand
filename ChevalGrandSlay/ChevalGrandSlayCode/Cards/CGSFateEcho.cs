@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 命运回声
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSFateEcho : ModCardTemplate
+public sealed class CGSFateEcho : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
@@ -57,4 +57,3 @@ public sealed class CGSFateEcho : ModCardTemplate
         CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
     
 }
-

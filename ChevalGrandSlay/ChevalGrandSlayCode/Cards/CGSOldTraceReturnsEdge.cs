@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 旧迹回锋
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSOldTraceReturnsEdge : ModCardTemplate
+public sealed class CGSOldTraceReturnsEdge : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
@@ -59,4 +59,3 @@ public sealed class CGSOldTraceReturnsEdge : ModCardTemplate
 
 
 }
-

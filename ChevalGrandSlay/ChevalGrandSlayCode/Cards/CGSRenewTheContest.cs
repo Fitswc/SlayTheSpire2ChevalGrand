@@ -13,7 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 再续胜负
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSRenewTheContest : ModCardTemplate
+public sealed class CGSRenewTheContest : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

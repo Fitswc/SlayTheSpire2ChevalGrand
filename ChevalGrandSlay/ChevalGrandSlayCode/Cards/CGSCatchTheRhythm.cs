@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 追上节奏
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSCatchTheRhythm : ModCardTemplate
+public sealed class CGSCatchTheRhythm : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

@@ -13,7 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 缓冲落点
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSCushionLanding : ModCardTemplate
+public sealed class CGSCushionLanding : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(

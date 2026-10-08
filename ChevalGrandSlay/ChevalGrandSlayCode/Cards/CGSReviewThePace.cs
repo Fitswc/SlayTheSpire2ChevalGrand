@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 审视步调
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSReviewThePace : ModCardTemplate
+public sealed class CGSReviewThePace : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(

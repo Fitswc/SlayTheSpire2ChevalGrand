@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSReorganizeThePace : ModCardTemplate
+public sealed class CGSReorganizeThePace : CGSStaminaCardTemplate
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;

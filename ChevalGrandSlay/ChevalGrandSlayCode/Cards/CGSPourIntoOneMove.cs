@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 倾注一式
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSPourIntoOneMove : ModCardTemplate
+public sealed class CGSPourIntoOneMove : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

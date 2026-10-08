@@ -11,7 +11,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 余次感知
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSRemainingUsesSense : ModCardTemplate
+public sealed class CGSRemainingUsesSense : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(

@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 穿隙而入
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSPierceTheGap : ModCardTemplate
+public sealed class CGSPierceTheGap : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

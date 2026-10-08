@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 翻过旧页
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSTurnTheOldPage : ModCardTemplate
+public sealed class CGSTurnTheOldPage : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

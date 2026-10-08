@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 打乱步点
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSDisruptFootwork : ModCardTemplate
+public sealed class CGSDisruptFootwork : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 乘隙追击
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSOpportunisticPursuit : ModCardTemplate
+public sealed class CGSOpportunisticPursuit : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

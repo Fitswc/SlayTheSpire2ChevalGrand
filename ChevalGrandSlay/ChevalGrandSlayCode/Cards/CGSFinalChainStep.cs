@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 终盘连踏
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSFinalChainStep : ModCardTemplate
+public sealed class CGSFinalChainStep : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

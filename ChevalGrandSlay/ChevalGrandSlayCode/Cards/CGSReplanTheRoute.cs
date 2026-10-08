@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 重编路线
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSReplanTheRoute : ModCardTemplate
+public sealed class CGSReplanTheRoute : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

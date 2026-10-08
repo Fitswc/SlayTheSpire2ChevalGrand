@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 双拍加速
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSDoubleTempo : ModCardTemplate
+public sealed class CGSDoubleTempo : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

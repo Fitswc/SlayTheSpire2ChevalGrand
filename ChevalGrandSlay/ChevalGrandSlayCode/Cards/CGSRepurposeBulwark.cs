@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 挪用壁垒
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSRepurposeBulwark : ModCardTemplate
+public sealed class CGSRepurposeBulwark : CGSStaminaCardTemplate
 {
     public override bool GainsBlock => true;
     public override CardAssetProfile AssetProfile => new(

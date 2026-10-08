@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 校正队列
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSCorrectTheFormation : ModCardTemplate
+public sealed class CGSCorrectTheFormation : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     protected override IEnumerable<DynamicVar> CanonicalVars => 

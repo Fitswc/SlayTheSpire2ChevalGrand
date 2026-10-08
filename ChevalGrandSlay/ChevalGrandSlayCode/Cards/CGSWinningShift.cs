@@ -11,7 +11,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 决胜换挡
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSWinningShift : ModCardTemplate
+public sealed class CGSWinningShift : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

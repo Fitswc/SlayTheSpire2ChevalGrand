@@ -11,7 +11,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 再起一程xsd
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSRestartTheJourney : ModCardTemplate
+public sealed class CGSRestartTheJourney : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(

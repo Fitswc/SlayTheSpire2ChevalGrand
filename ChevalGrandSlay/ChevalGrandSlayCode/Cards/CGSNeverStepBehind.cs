@@ -13,7 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 防御牌和打击一样注册到角色卡池，并作为 4 张初始卡加入角色卡组。
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSNeverStepBehind : ModCardTemplate
+public sealed class CGSNeverStepBehind : CGSStaminaCardTemplate
 {
     // 基础耗能。
     private const int BaseEnergyCost = 2;

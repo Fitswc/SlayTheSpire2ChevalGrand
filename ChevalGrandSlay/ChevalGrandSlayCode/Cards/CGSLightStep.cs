@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 轻捷一步
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSLightStep : ModCardTemplate
+public sealed class CGSLightStep : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

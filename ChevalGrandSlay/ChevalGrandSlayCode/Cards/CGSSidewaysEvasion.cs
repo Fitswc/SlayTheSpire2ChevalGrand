@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 侧向回避
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSSidewaysEvasion : ModCardTemplate
+public sealed class CGSSidewaysEvasion : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
@@ -57,4 +57,3 @@ public sealed class CGSSidewaysEvasion : ModCardTemplate
 
 
 }
-

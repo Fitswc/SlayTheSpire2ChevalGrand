@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 重写命运
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSRewriteFate : ModCardTemplate
+public sealed class CGSRewriteFate : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
@@ -58,4 +58,3 @@ public sealed class CGSRewriteFate : ModCardTemplate
 
 
 }
-

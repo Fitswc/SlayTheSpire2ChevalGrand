@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 瞄准终点
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSAimForTheFinish : ModCardTemplate
+public sealed class CGSAimForTheFinish : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(

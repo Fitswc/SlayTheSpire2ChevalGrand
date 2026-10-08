@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 胜势一线
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSWinningLine : ModCardTemplate
+public sealed class CGSWinningLine : CGSStaminaCardTemplate
 {
     private const string BonusDamageVarName = "BonusDamage";
 

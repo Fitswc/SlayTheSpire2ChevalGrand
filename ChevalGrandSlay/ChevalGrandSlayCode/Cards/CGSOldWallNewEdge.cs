@@ -13,7 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 旧垒开新锋
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSOldWallNewEdge : ModCardTemplate
+public sealed class CGSOldWallNewEdge : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 划定终线
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSDrawFinishLine : ModCardTemplate
+public sealed class CGSDrawFinishLine : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
@@ -60,4 +60,3 @@ public sealed class CGSDrawFinishLine : ModCardTemplate
 
 
 }
-

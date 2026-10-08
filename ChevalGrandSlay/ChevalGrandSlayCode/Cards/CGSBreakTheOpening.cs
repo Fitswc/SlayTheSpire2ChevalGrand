@@ -13,7 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 凿开破绽
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSBreakTheOpening : ModCardTemplate
+public sealed class CGSBreakTheOpening : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(

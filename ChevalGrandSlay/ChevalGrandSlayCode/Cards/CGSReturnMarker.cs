@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 折返标记
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSReturnMarker : ModCardTemplate
+public sealed class CGSReturnMarker : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(

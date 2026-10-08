@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 追风抢拍
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSChaseTheWind : ModCardTemplate
+public sealed class CGSChaseTheWind : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

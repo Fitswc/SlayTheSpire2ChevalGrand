@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 算清代价
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSCountTheCost : ModCardTemplate
+public sealed class CGSCountTheCost : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(

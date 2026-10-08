@@ -10,7 +10,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 旧约重启
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSRenewTheOldPact : ModCardTemplate
+public sealed class CGSRenewTheOldPact : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png"

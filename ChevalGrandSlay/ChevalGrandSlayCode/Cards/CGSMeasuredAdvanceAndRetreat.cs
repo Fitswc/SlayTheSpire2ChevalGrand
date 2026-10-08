@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 进退有界
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSMeasuredAdvanceAndRetreat : ModCardTemplate
+public sealed class CGSMeasuredAdvanceAndRetreat : CGSStaminaCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

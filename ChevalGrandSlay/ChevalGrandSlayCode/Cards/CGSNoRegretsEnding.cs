@@ -11,7 +11,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 无悔落幕
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSNoRegretsEnding : ModCardTemplate
+public sealed class CGSNoRegretsEnding : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(

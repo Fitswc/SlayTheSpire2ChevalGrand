@@ -11,7 +11,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 弥补空白
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSFillTheGap : ModCardTemplate
+public sealed class CGSFillTheGap : CGSStaminaCardTemplate
 {
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
