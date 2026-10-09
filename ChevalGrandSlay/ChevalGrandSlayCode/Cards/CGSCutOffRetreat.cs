@@ -1,8 +1,10 @@
 using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -13,8 +15,12 @@ namespace ChevalGrandSlay.Cards;
 
 // 截断退路
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSCutOffRetreat : CGSStaminaCardTemplate
+public sealed class CGSCutOffRetreat : ModCardTemplate
 {
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+    ];
+
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     

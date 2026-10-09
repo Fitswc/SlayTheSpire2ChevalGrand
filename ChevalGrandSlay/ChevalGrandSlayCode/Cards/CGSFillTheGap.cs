@@ -1,8 +1,10 @@
 using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -11,8 +13,12 @@ namespace ChevalGrandSlay.Cards;
 
 // 弥补空白
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSFillTheGap : CGSStaminaCardTemplate
+public sealed class CGSFillTheGap : ModCardTemplate
 {
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+    ];
+
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");

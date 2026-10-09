@@ -1,8 +1,10 @@
 using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -13,8 +15,12 @@ namespace ChevalGrandSlay.Cards;
 
 // 防御牌和打击一样注册到角色卡池，并作为 4 张初始卡加入角色卡组。
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSNeverStepBehind : CGSStaminaCardTemplate
+public sealed class CGSNeverStepBehind : ModCardTemplate
 {
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+    ];
+
     // 基础耗能。
     private const int BaseEnergyCost = 2;
 

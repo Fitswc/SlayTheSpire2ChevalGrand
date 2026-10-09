@@ -1,9 +1,11 @@
 using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -13,8 +15,12 @@ namespace ChevalGrandSlay.Cards;
 
 // 连踏
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSChainStep : CGSStaminaCardTemplate
+public sealed class CGSChainStep : ModCardTemplate
 {
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+    ];
+
     private int _discountedTurn = -1;
 
     public override CardAssetProfile AssetProfile => new(
