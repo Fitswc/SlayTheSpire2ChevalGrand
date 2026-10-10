@@ -18,7 +18,8 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSTearOpenDefense : ModCardTemplate
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
+        HoverTipFactory.FromPower<VulnerablePower>()
     ];
 
     private const string FirstAttackVulnerableVarName = "FirstAttackVulnerable";

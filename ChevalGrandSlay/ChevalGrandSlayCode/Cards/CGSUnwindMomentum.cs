@@ -3,6 +3,7 @@ using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -16,6 +17,12 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSUnwindMomentum : ModCardTemplate
 {
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        IsUpgraded
+            ? HoverTipFactory.FromPower<CGSNextEnemyHitReductionPower>()
+            : HoverTipFactory.FromPower<WeakPower>()
+    ];
+
     private const string DescriptionKey = "CHEVAL_GRAND_SLAY_CARD_CGS_UNWIND_MOMENTUM";
 
     public override CardAssetProfile AssetProfile => new(

@@ -19,7 +19,8 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSPourIntoOneMove : ModCardTemplate
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
+        HoverTipFactory.FromPower<CGSFirstStrikeTwicePower>()
     ];
 
     public override CardAssetProfile AssetProfile =>

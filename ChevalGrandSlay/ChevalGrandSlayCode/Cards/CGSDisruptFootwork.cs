@@ -17,7 +17,8 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSDisruptFootwork : ModCardTemplate
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
+        HoverTipFactory.FromPower<WeakPower>()
     ];
 
     public override CardAssetProfile AssetProfile => new(

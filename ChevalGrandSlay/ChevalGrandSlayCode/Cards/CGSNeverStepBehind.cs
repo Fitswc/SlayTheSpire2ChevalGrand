@@ -18,7 +18,8 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSNeverStepBehind : ModCardTemplate
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
+        HoverTipFactory.FromPower<WeakPower>()
     ];
 
     // 基础耗能。

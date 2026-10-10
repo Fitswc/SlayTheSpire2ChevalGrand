@@ -17,7 +17,8 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSTurnDefenseToEdge : ModCardTemplate
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
+        HoverTipFactory.FromPower<StrengthPower>()
     ];
 
     public override CardAssetProfile AssetProfile =>

@@ -15,7 +15,8 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSRenewTheOldPact : ModCardTemplate
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
+        HoverTipFactory.FromPower<CGSOldPactPower>()
     ];
 
     public override CardAssetProfile AssetProfile => new(

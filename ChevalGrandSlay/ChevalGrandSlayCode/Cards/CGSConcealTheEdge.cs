@@ -17,7 +17,8 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSConcealTheEdge : ModCardTemplate
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
+        HoverTipFactory.FromPower<DexterityPower>()
     ];
 
     public override CardAssetProfile AssetProfile =>

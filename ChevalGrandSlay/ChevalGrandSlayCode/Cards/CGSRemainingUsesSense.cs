@@ -16,7 +16,8 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSRemainingUsesSense : ModCardTemplate
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
+        HoverTipFactory.FromPower<CGSRemainingUsesSensePower>()
     ];
 
     // 美术暂缺，使用框架默认资源。

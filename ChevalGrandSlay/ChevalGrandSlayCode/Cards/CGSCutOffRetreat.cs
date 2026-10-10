@@ -18,7 +18,8 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSCutOffRetreat : ModCardTemplate
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
+        HoverTipFactory.FromPower<NoBlockPower>()
     ];
 
     public override CardAssetProfile AssetProfile => new(

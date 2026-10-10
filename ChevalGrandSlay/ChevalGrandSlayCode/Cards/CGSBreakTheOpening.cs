@@ -18,7 +18,8 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSBreakTheOpening : ModCardTemplate
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
+        HoverTipFactory.FromPower<VulnerablePower>()
     ];
 
     // 美术暂缺，使用框架默认资源。

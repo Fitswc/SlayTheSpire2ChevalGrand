@@ -19,7 +19,8 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSReserveAStep : ModCardTemplate
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
+        HoverTipFactory.FromPower<CGSReserveAStepPower>()
     ];
 
     // 美术暂缺，使用框架默认资源。
