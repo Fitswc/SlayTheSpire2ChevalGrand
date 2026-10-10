@@ -1,4 +1,7 @@
 {
+  "CHEVAL_GRAND_SLAY_POWER_CGS_DOMAIN_POWER.title": "领域",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_DOMAIN_POWER.description": "攻击牌伤害提高25%。每个你的回合额外获得4点能量。进入时，将休整牌堆中的牌恢复全部体力并加入手牌，手牌满时改为置入抽牌堆。\n剩余{Amount}个你的回合；倒计时结束时若战斗尚未胜利，你死亡。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_DOMAIN_POWER.smartDescription": "攻击牌伤害提高25%。每个你的回合额外获得4点能量。进入时，将休整牌堆中的牌恢复全部体力并加入手牌，手牌满时改为置入抽牌堆。\n剩余{Amount}个你的回合；倒计时结束时若战斗尚未胜利，你死亡。",
   "CHEVAL_GRAND_SLAY_POWER_CGS_BORROW_FROM_THE_PAST_POWER.title": "过往借力",
   "CHEVAL_GRAND_SLAY_POWER_CGS_BORROW_FROM_THE_PAST_POWER.description": "你的回合开始时，休整牌堆每有1张牌，获得1点[gold]格挡[/gold]，最多获得[blue]等于层数[/blue]点。",
   "CHEVAL_GRAND_SLAY_POWER_CGS_BORROW_FROM_THE_PAST_POWER.smartDescription": "你的回合开始时，休整牌堆每有1张牌，获得1点[gold]格挡[/gold]，最多获得[blue]等于层数[/blue]点。",
