@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -27,6 +28,16 @@ public sealed class CGSCorrectTheFormation : ModCardTemplate
         new DynamicVar("MaxUses", 2m), 
         new DynamicVar("Look", 4m)
     ];
+
+    protected override void AddExtraArgsToDescription(LocString description)
+    {
+        base.AddExtraArgsToDescription(description);
+
+        var effect = new LocString("cards",
+            $"{Id.Entry}.{(IsUpgraded ? "upgradedEffect" : "baseEffect")}");
+        DynamicVars.AddTo(effect);
+        description.Add("Effect", effect);
+    }
 
     public CGSCorrectTheFormation() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
     {

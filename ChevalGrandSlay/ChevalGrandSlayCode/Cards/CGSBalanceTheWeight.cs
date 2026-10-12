@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -25,6 +26,16 @@ public sealed class CGSBalanceTheWeight : ModCardTemplate
     //protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
     //    PileType.Hand.GetPile(Owner).Cards.Count(card => card != this) >= 2 &&
     //    PileType.Hand.GetPile(Owner).Cards.Any(CanDiscount);
+
+    protected override void AddExtraArgsToDescription(LocString description)
+    {
+        base.AddExtraArgsToDescription(description);
+
+        var effect = new LocString("cards",
+            $"{Id.Entry}.{(IsUpgraded ? "upgradedEffect" : "baseEffect")}");
+        DynamicVars.AddTo(effect);
+        description.Add("Effect", effect);
+    }
 
     public CGSBalanceTheWeight() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
     {

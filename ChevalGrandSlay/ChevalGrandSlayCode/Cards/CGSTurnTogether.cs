@@ -3,6 +3,7 @@ using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -27,6 +28,16 @@ public sealed class CGSTurnTogether : ModCardTemplate
     [
         new DynamicVar("PowerStacks", 1m)
     ];
+
+    protected override void AddExtraArgsToDescription(LocString description)
+    {
+        base.AddExtraArgsToDescription(description);
+
+        var effect = new LocString("cards",
+            $"{Id.Entry}.{(IsUpgraded ? "upgradedEffect" : "baseEffect")}");
+        DynamicVars.AddTo(effect);
+        description.Add("Effect", effect);
+    }
 
     public CGSTurnTogether() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self, true) { }
 

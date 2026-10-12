@@ -4,6 +4,7 @@ using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.HoverTips;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -22,6 +23,16 @@ public sealed class CGSRenewTheOldPact : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png"
     );
+
+    protected override void AddExtraArgsToDescription(LocString description)
+    {
+        base.AddExtraArgsToDescription(description);
+
+        var effect = new LocString("cards",
+            $"{Id.Entry}.{(IsUpgraded ? "upgradedEffect" : "baseEffect")}");
+        DynamicVars.AddTo(effect);
+        description.Add("Effect", effect);
+    }
 
     public CGSRenewTheOldPact() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self, true)
     {
