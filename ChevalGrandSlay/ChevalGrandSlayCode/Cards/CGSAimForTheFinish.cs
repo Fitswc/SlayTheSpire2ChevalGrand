@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-//TODO:修复升级后本地化
+
 
 // 瞄准终点
 [RegisterCard(typeof(CGSCardPool))]

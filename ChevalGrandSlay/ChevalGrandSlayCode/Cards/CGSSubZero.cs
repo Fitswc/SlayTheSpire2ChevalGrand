@@ -5,7 +5,9 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -49,8 +51,14 @@ public sealed class CGSSubZero : ModCardTemplate
     // BlockVar 会绑定到本地化里的 {Block:diff()}，升级时文本会自动显示差值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(12m, ValueProp.Unpowered)
+        new DynamicVar("Turns", 3m)
     ];
+    
+    protected override void AddExtraArgsToDescription(LocString description)
+    {
+        base.AddExtraArgsToDescription(description);
+        description.Add("PowerName", ModelDb.Power<CGSSubZeroPower>().Title);
+    }
 
     public CGSSubZero() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary) { }
 
@@ -74,13 +82,13 @@ public sealed class CGSSubZero : ModCardTemplate
         }
 
         await PowerCmd.Apply<CGSSubZeroPower>(
-            choiceContext, Owner.Creature, DynamicVars.Block.BaseValue, Owner.Creature, this);
+            choiceContext, Owner.Creature, DynamicVars["Turns"].BaseValue, Owner.Creature, this);
     }
 
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(4m);
+        DynamicVars["Turns"].UpgradeValueBy(1m);
         EnergyCost.UpgradeBy(-1);
     }
 }
