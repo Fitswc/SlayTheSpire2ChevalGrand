@@ -17,8 +17,7 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSFillTheGap : ModCardTemplate
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
-        HoverTipFactory.FromPower<CGSFillTheGapPower>()
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
     ];
 
     // 美术暂缺，使用框架默认资源。
@@ -34,7 +33,6 @@ public sealed class CGSFillTheGap : ModCardTemplate
 
         var effect = new LocString("cards",
             $"{Id.Entry}.{(IsUpgraded ? "upgradedEffect" : "baseEffect")}");
-        DynamicVars.AddTo(effect);
         description.Add("Effect", effect);
     }
 

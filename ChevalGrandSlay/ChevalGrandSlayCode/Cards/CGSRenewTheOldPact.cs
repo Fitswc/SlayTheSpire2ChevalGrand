@@ -16,8 +16,7 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSRenewTheOldPact : ModCardTemplate
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
-        HoverTipFactory.FromPower<CGSOldPactPower>()
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
     ];
 
     public override CardAssetProfile AssetProfile => new(
@@ -30,7 +29,6 @@ public sealed class CGSRenewTheOldPact : ModCardTemplate
 
         var effect = new LocString("cards",
             $"{Id.Entry}.{(IsUpgraded ? "upgradedEffect" : "baseEffect")}");
-        DynamicVars.AddTo(effect);
         description.Add("Effect", effect);
     }
 

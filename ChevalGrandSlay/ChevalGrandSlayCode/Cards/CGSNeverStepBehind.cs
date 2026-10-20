@@ -17,8 +17,9 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSNeverStepBehind : ModCardTemplate
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
         HoverTipFactory.FromPower<WeakPower>()
     ];
 

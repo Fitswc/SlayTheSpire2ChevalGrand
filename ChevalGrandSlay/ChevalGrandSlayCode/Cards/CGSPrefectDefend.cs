@@ -3,7 +3,6 @@ using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -15,10 +14,6 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSPrefectDefend : ModCardTemplate
 {
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<CGSPerfectDefendPower>()
-    ];
-
     // 基础耗能。
     private const int BaseEnergyCost = 3;
 
@@ -37,14 +32,12 @@ public sealed class CGSPrefectDefend : ModCardTemplate
     public override bool GainsBlock => true;
 
     // 卡图资源。
-    // 如果你按这行代码写，文件名就对应 ChevalGrandSlay/images/cards/ChevalGrandSlayReorganizeThePace.png。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Defend };
 
     // 卡牌基础数值。
-    // BlockVar 会绑定到本地化里的 {Block:diff()}，升级时文本会自动显示差值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("StartTurnBlock", 12m)

@@ -5,7 +5,9 @@ using STS2RitsuLib.Keywords;
 
 namespace ChevalGrandSlay.Keywords;
 
-[RegisterOwnedCardKeyword(StaminaStem)]
+[RegisterOwnedCardKeyword(StaminaStem,
+    CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.None,
+    IncludeInCardHoverTip = true)]
 public sealed class CGSKeywords
 {
     public const string StaminaStem = "stamina";

@@ -16,8 +16,7 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSNoRegretsEnding : ModCardTemplate
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
-        HoverTipFactory.FromPower<CGSNoRegretsEndingPower>()
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
     ];
 
     // 美术暂缺，使用框架默认资源。

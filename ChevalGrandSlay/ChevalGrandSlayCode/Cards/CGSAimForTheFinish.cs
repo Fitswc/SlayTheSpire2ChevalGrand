@@ -5,7 +5,6 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -13,14 +12,14 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 
+//TODO:验证修改
+//TODO: 余次感知，行云流水，顺畅呼吸，旧路余温，并肩转身，所有稀有牌改为具体效果
 
 // 瞄准终点
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSAimForTheFinish : ModCardTemplate
 {
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
-    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(

@@ -16,8 +16,7 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSRestartTheJourney : ModCardTemplate
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
-        HoverTipFactory.FromPower<CGSRestartTheJourneyPower>()
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
     ];
 
     // 美术暂缺，使用框架默认资源。

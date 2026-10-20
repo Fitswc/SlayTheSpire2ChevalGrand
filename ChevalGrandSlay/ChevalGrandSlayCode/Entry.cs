@@ -1,10 +1,13 @@
 using System.Reflection;
+using ChevalGrandSlay.Keywords;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using STS2RitsuLib;
 using STS2RitsuLib.Audio;
 using STS2RitsuLib.CardPiles;
+using STS2RitsuLib.Content;
 using STS2RitsuLib.Interop;
 using Logger = MegaCrit.Sts2.Core.Logging.Logger;
 
@@ -41,6 +44,13 @@ public partial class Entry
         // 新增内容类后，只要 attribute 写对，通常不需要在入口里手动逐个注册。
         // 卡牌构造时需要有效的资源标识。
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+
+        ModContentRegistry.For(ModId).ConfigureDefaultModelCapabilities<CardModel>(
+            "stamina-keyword-text", (card, capabilities) =>
+            {
+                if (card.GetType().Assembly == assembly && card.CanonicalKeywords.Contains(CGSKeywords.Stamina))
+                    capabilities.Add<CGSStaminaKeywordText>();
+            });
 
         FmodStudioDeferredBankRegistration.RegisterBank($"{ResPath}/audios/ChevalGrandSlaySFX.bank");
         FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings($"{ResPath}/audios/GUIDs.txt");
