@@ -17,8 +17,7 @@ internal static class CGSConsumeUse
     public static PileType GetResultPileTypeForCardPlay(CardModel card, PileType normalPile)
     {
         // The game chooses the result pile before calling OnPlay, where Uses is decremented.
-        bool preserved = card.Owner.Creature.Powers.OfType<CGSReserveAStepPower>()
-            .Any(power => power.TryPreserve(card));
+        bool preserved = TryPreserve(card);
         Decisions.Remove(card);
         Decisions.Add(card, new PlayDecision(preserved));
 
@@ -35,11 +34,15 @@ internal static class CGSConsumeUse
             if (decision.Preserved)
                 return;
         }
-        else if (card.Owner.Creature.Powers.OfType<CGSReserveAStepPower>()
-                 .Any(power => power.TryPreserve(card)))
+        else if (TryPreserve(card))
             return;
 
         var uses = card.DynamicVars["Uses"];
         uses.BaseValue = Math.Max(0m, uses.BaseValue - 1m);
     }
+
+    private static bool TryPreserve(CardModel card) =>
+        // Check the turn-long effect first so it does not spend Reserve a Step's one use.
+        card.Owner.Creature.HasPower<CGSEndlessStaminaPower>() ||
+        card.Owner.Creature.Powers.OfType<CGSReserveAStepPower>().Any(power => power.TryPreserve(card));
 }

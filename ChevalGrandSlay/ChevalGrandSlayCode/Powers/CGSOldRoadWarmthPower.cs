@@ -14,7 +14,11 @@ public sealed class CGSOldRoadWarmthPower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
-    public override PowerAssetProfile AssetProfile => new();
+    // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: $"{Entry.ResPath}/images/powers/CGSOldRoadWarmthPower.png",
+        BigIconPath: $"{Entry.ResPath}/images/powers/CGSOldRoadWarmthPower.png"
+    );
 
     public override async Task AfterCardChangedPiles(CardModel card, PileType previousPile, AbstractModel? source)
     {

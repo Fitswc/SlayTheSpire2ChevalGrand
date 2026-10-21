@@ -24,9 +24,10 @@ public sealed class CGSFullBlockCounterPower : ModPowerTemplate
 //     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
     // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
+    // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: $"{Entry.ResPath}/images/powers/test_power.png",
-        BigIconPath: $"{Entry.ResPath}/images/powers/test_power.png"
+        IconPath: $"{Entry.ResPath}/images/powers/CGSFullBlockCounterPower.png",
+        BigIconPath: $"{Entry.ResPath}/images/powers/CGSFullBlockCounterPower.png"
     );
 
     public override async Task AfterDamageReceived(

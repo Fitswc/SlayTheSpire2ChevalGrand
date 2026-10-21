@@ -14,7 +14,11 @@ public sealed class CGSSmoothBreathingPower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
-    public override PowerAssetProfile AssetProfile => new();
+    // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: $"{Entry.ResPath}/images/powers/CGSSmoothBreathingPower.png",
+        BigIconPath: $"{Entry.ResPath}/images/powers/CGSSmoothBreathingPower.png"
+    );
 
     public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext choiceContext, Player player)
     {
