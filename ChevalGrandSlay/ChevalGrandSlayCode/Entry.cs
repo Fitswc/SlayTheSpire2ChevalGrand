@@ -1,5 +1,6 @@
 using System.Reflection;
 using ChevalGrandSlay.Keywords;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Logging;
@@ -13,8 +14,6 @@ using Logger = MegaCrit.Sts2.Core.Logging.Logger;
 
 namespace ChevalGrandSlay;
 
-
-
 [ModInitializer(nameof(Initialize))]
 public partial class Entry
 {
@@ -24,9 +23,9 @@ public partial class Entry
     public const string ResPath = $"res://{ModId}";
 
     public static Logger Logger { get; } = new(ModId, LogType.Generic);
-    
+
     public static PileType CGSFatePile { get; private set; }
-    
+
 
     public static void Initialize()
     {
@@ -56,8 +55,8 @@ public partial class Entry
         FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings($"{ResPath}/audios/GUIDs.txt");
 
         //Patch
-        CharacterSelectAudio.Install();
-        
+        new Harmony(ModId).PatchAll(assembly);
+
         //CardPile
         //Fate CardPile Register
         var registry = ModCardPileRegistry.For(ModId);
@@ -81,7 +80,7 @@ public partial class Entry
             OnOpen = ctx => ctx.ShowDefaultPileScreen(),
             VisibleWhen = ctx => ctx.Player != null,
         }).PileType;
-        
+
 
 
         Logger.Info("ChevalGrandMod initialized.");

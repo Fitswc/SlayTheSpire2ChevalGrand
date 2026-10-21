@@ -1,4 +1,7 @@
 {
+  "CHEVAL_GRAND_SLAY_CARD_CGS_EMPTY_SHELL.title": "没有力气了...",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_EMPTY_SHELL.description": "没有效果，这张牌的出现有可能是你复制了一张体力值为0的卡牌",
+  
   "CHEVAL_GRAND_SLAY_CARD_CGS_STRIKE.title": "攻击",
   "CHEVAL_GRAND_SLAY_CARD_CGS_STRIKE.description": "对单个敌人造成 {Damage:diff()} 点伤害",
 

@@ -1,4 +1,7 @@
 {
+  "CHEVAL_GRAND_SLAY_CARD_CGS_EMPTY_SHELL.title": "Tired...",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_EMPTY_SHELL.description": "No effect.",
+  
   "CHEVAL_GRAND_SLAY_CARD_CGS_AIM_FOR_THE_FINISH.selectionScreenPrompt": "Choose a Skill to add to your hand",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ABANDON_BLOCK_ADVANCE.selectionScreenPrompt": "Select this card to spend 4 Block",
   "CHEVAL_GRAND_SLAY_CARD_CGS_AROUND_THE_BEND.selectionScreenPrompt": "Choose a card in your hand to reduce its cost this turn",
