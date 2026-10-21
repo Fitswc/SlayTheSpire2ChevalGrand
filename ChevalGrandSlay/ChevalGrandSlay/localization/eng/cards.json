@@ -34,11 +34,11 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.selectionScreenPrompt": "Choose a limited use card to play for each remaining use",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_CHANCE_REUNION.title": "Chance Reunion",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_CHANCE_REUNION.description": "Return {RecoveryCount:diff()} random Stamina cards from your Fate pile to your hand, restoring {Restore:diff()} Stamina to each.",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_CHANCE_REUNION.description": "Return {RecoveryCount:diff()} random Stamina cards from your [gold]Fate pile[/gold] to your hand, restoring {Restore:diff()} Stamina to each.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_READY_RECEPTION.title": "Ready Reception",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_READY_RECEPTION.description": "Gain {Block:diff()} Block.\nReturn {RecoveryCount:diff()} random Stamina cards from your Fate pile to your hand, restoring {Restore:diff()} Stamina to each.",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_READY_RECEPTION.description": "Gain {Block:diff()} Block.\nReturn {RecoveryCount:diff()} random Stamina cards from your [gold]Fate pile[/gold] to your hand, restoring {Restore:diff()} Stamina to each.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_RETURNING_OFFENSIVE.title": "Returning Offensive",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_RETURNING_OFFENSIVE.description": "Return {RecoveryCount:diff()} random Stamina Attacks from your Fate pile to your hand, restoring {Restore:diff()} Stamina to each.",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_RETURNING_OFFENSIVE.description": "Return {RecoveryCount:diff()} random Stamina Attacks from your [gold]Fate pile[/gold] to your hand, restoring {Restore:diff()} Stamina to each.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_TO_THE_TRACK.title": "Return to the Track",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_TO_THE_TRACK.description": "Return {RecoveryCount:diff()} random Stamina cards from your Fate pile to your hand, restoring {Restore:diff()} Stamina to each."
+  "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_TO_THE_TRACK.description": "Return {RecoveryCount:diff()} random Stamina cards from your [gold]Fate pile[/gold] to your hand, restoring {Restore:diff()} Stamina to each."
 }

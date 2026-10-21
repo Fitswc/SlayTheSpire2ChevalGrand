@@ -1,8 +1,10 @@
+using ChevalGrandSlay.Keywords;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -13,6 +15,11 @@ namespace ChevalGrandSlay.Powers;
 [RegisterPower]
 public sealed class CGSNoRegretsEndingPower : ModPowerTemplate
 {
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
+    ];
+
     private int _triggeredTurn = -1;
     private bool _boostNextAttack;
     private CardModel? _triggeringCard;

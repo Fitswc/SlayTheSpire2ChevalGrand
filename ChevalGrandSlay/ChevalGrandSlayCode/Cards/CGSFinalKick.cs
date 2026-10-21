@@ -29,6 +29,7 @@ public sealed class CGSFinalKick : ModCardTemplate
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
+        HoverTipFactory.FromKeyword(CGSKeywords.RestPile),
         HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
     ];
 

@@ -42,8 +42,6 @@ public sealed class CGSChainStep : ModCardTemplate
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this).Targeting(cardPlay.Target).Execute(choiceContext);
-        if (DynamicVars["Uses"].IntValue == 0)
-            await CardPileCmd.Draw(choiceContext, 1m, Owner);
     }
 
     public override Task BeforeCardPlayed(CardPlay cardPlay)

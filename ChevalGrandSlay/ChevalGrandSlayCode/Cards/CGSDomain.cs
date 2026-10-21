@@ -32,6 +32,7 @@ public sealed class CGSDomain : ModCardTemplate
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
+        HoverTipFactory.FromKeyword(CGSKeywords.RestPile),
         HoverTipFactory.FromPower<CGSDomainPower>(DynamicVars["Turns"].IntValue),
         HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
     ];

@@ -89,7 +89,7 @@ internal static class CGSCharacterSelectStopIntroPatch
     {
         // original 为空时是整个补丁的回调，避免逐个目标重复输出。
         if (original == null)
-            Entry.Logger.Info($"[Patch] {nameof(CGSCharacterSelectStopIntroPatch)} Star Patching");
+            Entry.Logger.Info($"[Patch] {nameof(CGSCharacterSelectStopIntroPatch)} Start Patching");
     }
 
     [HarmonyCleanup]

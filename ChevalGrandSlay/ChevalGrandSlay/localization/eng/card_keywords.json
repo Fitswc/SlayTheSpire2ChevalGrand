@@ -1,0 +1,7 @@
+{
+  "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.title": "Stamina",
+  "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.description": "Each play consumes 1 Stamina. When Stamina is depleted, the card enters the [gold]Fate pile[/gold].",
+  "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.cardText": "{StaminaName}:[pulse freq=0.8 color=#64c3c1 ease=-2.0]{Uses:diff()}[/pulse]",
+  "CHEVAL_GRAND_SLAY_KEYWORD_REST_PILE.title": "Fate Pile",
+  "CHEVAL_GRAND_SLAY_KEYWORD_REST_PILE.description": "Cards enter this pile when their Stamina is depleted. Cards and powers can restore their Stamina and move them out. This pile is cleared at the end of combat."
+}

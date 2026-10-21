@@ -1,5 +1,7 @@
 {
   "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.title": "体力",
-  "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.description": "每次打出消耗1点体力。当体力耗尽后，该牌进入休整牌堆。",
-  "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.cardText": "{StaminaName}:[pulse freq=0.8 color=#64c3c1 ease=-2.0]{Uses:diff()}[/pulse]"
+  "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.description": "每次打出消耗1点体力。当体力耗尽后，该牌进入[gold]休整牌堆[/gold]。",
+  "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.cardText": "{StaminaName}:[pulse freq=0.8 color=#64c3c1 ease=-2.0]{Uses:diff()}[/pulse]",
+  "CHEVAL_GRAND_SLAY_KEYWORD_REST_PILE.title": "休整牌堆",
+  "CHEVAL_GRAND_SLAY_KEYWORD_REST_PILE.description": "体力耗尽的牌会进入这里。可通过卡牌或能力恢复体力并移出。本场战斗结束后清空。"
 }
