@@ -1,10 +1,12 @@
 using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Potions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -16,6 +18,13 @@ public sealed class CGSEndlessStaminaPotion : ModPotionTemplate
     public override PotionRarity Rarity => PotionRarity.Rare;
     public override PotionUsage Usage => PotionUsage.CombatOnly;
     public override TargetType TargetType => TargetType.Self;
+    
+    /*
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
+    ];
+    */
 
     // Reuse the game's potion art until dedicated artwork is available.
     public override PotionAssetProfile AssetProfile => new(

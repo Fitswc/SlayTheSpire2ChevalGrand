@@ -1,4 +1,6 @@
 {
+  "CHEVAL_GRAND_SLAY_POTION_CGS_POTENTIAL_POTION.title": "Potential Potion",
+  "CHEVAL_GRAND_SLAY_POTION_CGS_POTENTIAL_POTION.description": "Choose 1 of 3 random, generatable [gold]Stamina[/gold] cards to add to your Hand. This combat, it costs 0 Energy, has 999 Stamina and maximum Stamina, and gains [gold]Retain[/gold]. It exists only for this combat.",
   "CHEVAL_GRAND_SLAY_POTION_CGS_ENDLESS_STAMINA_POTION.title": "Endless Stamina Potion",
   "CHEVAL_GRAND_SLAY_POTION_CGS_ENDLESS_STAMINA_POTION.description": "This turn, playing [gold]Stamina[/gold] cards does not consume Stamina."
 }

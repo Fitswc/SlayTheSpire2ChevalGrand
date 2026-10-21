@@ -83,6 +83,6 @@ public partial class Entry
 
 
 
-        Logger.Info("ChevalGrandMod initialized.");
+        Logger.Info("Uma-ChevalGrandMod initialized.");
     }
 }

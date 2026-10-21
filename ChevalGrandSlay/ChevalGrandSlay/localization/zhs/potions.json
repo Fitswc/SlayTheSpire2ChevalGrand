@@ -1,4 +1,6 @@
 {
+  "CHEVAL_GRAND_SLAY_POTION_CGS_POTENTIAL_POTION.title": "潜能药水",
+  "CHEVAL_GRAND_SLAY_POTION_CGS_POTENTIAL_POTION.description": "从3张随机、可生成的[gold]体力[/gold]牌中选择1张，加入手牌。本场战斗中，该牌耗能为0，体力及体力上限为999，并获得[gold]保留[/gold]。该牌仅存在于本次战斗。",
   "CHEVAL_GRAND_SLAY_POTION_CGS_ENDLESS_STAMINA_POTION.title": "无尽体力药水",
   "CHEVAL_GRAND_SLAY_POTION_CGS_ENDLESS_STAMINA_POTION.description": "本回合，打出[gold]体力[/gold]牌不消耗体力。"
 }
