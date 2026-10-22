@@ -38,9 +38,6 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_CHASE_THE_WIND.title": "追风抢拍",
   "CHEVAL_GRAND_SLAY_CARD_CGS_CHASE_THE_WIND.description": "造成{Damage:diff()}点伤害，抽{Cards:diff()}张牌",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_DOUBLE_TEMPO.title": "双拍加速",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_DOUBLE_TEMPO.description": "造成{Damage:diff()}点伤害2次",
-
   "CHEVAL_GRAND_SLAY_CARD_CGS_RENEW_THE_CONTEST.title": "再续胜负",
   "CHEVAL_GRAND_SLAY_CARD_CGS_RENEW_THE_CONTEST.description": "从[gold]休整牌堆[/gold]选择1张攻击牌，恢复{Restore:diff()}点体力并置入手牌",
   "CHEVAL_GRAND_SLAY_CARD_CGS_RENEW_THE_CONTEST.selectionScreenPrompt": "选择1张休整牌堆中的攻击牌加入手牌",
@@ -122,7 +119,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_ENERGY_DRINK.description": "回复4生命",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_DOMAIN.title": "领域",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_DOMAIN.description": "进入[gold]领域[/gold]：攻击牌伤害提高{DamageBonus}%，立即及每个你的回合额外获得{Energy:energyIcons()}。\n将[gold]休整牌堆[/gold]中全部牌恢复满体力并加入手牌，手牌满时置入抽牌堆。\n计入本回合，{Turns}个你的回合结束时未获胜则死亡。[gold]领域[/gold]不能重复进入。",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_DOMAIN.description": "进入[gold]领域[/gold]",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_FINAL_KICK.title": "最后的末脚",
   "CHEVAL_GRAND_SLAY_CARD_CGS_FINAL_KICK.description": "仅当能量为0、抽牌堆和弃牌堆中均无体力牌，且[gold]休整牌堆[/gold]非空时可打出。\n对所有敌人造成{Damage:diff()}点伤害。",
@@ -146,7 +143,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_NEVER_STEP_BEHIND.description": "获得 {Block:diff()} 点格挡。\n对所有敌人施加 {WeakPower:diff()} 层[gold]虚弱[/gold]",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_PREFECT_DEFEND.title": "PrefectDefend",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_PREFECT_DEFEND.description": "接下来2个你的回合开始时，获得{StartTurnBlock:diff()}点格挡。\n每当你完全格挡攻击伤害时，获得1点能量并抽1张牌。\n此效果在第2次回合开始获得格挡后的敌方回合结束时消失。",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_PREFECT_DEFEND.description": "下2个回合开始时，获得{StartTurnBlock:diff()}点格挡。\n每当你完全格挡攻击伤害时，获得1点能量并抽1张牌。",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_OPPORTUNISTIC_PURSUIT.title": "乘隙追击",
   "CHEVAL_GRAND_SLAY_CARD_CGS_OPPORTUNISTIC_PURSUIT.description": "造成{Damage:diff()}点伤害。\n若本回合此前已打出至少1张攻击牌，\n再造成{BonusDamage:diff()}点伤害",
@@ -214,7 +211,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_SUPPRESS_THEIR_SPIRIT.description": "对单个敌人造成{Damage:diff()}点伤害。\n基于1层[gold]压住气焰[/gold]",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_MEASURED_ADVANCE_AND_RETREAT.title": "进退有界",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_MEASURED_ADVANCE_AND_RETREAT.description": "本轮敌方回合中，来自敌方攻击的累计生命损失最多为{LossCap:diff()}点。",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_MEASURED_ADVANCE_AND_RETREAT.description": "获得{LossCap:diff()}层[gold]进退有界[/gold]。",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_BORROW_FORCE_ESCAPE.title": "借势卸困",
   "CHEVAL_GRAND_SLAY_CARD_CGS_BORROW_FORCE_ESCAPE.description": "每当你即将获得[gold]虚弱[/gold]或[gold]脆弱[/gold]时，该次获得的层数减少{Reduction:diff()}层，最低为0层。",
@@ -261,7 +258,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_RESCHEDULE.description": "将弃牌堆全部洗入抽牌堆。\n抽{Cards:diff()}张牌。",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_KEEP_SOME_IN_RESERVE.title": "留有余裕",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_KEEP_SOME_IN_RESERVE.description": "你的回合结束时，保留至多{RetainEnergy:diff()}点未使用的能量，在下次能量重置后获得这些能量。",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_KEEP_SOME_IN_RESERVE.description": "你的回合结束时，保留至多{RetainEnergy:diff()}点未使用的能量，下回合获得这些能量。",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_ECHO_OF_THE_FINISH.title": "余威及远",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ECHO_OF_THE_FINISH.description": "每回合首次击杀敌人时，将该次伤害超出其剩余生命的部分，对另一名随机敌人造成等量伤害，最多{OverflowCap:diff()}点。",
@@ -275,8 +272,8 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_OLD_TRACE_RETURNS_EDGE.description": "对单个敌人造成{Damage:diff()}点伤害。若[gold]休整牌堆[/gold]非空，获得{BonusBlock:diff()}点格挡。",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_RESERVE_A_STEP.title": "预留一步",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_RESERVE_A_STEP.description": "获得{Block:diff()}点格挡。\n选择手中另1张仍有体力的体力牌，获得1层[gold]预留一步[/gold]，指定该牌。",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_RESERVE_A_STEP.selectionScreenPrompt": "选择1张体力牌，使其本回合首次打出不消耗体力",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_RESERVE_A_STEP.description": "获得{Block:diff()}点格挡。\n选择手中另1张仍有体力的牌，本场战斗中为其附加[gold]预留一步[/gold]。",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_RESERVE_A_STEP.selectionScreenPrompt": "选择1张无其他附魔的体力牌，使其本场战斗中打出时不消耗体力",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_CUSHION_LANDING.title": "缓冲落点",
   "CHEVAL_GRAND_SLAY_CARD_CGS_CUSHION_LANDING.description": "获得{Block:diff()}点格挡。若本回合有牌进入[gold]休整牌堆[/gold]，抽1张牌。",
@@ -301,7 +298,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_LEND_RESERVE.selectionScreenPrompt": "选择要转移体力的牌",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_DRAW_FINISH_LINE.title": "划定终线",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_DRAW_FINISH_LINE.description": "选择手中另1张仍有体力的体力牌，将其归零并移入[gold]休整牌堆[/gold]。获得2点能量，抽{Cards:diff()}张牌。",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_DRAW_FINISH_LINE.description": "选择手中1张体力牌，消耗其全部体力并移入[gold]休整牌堆[/gold]。获得2点能量，抽{Cards:diff()}张牌。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_DRAW_FINISH_LINE.selectionScreenPrompt": "选择1张体力牌移入休整牌堆",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_FATE_GUIDANCE.title": "命运引航",
@@ -323,13 +320,10 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.title": "全力以赴",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.description": "选择手中另1张仍有体力的体力牌，按其剩余体力反复免费打出。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.selectionScreenPrompt": "选择1张体力牌，按剩余体力免费打出",
-
-  "CHEVAL_GRAND_SLAY_CARD_CGS_CHANCE_REUNION.title": "偶遇旧迹",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_CHANCE_REUNION.description": "从[gold]休整牌堆[/gold]随机取出{RecoveryCount:diff()}张体力牌，各恢复{Restore:diff()}点体力并加入手牌。",
+  
   "CHEVAL_GRAND_SLAY_CARD_CGS_READY_RECEPTION.title": "整备接应",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_READY_RECEPTION.description": "获得{Block:diff()}点格挡。\n从[gold]休整牌堆[/gold]随机取出{RecoveryCount:diff()}张体力牌，各恢复{Restore:diff()}点体力并加入手牌。",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_RETURNING_OFFENSIVE.title": "攻势回流",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_RETURNING_OFFENSIVE.description": "从[gold]休整牌堆[/gold]随机取出{RecoveryCount:diff()}张体力攻击牌，各恢复{Restore:diff()}点体力并加入手牌。",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_READY_RECEPTION.description": "获得{Block:diff()}点格挡。\n从[gold]休整牌堆[/gold]随机取出{RecoveryCount:diff()}张牌，恢复{Restore:diff()}点体力并加入手牌。",
+  
   "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_TO_THE_TRACK.title": "重返赛道",
   "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_TO_THE_TRACK.description": "从[gold]休整牌堆[/gold]随机取出{RecoveryCount:diff()}张体力牌，各恢复{Restore:diff()}点体力并加入手牌。"
 }

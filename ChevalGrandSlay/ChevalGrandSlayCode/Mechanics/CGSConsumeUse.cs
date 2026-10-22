@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using ChevalGrandSlay.Enchantments;
 using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
@@ -42,7 +43,7 @@ internal static class CGSConsumeUse
     }
 
     private static bool TryPreserve(CardModel card) =>
-        // Check the turn-long effect first so it does not spend Reserve a Step's one use.
+        // 无尽体力保护所有牌，预留一步在本场战斗中保护指定的牌。
         card.Owner.Creature.HasPower<CGSEndlessStaminaPower>() ||
-        card.Owner.Creature.Powers.OfType<CGSReserveAStepPower>().Any(power => power.TryPreserve(card));
+        (card.Enchantment is CGSReserveStepEnchantment enchantment && enchantment.PreservesStamina(card));
 }

@@ -57,6 +57,7 @@ public sealed class CGSDomainPower : ModPowerTemplate
                 : PileType.Draw;
             await CardPileCmd.Add(card, destination);
         }
+        //TODO:Add VFX here
     }
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,

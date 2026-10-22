@@ -36,6 +36,11 @@ public sealed class CGSDomain : ModCardTemplate
         HoverTipFactory.FromPower<CGSDomainPower>(DynamicVars["Turns"].IntValue),
         HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
     ];
+    
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        CardKeyword.Exhaust
+    ];
 
     protected override bool IsPlayable => Owner is not null && !Owner.Creature.HasPower<CGSDomainPower>();
 

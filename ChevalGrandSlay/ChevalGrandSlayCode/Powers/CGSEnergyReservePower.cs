@@ -1,8 +1,8 @@
-using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -31,7 +31,8 @@ public sealed class CGSEnergyReservePower : ModPowerTemplate
         return Task.CompletedTask;
     }
 
-    public override async Task AfterEnergyReset(Player player)
+    // 回合开始Hook在能量初始化之后触发，独立于额外的能量重置。
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player != Owner.Player || _saved == 0) return;
         int energy = _saved;

@@ -12,9 +12,6 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 
-//TODO:验证修改
-//TODO: 余次感知，行云流水，顺畅呼吸，旧路余温，并肩转身，所有稀有牌改为具体效果
-
 // 瞄准终点
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSAimForTheFinish : ModCardTemplate
