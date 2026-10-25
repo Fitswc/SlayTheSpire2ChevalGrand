@@ -14,7 +14,7 @@ public class CGSDomainBGGray
     private const string BackgroundShaderPath = Entry.ResPath + "/shaders/CGSDomainBGGrayScale.gdshader";
 
     /// 获得领域时调用；只将当前战斗背景逐渐变为黑白。
-    public static void FadeBackgroundToGrayscale(double duration = 0.8)
+    public static void FadeBackgroundToGrayscale(double duration)
     {
         var room = NCombatRoom.Instance;
         if (room == null || !GodotObject.IsInstanceValid(room) ||

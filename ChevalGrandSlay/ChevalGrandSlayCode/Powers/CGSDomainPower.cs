@@ -42,7 +42,7 @@ public sealed class CGSDomainPower : ModPowerTemplate
             return;
 
         await PlayerCmd.GainEnergy(EnergyPerTurn, player);
-        CGSDomainBGGray.FadeBackgroundToGrayscale();
+        CGSDomainBGGray.FadeBackgroundToGrayscale(1.2);
 
         // Snapshot the pile because moving cards can trigger other powers and change its contents.
         var restingCards = Entry.CGSFatePile.GetPile(player).Cards.ToArray();
