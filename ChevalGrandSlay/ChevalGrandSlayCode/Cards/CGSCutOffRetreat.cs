@@ -1,6 +1,7 @@
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
+using ChevalGrandSlay.Utilities;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -42,8 +43,12 @@ public sealed class CGSCutOffRetreat : ModCardTemplate
         CGSConsumeUse.Consume(this);
         
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this)
-            .Targeting(cardPlay.Target).Execute(choiceContext);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCard(this)
+            .Targeting(cardPlay.Target)
+            .CGSWithVfx("vfx/vfx_attack_slash")
+            .Execute(choiceContext);
+        
         await PowerCmd.Apply<NoBlockPower>(choiceContext, cardPlay.Target, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade()

@@ -1,3 +1,4 @@
+using ChevalGrandSlay.Utilities;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
@@ -40,7 +41,7 @@ public sealed class CGSRapidCombination : ModCardTemplate
         for (int i = 0; i < 3; i++)
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
                 .Targeting(cardPlay.Target)
                 .Execute(choiceContext);
         }

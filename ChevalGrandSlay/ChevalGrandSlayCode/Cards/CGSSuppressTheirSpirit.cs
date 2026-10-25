@@ -1,3 +1,4 @@
+using ChevalGrandSlay.Utilities;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
@@ -36,7 +37,7 @@ public sealed class CGSSuppressTheirSpirit : ModCardTemplate
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
             .Targeting(cardPlay.Target).Execute(choiceContext);
         await PowerCmd.Apply<CGSNoPositivePower>(choiceContext, cardPlay.Target, 1m, Owner.Creature, this);
     }

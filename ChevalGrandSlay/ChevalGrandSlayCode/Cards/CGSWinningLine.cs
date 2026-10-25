@@ -1,3 +1,4 @@
+using ChevalGrandSlay.Utilities;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
@@ -46,7 +47,7 @@ public sealed class CGSWinningLine : ModCardTemplate
                          previousAttacks * DynamicVars[BonusDamageVarName].BaseValue;
 
         await DamageCmd.Attack(damage)
-            .FromCard(this)
+            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
     }

@@ -1,4 +1,5 @@
 using ChevalGrandSlay.Keywords;
+using ChevalGrandSlay.Utilities;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -8,6 +9,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Combat.HandSize;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -40,6 +42,7 @@ public sealed class CGSDomainPower : ModPowerTemplate
             return;
 
         await PlayerCmd.GainEnergy(EnergyPerTurn, player);
+        CGSDomainBGGray.FadeBackgroundToGrayscale();
 
         // Snapshot the pile because moving cards can trigger other powers and change its contents.
         var restingCards = Entry.CGSFatePile.GetPile(player).Cards.ToArray();
@@ -57,7 +60,12 @@ public sealed class CGSDomainPower : ModPowerTemplate
                 : PileType.Draw;
             await CardPileCmd.Add(card, destination);
         }
-        //TODO:Add VFX here
+    }
+
+    public override Task AfterCombatEnd(CombatRoom room)
+    {
+        CGSDomainBGGray.RestoreBackgroundColor();
+        return Task.CompletedTask;
     }
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,

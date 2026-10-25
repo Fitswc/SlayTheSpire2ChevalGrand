@@ -1,3 +1,4 @@
+using ChevalGrandSlay.Utilities;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
@@ -40,7 +41,7 @@ public sealed class CGSEarthshakingStep : ModCardTemplate
         ArgumentNullException.ThrowIfNull(CombatState);
         // 一次支付，伤害命令负责对全部敌人结算。
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).TargetingAllOpponents(CombatState).Execute(choiceContext);
+            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").TargetingAllOpponents(CombatState).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()

@@ -37,6 +37,7 @@ public sealed class CGSPierceTheGap : ModCardTemplate
         CGSConsumeUse.Consume(this);
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         
+        VfxCmd.PlayOnCreatureCenter(cardPlay.Target, "vfx/vfx_attack_slash");
         await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue,
             ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this);
     }

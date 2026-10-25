@@ -1,3 +1,4 @@
+using ChevalGrandSlay.Utilities;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
@@ -53,10 +54,10 @@ public sealed class CGSOldWallNewEdge : ModCardTemplate
             await CreatureCmd.LoseBlock(Owner.Creature, spent);
         }
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue + spent)
-            .FromCard(this).Targeting(cardPlay.Target).Execute(choiceContext);
+            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
         
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).Targeting(cardPlay.Target).Execute(choiceContext);
+            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
     }
 
     protected override void OnUpgrade() {

@@ -1,4 +1,5 @@
-﻿using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Utilities;
+using ChevalGrandSlay.Characters;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -65,7 +66,7 @@ public sealed class CGSDisrupTheFormation : ModCardTemplate
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 

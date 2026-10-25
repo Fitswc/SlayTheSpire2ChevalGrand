@@ -1,3 +1,4 @@
+using ChevalGrandSlay.Utilities;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
@@ -40,12 +41,12 @@ public sealed class CGSOpportunisticPursuit : ModCardTemplate
         
         bool hasPreviousAttack = CGSAttackChain.CountAttacksPlayedThisTurn(Owner, CombatState, cardPlay) >= 1;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).Targeting(cardPlay.Target).Execute(choiceContext);
+            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
 
         if (hasPreviousAttack)
         {
             await DamageCmd.Attack(DynamicVars["BonusDamage"].BaseValue)
-                .FromCard(this).Targeting(cardPlay.Target).Execute(choiceContext);
+                .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
         }
     }
 

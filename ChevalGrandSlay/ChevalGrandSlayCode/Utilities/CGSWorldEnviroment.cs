@@ -1,6 +1,5 @@
 using ChevalGrandSlay;
 using Godot;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Nodes;
 
 /// <summary>
@@ -104,7 +103,7 @@ public static class CGSWorldEnvironmentUtil
 
         env.Environment.AdjustmentSaturation = saturation;
     }
-    
+
     /// <summary>
     /// 重置所有调整参数为默认值（曝光1，亮度1，对比度1，饱和度1，发光强度0.8）。
     /// 不会自动 DeactivateEnvironment，如需关闭请手动调用。

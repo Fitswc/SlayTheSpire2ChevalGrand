@@ -1,3 +1,4 @@
+using ChevalGrandSlay.Utilities;
 using ChevalGrandSlay.Characters;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -41,7 +42,7 @@ public sealed class CGSRemoveTheCharm : ModCardTemplate
         }
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(2)
-            .FromCard(this).Targeting(cardPlay.Target).Execute(choiceContext);
+            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()

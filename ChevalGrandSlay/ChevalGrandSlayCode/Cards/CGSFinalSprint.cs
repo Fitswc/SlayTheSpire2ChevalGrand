@@ -1,3 +1,4 @@
+using ChevalGrandSlay.Utilities;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
@@ -47,7 +48,7 @@ public sealed class CGSFinalSprint : ModCardTemplate
         int cardsInFate = Entry.CGSFatePile.GetPile(Owner).Cards.Count;
         decimal bonus = Math.Min(cardsInFate * 2m, DynamicVars["FateBonusCap"].BaseValue);
         //TODO: Check
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
             .TargetingAllOpponents(CombatState).Execute(choiceContext);
     }
 
