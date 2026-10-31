@@ -1,3 +1,8 @@
 {
-
+  "NEOW.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.0-0.char": "I'm ready.",
+  "NEOW.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.0-0.next": "Continue",
+  "NEOW.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.0-1.ancient": "[sine]Go... use this template... build your character...[/sine]",
+  "DARV.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.0-0.char": "It's still empty here.",
+  "DARV.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.0-0.next": "Continue",
+  "DARV.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.0-1.ancient": "Empty is perfect! Grab something and fill it up!"
 }

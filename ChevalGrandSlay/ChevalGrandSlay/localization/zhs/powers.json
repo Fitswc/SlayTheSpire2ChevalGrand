@@ -87,5 +87,8 @@
   "CHEVAL_GRAND_SLAY_POWER_CGS_WINNING_RHYTHM_POWER.description": "你的回合中，每打出1张攻击牌后，对所有敌人造成[blue]X层[/blue]点伤害；每回合至多触发3次。",
   "CHEVAL_GRAND_SLAY_POWER_CGS_WINNING_RHYTHM_POWER.smartDescription": "你的回合中，每打出1张攻击牌后，对所有敌人造成[blue]X层[/blue]点伤害；每回合至多触发3次。",
   "CHEVAL_GRAND_SLAY_POWER_CGS_RESTART_THE_JOURNEY_POWER.selectionScreenPrompt": "选择1张休整牌堆中的牌恢复体力并置入弃牌堆",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_SMOOTH_BREATHING_POWER.selectionScreenPrompt": "选择1张抽牌堆顶的牌加入手牌"
+  "CHEVAL_GRAND_SLAY_POWER_CGS_SMOOTH_BREATHING_POWER.selectionScreenPrompt": "选择1张抽牌堆顶的牌加入手牌",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_ONE_BEAT_AHEAD_POWER.title": "先行一拍",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_ONE_BEAT_AHEAD_POWER.description": "本回合结束后获得一个额外回合。该额外回合不能获得额外回合。",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_ONE_BEAT_AHEAD_POWER.smartDescription": "本回合结束后获得一个额外回合。该额外回合不能获得额外回合。"
 }

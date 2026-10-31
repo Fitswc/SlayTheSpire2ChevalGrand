@@ -1,3 +1,5 @@
 {
-
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.title": "A Promise Before the Start",
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.description": "On the first turn of each combat, gain {Energy:energyIcons()}.",
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.flavor": "An example relic for validating the template project."
 }

@@ -1,3 +1,21 @@
 {
-  
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.aromaPrinciple": "[sine][blue]A new journey begins with a clean template.[/blue][/sine]",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.banter.alive.endTurnPing": "Turn over.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.banter.dead.endTurnPing": "I'll retreat for now.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.cardsModifierDescription": "Cheval Grand's cards now appear in rewards and shops.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.cardsModifierTitle": "Template Cards",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.defeatMessage": "The template still needs adjustments.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.description": "An example character for validating a RitsuLib template project.\nAfter copying the template, replace this with your character's background.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.eventDeathPrevention": "Cheval Grand keeps going.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.flavor": "A clean template, waiting to become a new adventure.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.goldMonologue": "This gold is enough to start testing.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.possessiveAdjective": "her",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.pronounObject": "her",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.pronounPossessive": "hers",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.pronounSubject": "she",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.selectMessage": "Cheval Grand is ready.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.title": "Cheval Grand",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.titleObject": "Cheval Grand",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.unlockText": "Play a run with [pink]{Prerequisite}[/pink] to unlock this character.",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.victoryMessage": "Template validation complete."
 }
