@@ -327,5 +327,5 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_TO_THE_TRACK.title": "Return to the Track",
   "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_TO_THE_TRACK.description": "Return {RecoveryCount:diff()} random Stamina cards from your [gold]Fate pile[/gold] to your hand, restoring {Restore:diff()} Stamina to each.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ONE_BEAT_AHEAD.title": "One Beat Ahead",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_ONE_BEAT_AHEAD.description": "At the end of this turn, immediately take an extra turn.\nDuring that turn, you cannot take extra turns.\nExhaust."
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ONE_BEAT_AHEAD.description": "At the end of this turn, immediately take an extra turn.\nDuring that turn, you cannot take extra turns."
 }
