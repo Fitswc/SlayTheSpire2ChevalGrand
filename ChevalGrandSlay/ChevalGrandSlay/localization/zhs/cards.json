@@ -1,5 +1,5 @@
 {
-  "CHEVAL_GRAND_SLAY_CARD_CGS_EMPTY_SHELL.title": "让我缓缓",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_EMPTY_SHELL.title": "让我休息一下...",
   "CHEVAL_GRAND_SLAY_CARD_CGS_EMPTY_SHELL.description": "没有效果，这张牌的出现有可能是你复制了一张体力值为0的卡牌",
   
   "CHEVAL_GRAND_SLAY_CARD_CGS_STRIKE.title": "打击",
@@ -92,7 +92,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_COUNT_THE_COST.title": "汗水会回应",
   "CHEVAL_GRAND_SLAY_CARD_CGS_COUNT_THE_COST.description": "抽{Cards:diff()}张牌。若本回合已有牌进入[gold]休整牌堆[/gold]，返还1点能量。",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.title": "重续青空约",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.title": "青空下的约定",
   "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.description": "从[gold]休整牌堆[/gold]选择至多2张不同的牌，各恢复1点体力并置入弃牌堆。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.selectionScreenPrompt": "选择1至2张休整牌堆中的牌恢复体力",
 

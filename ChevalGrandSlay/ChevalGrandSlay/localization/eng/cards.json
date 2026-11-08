@@ -92,7 +92,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_COUNT_THE_COST.title": "Effort Rewarded",
   "CHEVAL_GRAND_SLAY_CARD_CGS_COUNT_THE_COST.description": "Draw {Cards:diff()} cards. If a card has entered your [gold]Rest Pile[/gold] this turn, regain 1 Energy.",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.title": "Renew Our Promise to the Sky",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.title": "Promise under the Sky",
   "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.description": "Choose up to 2 different cards from your [gold]Rest Pile[/gold], restore 1 Stamina to each, and move them to your discard pile.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.selectionScreenPrompt": "Choose 1 or 2 cards from the Rest Pile to restore Stamina",
 
