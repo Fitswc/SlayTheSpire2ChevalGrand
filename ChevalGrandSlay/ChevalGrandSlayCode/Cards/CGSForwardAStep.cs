@@ -51,7 +51,6 @@ public sealed class CGSForwardAStep : ModCardTemplate
 
     public CGSForwardAStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        
     }
 
     // 打出时的效果逻辑。

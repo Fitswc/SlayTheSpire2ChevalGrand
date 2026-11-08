@@ -51,7 +51,6 @@ public sealed class CGSPrefectDefend : ModCardTemplate
 
     public CGSPrefectDefend() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        
     }
 
     // 打出时的效果逻辑，这里是获得格挡。

@@ -16,6 +16,21 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSWinningLine : ModCardTemplate
 {
+    // 基础耗能。
+    private const int BaseEnergyCost = 2;
+
+    // 卡牌类型。
+    private const CardType CardKind = CardType.Attack;
+
+    // 卡牌稀有度。
+    private const CardRarity CardRarityValue = CardRarity.Rare;
+
+    // 目标类型（AnyEnemy 表示任意敌人）。
+    private const TargetType CardTarget = TargetType.AnyEnemy;
+
+    // 是否在卡牌图鉴中显示。
+    private const bool ShowInCardLibrary = true;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     private const string BonusDamageVarName = "BonusDamage";
@@ -31,7 +46,7 @@ public sealed class CGSWinningLine : ModCardTemplate
         new DynamicVar("MaxUses", 3m)
     ];
 
-    public CGSWinningLine() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+    public CGSWinningLine() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
     }
 

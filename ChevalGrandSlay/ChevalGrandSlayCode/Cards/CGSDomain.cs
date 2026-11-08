@@ -18,6 +18,21 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSDomain : ModCardTemplate
 {
+    // 基础耗能。
+    private const int BaseEnergyCost = 0;
+
+    // 卡牌类型。
+    private const CardType CardKind = CardType.Skill;
+
+    // 卡牌稀有度。
+    private const CardRarity CardRarityValue = CardRarity.Rare;
+
+    // 目标类型（Self 表示自己）。
+    private const TargetType CardTarget = TargetType.Self;
+
+    // 是否在卡牌图鉴中显示。
+    private const bool ShowInCardLibrary = true;
+
     public override int MaxUpgradeLevel => 0;
 
     public override CardAssetProfile AssetProfile => new(
@@ -44,7 +59,9 @@ public sealed class CGSDomain : ModCardTemplate
 
     protected override bool IsPlayable => Owner is not null && !Owner.Creature.HasPower<CGSDomainPower>();
 
-    public CGSDomain() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self, true) { }
+    public CGSDomain() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    {
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

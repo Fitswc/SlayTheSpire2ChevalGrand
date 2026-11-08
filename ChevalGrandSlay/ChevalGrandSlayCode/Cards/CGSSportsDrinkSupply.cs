@@ -14,6 +14,21 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSSportsDrinkSupply : ModCardTemplate
 {
+    // 基础耗能。
+    private const int BaseEnergyCost = 1;
+
+    // 卡牌类型。
+    private const CardType CardKind = CardType.Skill;
+
+    // 卡牌稀有度。
+    private const CardRarity CardRarityValue = CardRarity.Rare;
+
+    // 目标类型（Self 表示自己）。
+    private const TargetType CardTarget = TargetType.Self;
+
+    // 是否在卡牌图鉴中显示。
+    private const bool ShowInCardLibrary = true;
+
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
@@ -27,7 +42,9 @@ public sealed class CGSSportsDrinkSupply : ModCardTemplate
         HoverTipFactory.FromCard<CGSEnergyDrink>()
     ];
 
-    public CGSSportsDrinkSupply() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self, true) { }
+    public CGSSportsDrinkSupply() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    {
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

@@ -17,6 +17,21 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSFinalKick : ModCardTemplate
 {
+    // 基础耗能。
+    private const int BaseEnergyCost = 0;
+
+    // 卡牌类型。
+    private const CardType CardKind = CardType.Skill;
+
+    // 卡牌稀有度。
+    private const CardRarity CardRarityValue = CardRarity.Rare;
+
+    // 目标类型（AllEnemies 表示所有敌人）。
+    private const TargetType CardTarget = TargetType.AllEnemies;
+
+    // 是否在卡牌图鉴中显示。
+    private const bool ShowInCardLibrary = true;
+
     public override int MaxUpgradeLevel => 0;
 
     public override CardAssetProfile AssetProfile => new(
@@ -40,7 +55,9 @@ public sealed class CGSFinalKick : ModCardTemplate
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 
-    public CGSFinalKick() : base(0, CardType.Skill, CardRarity.Rare, TargetType.AllEnemies, true) { }
+    public CGSFinalKick() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    {
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

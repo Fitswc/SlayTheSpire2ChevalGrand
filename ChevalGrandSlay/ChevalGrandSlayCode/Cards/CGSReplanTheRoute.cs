@@ -15,6 +15,21 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSReplanTheRoute : ModCardTemplate
 {
+    // 基础耗能。
+    private const int BaseEnergyCost = 1;
+
+    // 卡牌类型。
+    private const CardType CardKind = CardType.Skill;
+
+    // 卡牌稀有度。
+    private const CardRarity CardRarityValue = CardRarity.Uncommon;
+
+    // 目标类型（Self 表示自己）。
+    private const TargetType CardTarget = TargetType.Self;
+
+    // 是否在卡牌图鉴中显示。
+    private const bool ShowInCardLibrary = true;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     public override CardAssetProfile AssetProfile => new(
@@ -28,7 +43,7 @@ public sealed class CGSReplanTheRoute : ModCardTemplate
             new CardsVar(1)
         ];
 
-    public CGSReplanTheRoute() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
+    public CGSReplanTheRoute() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
     }
 

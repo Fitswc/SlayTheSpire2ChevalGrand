@@ -18,6 +18,21 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSPourIntoOneMove : ModCardTemplate
 {
+    // 基础耗能。
+    private const int BaseEnergyCost = 1;
+
+    // 卡牌类型。
+    private const CardType CardKind = CardType.Skill;
+
+    // 卡牌稀有度。
+    private const CardRarity CardRarityValue = CardRarity.Rare;
+
+    // 目标类型（AnyEnemy 表示任意敌人）。
+    private const TargetType CardTarget = TargetType.AnyEnemy;
+
+    // 是否在卡牌图鉴中显示。
+    private const bool ShowInCardLibrary = true;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     public override CardAssetProfile AssetProfile =>
@@ -32,9 +47,8 @@ public sealed class CGSPourIntoOneMove : ModCardTemplate
     //protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
     //    PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
 
-    public CGSPourIntoOneMove() : base(1, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy, true)
+    public CGSPourIntoOneMove() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

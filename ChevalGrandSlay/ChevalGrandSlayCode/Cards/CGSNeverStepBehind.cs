@@ -58,7 +58,9 @@ public sealed class CGSNeverStepBehind : ModCardTemplate
     ];
 
 
-    public CGSNeverStepBehind() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary) { }
+    public CGSNeverStepBehind() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    {
+    }
 
     // 打出时的效果逻辑，这里是获得格挡。
     protected override async Task OnPlay(

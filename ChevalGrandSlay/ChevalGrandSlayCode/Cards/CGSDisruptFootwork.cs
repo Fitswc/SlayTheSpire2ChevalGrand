@@ -16,6 +16,21 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSDisruptFootwork : ModCardTemplate
 {
+    // 基础耗能。
+    private const int BaseEnergyCost = 0;
+
+    // 卡牌类型。
+    private const CardType CardKind = CardType.Skill;
+
+    // 卡牌稀有度。
+    private const CardRarity CardRarityValue = CardRarity.Uncommon;
+
+    // 目标类型（AllEnemies 表示所有敌人）。
+    private const TargetType CardTarget = TargetType.AllEnemies;
+
+    // 是否在卡牌图鉴中显示。
+    private const bool ShowInCardLibrary = true;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
@@ -31,7 +46,7 @@ public sealed class CGSDisruptFootwork : ModCardTemplate
         new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m)
     ];
 
-    public CGSDisruptFootwork() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies)
+    public CGSDisruptFootwork() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
     }
 

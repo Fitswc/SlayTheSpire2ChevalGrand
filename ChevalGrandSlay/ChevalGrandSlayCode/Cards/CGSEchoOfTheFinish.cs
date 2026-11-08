@@ -14,6 +14,21 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSEchoOfTheFinish : ModCardTemplate
 {
+    // 基础耗能。
+    private const int BaseEnergyCost = 2;
+
+    // 卡牌类型。
+    private const CardType CardKind = CardType.Power;
+
+    // 卡牌稀有度。
+    private const CardRarity CardRarityValue = CardRarity.Rare;
+
+    // 目标类型（Self 表示自己）。
+    private const TargetType CardTarget = TargetType.Self;
+
+    // 是否在卡牌图鉴中显示。
+    private const bool ShowInCardLibrary = true;
+
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     
@@ -22,9 +37,8 @@ public sealed class CGSEchoOfTheFinish : ModCardTemplate
             new DynamicVar("OverflowCap", 12m)
         ];
 
-    public CGSEchoOfTheFinish() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self, true)
+    public CGSEchoOfTheFinish() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

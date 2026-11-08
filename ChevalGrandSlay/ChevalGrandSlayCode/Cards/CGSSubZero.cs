@@ -45,7 +45,9 @@ public sealed class CGSSubZero : ModCardTemplate
         new DynamicVar("Turns", 3m)
     ];
     
-    public CGSSubZero() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary) { }
+    public CGSSubZero() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    {
+    }
 
     // 先弃牌，再获得持续三个己方回合的格挡效果。
     protected override async Task OnPlay(

@@ -54,7 +54,6 @@ public sealed class CGSWaitAndSee : ModCardTemplate
 
     public CGSWaitAndSee() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-
     }
 
     // 打出时的效果逻辑。

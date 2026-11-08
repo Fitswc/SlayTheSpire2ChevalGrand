@@ -17,6 +17,21 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSCushionLanding : ModCardTemplate
 {
+    // 基础耗能。
+    private const int BaseEnergyCost = 1;
+
+    // 卡牌类型。
+    private const CardType CardKind = CardType.Skill;
+
+    // 卡牌稀有度。
+    private const CardRarity CardRarityValue = CardRarity.Common;
+
+    // 目标类型（Self 表示自己）。
+    private const TargetType CardTarget = TargetType.Self;
+
+    // 是否在卡牌图鉴中显示。
+    private const bool ShowInCardLibrary = true;
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
@@ -35,9 +50,8 @@ public sealed class CGSCushionLanding : ModCardTemplate
             new BlockVar(6m, ValueProp.Move)
         ];
 
-    public CGSCushionLanding() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self, true)
+    public CGSCushionLanding() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

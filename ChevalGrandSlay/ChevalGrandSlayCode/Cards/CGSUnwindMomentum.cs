@@ -16,6 +16,21 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSUnwindMomentum : ModCardTemplate
 {
+    // 基础耗能。
+    private const int BaseEnergyCost = 1;
+
+    // 卡牌类型。
+    private const CardType CardKind = CardType.Skill;
+
+    // 卡牌稀有度。
+    private const CardRarity CardRarityValue = CardRarity.Common;
+
+    // 目标类型（AnyEnemy 表示任意敌人）。
+    private const TargetType CardTarget = TargetType.AnyEnemy;
+
+    // 是否在卡牌图鉴中显示。
+    private const bool ShowInCardLibrary = true;
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<WeakPower>()
     ];
@@ -29,9 +44,8 @@ public sealed class CGSUnwindMomentum : ModCardTemplate
             new PowerVar<WeakPower>(3m)
         ];
 
-    public CGSUnwindMomentum() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy, true)
+    public CGSUnwindMomentum() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

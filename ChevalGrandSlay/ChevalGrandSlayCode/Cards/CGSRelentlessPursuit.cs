@@ -15,6 +15,21 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRelentlessPursuit : ModCardTemplate
 {
+    // 基础耗能。
+    private const int BaseEnergyCost = 1;
+
+    // 卡牌类型。
+    private const CardType CardKind = CardType.Attack;
+
+    // 卡牌稀有度。
+    private const CardRarity CardRarityValue = CardRarity.Common;
+
+    // 目标类型（AnyEnemy 表示任意敌人）。
+    private const TargetType CardTarget = TargetType.AnyEnemy;
+
+    // 是否在卡牌图鉴中显示。
+    private const bool ShowInCardLibrary = true;
+
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
@@ -24,9 +39,8 @@ public sealed class CGSRelentlessPursuit : ModCardTemplate
         new DynamicVar("BonusDamage", 4m),
     ];
 
-    public CGSRelentlessPursuit() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy, true)
+    public CGSRelentlessPursuit() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

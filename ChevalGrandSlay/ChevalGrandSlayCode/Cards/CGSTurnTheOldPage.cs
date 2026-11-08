@@ -16,6 +16,21 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSTurnTheOldPage : ModCardTemplate
 {
+    // 基础耗能。
+    private const int BaseEnergyCost = 0;
+
+    // 卡牌类型。
+    private const CardType CardKind = CardType.Skill;
+
+    // 卡牌稀有度。
+    private const CardRarity CardRarityValue = CardRarity.Uncommon;
+
+    // 目标类型（Self 表示自己）。
+    private const TargetType CardTarget = TargetType.Self;
+
+    // 是否在卡牌图鉴中显示。
+    private const bool ShowInCardLibrary = true;
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
     ];
@@ -37,9 +52,8 @@ public sealed class CGSTurnTheOldPage : ModCardTemplate
     //   PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
 
     
-    public CGSTurnTheOldPage() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
+    public CGSTurnTheOldPage() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

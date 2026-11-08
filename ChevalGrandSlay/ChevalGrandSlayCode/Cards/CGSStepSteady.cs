@@ -48,7 +48,6 @@ public sealed class CGSStepSteady : ModCardTemplate
 
     public CGSStepSteady() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        
     }
 
     // 打出时的效果逻辑。

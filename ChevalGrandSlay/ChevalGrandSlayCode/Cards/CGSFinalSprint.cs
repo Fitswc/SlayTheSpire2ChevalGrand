@@ -18,6 +18,21 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSFinalSprint : ModCardTemplate
 {
+    // 基础耗能。
+    private const int BaseEnergyCost = 2;
+
+    // 卡牌类型。
+    private const CardType CardKind = CardType.Attack;
+
+    // 卡牌稀有度。
+    private const CardRarity CardRarityValue = CardRarity.Rare;
+
+    // 目标类型（AllEnemies 表示所有敌人）。
+    private const TargetType CardTarget = TargetType.AllEnemies;
+
+    // 是否在卡牌图鉴中显示。
+    private const bool ShowInCardLibrary = true;
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
@@ -36,9 +51,8 @@ public sealed class CGSFinalSprint : ModCardTemplate
             new DynamicVar("FateBonusCap", 8m)
         ];
 
-    public CGSFinalSprint() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies, true)
+    public CGSFinalSprint() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

@@ -16,6 +16,21 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSFinalChainStep : ModCardTemplate
 {
+    // 基础耗能。
+    private const int BaseEnergyCost = 2;
+
+    // 卡牌类型。
+    private const CardType CardKind = CardType.Attack;
+
+    // 卡牌稀有度。
+    private const CardRarity CardRarityValue = CardRarity.Rare;
+
+    // 目标类型（AnyEnemy 表示任意敌人）。
+    private const TargetType CardTarget = TargetType.AnyEnemy;
+
+    // 是否在卡牌图鉴中显示。
+    private const bool ShowInCardLibrary = true;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     public override CardAssetProfile AssetProfile => new(
@@ -28,9 +43,8 @@ public sealed class CGSFinalChainStep : ModCardTemplate
         new DynamicVar("MaxUses", 2m)
     ];
 
-    public CGSFinalChainStep() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+    public CGSFinalChainStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
-        
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
