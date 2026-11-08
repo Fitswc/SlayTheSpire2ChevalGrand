@@ -14,7 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 凿开破绽
+// 卡牌：向前探身
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSBreakTheOpening : ModCardTemplate
 {

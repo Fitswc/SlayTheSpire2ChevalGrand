@@ -13,7 +13,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 倾注一式
+// 卡牌：全力投球
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSPourIntoOneMove : ModCardTemplate
 {

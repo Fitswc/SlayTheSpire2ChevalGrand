@@ -13,7 +13,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 再续胜负
+// 卡牌：再较量一次
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRenewTheContest : ModCardTemplate
 {

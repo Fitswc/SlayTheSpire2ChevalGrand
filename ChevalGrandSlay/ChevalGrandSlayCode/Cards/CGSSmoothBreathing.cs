@@ -9,7 +9,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 顺畅呼吸
+// 卡牌：独处的节奏
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSSmoothBreathing : ModCardTemplate
 {

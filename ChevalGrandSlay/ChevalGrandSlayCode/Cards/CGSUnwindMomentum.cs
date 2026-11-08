@@ -11,7 +11,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 卸下冲势
+// 卡牌：躲进帽檐
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSUnwindMomentum : ModCardTemplate
 {

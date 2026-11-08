@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 整备接应
+// 卡牌：让我来支撑
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSReadyReception : ModCardTemplate
 {

@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 追上节奏
+// 卡牌：笨拙跟拍
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSCatchTheRhythm : ModCardTemplate
 {

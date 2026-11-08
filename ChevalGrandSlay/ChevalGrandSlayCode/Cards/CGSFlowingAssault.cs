@@ -9,7 +9,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 行云流水
+// 卡牌：顺风的航程
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSFlowingAssault : ModCardTemplate
 {

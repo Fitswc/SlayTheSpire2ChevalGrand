@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 命运回声
+// 卡牌：潮声再起
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSFateEcho : ModCardTemplate
 {

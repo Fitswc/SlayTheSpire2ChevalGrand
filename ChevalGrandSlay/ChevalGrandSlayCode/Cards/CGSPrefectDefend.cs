@@ -7,9 +7,10 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
-//稳固步调
 
 namespace ChevalGrandSlay.Cards;
+
+// 卡牌：自制心
 
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSPrefectDefend : ModCardTemplate

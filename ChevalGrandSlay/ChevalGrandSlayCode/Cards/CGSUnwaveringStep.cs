@@ -10,7 +10,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 重步不乱
+// 卡牌：即使有些笨拙
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSUnwaveringStep : ModCardTemplate
 {

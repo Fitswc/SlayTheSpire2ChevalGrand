@@ -8,7 +8,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 一往无前
+// 卡牌：进攻姿态
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSForgeAhead : ModCardTemplate
 {

@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 最后的末脚
+// 卡牌：末脚
 
 //TODO:修复费用
 [RegisterCard(typeof(CGSCardPool))]

@@ -11,7 +11,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 余次感知
+// 卡牌：疲惫的倔强
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRemainingUsesSense : ModCardTemplate
 {

@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 轻捷一步
+// 卡牌：怯怯的一步
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSLightStep : ModCardTemplate
 {

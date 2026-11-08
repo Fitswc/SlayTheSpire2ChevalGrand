@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 卸除护符
+// 卡牌：越过隔阂
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRemoveTheCharm : ModCardTemplate
 {

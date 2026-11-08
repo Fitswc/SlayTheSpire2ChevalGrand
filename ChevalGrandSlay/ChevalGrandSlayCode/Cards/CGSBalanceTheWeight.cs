@@ -10,7 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 轻重调配
+// 卡牌：多吃一口
 //Verify
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSBalanceTheWeight : ModCardTemplate

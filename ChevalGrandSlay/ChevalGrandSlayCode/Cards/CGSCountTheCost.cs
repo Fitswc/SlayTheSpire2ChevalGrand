@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 算清代价
+// 卡牌：汗水会回应
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSCountTheCost : ModCardTemplate
 {

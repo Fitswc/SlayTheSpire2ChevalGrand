@@ -12,7 +12,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 并肩转身
+// 卡牌：再一起跑吧
+
 //TODO:Check && Verify
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSTurnTogether : ModCardTemplate

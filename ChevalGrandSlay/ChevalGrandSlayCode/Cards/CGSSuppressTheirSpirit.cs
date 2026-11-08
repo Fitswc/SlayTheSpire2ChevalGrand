@@ -12,7 +12,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 压住气焰
+// 卡牌：请记住我
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSSuppressTheirSpirit : ModCardTemplate
 {

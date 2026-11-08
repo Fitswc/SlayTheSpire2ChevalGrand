@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 校正队列
+// 卡牌：整理钓线
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSCorrectTheFormation : ModCardTemplate
 {

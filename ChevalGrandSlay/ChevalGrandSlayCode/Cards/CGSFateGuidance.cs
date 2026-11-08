@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 命运引航
+// 卡牌：Tidebreaker
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSFateGuidance : ModCardTemplate
 {

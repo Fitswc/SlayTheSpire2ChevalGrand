@@ -11,7 +11,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 过往借力
+// 卡牌：光的背影
+
 
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSBorrowFromThePast : ModCardTemplate

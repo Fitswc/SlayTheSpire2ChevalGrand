@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 翻过旧页
+// 卡牌：昨日的练习
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSTurnTheOldPage : ModCardTemplate
 {

@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
-//扰乱阵型
+// 卡牌：影打
 
 namespace ChevalGrandSlay.Cards;
 

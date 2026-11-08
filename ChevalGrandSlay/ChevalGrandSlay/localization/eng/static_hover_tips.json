@@ -1,7 +1,7 @@
 {
   "CHEVAL_GRAND_SLAY_SECONDARY_RESOURCE_CGS_DETERMINATION.title": "Determination",
   "CHEVAL_GRAND_SLAY_SECONDARY_RESOURCE_CGS_DETERMINATION.description": "Determination",
-  "CHEVAL_GRAND_SLAY_CARDPILE_FATE.title": "Fate Pile",
+  "CHEVAL_GRAND_SLAY_CARDPILE_FATE.title": "Rest Pile",
   "CHEVAL_GRAND_SLAY_CARDPILE_FATE.description": "Cards enter this pile when their Stamina is depleted.",
-  "CHEVAL_GRAND_SLAY_CARDPILE_FATE.empty": "Um... there are no cards in the Fate pile."
+  "CHEVAL_GRAND_SLAY_CARDPILE_FATE.empty": "Um... there are no cards in the Rest Pile."
 }

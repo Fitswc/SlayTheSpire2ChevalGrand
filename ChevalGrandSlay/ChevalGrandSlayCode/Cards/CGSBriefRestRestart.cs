@@ -13,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 小憩再启
+// 卡牌：偶尔吃多点
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSBriefRestRestart : ModCardTemplate
 {

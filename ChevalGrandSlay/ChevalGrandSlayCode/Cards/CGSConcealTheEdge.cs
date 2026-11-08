@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 收敛锋芒
+// 卡牌：压低帽檐
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSConcealTheEdge : ModCardTemplate
 {

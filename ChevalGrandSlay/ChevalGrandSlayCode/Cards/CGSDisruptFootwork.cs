@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 打乱步点
+// 卡牌：别小看我
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSDisruptFootwork : ModCardTemplate
 {

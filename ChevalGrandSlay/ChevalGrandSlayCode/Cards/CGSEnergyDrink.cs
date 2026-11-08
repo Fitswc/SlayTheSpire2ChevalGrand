@@ -8,7 +8,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 能量饮料
+// 卡牌：运动饮料
+
 [RegisterCard(typeof(ColorlessCardPool))]
 public sealed class CGSEnergyDrink : ModCardTemplate
 {

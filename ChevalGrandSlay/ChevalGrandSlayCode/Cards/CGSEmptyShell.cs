@@ -6,6 +6,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
+// 卡牌：让我缓缓
+
 // 体力耗尽的卡牌被复制时产生的空壳。
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSEmptyShell : ModCardTemplate

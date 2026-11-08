@@ -9,7 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 扫去杂念
+// 卡牌：与自卑告别
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSClearDistractions : ModCardTemplate
 {

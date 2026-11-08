@@ -11,7 +11,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 终线回声
+// 卡牌：光的残响
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSFinishLineEcho : ModCardTemplate
 {

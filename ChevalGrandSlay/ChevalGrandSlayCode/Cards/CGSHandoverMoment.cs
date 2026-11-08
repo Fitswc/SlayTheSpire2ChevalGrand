@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 交接时机
+// 卡牌：轮到你了
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSHandoverMoment : ModCardTemplate
 {

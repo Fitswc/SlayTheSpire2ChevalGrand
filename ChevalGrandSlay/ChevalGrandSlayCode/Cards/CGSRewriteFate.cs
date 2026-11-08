@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 重写命运
+// 卡牌：重续青空约
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRewriteFate : ModCardTemplate
 {

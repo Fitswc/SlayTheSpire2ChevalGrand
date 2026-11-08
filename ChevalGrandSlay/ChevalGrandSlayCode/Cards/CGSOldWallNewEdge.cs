@@ -13,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 旧垒开新锋
+// 卡牌：放手一搏
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSOldWallNewEdge : ModCardTemplate
 {

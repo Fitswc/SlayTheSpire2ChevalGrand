@@ -13,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 缓冲落点
+// 卡牌：小歇
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSCushionLanding : ModCardTemplate
 {

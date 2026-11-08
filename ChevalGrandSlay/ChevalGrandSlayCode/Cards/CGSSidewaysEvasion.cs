@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 侧向回避
+// 卡牌：躲开人群
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSSidewaysEvasion : ModCardTemplate
 {

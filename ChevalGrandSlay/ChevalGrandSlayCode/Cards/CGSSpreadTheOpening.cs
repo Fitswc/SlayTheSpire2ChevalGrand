@@ -10,7 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 扩散破绽
+// 卡牌：浪纹扩散
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSSpreadTheOpening : ModCardTemplate
 {

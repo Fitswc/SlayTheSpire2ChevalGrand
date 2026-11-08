@@ -13,7 +13,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 终局冲线
+// 卡牌：伟大踏破
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSFinalSprint : ModCardTemplate
 {

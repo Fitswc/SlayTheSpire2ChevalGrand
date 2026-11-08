@@ -8,7 +8,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 先行一拍
+// 卡牌：憧憬的前方
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSOneBeatAhead : ModCardTemplate
 {

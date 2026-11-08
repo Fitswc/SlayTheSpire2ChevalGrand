@@ -9,7 +9,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 留有余裕
+// 卡牌：昨日的余力
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSKeepSomeInReserve : ModCardTemplate
 {

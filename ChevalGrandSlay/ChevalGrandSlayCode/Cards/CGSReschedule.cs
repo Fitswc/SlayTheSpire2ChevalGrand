@@ -8,7 +8,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 重排赛程
+// 卡牌：重新出发
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSReschedule : ModCardTemplate
 {

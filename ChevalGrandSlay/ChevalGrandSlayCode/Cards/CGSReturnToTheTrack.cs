@@ -10,7 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 重返赛道
+// 卡牌：重回起跑线
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSReturnToTheTrack : ModCardTemplate
 {

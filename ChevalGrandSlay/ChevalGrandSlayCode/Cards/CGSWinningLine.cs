@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 胜势一线
+// 卡牌：伸手可及
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSWinningLine : ModCardTemplate
 {

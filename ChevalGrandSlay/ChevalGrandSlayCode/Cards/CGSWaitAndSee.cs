@@ -12,6 +12,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
+// 卡牌：静候咬钩
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSWaitAndSee : ModCardTemplate
 {

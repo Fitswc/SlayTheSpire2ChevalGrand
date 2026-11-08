@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 护住终点
+// 卡牌：姐妹的声援
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSGuardTheFinish : ModCardTemplate
 {

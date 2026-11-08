@@ -12,7 +12,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 旧路余温
+// 卡牌：点滴积累
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSOldRoadWarmth : ModCardTemplate
 {

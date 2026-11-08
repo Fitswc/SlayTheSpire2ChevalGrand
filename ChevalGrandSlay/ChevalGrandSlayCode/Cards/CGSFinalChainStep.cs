@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 终盘连踏
+// 卡牌：超越那束光
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSFinalChainStep : ModCardTemplate
 {

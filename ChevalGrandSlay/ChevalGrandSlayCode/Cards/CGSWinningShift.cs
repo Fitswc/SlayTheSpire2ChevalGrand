@@ -10,7 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 决胜换挡
+// 卡牌：碧海航线
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSWinningShift : ModCardTemplate
 {

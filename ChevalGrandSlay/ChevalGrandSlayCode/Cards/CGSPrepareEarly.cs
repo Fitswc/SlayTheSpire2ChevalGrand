@@ -9,7 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 提前整备
+// 卡牌：独自晨练
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSPrepareEarly : ModCardTemplate
 {

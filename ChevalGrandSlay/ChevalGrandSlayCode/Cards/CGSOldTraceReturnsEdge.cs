@@ -13,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 旧迹回锋
+// 卡牌：汗水的痕迹
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSOldTraceReturnsEdge : ModCardTemplate
 {

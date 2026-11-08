@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 无悔落幕
+// 卡牌：没跑完的话
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSNoRegretsEnding : ModCardTemplate
 {

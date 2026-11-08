@@ -8,7 +8,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 重整手札
+// 卡牌：又写满一页
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSReorderNotes : ModCardTemplate
 {

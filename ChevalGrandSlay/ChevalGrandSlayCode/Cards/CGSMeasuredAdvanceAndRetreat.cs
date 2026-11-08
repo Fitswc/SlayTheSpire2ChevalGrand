@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 进退有界
+// 卡牌：稳守本垒
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSMeasuredAdvanceAndRetreat : ModCardTemplate
 {

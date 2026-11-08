@@ -9,7 +9,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 宽阔视野
+// 卡牌：我憧憬的蓝
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSWideView : ModCardTemplate
 {

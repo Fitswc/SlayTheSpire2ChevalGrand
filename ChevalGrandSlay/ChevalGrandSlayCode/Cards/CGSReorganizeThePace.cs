@@ -11,6 +11,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
+// 卡牌：听一会海风
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSReorganizeThePace : ModCardTemplate
 {

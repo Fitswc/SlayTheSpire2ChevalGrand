@@ -13,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 防御牌和打击一样注册到角色卡池，并作为 4 张初始卡加入角色卡组。
+// 卡牌：不甘的次席
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSNeverStepBehind : ModCardTemplate
 {

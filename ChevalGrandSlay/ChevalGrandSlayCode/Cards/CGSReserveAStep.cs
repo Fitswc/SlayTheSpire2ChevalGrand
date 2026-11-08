@@ -15,7 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 预留一步
+// 卡牌：还能再钓一条
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSReserveAStep : ModCardTemplate
 {

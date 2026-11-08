@@ -13,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 连踏
+// 卡牌：脚步渐轻
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSChainStep : ModCardTemplate
 {

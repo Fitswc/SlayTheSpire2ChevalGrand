@@ -14,7 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 撕开防线
+// 卡牌：请看着我
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSTearOpenDefense : ModCardTemplate
 {

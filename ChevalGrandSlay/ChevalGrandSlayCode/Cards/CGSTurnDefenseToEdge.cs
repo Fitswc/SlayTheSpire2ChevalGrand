@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 化守为锋
+// 卡牌：该抬起头了
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSTurnDefenseToEdge : ModCardTemplate
 {

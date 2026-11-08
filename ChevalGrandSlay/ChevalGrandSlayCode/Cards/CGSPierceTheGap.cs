@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 穿隙而入
+// 卡牌：穿浪
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSPierceTheGap : ModCardTemplate
 {

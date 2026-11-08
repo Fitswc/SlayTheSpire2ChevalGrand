@@ -11,7 +11,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 借势卸困
+// 卡牌：不惧不安
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSBorrowForceEscape : ModCardTemplate
 {

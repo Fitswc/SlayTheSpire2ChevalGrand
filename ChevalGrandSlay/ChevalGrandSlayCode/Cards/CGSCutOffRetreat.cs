@@ -14,7 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 截断退路
+// 卡牌：不再躲藏
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSCutOffRetreat : ModCardTemplate
 {

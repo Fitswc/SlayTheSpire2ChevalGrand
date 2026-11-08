@@ -9,7 +9,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 余威及远
+// 卡牌：打向远方!
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSEchoOfTheFinish : ModCardTemplate
 {

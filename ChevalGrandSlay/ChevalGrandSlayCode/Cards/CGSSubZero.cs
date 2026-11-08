@@ -8,9 +8,10 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
-// 冰点
 
 namespace ChevalGrandSlay.Cards;
+
+// 卡牌：夏凪
 
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSSubZero : ModCardTemplate

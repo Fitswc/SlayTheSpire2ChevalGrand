@@ -9,7 +9,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 连胜步调
+// 卡牌：快速进击
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSWinningRhythm : ModCardTemplate
 {

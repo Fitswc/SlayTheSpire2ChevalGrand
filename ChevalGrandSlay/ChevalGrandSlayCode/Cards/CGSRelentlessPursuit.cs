@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 紧追不舍
+// 卡牌：直到被看见
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRelentlessPursuit : ModCardTemplate
 {

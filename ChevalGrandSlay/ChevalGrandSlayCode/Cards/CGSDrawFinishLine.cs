@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 划定终线
+// 卡牌：今天的终点
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSDrawFinishLine : ModCardTemplate
 {

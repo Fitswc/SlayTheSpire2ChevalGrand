@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 领域
+// 卡牌：我也能耀眼
 
 //TODO:修复费用
 //

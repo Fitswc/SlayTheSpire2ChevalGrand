@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 旧约重启
+// 卡牌：那时约定的
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRenewTheOldPact : ModCardTemplate
 {

@@ -10,7 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 让出跑道
+// 卡牌：请借过一下
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSYieldTheTrack : ModCardTemplate
 {

@@ -13,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 重振锋芒
+// 卡牌：说我也可以
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRegainTheEdge : ModCardTemplate
 {

@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 接续攻势
+// 卡牌：下一棒上场
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSContinueTheOffensive : ModCardTemplate
 {

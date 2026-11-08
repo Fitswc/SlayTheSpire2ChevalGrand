@@ -9,7 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 稳固步调
+// 卡牌：慢慢站稳
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSSteadyPace : ModCardTemplate
 {

@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 疾步连打
+// 卡牌：三连挥棒
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRapidCombination : ModCardTemplate
 {

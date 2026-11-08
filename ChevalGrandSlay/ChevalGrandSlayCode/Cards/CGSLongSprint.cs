@@ -14,7 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 长线冲刺
+// 卡牌：迟来的疾驰
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSLongSprint : ModCardTemplate
 {

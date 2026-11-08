@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 折返标记
+// 卡牌：回垒记号
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSReturnMarker : ModCardTemplate
 {

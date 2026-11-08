@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 乘隙追击
+// 卡牌：追近那个人
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSOpportunisticPursuit : ModCardTemplate
 {

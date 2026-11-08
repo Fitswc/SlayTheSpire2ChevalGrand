@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 挪用壁垒
+// 卡牌：借来的从容
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRepurposeBulwark : ModCardTemplate
 {

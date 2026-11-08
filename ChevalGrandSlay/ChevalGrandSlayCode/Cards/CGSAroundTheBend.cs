@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 穿过弯道
+// 卡牌：转角后的蓝
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSAroundTheBend : ModCardTemplate
 {

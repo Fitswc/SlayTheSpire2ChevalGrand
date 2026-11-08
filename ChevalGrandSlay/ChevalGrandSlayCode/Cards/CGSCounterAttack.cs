@@ -11,6 +11,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
+// 卡牌：我也会还手
+
 // RegisterCard 会把这张牌交给 RitsuLib 自动注册。
 // RegisterCharacterStarterCard 会把它追加进 ChevalGrandSlayCharacter 的初始卡组。
 [RegisterCard(typeof(CGSCardPool))]

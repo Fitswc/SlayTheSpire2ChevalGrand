@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 重编路线
+// 卡牌：宏伟旅程
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSReplanTheRoute : ModCardTemplate
 {

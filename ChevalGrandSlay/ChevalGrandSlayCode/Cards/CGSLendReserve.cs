@@ -11,7 +11,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 转借余裕
+// 卡牌：传球
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSLendReserve : ModCardTemplate
 {

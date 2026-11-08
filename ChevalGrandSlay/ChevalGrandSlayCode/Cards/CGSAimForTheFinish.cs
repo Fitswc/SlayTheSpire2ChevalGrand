@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Cards;
 
 
-// 瞄准终点
+// 卡牌：心中的终点
 //TODO:补图
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSAimForTheFinish : ModCardTemplate

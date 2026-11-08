@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 震地踏击
+// 卡牌：小声的震撼
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSEarthshakingStep : ModCardTemplate
 {

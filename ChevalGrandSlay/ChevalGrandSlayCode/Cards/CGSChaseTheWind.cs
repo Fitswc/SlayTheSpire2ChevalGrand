@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 追风抢拍
+// 卡牌：衣角逐风
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSChaseTheWind : ModCardTemplate
 {

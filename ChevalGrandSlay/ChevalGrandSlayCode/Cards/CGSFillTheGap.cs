@@ -12,7 +12,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 弥补空白
+// 卡牌：小小的关照
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSFillTheGap : ModCardTemplate
 {

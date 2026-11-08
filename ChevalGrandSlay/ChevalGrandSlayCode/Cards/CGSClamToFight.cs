@@ -11,6 +11,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
+// 卡牌：无声的决意
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSClamToFight : ModCardTemplate
 {

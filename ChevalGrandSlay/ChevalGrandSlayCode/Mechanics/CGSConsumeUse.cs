@@ -43,7 +43,7 @@ internal static class CGSConsumeUse
     }
 
     private static bool TryPreserve(CardModel card) =>
-        // 无尽体力保护所有牌，预留一步在本场战斗中保护指定的牌。
+        // 无尽体力保护所有牌，再钓一条在本场战斗中保护指定的牌。
         card.Owner.Creature.HasPower<CGSEndlessStaminaPower>() ||
         (card.Enchantment is CGSReserveStepEnchantment enchantment && enchantment.PreservesStamina(card));
 }

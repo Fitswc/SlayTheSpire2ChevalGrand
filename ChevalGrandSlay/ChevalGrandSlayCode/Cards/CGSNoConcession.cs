@@ -9,9 +9,10 @@ using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
-//分毫不让
 
 namespace ChevalGrandSlay.Cards;
+
+// 卡牌：好胜的内心
 
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSNoConcession : ModCardTemplate

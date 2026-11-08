@@ -12,6 +12,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
+// 卡牌：明天仍赴约
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSPrepareForNextStep : ModCardTemplate
 {

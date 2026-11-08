@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 全力以赴
+// 卡牌：我想被记住
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSAllOut : ModCardTemplate
 {

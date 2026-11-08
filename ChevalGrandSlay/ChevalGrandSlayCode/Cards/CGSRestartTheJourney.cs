@@ -11,7 +11,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 再起一程xsd
+// 卡牌：驰骋梦想
+
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRestartTheJourney : ModCardTemplate
 {

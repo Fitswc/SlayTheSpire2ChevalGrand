@@ -10,6 +10,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
+// 卡牌：坚定步伐
+
 // RegisterCard 会把这张牌交给 RitsuLib 自动注册。
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSStepSteady : ModCardTemplate
