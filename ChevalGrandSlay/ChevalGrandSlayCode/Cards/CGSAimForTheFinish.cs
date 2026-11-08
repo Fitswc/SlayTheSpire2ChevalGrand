@@ -13,6 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 
 // 瞄准终点
+//TODO:补图
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSAimForTheFinish : ModCardTemplate
 {
