@@ -13,7 +13,6 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：末脚
 
-//TODO:修复费用
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSFinalKick : ModCardTemplate
 {

@@ -1,5 +1,5 @@
 {
-  "CHEVAL_GRAND_SLAY_CARD_CGS_EMPTY_SHELL.title": "Let Me Catch My Breath",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_EMPTY_SHELL.title": "Let Me Catch My Breath...",
   "CHEVAL_GRAND_SLAY_CARD_CGS_EMPTY_SHELL.description": "No effect. This card may appear when you copy a card with 0 Stamina.",
   
   "CHEVAL_GRAND_SLAY_CARD_CGS_STRIKE.title": "Strike",
@@ -82,7 +82,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_HANDOVER_MOMENT.description": "Choose another Stamina card in your hand with at least 2 Stamina remaining. Reduce its Stamina by 1. Draw {Cards:diff()} cards.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_HANDOVER_MOMENT.selectionScreenPrompt": "Choose a Stamina card with at least 2 Stamina remaining",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_MARKER.title": "A Mark for Home",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_MARKER.title": "A Signal to Head Home",
   "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_MARKER.description": "Choose another Stamina card in your hand with at least 2 Stamina remaining. Reduce its Stamina by 1. Reduce its cost by {Discount:diff()} this turn, to a minimum of 0. Draw {Cards:diff()} cards.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_MARKER.selectionScreenPrompt": "Choose a Stamina card with at least 2 Stamina remaining",
 
@@ -96,7 +96,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.description": "Choose up to 2 different cards from your [gold]Rest Pile[/gold], restore 1 Stamina to each, and move them to your discard pile.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.selectionScreenPrompt": "Choose 1 or 2 cards from the Rest Pile to restore Stamina",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.title": "Let's Run Together Again",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.title": "Someday... Let's Run Together Again",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.description": "{Effect}",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.baseEffect": "During your turn, whenever one of your cards leaves your [gold]Rest Pile[/gold], draw 1 card.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.upgradedEffect": "During your turn, whenever one of your cards leaves your [gold]Rest Pile[/gold], draw 1 card [green]and gain {PowerStacks:diff()} Block[/green].",
@@ -113,9 +113,9 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_FILL_THE_GAP.upgradedEffect": "The first time each turn you move a Stamina card out of your [gold]Rest Pile[/gold], restore 1 additional Stamina to it, up to its maximum, [green]and gain 1 Energy[/green].",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_SPORTS_DRINK_SUPPLY.title": "Energy Replenishment",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_SPORTS_DRINK_SUPPLY.description": "Add {CardNumber:diff()} Sports Drinks to your hand.",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_SPORTS_DRINK_SUPPLY.description": "Add {CardNumber:diff()} [gold]Extra-Large Meal[/gold] cards to your hand.",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_ENERGY_DRINK.title": "Sports Drink",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ENERGY_DRINK.title": "Extra-Large Meal",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ENERGY_DRINK.description": "Heal 4 HP.",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_DOMAIN.title": "I Can Shine, Too",
@@ -188,7 +188,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_PIERCE_THE_GAP.title": "Through the Waves",
   "CHEVAL_GRAND_SLAY_CARD_CGS_PIERCE_THE_GAP.description": "Deal {Damage:diff()} damage to an enemy.\nThis attack ignores the target's Block.",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_UNWIND_MOMENTUM.title": "Under My Cap",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_UNWIND_MOMENTUM.title": "Hiding in My Cap",
   "CHEVAL_GRAND_SLAY_CARD_CGS_UNWIND_MOMENTUM.description": "Gain {Block:diff()} Block.\nApply {WeakPower:diff()} [gold]Weak[/gold] to the target.",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_REPURPOSE_BULWARK.title": "Borrowed Composure",
@@ -197,7 +197,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_REGAIN_THE_EDGE.title": "Tell Me I Can, Too",
   "CHEVAL_GRAND_SLAY_CARD_CGS_REGAIN_THE_EDGE.description": "Remove {Cleanse:diff()} stacks of debuffs from yourself.\nDeal {Damage:diff()} damage to an enemy.",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_CORRECT_THE_FORMATION.title": "Untangling the Line",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_CORRECT_THE_FORMATION.title": "Tying My Shoelaces",
   "CHEVAL_GRAND_SLAY_CARD_CGS_CORRECT_THE_FORMATION.description": "{Effect}",
   "CHEVAL_GRAND_SLAY_CARD_CGS_CORRECT_THE_FORMATION.baseEffect": "Look at the top {Look:diff()} cards of your draw pile. Move 2 to the bottom and return the rest in their original order.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_CORRECT_THE_FORMATION.upgradedEffect": "Look at the top {Look:diff()} cards of your draw pile. You [green]may[/green] move [green]up to[/green] 2 to the bottom and return the rest in their original order.",
@@ -317,7 +317,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_NO_REGRETS_ENDING.title": "An Unfinished Run",
   "CHEVAL_GRAND_SLAY_CARD_CGS_NO_REGRETS_ENDING.description": "The first time each turn one of your Stamina Attacks enters your [gold]Rest Pile[/gold], your next Attack deals {PowerStacks:diff()} additional damage.",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.title": "I Want to Be Remembered",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.title": "I Want to Be Remembered, Too",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.description": "Choose another Stamina card in your hand with Stamina remaining. Play it for free as many times as its remaining Stamina.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.selectionScreenPrompt": "Choose a Stamina card to play for free once per remaining Stamina",
   

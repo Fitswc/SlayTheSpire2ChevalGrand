@@ -43,6 +43,7 @@ public sealed class CGSDomainPower : ModPowerTemplate
 
         await PlayerCmd.GainEnergy(EnergyPerTurn, player);
         CGSDomainBGGray.FadeBackgroundToGrayscale(1.2);
+        CGSDomainAura.Show(Owner);
 
         // Snapshot the pile because moving cards can trigger other powers and change its contents.
         var restingCards = Entry.CGSFatePile.GetPile(player).Cards.ToArray();
@@ -65,6 +66,7 @@ public sealed class CGSDomainPower : ModPowerTemplate
     public override Task AfterCombatEnd(CombatRoom room)
     {
         CGSDomainBGGray.RestoreBackgroundColor();
+        CGSDomainAura.Remove(Owner);
         return Task.CompletedTask;
     }
 

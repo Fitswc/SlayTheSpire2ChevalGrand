@@ -20,7 +20,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_STEADY_PACE.title": "慢慢站稳",
   "CHEVAL_GRAND_SLAY_CARD_CGS_STEADY_PACE.description": "获得 {Block:diff()} 点格挡。\n若已有8格挡则额外获得 {EnhancedBlock:diff()} 点格挡",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_PREPARE_FOR_NEXT_STEP.title": "明天仍赴约",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_PREPARE_FOR_NEXT_STEP.title": "明天仍然赴约",
   "CHEVAL_GRAND_SLAY_CARD_CGS_PREPARE_FOR_NEXT_STEP.description": "获得 {Block:diff()} 点格挡。\n下回合获得 {BlockNextTurn:diff()} 点格挡",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_SUB_ZERO.title": "夏凪",
@@ -29,7 +29,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_RELENTLESS_PURSUIT.title": "直到被看见",
   "CHEVAL_GRAND_SLAY_CARD_CGS_RELENTLESS_PURSUIT.description": "造成{Damage:diff()}点伤害。\n若本回合此前已打出至少1张攻击牌，本次伤害增加{BonusDamage:diff()}点",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_CATCH_THE_RHYTHM.title": "笨拙跟拍",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_CATCH_THE_RHYTHM.title": "笨拙的跟拍",
   "CHEVAL_GRAND_SLAY_CARD_CGS_CATCH_THE_RHYTHM.description": "抽{Cards:diff()}张牌。\n若本回合此前未打出攻击牌，丢弃1张牌",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_TEAR_OPEN_DEFENSE.title": "请看着我",
@@ -82,7 +82,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_HANDOVER_MOMENT.description": "选择手中另1张至少剩余2点体力的体力牌，使其减少1点体力。抽{Cards:diff()}张牌。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_HANDOVER_MOMENT.selectionScreenPrompt": "选择1张至少剩余2点体力的体力牌",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_MARKER.title": "回垒记号",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_MARKER.title": "回垒的讯号",
   "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_MARKER.description": "选择手中另1张至少剩余2点体力的体力牌，使其减少1点体力。本回合该牌费用减少{Discount:diff()}，最低为0。抽{Cards:diff()}张牌。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_MARKER.selectionScreenPrompt": "选择1张至少剩余2点体力的体力牌",
 
@@ -96,7 +96,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.description": "从[gold]休整牌堆[/gold]选择至多2张不同的牌，各恢复1点体力并置入弃牌堆。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.selectionScreenPrompt": "选择1至2张休整牌堆中的牌恢复体力",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.title": "再一起跑吧",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.title": "以后...再一起跑吧",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.description": "{Effect}",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.baseEffect": "你的回合中，每有1张你的牌从[gold]休整牌堆[/gold]移出，抽1张牌。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.upgradedEffect": "你的回合中，每有1张你的牌从[gold]休整牌堆[/gold]移出，抽1张牌[green]并获得{PowerStacks:diff()}点格挡[/green]。",
@@ -113,13 +113,13 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_FILL_THE_GAP.upgradedEffect": "每个你的回合，首次从[gold]休整牌堆[/gold]移出体力牌时，使其额外恢复1点体力，不超过上限，[green]并获得1点能量[/green]。",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_SPORTS_DRINK_SUPPLY.title": "能量补给",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_SPORTS_DRINK_SUPPLY.description": "获得{CardNumber:diff()}张能量饮料",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_SPORTS_DRINK_SUPPLY.description": "获得{CardNumber:diff()}张[gold]超大分食物[/gold]",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_ENERGY_DRINK.title": "运动饮料",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ENERGY_DRINK.title": "超大分食物",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ENERGY_DRINK.description": "回复4生命",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_DOMAIN.title": "我也能耀眼",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_DOMAIN.description": "进入[gold]青空领域[/gold]",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_DOMAIN.description": "进入[gold]领域[/gold]",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_FINAL_KICK.title": "末脚",
   "CHEVAL_GRAND_SLAY_CARD_CGS_FINAL_KICK.description": "仅当能量为0、抽牌堆和弃牌堆中均无体力牌，且[gold]休整牌堆[/gold]非空时可打出。\n对所有敌人造成{Damage:diff()}点伤害。",
@@ -188,7 +188,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_PIERCE_THE_GAP.title": "穿浪",
   "CHEVAL_GRAND_SLAY_CARD_CGS_PIERCE_THE_GAP.description": "对单个敌人造成{Damage:diff()}点伤害。\n本次攻击无视目标格挡",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_UNWIND_MOMENTUM.title": "躲进帽檐",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_UNWIND_MOMENTUM.title": "躲进帽子里",
   "CHEVAL_GRAND_SLAY_CARD_CGS_UNWIND_MOMENTUM.description": "获得{Block:diff()}点格挡。\n对目标施加{WeakPower:diff()}层[gold]虚弱[/gold]。",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_REPURPOSE_BULWARK.title": "借来的从容",
@@ -197,7 +197,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_REGAIN_THE_EDGE.title": "说我也可以",
   "CHEVAL_GRAND_SLAY_CARD_CGS_REGAIN_THE_EDGE.description": "移除自身{Cleanse:diff()}层负面效果。\n对单个敌人造成{Damage:diff()}点伤害",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_CORRECT_THE_FORMATION.title": "整理钓线",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_CORRECT_THE_FORMATION.title": "整理鞋带",
   "CHEVAL_GRAND_SLAY_CARD_CGS_CORRECT_THE_FORMATION.description": "{Effect}",
   "CHEVAL_GRAND_SLAY_CARD_CGS_CORRECT_THE_FORMATION.baseEffect": "查看抽牌堆顶{Look:diff()}张牌，将其中2张移到牌堆底，其余按原顺序放回。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_CORRECT_THE_FORMATION.upgradedEffect": "查看抽牌堆顶{Look:diff()}张牌，[green]可[/green]将其中[green]至多[/green]2张移到牌堆底，其余按原顺序放回。",
@@ -317,7 +317,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_NO_REGRETS_ENDING.title": "没跑完的话",
   "CHEVAL_GRAND_SLAY_CARD_CGS_NO_REGRETS_ENDING.description": "每回合首次有你的体力攻击牌进入[gold]休整牌堆[/gold]时，使你接下来打出的攻击牌伤害增加{PowerStacks:diff()}点。",
 
-  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.title": "我想被记住",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.title": "我也想被记住",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.description": "选择手中另1张仍有体力的体力牌，按其剩余体力反复免费打出。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.selectionScreenPrompt": "选择1张体力牌，按剩余体力免费打出",
   
@@ -326,6 +326,7 @@
   
   "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_TO_THE_TRACK.title": "重回起跑线",
   "CHEVAL_GRAND_SLAY_CARD_CGS_RETURN_TO_THE_TRACK.description": "从[gold]休整牌堆[/gold]随机取出{RecoveryCount:diff()}张体力牌，各恢复{Restore:diff()}点体力并加入手牌。",
+  
   "CHEVAL_GRAND_SLAY_CARD_CGS_ONE_BEAT_AHEAD.title": "憧憬的前方",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ONE_BEAT_AHEAD.description": "本回合结束后，立即获得一个额外回合。\n该额外回合不能获得额外回合。"
 }

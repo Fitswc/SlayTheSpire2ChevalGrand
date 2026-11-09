@@ -13,7 +13,6 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：我也能耀眼
 
-//TODO:修复费用
 //
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSDomain : ModCardTemplate

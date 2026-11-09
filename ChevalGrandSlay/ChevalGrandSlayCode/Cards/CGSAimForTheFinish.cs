@@ -13,7 +13,8 @@ namespace ChevalGrandSlay.Cards;
 
 
 // 卡牌：心中的终点
-//TODO:补图
+//TODO:确认领域特效效果
+//TODO：憧憬的前方先祖牌卡图修正
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSAimForTheFinish : ModCardTemplate
 {

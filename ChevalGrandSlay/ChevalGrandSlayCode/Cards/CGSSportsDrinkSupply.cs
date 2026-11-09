@@ -59,6 +59,6 @@ public sealed class CGSSportsDrinkSupply : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["CardNumber"].UpgradeValueBy(1m);
+        DynamicVars["CardNumber"].UpgradeValueBy(2m);
     }
 }

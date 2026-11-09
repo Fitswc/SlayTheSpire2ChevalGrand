@@ -38,7 +38,7 @@
   "CHEVAL_GRAND_SLAY_POWER_CGS_NEXT_ENEMY_HIT_REDUCTION_POWER.title": "卸下力道",
   "CHEVAL_GRAND_SLAY_POWER_CGS_NEXT_ENEMY_HIT_REDUCTION_POWER.description": "本轮敌方行动结束前，下一次敌方攻击对你造成的伤害减少[blue]X层[/blue]点，最低降至0点。",
   "CHEVAL_GRAND_SLAY_POWER_CGS_NEXT_ENEMY_HIT_REDUCTION_POWER.smartDescription": "本轮敌方行动结束前，下一次敌方攻击对你造成的伤害减少[blue]X层[/blue]点，最低降至0点。",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_NO_POSITIVE_POWER.title": "你在看别的孩子吗",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_NO_POSITIVE_POWER.title": "你在看别的孩子吗?",
   "CHEVAL_GRAND_SLAY_POWER_CGS_NO_POSITIVE_POWER.description": "无法获得正面效果。",
   "CHEVAL_GRAND_SLAY_POWER_CGS_NO_POSITIVE_POWER.smartDescription": "无法获得正面效果。",
   "CHEVAL_GRAND_SLAY_POWER_CGS_NO_REGRETS_ENDING_POWER.title": "没跑完的话",

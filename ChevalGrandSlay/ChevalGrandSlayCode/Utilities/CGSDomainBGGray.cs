@@ -13,7 +13,7 @@ public class CGSDomainBGGray
 
     private const string BackgroundShaderPath = Entry.ResPath + "/shaders/CGSDomainBGGrayScale.gdshader";
 
-    /// 获得领域时调用；只将当前战斗背景逐渐变为黑白。
+    /// 获得领域时调用；将当前战斗背景从画面中间向上下展开为黑白。
     public static void FadeBackgroundToGrayscale(double duration)
     {
         var room = NCombatRoom.Instance;
@@ -51,9 +51,9 @@ public class CGSDomainBGGray
         room.BgContainer.Resized += ResizeBackgroundLayout;
         room.TreeExiting += RestoreBackgroundColor;
 
-        material.SetShaderParameter("saturation", 1f);
+        material.SetShaderParameter("reveal_progress", 0f);
         _backgroundTween = room.CreateTween();
-        _backgroundTween.TweenProperty(material, "shader_parameter/saturation", 0f, Math.Max(0.0, duration))
+        _backgroundTween.TweenProperty(material, "shader_parameter/reveal_progress", 1f, Math.Max(0.0, duration))
             .SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.InOut);
     }
 
