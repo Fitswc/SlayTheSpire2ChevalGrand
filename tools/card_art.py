@@ -33,6 +33,23 @@ def log_action(action, details=""):
         pass
 
 
+def console_error(exc):
+    messages = {
+        "未找到卡牌，请保持 tools 位于项目根目录内。": "No cards found. Keep tools in the project root.",
+        "尺寸必须大于零，放大倍率须为 1–8。": "Dimensions must be positive and zoom must be between 1 and 8.",
+        "请填写整数宽度和高度。": "Width and height must be integers.",
+        "输出宽度和高度须在 16–4096 像素之间。": "Output width and height must be between 16 and 4096 pixels.",
+        "原图超过 4000 万像素，请先缩小后导入。": "Source image exceeds 40 million pixels. Resize it before importing.",
+    }
+    message = str(exc)
+    if message in messages:
+        return messages[message]
+    if message.isascii():
+        return message
+    # System error messages may follow the Windows display language.
+    return f"{type(exc).__name__} (errno={getattr(exc, 'errno', None)}, winerror={getattr(exc, 'winerror', None)})"
+
+
 @dataclass(frozen=True)
 class Card:
     name: str
@@ -287,7 +304,7 @@ class Editor:
         self.height.trace_add("write", self.dimensions_changed)
         root.protocol("WM_DELETE_WINDOW", self.close)
         self.filter_cards()
-        log_action("就绪", f"已识别 {len(self.cards)} 张卡牌；操作日志显示在此窗口。")
+        log_action("Ready", f"Found {len(self.cards)} cards. Actions will be logged here.")
 
     def queue_log(self, action, details):
         # Merge rapid typing/slider updates, retaining the latest result.
@@ -309,28 +326,28 @@ class Editor:
     def close(self):
         self.flush_logs()
         self.drag_end()
-        log_action("退出", "应用已关闭。")
+        log_action("Exit", "Application closed.")
         self.root.destroy()
 
     def dimensions_changed(self, *_):
         self.schedule_draw()
         if self.image is not None:
-            self.queue_log("输出尺寸", f"{self.width.get()}×{self.height.get()} 像素")
+            self.queue_log("Output size", f"{self.width.get()} x {self.height.get()} pixels")
 
     def zoom_changed(self, _=None):
         self.schedule_draw()
         if self.image is not None:
-            self.queue_log("取景放大", self.crop_details())
+            self.queue_log("Zoom", self.crop_details())
 
     def crop_details(self):
         if self.image is None:
-            return "尚未导入图片"
+            return "No image loaded."
         try:
             box = crop_box(self.image.size, self.target_size(), self.center, self.zoom.get())
             coordinates = ", ".join(f"{value:.1f}" for value in box)
-            return f"原图裁剪区域（左, 上, 右, 下）：({coordinates})；倍率 {self.zoom.get():.2f}"
+            return f"Source crop (left, top, right, bottom): ({coordinates}); zoom: {self.zoom.get():.2f}"
         except ValueError as exc:
-            return str(exc)
+            return console_error(exc)
 
     def filter_cards(self, *, announce=False):
         query = self.search.get().strip().casefold()
@@ -345,7 +362,7 @@ class Editor:
         # Filtering must never silently detach unsaved work from its card.
         self.schedule_draw()
         if announce:
-            self.queue_log("筛选卡牌", f"关键词：{query or '全部'}；仅缺图：{'是' if self.only_missing.get() else '否'}；显示 {len(self.filtered)} 张")
+            self.queue_log("Filter cards", f"Query: {query or '(all)'}; missing only: {self.only_missing.get()}; showing {len(self.filtered)} cards")
 
     def select_card(self, _=None):
         selected = self.card_list.selected
@@ -357,18 +374,18 @@ class Editor:
         self.flush_logs()
         unsaved = self.has_unsaved_edit()
         if unsaved:
-            log_action("切换确认", f"当前编辑尚未保存，等待确认是否切换到 {card.title}（{card.name}）。")
+            log_action("Confirm switch", f"Unsaved edits exist. Waiting for confirmation to switch to {card.name}.")
         if unsaved and not messagebox.askyesno(
                 "尚未保存的卡图", "当前图片或裁剪编辑尚未保存或导出。\n切换后将丢弃当前编辑，并加载所选卡牌的已有卡图；缺图则清空预览。\n\n仍要切换吗？",
                 icon="warning", default="no", parent=self.root):
             self.card_list.select(self.filtered.index(self.card) if self.card in self.filtered else None)
-            log_action("取消切换", "保留当前卡牌和编辑。")
+            log_action("Switch cancelled", "Keeping the current card and edits.")
             return
         if unsaved:
-            log_action("放弃编辑", "已确认放弃上一张卡牌的未保存编辑。")
+            log_action("Discard edits", "Confirmed discarding unsaved edits for the previous card.")
         self.clear_image()
         self.card = card
-        log_action("选择卡牌", f"{card.title}（{card.name}）")
+        log_action("Select card", card.name)
         self.info.set(f"{self.card.title} · {self.card.name}\n目标：{self.card.path.relative_to(ROOT)}")
         try:
             self.set_size(preferred_size(self.card))
@@ -379,10 +396,10 @@ class Editor:
             self.load_existing()
         else:
             self.status.set("此卡牌尚无卡图，请导入图片开始编辑；默认输出尺寸为 850×646。")
-            log_action("缺少卡图", "预览已清空，等待导入图片。")
+            log_action("Missing artwork", "Preview cleared. Import an image to begin editing.")
         if not self.card.configured:
             self.status.set("此卡未配置受支持的 PortraitPath，暂不能保存到项目；导出文件也不会自动在游戏显示。")
-            log_action("未接入", "卡牌未配置受支持的卡图路径，仅可导出暂存。")
+            log_action("Artwork not configured", "Card has no supported artwork path. Export only.")
         self.schedule_draw()
 
     def edit_signature(self):
@@ -426,14 +443,14 @@ class Editor:
     def load_image(self, path=None, *, already_saved=False):
         self.flush_logs()
         if path is None:
-            log_action("导入图片", "正在选择图片文件。")
+            log_action("Import image", "Choosing an image file.")
             path = filedialog.askopenfilename(title="选择卡图原图", filetypes=[
                 ("图片", "*.png *.jpg *.jpeg *.webp *.bmp *.tif *.tiff"), ("所有文件", "*.*")])
         if not path:
-            log_action("取消导入", "未选择图片。")
+            log_action("Import cancelled", "No image selected.")
             return
-        action = "加载已有卡图" if already_saved else "导入图片"
-        log_action(action, f"正在读取：{path}")
+        action = "Load existing artwork" if already_saved else "Import image"
+        log_action(action, f"Reading: {path}")
         try:
             with Image.open(path) as original:
                 # The preview is bounded, but retain source pixels for final output.
@@ -448,9 +465,9 @@ class Editor:
             if already_saved and self.target_size() == image.size:
                 self.saved_edit = self.edit_signature()
             self.status.set(f"已导入 {self.source_name}（{image.width}×{image.height}）；白框内是最终画面。")
-            log_action(action + "成功", f"{path}；原图 {image.width}×{image.height}；输出 {self.width.get()}×{self.height.get()}")
+            log_action(action + " succeeded", f"{path}; source: {image.width} x {image.height}; output: {self.width.get()} x {self.height.get()}")
         except (OSError, ValueError, Image.DecompressionBombError) as exc:
-            log_action(action + "失败", f"{path}；原因：{exc}")
+            log_action(action + " failed", f"{path}; reason: {console_error(exc)}")
             self.status.set("图片加载失败，请检查文件或导入其他图片。")
             messagebox.showerror("无法导入图片", str(exc))
 
@@ -458,7 +475,7 @@ class Editor:
         if self.card and self.card.path.exists():
             self.load_image(self.card.path, already_saved=True)
         else:
-            log_action("暂无卡图", "当前未选择卡牌，或所选卡牌没有已有卡图。")
+            log_action("No artwork", "No card selected, or the selected card has no existing artwork.")
             messagebox.showinfo("暂无卡图", "请先选择有卡图的卡牌，或使用“导入图片”。")
 
     def reset(self, *, announce=True):
@@ -468,7 +485,7 @@ class Editor:
         self.zoom.set(1)
         self.schedule_draw()
         if announce:
-            log_action("重置裁剪", self.crop_details())
+            log_action("Reset crop", self.crop_details())
 
     def schedule_draw(self):
         if self.pending:
@@ -524,7 +541,7 @@ class Editor:
             self.flush_logs()
             self.drag = (event.x, event.y, self.center)
             self.last_drag_log = monotonic()
-            log_action("开始移动白框", self.crop_details())
+            log_action("Crop drag started", self.crop_details())
 
     def drag_move(self, event):
         if self.drag is None:
@@ -535,50 +552,48 @@ class Editor:
         self.schedule_draw()
         if monotonic() - self.last_drag_log >= 0.3:
             self.last_drag_log = monotonic()
-            log_action("移动白框", self.crop_details())
+            log_action("Move crop", self.crop_details())
 
     def drag_end(self, _=None):
         if self.drag is not None:
             self.drag = None
-            log_action("结束移动白框", self.crop_details())
+            log_action("Crop drag ended", self.crop_details())
 
     def save(self, to_project):
         self.flush_logs()
         card = self.card
         if not card or self.image is None:
-            log_action("无法保存", "请先选择卡牌并导入图片。")
+            log_action("Cannot save", "Select a card and import an image first.")
             return
         if to_project and not card.configured:
-            log_action("无法保存", f"{card.name} 尚未配置受支持的卡图路径。")
+            log_action("Cannot save", f"{card.name} has no supported artwork path.")
             messagebox.showerror("无法接入", "该卡牌尚未配置受支持的卡图路径。")
             return
         target = card.path if to_project else TOOLS / "output" / (card.name + ".png")
-        action = "保存到项目" if to_project else "导出图片"
-        log_action(action, f"目标：{target}")
+        action = "Save to project" if to_project else "Export image"
+        log_action(action, f"Target: {target}")
         overwrite = target.exists()
         if overwrite:
-            log_action("覆盖确认", "目标文件已存在，等待确认；确认后会备份原文件。")
+            log_action("Confirm overwrite", "Target already exists. Waiting for confirmation; the original will be backed up.")
         if overwrite and not messagebox.askyesno("确认替换卡图", f"即将替换：\n{target}\n\n原文件会先备份到 tools/backups。是否继续？"):
-            log_action("取消保存", f"保留已有文件：{target}")
+            log_action("Save cancelled", f"Keeping existing file: {target}")
             return
         try:
             image = render_crop(self.image, self.target_size(), self.center, self.zoom.get())
             backup = save_png(image, target, overwrite=overwrite)
             if backup:
-                log_action("已备份", str(backup))
-            log_action(action + "成功", f"{image.width}×{image.height} PNG → {target}")
+                log_action("Backup created", str(backup))
+            log_action(action + " succeeded", f"{image.width} x {image.height} PNG -> {target}")
             self.saved_edit = self.edit_signature()
             self.filter_cards()
             self.status.set(f"已保存：{target}" + (f"；原图备份：{backup.name}" if backup else ""))
-            messagebox.showinfo("保存成功", f"已保存 {image.width}×{image.height} PNG：\n{target}" +
-                                (f"\n\n原图备份：\n{backup}" if backup else ""))
         except (OSError, ValueError) as exc:
-            log_action(action + "失败", f"{target}；原因：{exc}")
+            log_action(action + " failed", f"{target}; reason: {console_error(exc)}")
             messagebox.showerror("保存失败", str(exc))
 
 
 def main():
-    log_action("启动", "正在启动卡图工坊。")
+    log_action("Startup", "Starting Card Art Editor.")
     if os.name == "nt":
         # Keep Tk geometry and pointer coordinates consistent on scaled displays.
         import ctypes
@@ -590,7 +605,7 @@ def main():
     try:
         Editor(root)
     except (OSError, ValueError) as exc:
-        log_action("启动失败", str(exc))
+        log_action("Startup failed", console_error(exc))
         messagebox.showerror("启动失败", str(exc))
         root.destroy()
         return
