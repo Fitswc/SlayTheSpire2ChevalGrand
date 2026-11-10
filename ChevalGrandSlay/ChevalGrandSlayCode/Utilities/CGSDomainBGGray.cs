@@ -54,7 +54,7 @@ public class CGSDomainBGGray
         material.SetShaderParameter("reveal_progress", 0f);
         _backgroundTween = room.CreateTween();
         _backgroundTween.TweenProperty(material, "shader_parameter/reveal_progress", 1f, Math.Max(0.0, duration))
-            .SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.InOut);
+            .SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.Out);
     }
 
     private static void ResizeBackgroundLayout()

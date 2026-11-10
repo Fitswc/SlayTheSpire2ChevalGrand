@@ -30,8 +30,8 @@ public partial class CGSDomainAura : CanvasGroup
             Name = "CGSDomainAura",
             Material = material,
             // Leave room around the silhouette for the outline and leftward trail.
-            FitMargin = 48f,
-            ClearMargin = 48f,
+            FitMargin = 72f,
+            ClearMargin = 72f,
             _body = body,
             _bodyIndex = body.GetIndex()
         };
