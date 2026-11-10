@@ -11,6 +11,9 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_FORWARD_A_STEP.title": "A Little Courage",
   "CHEVAL_GRAND_SLAY_CARD_CGS_FORWARD_A_STEP.description": "Deal {Damage:diff()} damage to an enemy.\nGain {Block:diff()} Block.",
 
+  "CHEVAL_GRAND_SLAY_CARD_CGS_LITTLE_BRAVE_PLUS.title": "Poised and Confident",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_LITTLE_BRAVE_PLUS.description": "Deal {Damage:diff()} damage to an enemy.\nHeal {Heal:diff()} HP.",
+
   "CHEVAL_GRAND_SLAY_CARD_CGS_CLAM_TO_FIGHT.title": "Quiet Resolve",
   "CHEVAL_GRAND_SLAY_CARD_CGS_CLAM_TO_FIGHT.description": "Gain {Block:diff()} Block.\nGain {VigorPower:diff()} [gold]Vigor[/gold].",
 

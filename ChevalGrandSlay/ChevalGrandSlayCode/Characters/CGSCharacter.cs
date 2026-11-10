@@ -97,15 +97,15 @@ public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPoo
             // ArmPaperTexturePath: null,
             // 多人模式剪刀石头布-剪刀。
             // ArmScissorsTexturePath: null
-        )
+        ),
         // 其余如果有需要自行取消注释使用
         // Spine: null,
         // WorldProceduralVisuals: null,
         // 以下为让遗物根据你的人物展现不同的图像资源，在列表里添加即可
         // VanillaCardVisualOverrides: [],
-        // VanillaRelicVisualOverrides: [
-        //     new (CharacterOwnedVanillaRelicModelId.YummyCookie, new("res://icon.svg")) // 美味饼干覆盖
-        // ],
+         VanillaRelicVisualOverrides: [
+             new (CharacterOwnedVanillaRelicModelId.YummyCookie, new($"{Entry.ResPath}/images/relics/yummy_cookie_cheval_grand.png")) // 美味饼干覆盖
+         ]
         // VanillaPotionVisualOverrides: []
     );
 
@@ -116,8 +116,8 @@ public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPoo
     public override bool RequiresEpochAndTimeline => false;
 
     // 攻击和施法动画延迟，以对齐动画。静态占位资源不需要延迟。
-    public override float AttackAnimDelay => 0f;
-    public override float CastAnimDelay => 0f;
+    public override float AttackAnimDelay => 0.5f;
+    public override float CastAnimDelay => 0.5f;
 
     // 让 RitsuLib 把普通 Godot 场景转换成游戏需要的 NCreatureVisuals。
     // 自动转换人物场景，让你不需要手动挂脚本。复制即可。
@@ -158,7 +158,6 @@ public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPoo
             "vfx/vfx_heavy_blunt",
             "vfx/vfx_attack_slash",
             "vfx/vfx_bloody_impact",
-            "vfx/vfx_rock_shatter"
         ];
     }
 }

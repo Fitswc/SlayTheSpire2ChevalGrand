@@ -11,6 +11,9 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_FORWARD_A_STEP.title": "小小的勇气",
   "CHEVAL_GRAND_SLAY_CARD_CGS_FORWARD_A_STEP.description": "对单个敌人造成 {Damage:diff()} 点伤害。\n获得 {Block:diff()} 点格挡",
 
+  "CHEVAL_GRAND_SLAY_CARD_CGS_LITTLE_BRAVE_PLUS.title": "自信大方",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_LITTLE_BRAVE_PLUS.description": "对单个敌人造成{Damage:diff()}点伤害。\n回复{Heal:diff()}点生命。",
+
   "CHEVAL_GRAND_SLAY_CARD_CGS_CLAM_TO_FIGHT.title": "无声的决意",
   "CHEVAL_GRAND_SLAY_CARD_CGS_CLAM_TO_FIGHT.description": "获得 {Block:diff()} 点格挡。\n获得{VigorPower:diff()}层[gold]活力[/gold]",
 

@@ -1,5 +1,6 @@
 using System.Reflection;
 using ChevalGrandSlay.Cards;
+using ChevalGrandSlay.Relics;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
 
@@ -59,5 +60,6 @@ internal static class CGSStaminaCopyPatch
         // 完整保留当前耐力与上限，包括升级和战斗中的修改。
         copiedMaxUses.BaseValue = originalMaxUses.BaseValue;
         copiedUses.BaseValue = originalUses.BaseValue;
+        CGSStartRelicPlus.InheritStaminaBonus(original, copy);
     }
 }

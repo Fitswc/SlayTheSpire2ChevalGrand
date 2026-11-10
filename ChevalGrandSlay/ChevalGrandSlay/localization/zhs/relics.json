@@ -1,5 +1,11 @@
 {
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.title": "起跑前的约定",
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.description": "每场战斗第一回合，获得{Energy:energyIcons()}。",
-  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.flavor": "一个用于验证模板工程的示例遗物。"
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.flavor": "这是什么地方?",
+
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC_PLUS.title": "起跑前的约定+",
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC_PLUS.description": "每场战斗第一回合，获得{Energy:energyIcons()}。\n本场战斗中，你的所有[gold]体力[/gold]牌额外获得{BonusStamina}点体力及体力上限，包括战斗中新生成的牌。",
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC_PLUS.flavor": "这次,我一定要......",
+
+  "SEA_GLASS.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.title": "湛蓝玻璃"
 }

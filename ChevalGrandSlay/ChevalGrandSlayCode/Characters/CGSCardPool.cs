@@ -1,10 +1,11 @@
 using Godot;
+using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Content;
 using STS2RitsuLib.Utils;
 
 namespace ChevalGrandSlay.Characters;
 
-public sealed class CGSCardPool : TypeListCardPoolModel
+public sealed class CGSCardPool : TypeListCardPoolModel, IModColorfulPhilosophersCardPool
 {
     private static readonly Material? PoolFrameTintMaterial = MaterialUtils.CreateReplaceHueShaderMaterial(0.4f, 0.76f, 0.76f);
     //MaterialUtils.CreateRgbShaderMaterial(0.42f, 0.65f, 0.72f);

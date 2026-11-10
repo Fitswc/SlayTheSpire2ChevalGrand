@@ -1,5 +1,7 @@
 using System.Reflection;
+using ChevalGrandSlay.Cards;
 using ChevalGrandSlay.Keywords;
+using ChevalGrandSlay.Relics;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
@@ -80,6 +82,10 @@ public partial class Entry
             OnOpen = ctx => ctx.ShowDefaultPileScreen(),
             VisibleWhen = ctx => ctx.Player != null,
         }).PileType;
+        
+        RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<CGSForwardAStep, CGSLittleBravePlus>();
+        RitsuLibFramework.RegisterTouchOfOrobasRefinementMapping<CGSStartRelic, CGSStartRelicPlus>();
+        
 
 
 

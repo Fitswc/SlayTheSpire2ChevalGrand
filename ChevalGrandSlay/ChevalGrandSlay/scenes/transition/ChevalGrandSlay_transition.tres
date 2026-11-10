@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dwjnc703x683y"]
 
-[ext_resource type="Texture2D" uid="uid://blsda5h0dvh5b" path="res://ChevalGrandSlay/scenes/transition/ChevalGrandSlay_transition.png" id="bva5tt1iem3xy"]
+[ext_resource type="Texture2D" uid="uid://ltaiqk2y4lwr" path="res://ChevalGrandSlay/scenes/transition/ChevalGrandSlay_transition_sink.png" id="bva5tt1iem3xy"]
 
 [sub_resource type="Shader" id="Shader_wjwey"]
 code = "shader_type canvas_item;
