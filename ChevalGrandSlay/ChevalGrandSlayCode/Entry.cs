@@ -75,7 +75,7 @@ public partial class Entry
             Style = ModCardPileUiStyle.BottomLeft,
             // 锚点，见下
             Anchor = ModCardPileAnchor.Default,
-            IconPath = $"{ResPath}/images/fate_pile.png",
+            IconPath = $"{ResPath}/images/CGSFatePile.png",
             // 点击打开
             OnOpen = ctx => ctx.ShowDefaultPileScreen(),
             VisibleWhen = ctx => ctx.Player != null,

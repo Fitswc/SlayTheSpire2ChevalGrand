@@ -33,4 +33,4 @@ position = Vector2(-10, -221)
 
 [node name="TalkPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(133, -364)
+position = Vector2(133, -373)

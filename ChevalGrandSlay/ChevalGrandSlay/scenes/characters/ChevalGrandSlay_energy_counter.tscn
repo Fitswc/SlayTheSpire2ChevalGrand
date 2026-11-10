@@ -1,12 +1,12 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://de4lgewojgik4"]
 
-[ext_resource type="Texture2D" path="res://ChevalGrandSlay/images/characters/ChevalGrandSlay_energy_orb_layer_1.png" id="1_layer1"]
-[ext_resource type="Texture2D" path="res://ChevalGrandSlay/images/characters/ChevalGrandSlay_energy_orb_layer_2.png" id="2_layer2"]
-[ext_resource type="Texture2D" path="res://ChevalGrandSlay/images/characters/ChevalGrandSlay_energy_orb_layer_3.png" id="3_layer3"]
-[ext_resource type="Texture2D" path="res://ChevalGrandSlay/images/characters/ChevalGrandSlay_energy_orb_layer_4.png" id="4_layer4"]
-[ext_resource type="Texture2D" path="res://ChevalGrandSlay/images/characters/ChevalGrandSlay_energy_orb_layer_5.png" id="5_layer5"]
+[ext_resource type="Texture2D" uid="uid://bh5xjptyqrg68" path="res://ChevalGrandSlay/images/characters/ChevalGrandSlay_energy_orb_layer_1.png" id="1_layer1"]
+[ext_resource type="Texture2D" uid="uid://dkeni7jvulfjl" path="res://ChevalGrandSlay/images/characters/ChevalGrandSlay_energy_orb_layer_2.png" id="2_layer2"]
+[ext_resource type="Texture2D" uid="uid://daubc7i80eqhr" path="res://ChevalGrandSlay/images/characters/ChevalGrandSlay_energy_orb_layer_3.png" id="3_layer3"]
+[ext_resource type="Texture2D" uid="uid://wqpy51ebf7g3" path="res://ChevalGrandSlay/images/characters/ChevalGrandSlay_energy_orb_layer_4.png" id="4_layer4"]
+[ext_resource type="Texture2D" uid="uid://dt8ipy1k3wu5g" path="res://ChevalGrandSlay/images/characters/ChevalGrandSlay_energy_orb_layer_5.png" id="5_layer5"]
 
-[node name="TemplateEnergyCounter" type="Control"]
+[node name="ChevalGrandSlayEnergyCounter" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 128.0
@@ -52,6 +52,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(64, 64)
 texture = ExtResource("2_layer2")
 expand_mode = 1
 
@@ -62,10 +63,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(64, 64)
 texture = ExtResource("3_layer3")
 expand_mode = 1
 
 [node name="Layer4" type="TextureRect" parent="Layers"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

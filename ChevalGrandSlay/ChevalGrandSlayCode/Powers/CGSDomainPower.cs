@@ -1,5 +1,6 @@
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Utilities;
+using Godot;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -12,14 +13,18 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Combat.HandSize;
+using STS2RitsuLib.Combat.HealthBars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
 [RegisterPower]
-public sealed class CGSDomainPower : ModPowerTemplate
+public sealed class CGSDomainPower : ModPowerTemplate, IHealthBarForecastSource
 {
+    private int _appliedTurnNumber;
+    private bool _hasReachedNextTurn;
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
@@ -41,8 +46,11 @@ public sealed class CGSDomainPower : ModPowerTemplate
         if (Owner.Player is not { } player)
             return;
 
+        _appliedTurnNumber = player.PlayerCombatState?.TurnNumber ?? 0;
+        _hasReachedNextTurn = false;
+
         await PlayerCmd.GainEnergy(EnergyPerTurn, player);
-        CGSDomainBGGray.FadeBackgroundToGrayscale(1.2);
+        CGSDomainBGGray.FadeBackgroundToGrayscale(1.8);
         CGSDomainAura.Show(Owner);
 
         // Snapshot the pile because moving cards can trigger other powers and change its contents.
@@ -79,7 +87,12 @@ public sealed class CGSDomainPower : ModPowerTemplate
     public override async Task AfterEnergyReset(Player player)
     {
         if (player == Owner.Player)
+        {
+            if (player.PlayerCombatState?.TurnNumber > _appliedTurnNumber)
+                _hasReachedNextTurn = true;
+
             await PlayerCmd.GainEnergy(EnergyPerTurn, player);
+        }
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side,
@@ -93,5 +106,18 @@ public sealed class CGSDomainPower : ModPowerTemplate
             await PowerCmd.Decrement(this);
         else
             await CreatureCmd.Kill(Owner, force: true);
+    }
+
+    public IEnumerable<HealthBarForecastSegment> GetHealthBarForecastSegments(HealthBarForecastContext context)
+    {
+
+        int currentHp = context.Creature.CurrentHp;
+        
+        int coveredHp = _hasReachedNextTurn ? currentHp : currentHp / 2;
+        return HealthBarForecasts.Single(
+            coveredHp,
+            new Color(0.4f, 0.1f, 0.1f),
+            HealthBarForecastGrowthDirection.FromLeft
+        );
     }
 }
