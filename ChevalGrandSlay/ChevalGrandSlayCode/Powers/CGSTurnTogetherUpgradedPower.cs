@@ -1,0 +1,68 @@
+using ChevalGrandSlay.Keywords;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
+
+namespace ChevalGrandSlay.Powers;
+
+[RegisterPower]
+public sealed class CGSTurnTogetherUpgradedPower : ModPowerTemplate
+{
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
+    ];
+
+    private int _pendingDraws;
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Single;
+
+    // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: $"{Entry.ResPath}/images/powers/CGSTurnTogetherPower.png",
+        BigIconPath: $"{Entry.ResPath}/images/powers/CGSTurnTogetherPower.png"
+    );
+
+    public override Task AfterCardChangedPiles(CardModel card, PileType previousPile, AbstractModel? source)
+    {
+        if (card.Owner == Owner.Player && previousPile == Entry.CGSFatePile &&
+            card.Pile?.Type != Entry.CGSFatePile && CombatState?.CurrentSide == CombatSide.Player)
+            _pendingDraws++;
+        return Task.CompletedTask;
+    }
+
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay) =>
+        await ResolvePending(choiceContext);
+
+    public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext choiceContext, Player player)
+    {
+        if (player == Owner.Player) await ResolvePending(choiceContext);
+    }
+
+    public override async Task BeforeSideTurnEndEarly(PlayerChoiceContext choiceContext, CombatSide side,
+        IEnumerable<Creature> participants)
+    {
+        if (side == CombatSide.Player && participants.Contains(Owner))
+            await ResolvePending(choiceContext);
+    }
+
+    private async Task ResolvePending(PlayerChoiceContext choiceContext)
+    {
+        while (_pendingDraws > 0)
+        {
+            _pendingDraws--;
+            await CardPileCmd.Draw(choiceContext, 1m, Owner.Player!);
+            await CreatureCmd.GainBlock(Owner, 3m, ValueProp.Move, null);
+        }
+        _pendingDraws = 0;
+    }
+}

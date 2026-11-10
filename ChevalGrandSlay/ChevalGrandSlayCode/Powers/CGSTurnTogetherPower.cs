@@ -8,7 +8,6 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -24,7 +23,8 @@ public sealed class CGSTurnTogetherPower : ModPowerTemplate
 
     private int _pendingDraws;
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
+    public override PowerStackType StackType => PowerStackType.Single;
+
     // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
     public override PowerAssetProfile AssetProfile => new(
         IconPath: $"{Entry.ResPath}/images/powers/CGSTurnTogetherPower.png",
@@ -56,11 +56,10 @@ public sealed class CGSTurnTogetherPower : ModPowerTemplate
 
     private async Task ResolvePending(PlayerChoiceContext choiceContext)
     {
-        while (_pendingDraws-- > 0)
+        while (_pendingDraws > 0)
         {
+            _pendingDraws--;
             await CardPileCmd.Draw(choiceContext, 1m, Owner.Player!);
-            if (Amount >= 3m)
-                await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Move, null);
         }
         _pendingDraws = 0;
     }

@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -14,7 +15,6 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：再一起跑吧
 
-//TODO:Check && Verify
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSTurnTogether : ModCardTemplate
 {
@@ -41,10 +41,10 @@ public sealed class CGSTurnTogether : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
-    protected override IEnumerable<DynamicVar> CanonicalVars => 
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("PowerStacks", 1m)
+        new BlockVar(0m, ValueProp.Move)
     ];
 
     protected override void AddExtraArgsToDescription(LocString description)
@@ -63,12 +63,24 @@ public sealed class CGSTurnTogether : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<CGSTurnTogetherPower>(choiceContext, Owner.Creature,
-            DynamicVars["PowerStacks"].BaseValue, Owner.Creature, this);
+        if (Owner.Creature.HasPower<CGSTurnTogetherUpgradedPower>()) return;
+
+        var basePower = Owner.Creature.GetPower<CGSTurnTogetherPower>();
+        if (IsUpgraded)
+        {
+            if (basePower is not null)
+                await PowerCmd.Remove(basePower);
+            await PowerCmd.Apply<CGSTurnTogetherUpgradedPower>(
+                choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        }
+        else if (basePower is null)
+        {
+            await PowerCmd.Apply<CGSTurnTogetherPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["PowerStacks"].UpgradeValueBy(2m);
+        DynamicVars.Block.UpgradeValueBy(3m);
     }
 }

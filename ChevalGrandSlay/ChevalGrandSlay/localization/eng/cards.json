@@ -99,7 +99,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.title": "Someday... Let's Run Together Again",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.description": "{Effect}",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.baseEffect": "During your turn, whenever one of your cards leaves your [gold]Rest Pile[/gold], draw 1 card.",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.upgradedEffect": "During your turn, whenever one of your cards leaves your [gold]Rest Pile[/gold], draw 1 card [green]and gain {PowerStacks:diff()} Block[/green].",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.upgradedEffect": "During your turn, whenever one of your cards leaves your [gold]Rest Pile[/gold], draw 1 card [green]and gain {Block:diff()} Block[/green].",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_FINISH_LINE_ECHO.title": "Echoes of Light",
   "CHEVAL_GRAND_SLAY_CARD_CGS_FINISH_LINE_ECHO.description": "During your turn, whenever one of your cards enters your [gold]Rest Pile[/gold], deal {EchoDamage:diff()} damage to a random enemy.\nLasts {Turns:diff()} turns, including this turn.",

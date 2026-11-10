@@ -99,7 +99,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.title": "以后...再一起跑吧",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.description": "{Effect}",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.baseEffect": "你的回合中，每有1张你的牌从[gold]休整牌堆[/gold]移出，抽1张牌。",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.upgradedEffect": "你的回合中，每有1张你的牌从[gold]休整牌堆[/gold]移出，抽1张牌[green]并获得{PowerStacks:diff()}点格挡[/green]。",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.upgradedEffect": "你的回合中，每有1张你的牌从[gold]休整牌堆[/gold]移出，抽1张牌[green]并获得{Block:diff()}点格挡[/green]。",
 
   "CHEVAL_GRAND_SLAY_CARD_CGS_FINISH_LINE_ECHO.title": "光的残响",
   "CHEVAL_GRAND_SLAY_CARD_CGS_FINISH_LINE_ECHO.description": "你的回合中，每有1张你的牌进入[gold]休整牌堆[/gold]，对随机敌人造成{EchoDamage:diff()}点伤害。\n计入本回合，持续{Turns:diff()}回合。",
