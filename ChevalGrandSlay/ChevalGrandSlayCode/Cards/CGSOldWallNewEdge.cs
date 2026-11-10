@@ -2,7 +2,6 @@ using ChevalGrandSlay.Utilities;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -36,15 +35,15 @@ public sealed class CGSOldWallNewEdge : ModCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
-    protected override IEnumerable<DynamicVar> CanonicalVars => 
-        [
-            new DynamicVar("Uses", 3m),
-            new DynamicVar("MaxUses", 3m),
-            new DamageVar(8m, ValueProp.Move),
-            new DynamicVar("BlockSpent", 12m)
-        ];
-    
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new DynamicVar("Uses", 3m),
+        new DynamicVar("MaxUses", 3m),
+        new DamageVar(8m, ValueProp.Move),
+        new DynamicVar("BlockSpent", 12m)
+    ];
+
     public CGSOldWallNewEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
     {
     }
@@ -52,33 +51,26 @@ public sealed class CGSOldWallNewEdge : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CGSConsumeUse.Consume(this);
-        
+
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        decimal spent = 0m;
-        
-        if (Owner.Creature.Block > 0)
-        {
-            var choice = await CardSelectCmd.FromSimpleGrid(choiceContext, [this], Owner,
-                new CardSelectorPrefs(SelectionScreenPrompt, 0, 1));
-            if (choice.Any())
-                spent = Math.Min(Owner.Creature.Block, DynamicVars["BlockSpent"].BaseValue);
-        }
+        decimal spent = Math.Min(Owner.Creature.Block, DynamicVars["BlockSpent"].BaseValue);
         if (spent > 0)
         {
             await CreatureCmd.LoseBlock(Owner.Creature, spent);
         }
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue + spent)
             .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
-        
+
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
     }
 
-    protected override void OnUpgrade() {
+    protected override void OnUpgrade()
+    {
         DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m); }
+        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+    }
 
     protected override PileType GetResultPileTypeForCardPlay() =>
         CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
-
 }
