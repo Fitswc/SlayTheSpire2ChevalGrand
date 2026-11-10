@@ -16,7 +16,7 @@ namespace ChevalGrandSlay.Relics;
 public sealed class CGSStartRelic : ModRelicTemplate
 {
     // 稀有度。
-    public override RelicRarity Rarity => RelicRarity.Common;
+    public override RelicRarity Rarity => RelicRarity.Starter;
 
     // 遗物的数值。这里会替换本地化中的 {Energy}。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -28,11 +28,11 @@ public sealed class CGSStartRelic : ModRelicTemplate
     // 三个路径可以先指向同一张图。后续有高清图或轮廓图时再拆开。
     public override RelicAssetProfile AssetProfile => new(
         // 小图标（原版 85x85）。
-        IconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
+        IconPath: $"{Entry.ResPath}/images/relics/CGSStartRelic_small.png",
         // 轮廓图标（原版 85x85）。
-        IconOutlinePath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
+        IconOutlinePath: $"{Entry.ResPath}/images/relics/CGSStartRelic_outline.png",
         // 大图标（原版 256x256）。
-        BigIconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png");
+        BigIconPath: $"{Entry.ResPath}/images/relics/CGSStartRelic.png");
 
     // 回合开始时能量已重置，只在每场战斗的第一回合给予额外能量。
     public override async Task AfterSideTurnStart(

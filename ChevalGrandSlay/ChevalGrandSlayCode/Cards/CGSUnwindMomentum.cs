@@ -50,6 +50,8 @@ public sealed class CGSUnwindMomentum : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
         await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target,
             DynamicVars["WeakPower"].BaseValue, Owner.Creature, this);

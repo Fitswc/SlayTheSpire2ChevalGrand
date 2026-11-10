@@ -74,7 +74,7 @@ public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPoo
         ),
         Vfx: new(
             // 卡牌拖尾场景。
-            // TrailPath: "res://scenes/vfx/card_trail_ironclad.tscn"
+            TrailPath: "res://scenes/vfx/card_trail_defect.tscn"
         ),
         Audio: new(
             // 攻击音效
@@ -104,7 +104,12 @@ public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPoo
         // 以下为让遗物根据你的人物展现不同的图像资源，在列表里添加即可
         // VanillaCardVisualOverrides: [],
          VanillaRelicVisualOverrides: [
-             new (CharacterOwnedVanillaRelicModelId.YummyCookie, new($"{Entry.ResPath}/images/relics/yummy_cookie_cheval_grand.png")) // 美味饼干覆盖
+             new (CharacterOwnedVanillaRelicModelId.YummyCookie, new(
+                 $"{Entry.ResPath}/images/relics/yummy_cookie_cheval_grand_small.png", 
+                 $"{Entry.ResPath}/images/relics/yummy_cookie_cheval_grand_outline.png", 
+                 $"{Entry.ResPath}/images/relics/yummy_cookie_cheval_grand.png"
+                 )
+             ) // 美味饼干覆盖
          ]
         // VanillaPotionVisualOverrides: []
     );
@@ -116,8 +121,8 @@ public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPoo
     public override bool RequiresEpochAndTimeline => false;
 
     // 攻击和施法动画延迟，以对齐动画。静态占位资源不需要延迟。
-    public override float AttackAnimDelay => 0.5f;
-    public override float CastAnimDelay => 0.5f;
+    public override float AttackAnimDelay => 0f;
+    public override float CastAnimDelay => 0f;
 
     // 让 RitsuLib 把普通 Godot 场景转换成游戏需要的 NCreatureVisuals。
     // 自动转换人物场景，让你不需要手动挂脚本。复制即可。
