@@ -1,9 +1,11 @@
 {
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.title": "A Promise Before the Start",
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.description": "On the first turn of each combat, gain {Energy:energyIcons()}.",
-  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.flavor": "An example relic for validating the template project.",
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.flavor": "Where am I?",
 
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC_PLUS.title": "A Promise Before the Start+",
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC_PLUS.description": "On the first turn of each combat, gain {Energy:energyIcons()}.\nYour [gold]Stamina[/gold] cards gain {BonusStamina} additional Stamina and maximum Stamina this combat, including cards generated during combat.",
-  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC_PLUS.flavor": "Better prepared this time."
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC_PLUS.flavor": "This time, I have to...",
+
+  "SEA_GLASS.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.title": "Azure Glass"
 }
