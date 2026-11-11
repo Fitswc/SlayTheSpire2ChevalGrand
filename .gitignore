@@ -3,10 +3,13 @@ obj/
 .vs/
 .idea/
 .godot/
-.codex
-.cache
-.unsaved
-.user
+.codex/
+.cache/
+.unsaved/
+.user/
+.agents/
+.trellis/
+
 
 *.DotSettings
 *.DotSettings.user
@@ -16,4 +19,6 @@ local.props
 *.import
 *.tmp
 *.log
+
+AGENTS.md
 
