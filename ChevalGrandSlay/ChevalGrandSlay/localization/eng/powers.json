@@ -68,9 +68,6 @@
   "CHEVAL_GRAND_SLAY_POWER_CGS_RESTART_THE_JOURNEY_POWER.title": "Racing Toward Dreams",
   "CHEVAL_GRAND_SLAY_POWER_CGS_RESTART_THE_JOURNEY_POWER.description": "At the start of your turn, choose a Stamina card from your [gold]Rest Pile[/gold], restore 1 Stamina, and move it to your discard pile. Triggers at most [blue]X[/blue] times this combat.",
   "CHEVAL_GRAND_SLAY_POWER_CGS_RESTART_THE_JOURNEY_POWER.smartDescription": "At the start of your turn, choose a Stamina card from your [gold]Rest Pile[/gold], restore 1 Stamina, and move it to your discard pile. Triggers at most [blue]X[/blue] times this combat.",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_SMOOTH_BREATHING_POWER.title": "The Rhythm of Solitude",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_SMOOTH_BREATHING_POWER.description": "At the start of your turn, look at the top [blue]X[/blue] cards of your draw pile. Choose 1 to add to your hand.",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_SMOOTH_BREATHING_POWER.smartDescription": "At the start of your turn, look at the top [blue]X[/blue] cards of your draw pile. Choose 1 to add to your hand.",
   "CHEVAL_GRAND_SLAY_POWER_CGS_SUB_ZERO_POWER.title": "Summer Calm",
   "CHEVAL_GRAND_SLAY_POWER_CGS_SUB_ZERO_POWER.description": "At the end of your next [blue]X[/blue] turns, gain 16 [gold]Block[/gold].",
   "CHEVAL_GRAND_SLAY_POWER_CGS_SUB_ZERO_POWER.smartDescription": "At the end of your next [blue]{Amount}[/blue] turns, gain 16 [gold]Block[/gold].",
@@ -90,7 +87,6 @@
   "CHEVAL_GRAND_SLAY_POWER_CGS_WINNING_RHYTHM_POWER.description": "During your turn, after playing an Attack, deal [blue]X[/blue] damage to ALL enemies. Triggers at most 3 times per turn.",
   "CHEVAL_GRAND_SLAY_POWER_CGS_WINNING_RHYTHM_POWER.smartDescription": "During your turn, after playing an Attack, deal [blue]X[/blue] damage to ALL enemies. Triggers at most 3 times per turn.",
   "CHEVAL_GRAND_SLAY_POWER_CGS_RESTART_THE_JOURNEY_POWER.selectionScreenPrompt": "Choose a card from your Rest Pile to restore Stamina and move to your discard pile",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_SMOOTH_BREATHING_POWER.selectionScreenPrompt": "Choose a card from the top of your draw pile to add to your hand",
   "CHEVAL_GRAND_SLAY_POWER_CGS_ONE_BEAT_AHEAD_POWER.title": "Beyond Admiration",
   "CHEVAL_GRAND_SLAY_POWER_CGS_ONE_BEAT_AHEAD_POWER.description": "Take an extra turn after this turn. During that extra turn, you cannot take extra turns.",
   "CHEVAL_GRAND_SLAY_POWER_CGS_ONE_BEAT_AHEAD_POWER.smartDescription": "Take an extra turn after this turn. During that extra turn, you cannot take extra turns."
