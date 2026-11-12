@@ -19,8 +19,8 @@ public sealed class CGSOverflowEchoPower : ModPowerTemplate
     public override PowerStackType StackType => PowerStackType.Counter;
     // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: $"{Entry.ResPath}/images/powers/CGSOverflowEchoPower.png",
-        BigIconPath: $"{Entry.ResPath}/images/powers/CGSOverflowEchoPower.png"
+        IconPath: $"{Entry.ResPath}/images/powers/small/CGSOverflowEcho.png",
+        BigIconPath: $"{Entry.ResPath}/images/powers/CGSOverflowEcho.png"
     );
 
     private bool _usedThisTurn;

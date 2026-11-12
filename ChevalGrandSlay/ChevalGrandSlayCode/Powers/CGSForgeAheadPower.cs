@@ -19,8 +19,8 @@ public sealed class CGSForgeAheadPower : ModPowerTemplate
     public override PowerStackType StackType => PowerStackType.Single;
     // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: $"{Entry.ResPath}/images/powers/CGSForgeAheadPower.png",
-        BigIconPath: $"{Entry.ResPath}/images/powers/CGSForgeAheadPower.png"
+        IconPath: $"{Entry.ResPath}/images/powers/small/CGSForgeAhead.png",
+        BigIconPath: $"{Entry.ResPath}/images/powers/CGSForgeAhead.png"
     );
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)

@@ -29,8 +29,8 @@ public sealed class CGSTurnTogetherUpgradedPower : ModPowerTemplate
 
     // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: $"{Entry.ResPath}/images/powers/CGSTurnTogetherPower.png",
-        BigIconPath: $"{Entry.ResPath}/images/powers/CGSTurnTogetherPower.png"
+        IconPath: $"{Entry.ResPath}/images/powers/small/CGSTurnTogetherUpgraded.png",
+        BigIconPath: $"{Entry.ResPath}/images/powers/CGSTurnTogetherUpgraded.png"
     );
 
     public override Task AfterCardChangedPiles(CardModel card, PileType previousPile, AbstractModel? source)

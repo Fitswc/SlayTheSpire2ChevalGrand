@@ -19,8 +19,8 @@ public sealed class CGSOneBeatAheadPower : ModPowerTemplate
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: $"{Entry.ResPath}/images/powers/CGSOneBeatAheadPower.png",
-        BigIconPath: $"{Entry.ResPath}/images/powers/CGSOneBeatAheadPower.png");
+        IconPath: $"{Entry.ResPath}/images/powers/small/CGSOneBeatAhead.png",
+        BigIconPath: $"{Entry.ResPath}/images/powers/CGSOneBeatAhead.png");
 
     public override bool ShouldTakeExtraTurn(Player player) =>
         player == Owner.Player && !IsExtraTurnActive;
