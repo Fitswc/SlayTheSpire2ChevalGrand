@@ -1,0 +1,6 @@
+[project]
+name = "sts2mcp-server"
+version = "0.1.0"
+description = "Local MCP server for the STS2MCP game mod"
+requires-python = ">=3.11"
+dependencies = ["httpx>=0.28,<1", "mcp>=1.20,<2"]

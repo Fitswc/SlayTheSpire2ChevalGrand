@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Version>0.1.0</Version>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Sts2Dir Condition="'$(Sts2Dir)' == ''">$(STS2_GAME_DIR)</Sts2Dir>
+    <Sts2DataDir>$(Sts2Dir)/data_sts2_windows_x86_64</Sts2DataDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="sts2;GodotSharp;0Harmony">
+      <HintPath>$(Sts2DataDir)/%(Identity).dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <None Update="STS2MCP.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <Target Name="CheckGamePath" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(Sts2DataDir)/sts2.dll')" Text="Set STS2_GAME_DIR or pass -p:Sts2Dir to the Windows Slay the Spire 2 installation." />
+  </Target>
+</Project>
