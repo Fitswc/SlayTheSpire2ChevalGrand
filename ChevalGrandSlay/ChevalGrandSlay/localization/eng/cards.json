@@ -50,7 +50,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_SPREAD_THE_OPENING.title": "Spreading Ripples",
   "CHEVAL_GRAND_SLAY_CARD_CGS_SPREAD_THE_OPENING.description": "Remove up to {Transfer:diff()} [gold]Vulnerable[/gold] from an enemy.\nApply that much [gold]Vulnerable[/gold] to every other enemy.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_THE_OLD_PAGE.title": "Yesterday's Practice",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_THE_OLD_PAGE.description": "Choose a card in your hand that originally has Stamina, with at least 2 Stamina remaining. Reduce its Stamina by 2. Draw {Cards:diff()} cards. Exhaust.",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_THE_OLD_PAGE.description": "Choose a card in your hand that originally has Stamina, with at least 2 Stamina remaining. Reduce its Stamina by 2. Draw {Cards:diff()} cards.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_THE_OLD_PAGE.selectionScreenPrompt": "Choose a Stamina card with at least 2 Stamina remaining",
   "CHEVAL_GRAND_SLAY_CARD_CGS_WIDE_VIEW.title": "The Blue I Dream Of",
   "CHEVAL_GRAND_SLAY_CARD_CGS_WIDE_VIEW.description": "Increase your hand limit by {HandLimitBonus:diff()} this combat.\nDraw 1 additional card during your normal draw each turn.",

@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Powers;
 
 
+// 能力：安心出手
 [RegisterPower]
 public sealed class CGSNoRetaliationPower : ModPowerTemplate
 {

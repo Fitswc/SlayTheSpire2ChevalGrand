@@ -6,6 +6,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：全力投球
 [RegisterPower]
 public sealed class CGSFirstStrikeTwicePower : ModPowerTemplate
 {

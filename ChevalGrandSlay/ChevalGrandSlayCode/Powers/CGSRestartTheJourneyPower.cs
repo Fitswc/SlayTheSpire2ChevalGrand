@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：驰骋梦想
 [RegisterPower]
 public sealed class CGSRestartTheJourneyPower : ModPowerTemplate
 {

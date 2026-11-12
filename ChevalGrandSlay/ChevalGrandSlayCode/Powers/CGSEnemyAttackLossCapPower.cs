@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：稳守本垒
 [RegisterPower]
 public sealed class CGSEnemyAttackLossCapPower : ModPowerTemplate
 {

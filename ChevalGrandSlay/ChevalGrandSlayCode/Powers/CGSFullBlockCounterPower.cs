@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：好胜心
 [RegisterPower]
 public sealed class CGSFullBlockCounterPower : ModPowerTemplate
 {

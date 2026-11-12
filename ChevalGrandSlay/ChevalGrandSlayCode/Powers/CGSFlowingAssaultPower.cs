@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Powers;
 
 
+// 能力：顺风的航程
 [RegisterPower]
 public sealed class CGSFlowingAssaultPower : ModPowerTemplate
 {

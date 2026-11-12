@@ -6,6 +6,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：你在看别的孩子吗?
 [RegisterPower]
 public sealed class CGSNoPositivePower : ModPowerTemplate
 {

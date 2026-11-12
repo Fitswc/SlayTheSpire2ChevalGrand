@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：憧憬的前方
 [RegisterPower]
 public sealed class CGSOneBeatAheadPower : ModPowerTemplate
 {

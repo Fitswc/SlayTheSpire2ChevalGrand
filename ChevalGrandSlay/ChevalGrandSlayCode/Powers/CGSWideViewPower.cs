@@ -6,6 +6,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：我憧憬的蓝
 [RegisterPower]
 public sealed class CGSWideViewPower : ModPowerTemplate, IMaxHandSizeModifier
 {

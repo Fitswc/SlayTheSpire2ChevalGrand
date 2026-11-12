@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Powers;
 
 
+// 能力：光的背影
 [RegisterPower]
 public sealed class CGSBorrowFromThePastPower : ModPowerTemplate
 {

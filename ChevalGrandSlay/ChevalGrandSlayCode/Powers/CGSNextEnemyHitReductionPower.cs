@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：卸下力道
 [RegisterPower]
 public sealed class CGSNextEnemyHitReductionPower : ModPowerTemplate
 {

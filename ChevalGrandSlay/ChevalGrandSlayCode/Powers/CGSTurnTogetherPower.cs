@@ -13,6 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：再一起跑吧
 [RegisterPower]
 public sealed class CGSTurnTogetherPower : ModPowerTemplate
 {

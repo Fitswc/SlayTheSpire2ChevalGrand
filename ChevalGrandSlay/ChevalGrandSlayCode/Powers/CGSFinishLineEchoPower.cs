@@ -15,6 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Powers;
 
 
+// 能力：光的残响
 [RegisterPower]
 public sealed class CGSFinishLineEchoPower : ModPowerTemplate
 {

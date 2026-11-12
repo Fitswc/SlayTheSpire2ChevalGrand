@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Powers;
 
 
+// 能力：我也会还手
 [RegisterPower]
 public sealed class CGSCounterAttackPower : ModPowerTemplate
 {

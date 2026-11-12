@@ -8,6 +8,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：尚能奔跑
 [RegisterPower]
 public sealed class CGSEndlessStaminaPower : ModPowerTemplate
 {

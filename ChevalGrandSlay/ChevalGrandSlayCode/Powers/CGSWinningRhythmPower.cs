@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：快速进击
 [RegisterPower]
 public sealed class CGSWinningRhythmPower : ModPowerTemplate
 {

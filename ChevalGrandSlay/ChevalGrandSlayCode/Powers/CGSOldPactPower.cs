@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：那时的约定
 [RegisterPower]
 public sealed class CGSOldPactPower : ModPowerTemplate
 {

@@ -8,6 +8,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Powers;
 
 
+// 能力：不惧不安
 [RegisterPower]
 public sealed class CGSResistWeakFrailPower : ModPowerTemplate
 {

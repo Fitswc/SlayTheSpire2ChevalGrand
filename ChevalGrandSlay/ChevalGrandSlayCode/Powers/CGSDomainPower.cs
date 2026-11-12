@@ -19,6 +19,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：领域
 [RegisterPower]
 public sealed class CGSDomainPower : ModPowerTemplate, IHealthBarForecastSource
 {

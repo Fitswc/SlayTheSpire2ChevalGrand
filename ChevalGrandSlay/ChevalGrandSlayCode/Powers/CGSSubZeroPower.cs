@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：夏凪
 [RegisterPower]
 public sealed class CGSSubZeroPower : ModPowerTemplate
 {

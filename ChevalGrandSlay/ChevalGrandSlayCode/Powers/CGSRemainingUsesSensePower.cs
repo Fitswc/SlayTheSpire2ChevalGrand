@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：疲惫的倔强
 [RegisterPower]
 public sealed class CGSRemainingUsesSensePower : ModPowerTemplate
 {

@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：没跑完的话
 [RegisterPower]
 public sealed class CGSNoRegretsEndingPower : ModPowerTemplate
 {

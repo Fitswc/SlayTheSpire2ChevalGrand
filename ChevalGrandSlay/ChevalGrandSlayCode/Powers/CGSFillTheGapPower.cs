@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Powers;
 
 
+// 能力：小小的关照
 [RegisterPower]
 public sealed class CGSFillTheGapPower : ModPowerTemplate
 {

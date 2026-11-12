@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace ChevalGrandSlay.Powers;
 
 
+// 能力：打向远方!
 [RegisterPower]
 public sealed class CGSOverflowEchoPower : ModPowerTemplate
 {

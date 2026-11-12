@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：点滴积累
 [RegisterPower]
 public sealed class CGSOldRoadWarmthPower : ModPowerTemplate
 {

@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：昨日的余力
 [RegisterPower]
 public sealed class CGSEnergyReservePower : ModPowerTemplate
 {

@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：笨拙的坚持
 [RegisterPower]
 public sealed class CGSUnwaveringStepPower : ModPowerTemplate
 {

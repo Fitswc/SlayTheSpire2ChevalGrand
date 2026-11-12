@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
+// 能力：进攻姿态
 [RegisterPower]
 public sealed class CGSForgeAheadPower : ModPowerTemplate
 {
