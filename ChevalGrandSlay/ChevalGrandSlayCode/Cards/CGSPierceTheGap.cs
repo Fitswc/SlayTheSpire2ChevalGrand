@@ -42,7 +42,7 @@ public sealed class CGSPierceTheGap : ModCardTemplate
             new DamageVar(8m, ValueProp.Move | ValueProp.Unblockable)
         ];
 
-    public CGSPierceTheGap() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSPierceTheGap() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -53,7 +53,7 @@ public sealed class CGSPierceTheGap : ModCardTemplate
         
         VfxCmd.PlayOnCreatureCenter(cardPlay.Target, "vfx/vfx_attack_slash");
         await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue,
-            ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this);
+            ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this, cardPlay);
     }
 
     protected override void OnUpgrade()
@@ -63,7 +63,7 @@ public sealed class CGSPierceTheGap : ModCardTemplate
         DynamicVars.Damage.UpgradeValueBy(3m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

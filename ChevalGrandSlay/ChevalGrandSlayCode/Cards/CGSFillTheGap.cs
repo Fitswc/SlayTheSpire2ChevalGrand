@@ -53,7 +53,7 @@ public sealed class CGSFillTheGap : ModCardTemplate
         description.Add("Effect", effect);
     }
 
-    public CGSFillTheGap() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSFillTheGap() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

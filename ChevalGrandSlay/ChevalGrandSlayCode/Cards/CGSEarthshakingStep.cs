@@ -44,7 +44,7 @@ public sealed class CGSEarthshakingStep : ModCardTemplate
             new DamageVar(28m, ValueProp.Move)
         ];
 
-    public CGSEarthshakingStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSEarthshakingStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -55,7 +55,7 @@ public sealed class CGSEarthshakingStep : ModCardTemplate
         ArgumentNullException.ThrowIfNull(CombatState);
         // 一次支付，伤害命令负责对全部敌人结算。
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").TargetingAllOpponents(CombatState).Execute(choiceContext);
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash").TargetingAllOpponents(CombatState).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
@@ -65,12 +65,7 @@ public sealed class CGSEarthshakingStep : ModCardTemplate
         DynamicVars["Damage"].UpgradeValueBy(8m);
     }
 
-    protected override void AfterDowngraded()
-    {
-        base.AfterDowngraded();
-    }
-
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

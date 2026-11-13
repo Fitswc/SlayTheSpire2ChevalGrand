@@ -47,14 +47,14 @@ public sealed class CGSFinalKick : ModCardTemplate
         HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
     ];
 
-    protected override bool IsPlayable => Owner?.PlayerCombatState is { Energy: 0 } &&
+    protected override bool IsPlayable => Owner.PlayerCombatState is { Energy: 0 } &&
         !PileType.Draw.GetPile(Owner).Cards.Any(card => card.DynamicVars.ContainsKey("Uses")) &&
         !PileType.Discard.GetPile(Owner).Cards.Any(card => card.DynamicVars.ContainsKey("Uses")) &&
         Entry.CGSFatePile.GetPile(Owner).Cards.Count > 0;
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 
-    public CGSFinalKick() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSFinalKick() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -65,6 +65,6 @@ public sealed class CGSFinalKick : ModCardTemplate
             return;
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).TargetingAllOpponents(combatState).Execute(choiceContext);
+            .FromCard(this, cardPlay).TargetingAllOpponents(combatState).Execute(choiceContext);
     }
 }

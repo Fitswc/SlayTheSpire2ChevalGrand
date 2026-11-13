@@ -31,7 +31,7 @@ public sealed class CGSRemainingUsesSensePower : ModPowerTemplate
     public override async Task AfterCardChangedPiles(CardModel card, PileType previousPile, AbstractModel? source)
     {
         if (card.Owner != Owner.Player || previousPile == Entry.CGSFatePile ||
-            card.Pile?.Type != Entry.CGSFatePile || CombatState?.CurrentSide != CombatSide.Player ||
+            card.Pile?.Type != Entry.CGSFatePile || CombatState.CurrentSide != CombatSide.Player ||
             Owner.Player?.PlayerCombatState is not { } state || _triggeredTurn == state.TurnNumber)
             return;
         _triggeredTurn = state.TurnNumber;

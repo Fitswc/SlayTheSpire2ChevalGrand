@@ -44,7 +44,7 @@ public sealed class CGSSuppressTheirSpirit : ModCardTemplate
             new DamageVar(8m, ValueProp.Move)
         ];
 
-    public CGSSuppressTheirSpirit() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSSuppressTheirSpirit() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
     
@@ -52,7 +52,7 @@ public sealed class CGSSuppressTheirSpirit : ModCardTemplate
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
             .Targeting(cardPlay.Target).Execute(choiceContext);
         await PowerCmd.Apply<CGSNoPositivePower>(choiceContext, cardPlay.Target, 1m, Owner.Creature, this);
     }

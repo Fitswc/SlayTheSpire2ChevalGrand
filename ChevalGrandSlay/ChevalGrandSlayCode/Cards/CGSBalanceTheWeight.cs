@@ -52,7 +52,7 @@ public sealed class CGSBalanceTheWeight : ModCardTemplate
         description.Add("Effect", effect);
     }
 
-    public CGSBalanceTheWeight() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSBalanceTheWeight() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

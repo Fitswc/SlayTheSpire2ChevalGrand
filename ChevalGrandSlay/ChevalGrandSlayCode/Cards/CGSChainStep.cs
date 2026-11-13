@@ -46,7 +46,7 @@ public sealed class CGSChainStep : ModCardTemplate
             new DamageVar(7m, ValueProp.Move)
         ];
 
-    public CGSChainStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSChainStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -56,7 +56,7 @@ public sealed class CGSChainStep : ModCardTemplate
         
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
     }
 
     public override Task BeforeCardPlayed(CardPlay cardPlay)
@@ -86,7 +86,7 @@ public sealed class CGSChainStep : ModCardTemplate
 
     private void RefreshDiscount(CardPlay? excludedPlay = null)
     {
-        if (Owner?.PlayerCombatState is not { } state || _discountedTurn == state.TurnNumber ||
+        if (Owner.PlayerCombatState is not { } state || _discountedTurn == state.TurnNumber ||
             CGSAttackChain.CountAttacksPlayedThisTurn(Owner, CombatState, excludedPlay) < 2)
             return;
 
@@ -101,7 +101,7 @@ public sealed class CGSChainStep : ModCardTemplate
         DynamicVars.Damage.UpgradeValueBy(3m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

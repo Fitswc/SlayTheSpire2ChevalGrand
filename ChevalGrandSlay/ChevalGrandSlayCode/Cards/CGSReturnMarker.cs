@@ -43,7 +43,7 @@ public sealed class CGSReturnMarker : ModCardTemplate
         new DynamicVar("Discount", 1m)
     ];
 
-    public CGSReturnMarker() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSReturnMarker() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -83,6 +83,6 @@ public sealed class CGSReturnMarker : ModCardTemplate
         DynamicVars["Discount"].UpgradeValueBy(1m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

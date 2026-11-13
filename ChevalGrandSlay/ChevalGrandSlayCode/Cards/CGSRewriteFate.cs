@@ -48,7 +48,7 @@ public sealed class CGSRewriteFate : ModCardTemplate
             new DynamicVar("MaxUses", 1m)
         ];
 
-    public CGSRewriteFate() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSRewriteFate() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -75,8 +75,8 @@ public sealed class CGSRewriteFate : ModCardTemplate
         EnergyCost.UpgradeBy(-1);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 
 

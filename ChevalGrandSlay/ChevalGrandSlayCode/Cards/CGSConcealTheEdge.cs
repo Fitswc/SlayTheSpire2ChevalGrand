@@ -47,7 +47,7 @@ public sealed class CGSConcealTheEdge : ModCardTemplate
             new DynamicVar("Transfer", 3m)
         ];
 
-    public CGSConcealTheEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSConcealTheEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -72,7 +72,7 @@ public sealed class CGSConcealTheEdge : ModCardTemplate
         DynamicVars["Transfer"].UpgradeValueBy(2m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

@@ -27,7 +27,7 @@ public sealed class CGSWinningRhythmPower : ModPowerTemplate
     {
         var player = Owner.Player;
         if (player?.PlayerCombatState is not { } state ||
-            CombatState?.CurrentSide != CombatSide.Player ||
+            CombatState.CurrentSide != CombatSide.Player ||
             cardPlay.Card.Owner != player || cardPlay.Card.Type != CardType.Attack)
             return;
 
@@ -42,7 +42,7 @@ public sealed class CGSWinningRhythmPower : ModPowerTemplate
         foreach (var enemy in CombatState.HittableEnemies.ToArray())
         {
             if (enemy.IsAlive)
-                await CreatureCmd.Damage(choiceContext, enemy, Amount, ValueProp.Unpowered, Owner, null);
+                await CreatureCmd.Damage(choiceContext, enemy, Amount, ValueProp.Unpowered, Owner, null, null);
         }
     }
 }

@@ -43,7 +43,7 @@ public sealed class CGSReviewThePace : ModCardTemplate
         new CardsVar(2)
     ];
 
-    public CGSReviewThePace() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSReviewThePace() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -66,6 +66,6 @@ public sealed class CGSReviewThePace : ModCardTemplate
         DynamicVars["Cards"].UpgradeValueBy(1m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

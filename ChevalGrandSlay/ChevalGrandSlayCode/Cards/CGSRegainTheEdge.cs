@@ -45,7 +45,7 @@ public sealed class CGSRegainTheEdge : ModCardTemplate
             new DynamicVar("Cleanse", 1m)
         ];
 
-    public CGSRegainTheEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSRegainTheEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -65,7 +65,7 @@ public sealed class CGSRegainTheEdge : ModCardTemplate
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
@@ -76,7 +76,7 @@ public sealed class CGSRegainTheEdge : ModCardTemplate
         DynamicVars["Cleanse"].UpgradeValueBy(1m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

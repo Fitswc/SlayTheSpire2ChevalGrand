@@ -33,7 +33,7 @@ public sealed class CGSFillTheGapPower : ModPowerTemplate
     {
         if (card.Owner != Owner.Player || previousPile != Entry.CGSFatePile ||
             card.Pile?.Type == Entry.CGSFatePile || !card.DynamicVars.ContainsKey("Uses") ||
-            CombatState?.CurrentSide != CombatSide.Player ||
+            CombatState.CurrentSide != CombatSide.Player ||
             Owner.Player?.PlayerCombatState is not { } state || _triggeredTurn == state.TurnNumber)
             return;
         _triggeredTurn = state.TurnNumber;

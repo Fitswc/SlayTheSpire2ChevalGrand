@@ -48,7 +48,7 @@ public sealed class CGSStrike : ModCardTemplate
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Strike };
 
-    public CGSStrike() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSStrike() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -60,7 +60,7 @@ public sealed class CGSStrike : ModCardTemplate
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
     }

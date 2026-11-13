@@ -52,7 +52,7 @@ public sealed class CGSClamToFight : ModCardTemplate
         new PowerVar<VigorPower>(3m)
     ];
 
-    public CGSClamToFight() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSClamToFight() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

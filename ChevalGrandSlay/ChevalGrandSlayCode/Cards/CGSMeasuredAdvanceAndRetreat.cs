@@ -46,7 +46,7 @@ public sealed class CGSMeasuredAdvanceAndRetreat : ModCardTemplate
             new DynamicVar("LossCap", 12m)
         ];
     
-    public CGSMeasuredAdvanceAndRetreat() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSMeasuredAdvanceAndRetreat() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
     
@@ -65,7 +65,7 @@ public sealed class CGSMeasuredAdvanceAndRetreat : ModCardTemplate
         DynamicVars["LossCap"].UpgradeValueBy(-4m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

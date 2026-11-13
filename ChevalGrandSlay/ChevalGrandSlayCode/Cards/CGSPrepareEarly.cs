@@ -36,7 +36,7 @@ public sealed class CGSPrepareEarly : ModCardTemplate
             CardKeyword.Exhaust
         ];
 
-    public CGSPrepareEarly() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSPrepareEarly() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

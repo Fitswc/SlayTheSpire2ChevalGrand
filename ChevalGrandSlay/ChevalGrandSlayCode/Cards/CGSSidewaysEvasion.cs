@@ -43,7 +43,7 @@ public sealed class CGSSidewaysEvasion : ModCardTemplate
             new BlockVar(5m, ValueProp.Move)
         ];
 
-    public CGSSidewaysEvasion() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSSidewaysEvasion() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -68,8 +68,8 @@ public sealed class CGSSidewaysEvasion : ModCardTemplate
         DynamicVars.Block.UpgradeValueBy(3m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 
 

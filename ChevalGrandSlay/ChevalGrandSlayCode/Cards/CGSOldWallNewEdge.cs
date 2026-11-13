@@ -44,7 +44,7 @@ public sealed class CGSOldWallNewEdge : ModCardTemplate
         new DynamicVar("BlockSpent", 12m)
     ];
 
-    public CGSOldWallNewEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSOldWallNewEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -56,13 +56,13 @@ public sealed class CGSOldWallNewEdge : ModCardTemplate
         decimal spent = Math.Min(Owner.Creature.Block, DynamicVars["BlockSpent"].BaseValue);
         if (spent > 0)
         {
-            await CreatureCmd.LoseBlock(Owner.Creature, spent);
+            await CreatureCmd.LoseBlock(choiceContext, Owner.Creature, spent, null);
         }
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue + spent)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
@@ -71,6 +71,6 @@ public sealed class CGSOldWallNewEdge : ModCardTemplate
         DynamicVars["MaxUses"].UpgradeValueBy(1m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

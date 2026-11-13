@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Combat;
@@ -25,10 +26,10 @@ public sealed class CGSNextEnemyHitReductionPower : ModPowerTemplate
     private bool _reducedHit;
 
     public override decimal ModifyDamageAdditive(Creature? target, decimal damage, ValueProp props,
-        Creature? dealer, CardModel? cardSource)
+        Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (target != Owner || dealer?.IsEnemy != true || !props.IsPoweredAttack() ||
-            CombatState?.CurrentSide != CombatSide.Enemy || _reducedHit)
+            CombatState.CurrentSide != CombatSide.Enemy || _reducedHit)
             return 0m;
 
         _reducedHit = true;

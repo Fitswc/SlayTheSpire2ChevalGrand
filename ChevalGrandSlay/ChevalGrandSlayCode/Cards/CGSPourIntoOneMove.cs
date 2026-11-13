@@ -47,7 +47,7 @@ public sealed class CGSPourIntoOneMove : ModCardTemplate
     //protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
     //    PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
 
-    public CGSPourIntoOneMove() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSPourIntoOneMove() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -96,9 +96,9 @@ public sealed class CGSPourIntoOneMove : ModCardTemplate
     private bool IsCandidate(CardModel card) =>
         card.Type == CardType.Attack && card.DynamicVars.ContainsKey("Uses") &&
         card.DynamicVars["Uses"].IntValue >= 2 &&
-        card.EnergyCost.GetWithModifiers(CostModifiers.All) <= (Owner?.PlayerCombatState?.Energy ?? 0);
+        card.EnergyCost.GetWithModifiers(CostModifiers.All) <= (Owner.PlayerCombatState?.Energy ?? 0);
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

@@ -37,7 +37,7 @@ public sealed class CGSWideView : ModCardTemplate
         new DynamicVar("HandLimitBonus", 2m)
     ];
 
-    public CGSWideView() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSWideView() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

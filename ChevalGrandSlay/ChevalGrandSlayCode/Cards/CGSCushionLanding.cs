@@ -50,7 +50,7 @@ public sealed class CGSCushionLanding : ModCardTemplate
             new BlockVar(6m, ValueProp.Move)
         ];
 
-    public CGSCushionLanding() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSCushionLanding() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -74,8 +74,8 @@ public sealed class CGSCushionLanding : ModCardTemplate
         DynamicVars.Block.UpgradeValueBy(3m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 
 

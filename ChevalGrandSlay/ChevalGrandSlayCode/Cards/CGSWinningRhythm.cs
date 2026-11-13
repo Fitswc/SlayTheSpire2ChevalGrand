@@ -39,7 +39,7 @@ public sealed class CGSWinningRhythm : ModCardTemplate
             new DynamicVar(PowerDamageVarName, 3m)
         ];
 
-    public CGSWinningRhythm() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSWinningRhythm() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

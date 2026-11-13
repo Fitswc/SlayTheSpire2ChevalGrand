@@ -27,7 +27,7 @@ public sealed class CGSEnemyAttackLossCapPower : ModPowerTemplate
         Creature? dealer, CardModel? cardSource)
     {
         if (target != Owner || dealer?.IsEnemy != true || !props.IsPoweredAttack() ||
-            CombatState?.CurrentSide != CombatSide.Enemy) return hpLoss;
+            CombatState.CurrentSide != CombatSide.Enemy) return hpLoss;
         decimal allowed = Math.Max(0m, Amount - _lost);
         decimal actual = Math.Min(hpLoss, allowed);
         _lost += actual;

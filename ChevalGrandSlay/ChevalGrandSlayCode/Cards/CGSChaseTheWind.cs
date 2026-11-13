@@ -44,7 +44,7 @@ public sealed class CGSChaseTheWind : ModCardTemplate
         new DynamicVar("MaxUses", 3m)
     ];
 
-    public CGSChaseTheWind() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSChaseTheWind() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -54,7 +54,7 @@ public sealed class CGSChaseTheWind : ModCardTemplate
         
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
@@ -67,7 +67,7 @@ public sealed class CGSChaseTheWind : ModCardTemplate
         DynamicVars.Damage.UpgradeValueBy(3m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

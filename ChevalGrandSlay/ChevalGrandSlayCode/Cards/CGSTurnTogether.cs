@@ -57,7 +57,7 @@ public sealed class CGSTurnTogether : ModCardTemplate
         description.Add("Effect", effect);
     }
 
-    public CGSTurnTogether() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSTurnTogether() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

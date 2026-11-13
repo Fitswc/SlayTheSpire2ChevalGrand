@@ -45,7 +45,7 @@ public sealed class CGSRestartTheJourney : ModCardTemplate
         new DynamicVar("PowerStacks", 2m)
     ];
 
-    public CGSRestartTheJourney() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSRestartTheJourney() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

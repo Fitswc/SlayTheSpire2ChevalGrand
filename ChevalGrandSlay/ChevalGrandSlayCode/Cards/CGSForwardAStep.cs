@@ -49,7 +49,7 @@ public sealed class CGSForwardAStep : ModCardTemplate
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Strike };
 
-    public CGSForwardAStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSForwardAStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -61,7 +61,7 @@ public sealed class CGSForwardAStep : ModCardTemplate
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 

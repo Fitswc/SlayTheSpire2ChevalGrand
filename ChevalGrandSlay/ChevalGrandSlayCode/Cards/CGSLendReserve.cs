@@ -48,7 +48,7 @@ public sealed class CGSLendReserve : ModCardTemplate
     //protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
     //    PileType.Hand.GetPile(Owner).Cards.Count(card => card != this && card.DynamicVars.ContainsKey("Uses")) >= 2;
     
-    public CGSLendReserve() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSLendReserve() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -100,7 +100,7 @@ public sealed class CGSLendReserve : ModCardTemplate
         DynamicVars["Restore"].UpgradeValueBy(1m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

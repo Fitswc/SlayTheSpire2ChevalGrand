@@ -44,7 +44,7 @@ public sealed class CGSOpportunisticPursuit : ModCardTemplate
         new DynamicVar("BonusDamage", 5m),
     ];
 
-    public CGSOpportunisticPursuit() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSOpportunisticPursuit() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -55,12 +55,12 @@ public sealed class CGSOpportunisticPursuit : ModCardTemplate
         
         bool hasPreviousAttack = CGSAttackChain.CountAttacksPlayedThisTurn(Owner, CombatState, cardPlay) >= 1;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
 
         if (hasPreviousAttack)
         {
             await DamageCmd.Attack(DynamicVars["BonusDamage"].BaseValue)
-                .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
+                .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
         }
     }
 
@@ -72,7 +72,7 @@ public sealed class CGSOpportunisticPursuit : ModCardTemplate
         DynamicVars["BonusDamage"].UpgradeValueBy(2m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

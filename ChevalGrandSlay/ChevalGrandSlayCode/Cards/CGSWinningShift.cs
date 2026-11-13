@@ -42,7 +42,7 @@ public sealed class CGSWinningShift : ModCardTemplate
         new CardsVar(1)
     ];
 
-    public CGSWinningShift() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSWinningShift() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -60,7 +60,7 @@ public sealed class CGSWinningShift : ModCardTemplate
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

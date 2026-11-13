@@ -49,7 +49,7 @@ public sealed class CGSBriefRestRestart : ModCardTemplate
             new BlockVar(4m, ValueProp.Move)
         ];
 
-    public CGSBriefRestRestart() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSBriefRestRestart() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -92,8 +92,8 @@ public sealed class CGSBriefRestRestart : ModCardTemplate
         DynamicVars.Block.UpgradeValueBy(3m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 
 

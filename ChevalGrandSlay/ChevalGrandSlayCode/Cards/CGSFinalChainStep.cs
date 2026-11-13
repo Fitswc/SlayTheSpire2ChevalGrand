@@ -43,7 +43,7 @@ public sealed class CGSFinalChainStep : ModCardTemplate
         new DynamicVar("MaxUses", 2m)
     ];
 
-    public CGSFinalChainStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSFinalChainStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -56,7 +56,7 @@ public sealed class CGSFinalChainStep : ModCardTemplate
         for (int i = 0; i < hitCount; i++)
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
+                .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
                 .Targeting(cardPlay.Target)
                 .Execute(choiceContext);
         }
@@ -70,7 +70,7 @@ public sealed class CGSFinalChainStep : ModCardTemplate
         EnergyCost.UpgradeBy(-1);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

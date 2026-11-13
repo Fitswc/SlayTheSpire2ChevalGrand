@@ -43,7 +43,7 @@ public sealed class CGSLightStep : ModCardTemplate
             new DamageVar(6m, ValueProp.Move)
         ];
 
-    public CGSLightStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSLightStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -53,7 +53,7 @@ public sealed class CGSLightStep : ModCardTemplate
         
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
@@ -63,7 +63,7 @@ public sealed class CGSLightStep : ModCardTemplate
         DynamicVars.Damage.UpgradeValueBy(2m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

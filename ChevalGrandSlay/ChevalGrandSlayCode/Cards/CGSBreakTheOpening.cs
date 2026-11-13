@@ -51,7 +51,7 @@ public sealed class CGSBreakTheOpening : ModCardTemplate
         new PowerVar<VulnerablePower>(2m)
     ];
 
-    public CGSBreakTheOpening() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSBreakTheOpening() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -70,7 +70,7 @@ public sealed class CGSBreakTheOpening : ModCardTemplate
             );
         
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
@@ -81,7 +81,7 @@ public sealed class CGSBreakTheOpening : ModCardTemplate
         DynamicVars["VulnerablePower"].UpgradeValueBy(1m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

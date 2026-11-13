@@ -51,7 +51,7 @@ public sealed class CGSLongSprint : ModCardTemplate
         new DynamicVar("RetainedDamage", 8m)
     ];
 
-    public CGSLongSprint() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSLongSprint() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -70,7 +70,7 @@ public sealed class CGSLongSprint : ModCardTemplate
 
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(damage)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
@@ -97,6 +97,6 @@ public sealed class CGSLongSprint : ModCardTemplate
         return Task.CompletedTask;
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

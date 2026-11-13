@@ -52,7 +52,7 @@ public sealed class CGSTearOpenDefense : ModCardTemplate
         new DynamicVar(FirstAttackVulnerableVarName, 1m)
     ];
 
-    public CGSTearOpenDefense() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSTearOpenDefense() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -63,7 +63,7 @@ public sealed class CGSTearOpenDefense : ModCardTemplate
         bool isFirstAttack = CGSAttackChain.CountAttacksPlayedThisTurn(Owner, CombatState, cardPlay) == 0;
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 
@@ -87,7 +87,7 @@ public sealed class CGSTearOpenDefense : ModCardTemplate
         DynamicVars[FirstAttackVulnerableVarName].UpgradeValueBy(1m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

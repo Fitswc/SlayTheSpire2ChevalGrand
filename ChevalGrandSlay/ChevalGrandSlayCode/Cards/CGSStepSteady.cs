@@ -46,7 +46,7 @@ public sealed class CGSStepSteady : ModCardTemplate
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Strike };
 
-    public CGSStepSteady() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSStepSteady() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -58,7 +58,7 @@ public sealed class CGSStepSteady : ModCardTemplate
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 
@@ -75,7 +75,7 @@ public sealed class CGSStepSteady : ModCardTemplate
 
             if (CombatState != null)
                 await DamageCmd.Attack(damage)
-                    .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
+                    .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
                     .TargetingAllOpponents(CombatState)
                     .Execute(choiceContext);
         }

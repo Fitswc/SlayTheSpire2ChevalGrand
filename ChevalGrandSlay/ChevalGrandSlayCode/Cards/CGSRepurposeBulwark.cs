@@ -43,7 +43,7 @@ public sealed class CGSRepurposeBulwark : ModCardTemplate
             new DynamicVar("BlockLimit", 9m)
         ];
 
-    public CGSRepurposeBulwark() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSRepurposeBulwark() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -57,7 +57,7 @@ public sealed class CGSRepurposeBulwark : ModCardTemplate
             return;
         }
 
-        await CreatureCmd.LoseBlock(cardPlay.Target, removed);
+        await CreatureCmd.LoseBlock(choiceContext, cardPlay.Target, removed, null);
         await CreatureCmd.GainBlock(Owner.Creature, removed, ValueProp.Move, cardPlay);
     }
 
@@ -68,7 +68,7 @@ public sealed class CGSRepurposeBulwark : ModCardTemplate
         DynamicVars["BlockLimit"].UpgradeValueBy(4m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

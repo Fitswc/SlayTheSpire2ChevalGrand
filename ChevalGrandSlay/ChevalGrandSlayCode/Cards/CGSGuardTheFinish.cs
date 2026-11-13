@@ -50,7 +50,7 @@ public sealed class CGSGuardTheFinish : ModCardTemplate
             new DynamicVar("BonusBlock", 4m)
         ];
 
-    public CGSGuardTheFinish() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSGuardTheFinish() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -73,8 +73,8 @@ public sealed class CGSGuardTheFinish : ModCardTemplate
         DynamicVars["BonusBlock"].UpgradeValueBy(2m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 
 

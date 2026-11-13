@@ -46,7 +46,7 @@ public sealed class CGSSpreadTheOpening : ModCardTemplate
             CardKeyword.Exhaust
         ];
 
-    public CGSSpreadTheOpening() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSSpreadTheOpening() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

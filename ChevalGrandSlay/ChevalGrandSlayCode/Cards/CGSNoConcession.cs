@@ -54,7 +54,7 @@ public sealed class CGSNoConcession : ModCardTemplate
         new DynamicVar("CounterCharges", 1m)
     ];
 
-    public CGSNoConcession() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSNoConcession() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

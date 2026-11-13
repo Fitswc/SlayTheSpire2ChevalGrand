@@ -44,7 +44,7 @@ public sealed class CGSUnwindMomentum : ModCardTemplate
             new PowerVar<WeakPower>(3m)
         ];
 
-    public CGSUnwindMomentum() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSUnwindMomentum() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

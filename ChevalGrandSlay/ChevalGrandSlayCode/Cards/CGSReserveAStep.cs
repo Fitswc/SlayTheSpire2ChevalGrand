@@ -50,7 +50,7 @@ public sealed class CGSReserveAStep : ModCardTemplate
         new BlockVar(5m, ValueProp.Move)
     ];
 
-    public CGSReserveAStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSReserveAStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -84,6 +84,6 @@ public sealed class CGSReserveAStep : ModCardTemplate
         DynamicVars.Block.UpgradeValueBy(2m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

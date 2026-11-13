@@ -50,7 +50,7 @@ public sealed class CGSReadyReception : ModCardTemplate
         new BlockVar(5m, ValueProp.Move)
     ];
 
-    public CGSReadyReception() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSReadyReception() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -68,6 +68,6 @@ public sealed class CGSReadyReception : ModCardTemplate
         DynamicVars.Block.UpgradeValueBy(3m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

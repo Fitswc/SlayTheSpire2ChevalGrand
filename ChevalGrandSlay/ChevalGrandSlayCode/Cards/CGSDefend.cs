@@ -47,7 +47,7 @@ public sealed class CGSDefend : ModCardTemplate
         new BlockVar(5m, ValueProp.Move)
     ];
 
-    public CGSDefend() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSDefend() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

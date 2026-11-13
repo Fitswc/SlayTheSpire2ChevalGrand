@@ -65,7 +65,7 @@ public sealed class CGSFullBlockCounterPower : ModPowerTemplate
                 damage,
                 ValueProp.Unpowered,
                 owner,
-                null);
+                null, null);
         }
     }
 

@@ -33,7 +33,7 @@ public sealed class CGSRestartTheJourneyPower : ModPowerTemplate
     {
         if (player != Owner.Player || _triggerCount >= Amount) return;
         var candidates = Entry.CGSFatePile.GetPile(player).Cards
-            .Where(card => card.DynamicVars.ContainsKey("Uses")).ToList();
+            .Where(candidateCard => candidateCard.DynamicVars.ContainsKey("Uses")).ToList();
         if (candidates.Count == 0) return;
         var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, player,
             new CardSelectorPrefs(SelectionScreenPrompt, 1));

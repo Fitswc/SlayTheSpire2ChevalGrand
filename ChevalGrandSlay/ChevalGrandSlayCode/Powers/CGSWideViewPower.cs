@@ -22,5 +22,5 @@ public sealed class CGSWideViewPower : ModPowerTemplate, IMaxHandSizeModifier
         player == Owner.Player ? amount + 1m : amount;
 
     public int ModifyMaxHandSize(Player player, int currentMaxHandSize) =>
-        player == Owner.Player ? currentMaxHandSize + (int)Amount : currentMaxHandSize;
+        player == Owner.Player ? currentMaxHandSize + Amount : currentMaxHandSize;
 }

@@ -45,7 +45,7 @@ public sealed class CGSBorrowFromThePast : ModCardTemplate
         new DynamicVar("PowerStack", 6m)
     ];
 
-    public CGSBorrowFromThePast() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSBorrowFromThePast() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

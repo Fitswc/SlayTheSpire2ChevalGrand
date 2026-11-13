@@ -38,7 +38,7 @@ public sealed class CGSOverflowEchoPower : ModPowerTemplate
         if (_usedThisTurn || dealer != Owner || target?.IsEnemy != true || !result.WasTargetKilled)
             return;
         _usedThisTurn = true;
-        if (result.OverkillDamage <= 0 || CombatState is null) return;
+        if (result.OverkillDamage <= 0) return;
 
         var others = CombatState.HittableEnemies.Where(enemy => enemy != target).ToArray();
         if (others.Length == 0) return;
@@ -46,7 +46,7 @@ public sealed class CGSOverflowEchoPower : ModPowerTemplate
         if (other is null) return;
 
         decimal damage = Math.Min(result.OverkillDamage, Amount);
-        await CreatureCmd.Damage(choiceContext, other, damage, ValueProp.Unpowered, Owner, null);
+        await CreatureCmd.Damage(choiceContext, other, damage, ValueProp.Unpowered, Owner, null, null);
     }
 }
 

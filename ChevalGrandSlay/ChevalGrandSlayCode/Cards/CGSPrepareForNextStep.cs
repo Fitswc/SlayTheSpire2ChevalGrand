@@ -52,7 +52,7 @@ public sealed class CGSPrepareForNextStep : ModCardTemplate
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Defend };
 
-    public CGSPrepareForNextStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSPrepareForNextStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

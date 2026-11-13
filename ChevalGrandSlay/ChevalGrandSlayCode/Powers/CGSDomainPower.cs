@@ -80,7 +80,7 @@ public sealed class CGSDomainPower : ModPowerTemplate, IHealthBarForecastSource
     }
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,
-        Creature? dealer, CardModel? cardSource) =>
+        Creature? dealer, CardModel? cardSource, CardPlay? cardPlay) =>
         dealer == Owner && cardSource?.Type == CardType.Attack && props.IsPoweredAttack()
             ? 1m + DamageBonusPercent / 100m
             : 1m;

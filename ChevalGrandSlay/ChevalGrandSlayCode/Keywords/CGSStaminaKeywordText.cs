@@ -18,6 +18,6 @@ public sealed class CGSStaminaKeywordText : ModelCapability, ICardDescriptionCon
         // RitsuLib formats the fragment with this card's dynamic vars, including upgrade previews.
         var text = new LocString("card_keywords", "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.cardText");
         text.Add("StaminaName", CGSKeywords.Stamina.GetModKeywordTitle());
-        yield return new CardDescriptionFragment(text, CardDescriptionFragmentPlacement.AfterBase);
+        yield return new CardDescriptionFragment(text);
     }
 }

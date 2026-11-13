@@ -39,7 +39,7 @@ public sealed class CGSRemoveTheCharm : ModCardTemplate
             new DynamicVar("ArtifactRemoved", 1m)
         ];
 
-    public CGSRemoveTheCharm() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSRemoveTheCharm() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -56,7 +56,7 @@ public sealed class CGSRemoveTheCharm : ModCardTemplate
         }
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(2)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()

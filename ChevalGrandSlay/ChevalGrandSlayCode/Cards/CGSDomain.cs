@@ -56,9 +56,9 @@ public sealed class CGSDomain : ModCardTemplate
         CardKeyword.Exhaust
     ];
 
-    protected override bool IsPlayable => Owner is not null && !Owner.Creature.HasPower<CGSDomainPower>();
+    protected override bool IsPlayable => !Owner.Creature.HasPower<CGSDomainPower>();
 
-    public CGSDomain() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSDomain() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

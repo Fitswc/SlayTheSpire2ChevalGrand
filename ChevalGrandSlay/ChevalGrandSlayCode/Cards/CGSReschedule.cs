@@ -40,7 +40,7 @@ public sealed class CGSReschedule : ModCardTemplate
             CardKeyword.Exhaust
         ];
 
-    public CGSReschedule() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSReschedule() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

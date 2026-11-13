@@ -39,7 +39,7 @@ public sealed class CGSEnergyDrink : ModCardTemplate
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [];
 
-    public CGSEnergyDrink() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSEnergyDrink() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

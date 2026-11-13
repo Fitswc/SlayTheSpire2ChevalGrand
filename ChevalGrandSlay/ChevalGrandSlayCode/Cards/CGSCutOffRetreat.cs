@@ -49,7 +49,7 @@ public sealed class CGSCutOffRetreat : ModCardTemplate
             new DamageVar(8m, ValueProp.Move)
         ];
 
-    public CGSCutOffRetreat() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSCutOffRetreat() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -58,7 +58,7 @@ public sealed class CGSCutOffRetreat : ModCardTemplate
         
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .CGSWithVfx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
@@ -72,7 +72,7 @@ public sealed class CGSCutOffRetreat : ModCardTemplate
         DynamicVars.Damage.UpgradeValueBy(3m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

@@ -40,7 +40,7 @@ public sealed class CGSReorderNotes : ModCardTemplate
         CardKeyword.Exhaust
     ];
 
-    public CGSReorderNotes() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSReorderNotes() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

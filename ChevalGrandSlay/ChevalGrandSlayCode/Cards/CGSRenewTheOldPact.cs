@@ -48,7 +48,7 @@ public sealed class CGSRenewTheOldPact : ModCardTemplate
         description.Add("Effect", effect);
     }
 
-    public CGSRenewTheOldPact() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSRenewTheOldPact() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

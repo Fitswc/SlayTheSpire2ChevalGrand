@@ -37,7 +37,7 @@ public sealed class CGSFlowingAssault : ModCardTemplate
             new CardsVar(1)
         ];
 
-    public CGSFlowingAssault() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSFlowingAssault() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

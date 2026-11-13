@@ -32,7 +32,7 @@ public sealed class CGSOneBeatAhead : ModCardTemplate
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    public CGSOneBeatAhead() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSOneBeatAhead() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

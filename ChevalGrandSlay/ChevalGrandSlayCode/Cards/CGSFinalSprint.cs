@@ -51,7 +51,7 @@ public sealed class CGSFinalSprint : ModCardTemplate
             new DynamicVar("FateBonusCap", 8m)
         ];
 
-    public CGSFinalSprint() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSFinalSprint() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -62,7 +62,7 @@ public sealed class CGSFinalSprint : ModCardTemplate
         ArgumentNullException.ThrowIfNull(CombatState);
         int cardsInFate = Entry.CGSFatePile.GetPile(Owner).Cards.Count;
         decimal bonus = Math.Min(cardsInFate * 2m, DynamicVars["FateBonusCap"].BaseValue);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
             .TargetingAllOpponents(CombatState).Execute(choiceContext);
     }
 
@@ -74,8 +74,8 @@ public sealed class CGSFinalSprint : ModCardTemplate
         DynamicVars["FateBonusCap"].UpgradeValueBy(2m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 
 

@@ -37,7 +37,7 @@ public sealed class CGSEchoOfTheFinish : ModCardTemplate
             new DynamicVar("OverflowCap", 12m)
         ];
 
-    public CGSEchoOfTheFinish() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSEchoOfTheFinish() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

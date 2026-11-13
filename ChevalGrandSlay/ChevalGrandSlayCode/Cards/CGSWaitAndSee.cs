@@ -52,7 +52,7 @@ public sealed class CGSWaitAndSee : ModCardTemplate
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Defend };
 
-    public CGSWaitAndSee() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSWaitAndSee() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -93,7 +93,7 @@ public sealed class CGSWaitAndSee : ModCardTemplate
         DynamicVars.Block.UpgradeValueBy(2m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

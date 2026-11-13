@@ -51,7 +51,7 @@ public sealed class CGSReorganizeThePace : ModCardTemplate
         new BlockVar(15m, ValueProp.Move),
     ];
 
-    public CGSReorganizeThePace() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSReorganizeThePace() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -70,7 +70,7 @@ public sealed class CGSReorganizeThePace : ModCardTemplate
         DynamicVars.Block.UpgradeValueBy(3m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

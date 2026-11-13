@@ -51,7 +51,7 @@ public sealed class CGSOldTraceReturnsEdge : ModCardTemplate
         new DynamicVar("BonusBlock", 4m)
     ];
 
-    public CGSOldTraceReturnsEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSOldTraceReturnsEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -60,7 +60,7 @@ public sealed class CGSOldTraceReturnsEdge : ModCardTemplate
         CGSConsumeUse.Consume(this);
 
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
             .Targeting(cardPlay.Target).Execute(choiceContext);
         
         if (Entry.CGSFatePile.GetPile(Owner).Cards.Count > 0)
@@ -77,8 +77,8 @@ public sealed class CGSOldTraceReturnsEdge : ModCardTemplate
         DynamicVars["BonusBlock"].UpgradeValueBy(2m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 
 

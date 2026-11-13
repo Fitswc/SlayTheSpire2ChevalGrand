@@ -46,7 +46,7 @@ public sealed class CGSOldRoadWarmth : ModCardTemplate
             new BlockVar(4m, ValueProp.Move)
         ];
 
-    public CGSOldRoadWarmth() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSOldRoadWarmth() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

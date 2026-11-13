@@ -58,7 +58,7 @@ public sealed class CGSCounterAttackPower : ModPowerTemplate
                         Amount,
                         ValueProp.Unpowered,
                         Owner,
-                        null
+                        null, null
                     );
 
                 }

@@ -43,7 +43,7 @@ public sealed class CGSAroundTheBend : ModCardTemplate
         new CardsVar(1)
     ];
 
-    public CGSAroundTheBend() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSAroundTheBend() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

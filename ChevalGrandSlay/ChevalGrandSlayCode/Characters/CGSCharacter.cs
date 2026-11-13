@@ -115,7 +115,7 @@ public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPoo
     );
 
     // 某个字段没写时，RitsuLib 会从占位角色配置里补齐。
-    public override string? PlaceholderCharacterId => "ironclad";
+    public override string PlaceholderCharacterId => "ironclad";
 
     // 如果你的人物不需要时间线小故事，加上这句。
     public override bool RequiresEpochAndTimeline => false;
@@ -126,14 +126,14 @@ public sealed class CGSCharacter : ModCharacterTemplate<CGSCardPool, CGSRelicPoo
 
     // 让 RitsuLib 把普通 Godot 场景转换成游戏需要的 NCreatureVisuals。
     // 自动转换人物场景，让你不需要手动挂脚本。复制即可。
-    protected override NCreatureVisuals? TryCreateCreatureVisuals()
+    protected override NCreatureVisuals TryCreateCreatureVisuals()
     {
         return RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(
             CharacterScenePath);
     }
     
     // 进入商店后，由状态机启动并循环播放动画。
-    protected override ModAnimStateMachine? SetupCustomMerchantAnimationStateMachine(
+    protected override ModAnimStateMachine SetupCustomMerchantAnimationStateMachine(
         Node merchantRoot,
         CharacterModel character)
     {

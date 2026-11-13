@@ -49,7 +49,7 @@ public sealed class CGSPrefectDefend : ModCardTemplate
 
     ];
 
-    public CGSPrefectDefend() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSPrefectDefend() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

@@ -58,7 +58,7 @@ public sealed class CGSNeverStepBehind : ModCardTemplate
     ];
 
 
-    public CGSNeverStepBehind() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSNeverStepBehind() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -89,7 +89,7 @@ public sealed class CGSNeverStepBehind : ModCardTemplate
         EnergyCost.UpgradeBy(-1);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

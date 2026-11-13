@@ -44,7 +44,7 @@ public sealed class CGSRemainingUsesSense : ModCardTemplate
         new DynamicVar("PowerStacks", 1m)
     ];
 
-    public CGSRemainingUsesSense() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSRemainingUsesSense() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

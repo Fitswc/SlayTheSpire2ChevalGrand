@@ -52,7 +52,7 @@ public sealed class CGSRenewTheContest : ModCardTemplate
 
     //protected override bool IsPlayable => base.IsPlayable && GetCandidates().Count != 0;
 
-    public CGSRenewTheContest() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSRenewTheContest() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -78,9 +78,6 @@ public sealed class CGSRenewTheContest : ModCardTemplate
 
     private List<CardModel> GetCandidates()
     {
-        if (Owner == null)
-            return [];
-
         return Entry.CGSFatePile.GetPile(Owner).Cards.Where(IsCandidate).ToList();
     }
 
@@ -89,7 +86,7 @@ public sealed class CGSRenewTheContest : ModCardTemplate
         return card.Type == CardType.Attack && card.DynamicVars.ContainsKey("Uses");
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

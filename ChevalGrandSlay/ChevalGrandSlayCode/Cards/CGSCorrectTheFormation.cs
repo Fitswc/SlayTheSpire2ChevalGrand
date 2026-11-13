@@ -51,7 +51,7 @@ public sealed class CGSCorrectTheFormation : ModCardTemplate
         description.Add("Effect", effect);
     }
 
-    public CGSCorrectTheFormation() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSCorrectTheFormation() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -75,7 +75,7 @@ public sealed class CGSCorrectTheFormation : ModCardTemplate
 
         foreach (var card in cards.Where(selected.Contains))
         {
-            await CardPileCmd.Add(card, PileType.Draw, CardPilePosition.Bottom);
+            await CardPileCmd.Add(card, PileType.Draw);
         }
     }
 
@@ -86,7 +86,7 @@ public sealed class CGSCorrectTheFormation : ModCardTemplate
         DynamicVars["Look"].UpgradeValueBy(2m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

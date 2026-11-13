@@ -45,7 +45,7 @@ public sealed class CGSBorrowForceEscape : ModCardTemplate
         new DynamicVar("Reduction", 1m)
     ];
     
-    public CGSBorrowForceEscape() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSBorrowForceEscape() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

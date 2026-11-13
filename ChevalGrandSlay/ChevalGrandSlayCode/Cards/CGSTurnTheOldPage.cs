@@ -52,7 +52,7 @@ public sealed class CGSTurnTheOldPage : ModCardTemplate
     //   PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
 
     
-    public CGSTurnTheOldPage() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSTurnTheOldPage() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

@@ -42,7 +42,7 @@ public sealed class CGSSportsDrinkSupply : ModCardTemplate
         HoverTipFactory.FromCard<CGSEnergyDrink>()
     ];
 
-    public CGSSportsDrinkSupply() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSSportsDrinkSupply() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

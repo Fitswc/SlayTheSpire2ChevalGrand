@@ -45,7 +45,7 @@ public sealed class CGSSubZero : ModCardTemplate
         new DynamicVar("Turns", 3m)
     ];
     
-    public CGSSubZero() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSSubZero() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

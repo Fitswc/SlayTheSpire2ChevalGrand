@@ -18,9 +18,9 @@ public sealed class CGSCardPool : TypeListCardPoolModel, IModColorfulPhilosopher
     // 这里指定卡牌文本和大图使用的能量图标路径。
     // res://ChevalGrandSlay/... 里的 ChevalGrandSlay 是 PCK 资源目录，不是 C# namespace。
     // 描述中使用的能量图标。大小为24x24。
-    public override string? BigEnergyIconPath => $"{Entry.ResPath}/images/characters/energy_big.png";
+    public override string BigEnergyIconPath => $"{Entry.ResPath}/images/characters/energy_big.png";
     // tooltip和卡牌左上角的能量图标。大小为74x74。
-    public override string? TextEnergyIconPath => $"{Entry.ResPath}/images/characters/energy_text.png";
+    public override string TextEnergyIconPath => $"{Entry.ResPath}/images/characters/energy_text.png";
     // 卡池的主题色。
     public override Color DeckEntryCardColor => CGSCharacter.ThemeColor;
     // 卡牌费用数字使用深蓝描边

@@ -46,7 +46,7 @@ public sealed class CGSDisruptFootwork : ModCardTemplate
         new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m)
     ];
 
-    public CGSDisruptFootwork() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSDisruptFootwork() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -74,7 +74,7 @@ public sealed class CGSDisruptFootwork : ModCardTemplate
         DynamicVars.Weak.UpgradeValueBy(1m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

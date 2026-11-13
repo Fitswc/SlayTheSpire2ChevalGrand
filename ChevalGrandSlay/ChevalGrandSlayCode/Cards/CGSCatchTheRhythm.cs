@@ -42,7 +42,7 @@ public sealed class CGSCatchTheRhythm : ModCardTemplate
             new CardsVar(2)
         ];
 
-    public CGSCatchTheRhythm() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSCatchTheRhythm() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -77,7 +77,7 @@ public sealed class CGSCatchTheRhythm : ModCardTemplate
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

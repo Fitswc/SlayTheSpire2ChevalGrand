@@ -54,7 +54,7 @@ public sealed class CGSCounterAttack : ModCardTemplate
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Defend };
 
-    public CGSCounterAttack() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSCounterAttack() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

@@ -43,7 +43,7 @@ public sealed class CGSHandoverMoment : ModCardTemplate
             new CardsVar(2)
         ];
 
-    public CGSHandoverMoment() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSHandoverMoment() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -76,8 +76,8 @@ public sealed class CGSHandoverMoment : ModCardTemplate
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 
 

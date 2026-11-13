@@ -45,7 +45,7 @@ public sealed class CGSAllOut : ModCardTemplate
 //    protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
 //        PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
 
-    public CGSAllOut() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSAllOut() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -69,8 +69,8 @@ public sealed class CGSAllOut : ModCardTemplate
         EnergyCost.UpgradeBy(-2);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
     private bool IsCandidate(CardModel card) =>
         card != this && card.DynamicVars.ContainsKey("MaxUses") &&

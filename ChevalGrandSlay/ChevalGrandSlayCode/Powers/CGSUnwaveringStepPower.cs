@@ -28,7 +28,7 @@ public sealed class CGSUnwaveringStepPower : ModPowerTemplate
     {
         var player = Owner.Player;
         var card = cardPlay.Card;
-        if (player?.PlayerCombatState is { } state && CombatState?.CurrentSide == CombatSide.Player &&
+        if (player?.PlayerCombatState is { } state && CombatState.CurrentSide == CombatSide.Player &&
             card.Owner == player && card.Type == CardType.Attack && !card.EnergyCost.CostsX &&
             card.EnergyCost.GetWithModifiers(CostModifiers.None) >= 2 &&
             _triggeredTurn != state.TurnNumber)

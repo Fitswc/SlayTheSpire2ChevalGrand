@@ -39,7 +39,7 @@ public sealed class CGSSteadyPace : ModCardTemplate
             new BlockVar("EnhancedBlock", 11m, ValueProp.Move)
         ];
 
-    public CGSSteadyPace() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSSteadyPace() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

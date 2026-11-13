@@ -43,7 +43,7 @@ public sealed class CGSSmoothBreathing : ModCardTemplate
         new DynamicVar("MaxUses", 2m)
     ];
 
-    public CGSSmoothBreathing() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSSmoothBreathing() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -87,6 +87,6 @@ public sealed class CGSSmoothBreathing : ModCardTemplate
         DynamicVars["MaxUses"].UpgradeValueBy(1m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

@@ -34,7 +34,7 @@ public sealed class CGSClearDistractions : ModCardTemplate
     //protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
     //    PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
 
-    public CGSClearDistractions() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSClearDistractions() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

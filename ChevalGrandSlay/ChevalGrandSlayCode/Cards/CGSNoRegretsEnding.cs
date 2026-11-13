@@ -43,7 +43,7 @@ public sealed class CGSNoRegretsEnding : ModCardTemplate
             new DynamicVar("PowerStacks", 8m)
         ];
 
-    public CGSNoRegretsEnding() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSNoRegretsEnding() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

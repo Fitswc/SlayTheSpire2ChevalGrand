@@ -15,16 +15,17 @@ internal static class CGSConsumeUse
 
     private static readonly ConditionalWeakTable<CardModel, PlayDecision> Decisions = new();
 
-    public static PileType GetResultPileTypeForCardPlay(CardModel card, PileType normalPile)
+    public static CardLocation GetResultLocationForCardPlay(CardModel card, CardLocation normalLocation)
     {
         // The game chooses the result pile before calling OnPlay, where Uses is decremented.
         bool preserved = TryPreserve(card);
         Decisions.Remove(card);
         Decisions.Add(card, new PlayDecision(preserved));
 
-        return card.DynamicVars["Uses"].IntValue <= (preserved ? 0 : 1)
-            ? Entry.CGSFatePile
-            : normalPile;
+        if (card.DynamicVars["Uses"].IntValue <= (preserved ? 0 : 1))
+            normalLocation.pileType = Entry.CGSFatePile;
+
+        return normalLocation;
     }
 
     public static void Consume(CardModel card)

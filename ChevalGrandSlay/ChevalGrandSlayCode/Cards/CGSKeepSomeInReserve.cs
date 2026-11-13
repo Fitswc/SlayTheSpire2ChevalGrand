@@ -37,7 +37,7 @@ public sealed class CGSKeepSomeInReserve : ModCardTemplate
             new DynamicVar("RetainEnergy", 1m)
         ];
 
-    public CGSKeepSomeInReserve() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSKeepSomeInReserve() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

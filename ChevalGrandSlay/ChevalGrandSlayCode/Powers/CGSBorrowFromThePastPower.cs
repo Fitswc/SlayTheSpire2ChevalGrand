@@ -32,7 +32,7 @@ public sealed class CGSBorrowFromThePastPower : ModPowerTemplate
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player != Owner.Player) return;
-        var block = Math.Min(Entry.CGSFatePile.GetPile(player).Cards.Count, (int)Amount);
+        int block = Math.Min(Entry.CGSFatePile.GetPile(player).Cards.Count, Amount);
         if (block > 0) await CreatureCmd.GainBlock(Owner, block, ValueProp.Move, null);
     }
 }

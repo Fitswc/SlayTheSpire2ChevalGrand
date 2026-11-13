@@ -45,7 +45,7 @@ public sealed class CGSFinishLineEcho : ModCardTemplate
             new DynamicVar("Turns", 2m)
         ];
 
-    public CGSFinishLineEcho() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSFinishLineEcho() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

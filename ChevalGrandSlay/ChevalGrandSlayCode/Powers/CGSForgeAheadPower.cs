@@ -27,7 +27,7 @@ public sealed class CGSForgeAheadPower : ModPowerTemplate
     {
         var player = Owner.Player;
         if (player?.PlayerCombatState is not { } state ||
-            CombatState?.CurrentSide != CombatSide.Player ||
+            CombatState.CurrentSide != CombatSide.Player ||
             cardPlay.Card.Owner != player ||
             cardPlay.Card.Type != CardType.Attack ||
             _triggeredTurn == state.TurnNumber ||

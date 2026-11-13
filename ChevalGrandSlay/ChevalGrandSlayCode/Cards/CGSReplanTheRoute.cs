@@ -43,7 +43,7 @@ public sealed class CGSReplanTheRoute : ModCardTemplate
             new CardsVar(1)
         ];
 
-    public CGSReplanTheRoute() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSReplanTheRoute() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -71,7 +71,7 @@ public sealed class CGSReplanTheRoute : ModCardTemplate
         EnergyCost.UpgradeBy(-1);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

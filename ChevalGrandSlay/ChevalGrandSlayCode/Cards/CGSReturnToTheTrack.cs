@@ -47,7 +47,7 @@ public sealed class CGSReturnToTheTrack : ModCardTemplate
         new DynamicVar("Restore", 2m)
     ];
 
-    public CGSReturnToTheTrack() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSReturnToTheTrack() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -64,6 +64,6 @@ public sealed class CGSReturnToTheTrack : ModCardTemplate
         EnergyCost.UpgradeBy(-1);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

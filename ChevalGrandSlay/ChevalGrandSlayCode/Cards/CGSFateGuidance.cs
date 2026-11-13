@@ -49,7 +49,7 @@ public sealed class CGSFateGuidance : ModCardTemplate
         new DynamicVar("Restore", 1m)
     ];
 
-    public CGSFateGuidance() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSFateGuidance() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -86,7 +86,7 @@ public sealed class CGSFateGuidance : ModCardTemplate
         DynamicVars["Restore"].UpgradeValueBy(1m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
     
 }

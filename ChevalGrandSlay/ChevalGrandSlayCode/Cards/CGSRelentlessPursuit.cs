@@ -39,7 +39,7 @@ public sealed class CGSRelentlessPursuit : ModCardTemplate
         new DynamicVar("BonusDamage", 4m),
     ];
 
-    public CGSRelentlessPursuit() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSRelentlessPursuit() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -51,7 +51,7 @@ public sealed class CGSRelentlessPursuit : ModCardTemplate
         if (CGSAttackChain.CountAttacksPlayedThisTurn(Owner, CombatState, cardPlay) >= 1)
             damage += DynamicVars["BonusDamage"].BaseValue;
 
-        await DamageCmd.Attack(damage).FromCard(this).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
+        await DamageCmd.Attack(damage).FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()

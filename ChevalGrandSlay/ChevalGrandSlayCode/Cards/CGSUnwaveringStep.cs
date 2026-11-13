@@ -39,7 +39,7 @@ public sealed class CGSUnwaveringStep : ModCardTemplate
         new BlockVar(6m, ValueProp.Move)
     ];
 
-    public CGSUnwaveringStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSUnwaveringStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

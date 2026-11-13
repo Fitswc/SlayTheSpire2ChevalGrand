@@ -31,7 +31,7 @@ public sealed class CGSForgeAhead : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    public CGSForgeAhead() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSForgeAhead() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 

@@ -38,7 +38,7 @@ public sealed class CGSFinishLineEchoPower : ModPowerTemplate
     public override Task AfterCardChangedPiles(CardModel card, PileType previousPile, AbstractModel? source)
     {
         if (card.Owner == Owner.Player && previousPile != Entry.CGSFatePile &&
-            card.Pile?.Type == Entry.CGSFatePile && CombatState?.CurrentSide == CombatSide.Player)
+            card.Pile?.Type == Entry.CGSFatePile && CombatState.CurrentSide == CombatSide.Player)
             _pendingHits++;
         return Task.CompletedTask;
     }
@@ -66,7 +66,7 @@ public sealed class CGSFinishLineEchoPower : ModPowerTemplate
             if (enemies is not { Count: > 0 }) continue;
             var enemy = Owner.Player?.RunState.Rng.CombatTargets.NextItem(enemies);
             if (enemy is not null)
-                await CreatureCmd.Damage(choiceContext, enemy, Amount, ValueProp.Unpowered, Owner, null);
+                await CreatureCmd.Damage(choiceContext, enemy, Amount, ValueProp.Unpowered, Owner, null, null);
         }
         _pendingHits = 0;
     }

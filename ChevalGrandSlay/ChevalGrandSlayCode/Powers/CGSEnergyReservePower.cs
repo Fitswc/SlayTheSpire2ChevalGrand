@@ -29,7 +29,7 @@ public sealed class CGSEnergyReservePower : ModPowerTemplate
     {
         if (side == CombatSide.Player && participants.Contains(Owner) &&
             Owner.Player?.PlayerCombatState is { } state)
-            _saved = Math.Min(Math.Max(0, state.Energy), (int)Amount);
+            _saved = Math.Min(Math.Max(0, state.Energy), Amount);
         return Task.CompletedTask;
     }
 

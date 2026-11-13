@@ -48,7 +48,7 @@ public sealed class CGSNoRegretsEndingPower : ModPowerTemplate
     }
 
     public override decimal ModifyDamageAdditive(Creature? target, decimal damage, ValueProp props,
-        Creature? dealer, CardModel? cardSource)
+        Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (_boostNextAttack && cardSource?.Type == CardType.Attack && cardSource.Owner == Owner.Player)
             return Amount;

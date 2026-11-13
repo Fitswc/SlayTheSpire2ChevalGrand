@@ -43,7 +43,7 @@ public sealed class CGSRapidCombination : ModCardTemplate
         new DamageVar(4m, ValueProp.Move)
     ];
 
-    public CGSRapidCombination() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSRapidCombination() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -55,7 +55,7 @@ public sealed class CGSRapidCombination : ModCardTemplate
         for (int i = 0; i < 3; i++)
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
+                .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
                 .Targeting(cardPlay.Target)
                 .Execute(choiceContext);
         }
@@ -68,7 +68,7 @@ public sealed class CGSRapidCombination : ModCardTemplate
         DynamicVars.Damage.UpgradeValueBy(1m);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }

@@ -32,7 +32,7 @@ public sealed class CGSOldRoadWarmthPower : ModPowerTemplate
     public override async Task AfterCardChangedPiles(CardModel card, PileType previousPile, AbstractModel? source)
     {
         if (card.Owner == Owner.Player && previousPile != Entry.CGSFatePile &&
-            card.Pile?.Type == Entry.CGSFatePile && CombatState?.CurrentSide == CombatSide.Player)
+            card.Pile?.Type == Entry.CGSFatePile && CombatState.CurrentSide == CombatSide.Player)
             await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Move, null);
     }
 }

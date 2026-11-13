@@ -25,7 +25,7 @@ public sealed class CGSNoRetaliationPower : ModPowerTemplate
     public override decimal ModifyHpLostAfterOsty(Creature target, decimal hpLoss, ValueProp props,
         Creature? dealer, CardModel? cardSource)
     {
-        return target == Owner && dealer?.IsEnemy == true && CombatState?.CurrentSide == CombatSide.Player &&
+        return target == Owner && dealer?.IsEnemy == true && CombatState.CurrentSide == CombatSide.Player &&
             !props.IsPoweredAttack()
                 ? 0m
                 : hpLoss;

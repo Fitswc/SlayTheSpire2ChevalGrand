@@ -41,7 +41,7 @@ public sealed class CGSContinueTheOffensive : ModCardTemplate
         new DynamicVar("MaxUses", 2m)
     ];
 
-    public CGSContinueTheOffensive() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSContinueTheOffensive() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -75,6 +75,6 @@ public sealed class CGSContinueTheOffensive : ModCardTemplate
         EnergyCost.UpgradeBy(-1);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

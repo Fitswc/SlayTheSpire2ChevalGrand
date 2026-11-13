@@ -46,7 +46,7 @@ public sealed class CGSWinningLine : ModCardTemplate
         new DynamicVar("MaxUses", 3m)
     ];
 
-    public CGSWinningLine() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
+    public CGSWinningLine() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
@@ -62,7 +62,7 @@ public sealed class CGSWinningLine : ModCardTemplate
                          previousAttacks * DynamicVars[BonusDamageVarName].BaseValue;
 
         await DamageCmd.Attack(damage)
-            .FromCard(this).CGSWithVfx("vfx/vfx_attack_slash")
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
     }
@@ -76,7 +76,7 @@ public sealed class CGSWinningLine : ModCardTemplate
         EnergyCost.UpgradeBy(-1);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
-        CGSConsumeUse.GetResultPileTypeForCardPlay(this, base.GetResultPileTypeForCardPlay());
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 
 }
