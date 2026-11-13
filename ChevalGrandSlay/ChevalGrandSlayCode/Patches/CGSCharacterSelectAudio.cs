@@ -109,7 +109,7 @@ internal static class CGSCharacterSelectStopIntroPatch
     public static IEnumerable<MethodBase> TargetMethods() =>
     [
         AccessTools.Method(typeof(NCharacterSelectScreen), "SelectCharacter"),
-        AccessTools.Method(typeof(NCharacterSelectScreen), "OnLocalCharacterChangedForRandom"),
+        AccessTools.Method(typeof(NCharacterSelectScreen), "DoRandomCharacterChange"),
         AccessTools.Method(typeof(NCharacterSelectScreen), "OnEmbarkPressed"),
         AccessTools.Method(typeof(NCharacterSelectScreen), "OnSubmenuClosed")
     ];
