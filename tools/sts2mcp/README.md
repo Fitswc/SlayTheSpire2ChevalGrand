@@ -4,7 +4,7 @@
 
 ## 构建与安装
 
-Mod 以 Windows Steam 游戏 `v0.107.1` 的 .NET 9 程序集为构建目标。可将安装包内的两个文件解压到游戏目录下的 `mods/STS2MCP/`。如需从源码构建，请安装 .NET SDK 并从项目根目录运行以下命令。
+Mod 以 Windows Steam 游戏 `v0.113.0` 的 .NET 9 程序集为构建目标。可将安装包内的两个文件解压到游戏目录下的 `mods/STS2MCP/`。如需从源码构建，请安装 .NET SDK 并从项目根目录运行以下命令。
 
 ```powershell
 $game = 'D:\SteamLibrary\steamapps\common\Slay the Spire 2'

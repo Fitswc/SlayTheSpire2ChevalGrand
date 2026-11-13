@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Reflection;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -36,7 +37,7 @@ public static class Entry
         catch (Exception e)
         {
             harmony.UnpatchAll(harmony.Id);
-            GD.PushError($"STS2MCP could not attach to this game version: {e.Message}");
+            GD.PushError($"STS2MCP could not attach to this game version: {e}");
         }
     }
 
@@ -125,10 +126,35 @@ public static class Entry
         }
     }
 
-    [HarmonyPatch(typeof(MerchantEntry), nameof(MerchantEntry.OnTryPurchaseWrapper))]
+    [HarmonyPatch]
     private static class ManualPurchase
     {
-        private static void Prefix(MerchantEntry __instance) => bridge?.Observe(bridge.FindControl(__instance));
+        private static MethodBase? PurchaseMethod { get; } = FindPurchaseMethod();
+
+        private static MethodBase? FindPurchaseMethod()
+        {
+            // v0.113.0 moved purchases from the entry to the local merchant synchronizer.
+            var synchronizer = typeof(MerchantEntry).Assembly.GetType("MegaCrit.Sts2.Core.Multiplayer.Game.MerchantSynchronizer");
+            if (synchronizer is not null && AccessTools.Method(synchronizer, "PurchaseLocalEntry", [typeof(MerchantEntry)]) is { } purchase)
+                return purchase;
+            return AccessTools.Method(typeof(MerchantEntry), "OnTryPurchaseWrapper", [typeof(MerchantInventory), typeof(bool)]);
+        }
+
+        private static bool Prepare()
+        {
+            if (PurchaseMethod is not null)
+                return true;
+            GD.PushWarning("STS2MCP could not find the manual merchant purchase hook. Other actions remain available.");
+            return false;
+        }
+
+        private static MethodBase? TargetMethod() => PurchaseMethod;
+
+        private static void Prefix(object __instance, object[] __args)
+        {
+            if ((__instance as MerchantEntry ?? __args.FirstOrDefault() as MerchantEntry) is { } entry)
+                bridge?.Observe(bridge.FindControl(entry));
+        }
     }
 
     [HarmonyPatch(typeof(PotionModel), nameof(PotionModel.EnqueueManualUse))]
