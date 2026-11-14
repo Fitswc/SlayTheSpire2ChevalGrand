@@ -47,7 +47,7 @@ public sealed class CGSReadyReception : ModCardTemplate
         new DynamicVar("MaxUses", 2m),
         new DynamicVar("RecoveryCount", 1m),
         new DynamicVar("Restore", 1m),
-        new BlockVar(5m, ValueProp.Move)
+        new BlockVar(7m, ValueProp.Move)
     ];
 
     public CGSReadyReception() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
