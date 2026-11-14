@@ -86,9 +86,7 @@ public partial class Entry
         RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<CGSForwardAStep, CGSLittleBravePlus>();
         RitsuLibFramework.RegisterTouchOfOrobasRefinementMapping<CGSStartRelic, CGSStartRelicPlus>();
         
-
-
-
-        Logger.Info("Uma-ChevalGrandMod initialized.");
+        
+        Logger.Info("UmaChevalGrandMod initialized.");
     }
 }

@@ -1,4 +1,54 @@
-[gd_scene format=3 uid="uid://c4mr87m075and"]
+[gd_scene load_steps=7 format=3 uid="uid://c4mr87m075and"]
+
+[ext_resource type="Shader" uid="uid://dy3txhg1r6c88" path="res://ChevalGrandSlay/shaders/CGSPalmWave.gdshader" id="2_palm_wave"]
+[ext_resource type="Texture2D" uid="uid://dah0yhr8ducbi" path="res://ChevalGrandSlay/images/characters/ChevalGrandBG.jpg" id="2_qaa16"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_palm_wave"]
+resource_local_to_scene = true
+shader = ExtResource("2_palm_wave")
+shader_parameter/wave_amplitude = 14.5
+shader_parameter/wavelength = 570.0
+shader_parameter/background_wave_strength = 0.7500000111759
+shader_parameter/wave_phase = 0.0
+
+[sub_resource type="Animation" id="Animation_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/wave_phase")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_palm_wave"]
+resource_name = "palm_wave"
+length = 5.0
+loop_mode = 1
+step = 3.333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/wave_phase")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_palm_wave"]
+_data = {
+&"RESET": SubResource("Animation_reset"),
+&"palm_wave": SubResource("Animation_palm_wave")
+}
 
 [node name="ChevalGrandSlay_character_select_bg" type="Control"]
 layout_mode = 3
@@ -25,11 +75,31 @@ anchor_bottom = 0.5
 offset_left = -1280.0
 offset_top = -600.0
 offset_right = 640.0
-offset_bottom = 478.0
+offset_bottom = 480.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="TextureRect" type="TextureRect" parent="Control"]
+material = SubResource("ShaderMaterial_palm_wave")
+layout_mode = 0
+offset_left = 61.81818
+offset_top = 18.18182
+offset_right = 1981.81818
+offset_bottom = 1098.18182
+scale = Vector2(0.90909094, 0.90909094)
+pivot_offset = Vector2(960, 540)
+texture = ExtResource("2_qaa16")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/TextureRect"]
+libraries = {
+&"": SubResource("AnimationLibrary_palm_wave")
+}
+autoplay = "palm_wave"
+
 [node name="ColorRect" type="ColorRect" parent="Control"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,6 +123,7 @@ scale = Vector2(0.82, 0.82)
 expand_mode = 1
 
 [node name="ash1" type="CPUParticles2D" parent="."]
+visible = false
 position = Vector2(1832, -17)
 amount = 40
 lifetime = 15.0
@@ -68,6 +139,7 @@ scale_amount_min = 10.0
 scale_amount_max = 10.0
 
 [node name="ash2" type="CPUParticles2D" parent="."]
+visible = false
 position = Vector2(1832, -17)
 amount = 40
 lifetime = 15.0

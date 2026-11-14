@@ -57,7 +57,7 @@ internal static class CGSCharacterSelectAudio
             AudioSource.Event(Intro), new AudioPlaybackOptions());
         if (_introHandle == null)
         {
-            Entry.Logger.Info("The character introduction audio instance cannot be created.");
+            Entry.Logger.Warn("The character introduction audio instance CANNOT be created.");
             return false;
         }
 
