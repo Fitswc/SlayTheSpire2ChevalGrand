@@ -1,8 +1,8 @@
 {
-  "NEOW.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.0-0.char": "I'm ready.",
-  "NEOW.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.0-0.next": "Continue",
-  "NEOW.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.0-1.ancient": "[sine]Go... use this template... build your character...[/sine]",
-  "DARV.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.0-0.char": "It's still empty here.",
-  "DARV.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.0-0.next": "Continue",
-  "DARV.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.0-1.ancient": "Empty is perfect! Grab something and fill it up!"
+  "THE_ARCHITECT.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.0-0r.ancient": "My little girl, Why are you here?",
+  "THE_ARCHITECT.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.0-0r.next": "Threaten",
+  "THE_ARCHITECT.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.0-1r.char": "Why...I'm here...",
+  "THE_ARCHITECT.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.1-0r.ancient": "Cursed to stay here forever, aren't you?",
+  "THE_ARCHITECT.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.1-0r.next": "Continue",
+  "THE_ARCHITECT.talk.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.1-1r.char": "I can't tell you more detail right now. Once again, Cheval Grand!"
 }
