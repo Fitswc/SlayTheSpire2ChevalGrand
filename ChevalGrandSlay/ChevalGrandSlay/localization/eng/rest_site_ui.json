@@ -1,0 +1,5 @@
+{
+  "OPTION_CGS_FORGET.name": "Forget",
+  "OPTION_CGS_FORGET.description": "[gold]Remove[/gold] a card with [gold]Stamina[/gold] from your deck.",
+  "OPTION_CGS_FORGET.descriptionDisabled": "There are no removable Stamina cards in your deck."
+}

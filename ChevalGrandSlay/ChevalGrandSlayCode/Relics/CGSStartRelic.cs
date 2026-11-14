@@ -1,8 +1,11 @@
 using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.RestSiteOperation;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.Entities.RestSite;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -46,5 +49,15 @@ public sealed class CGSStartRelic : ModRelicTemplate
             return;
 
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
+    }
+    
+    public override bool TryModifyRestSiteOptions(
+        Player player, ICollection<RestSiteOption> options)
+    {
+        if (player != Owner)
+            return false;
+
+        options.Add(new CGSForgetOperation(player));
+        return true;
     }
 }
