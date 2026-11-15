@@ -12,7 +12,7 @@ internal static class CGSConsumeUse
 
     public static CardLocation GetResultLocationForCardPlay(CardModel card, CardLocation normalLocation)
     {
-        // The game chooses the result pile before calling OnPlay, where Uses is decremented.
+        // The game chooses the result pile before calling OnPlay, where Stamina is spent.
         bool preserved = TryPreserve(card);
         Decisions.Remove(card);
         Decisions.Add(card, new PlayDecision(preserved));

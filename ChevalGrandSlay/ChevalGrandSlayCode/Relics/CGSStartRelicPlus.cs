@@ -73,7 +73,7 @@ public sealed class CGSStartRelicPlus : ModRelicTemplate
 
     internal static void InheritStaminaBonus(CardModel original, CardModel copy)
     {
-        // The copy patch already transfers Uses and MaxUses; transfer the marker too.
+        // The copy patch already transfers current and maximum Stamina. Transfer the marker too.
         if (StaminaBonuses.TryGetValue(original, out _) && !StaminaBonuses.TryGetValue(copy, out _))
             StaminaBonuses.Add(copy, new object());
     }

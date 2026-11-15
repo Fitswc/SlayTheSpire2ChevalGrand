@@ -9,8 +9,8 @@ namespace ChevalGrandSlay.Mechanics;
 
 internal static class CGSStamina
 {
-    internal const string Uses = "Uses";
-    internal const string MaxUses = "MaxUses";
+    internal const string Uses = "CGSUses";
+    internal const string MaxUses = "CGSMaxUses";
 
     private sealed record SpentStamina
     {
