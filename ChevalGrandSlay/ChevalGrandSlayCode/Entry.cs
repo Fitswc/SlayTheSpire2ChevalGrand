@@ -1,6 +1,7 @@
 using System.Reflection;
 using ChevalGrandSlay.Cards;
 using ChevalGrandSlay.Keywords;
+using ChevalGrandSlay.Mechanics;
 using ChevalGrandSlay.Relics;
 using ChevalGrandSlayCode.Rewards;
 using HarmonyLib;
@@ -76,6 +77,9 @@ public partial class Entry
             OnOpen = ctx => ctx.ShowDefaultPileScreen(),
             VisibleWhen = ctx => ctx.Player != null,
         }).PileType;
+        
+        //Mechanism
+        CGSStamina.Register();
 
         //Reward
         CGSRewardAfterCombat.Register();

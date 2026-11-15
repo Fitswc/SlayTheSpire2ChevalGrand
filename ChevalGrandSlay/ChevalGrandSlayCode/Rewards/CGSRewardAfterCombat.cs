@@ -4,6 +4,7 @@ using ChevalGrandSlay;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -11,6 +12,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Rewards;
+using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib;
 using STS2RitsuLib.Combat.Rewards;
 
@@ -26,6 +28,7 @@ public sealed class CGSRewardAfterCombat : ModCustomReward
     private const int ChoiceCount = 3;
     private static RewardType _rewardType;
     private readonly CardModel[] _choices;
+    private bool _skipped;
 
     public CGSRewardAfterCombat(Player player, string[]? savedCardIds = null) : base(player)
     {
@@ -36,7 +39,7 @@ public sealed class CGSRewardAfterCombat : ModCustomReward
 
     public override RewardType ModRewardType => _rewardType;
 
-    protected override string RewardIconPath => "res://images/ui/reward_screen/reward_icon_cheval.png";
+    protected override string RewardIconPath => $"{Entry.ResPath}/images/ui/reward_screen/reward_icon_cheval.png";
     protected override string DescriptionLocKey => "CGSREWARDAFTERCOMBAT_REWARD_TOKEN";
 
     internal static void Register()
@@ -47,6 +50,7 @@ public sealed class CGSRewardAfterCombat : ModCustomReward
                 CGSRewardJsonContext.Default.CGSStaminaRewardPayload,
                 (_, player, payload) => new CGSRewardAfterCombat(player, payload?.CardIds))
             .RewardType;
+        CGSRestoreStaminaReward.Register();
         RitsuLibFramework.SubscribeLifecycle<CombatVictoryEvent>(AddRoomRewards, replayCurrentState: false);
     }
 
@@ -58,11 +62,19 @@ public sealed class CGSRewardAfterCombat : ModCustomReward
                 continue;
 
             victory.Room.ExtraRewards.TryGetValue(player, out var existing);
-            if (existing?.Any(reward => reward is CGSRewardAfterCombat) == true)
+            if (existing?.SelectMany(reward => reward is LinkedRewardSet set ? set.Rewards : [reward])
+                    .Any(reward => reward is CGSRewardAfterCombat or CGSRestoreStaminaReward) == true)
                 continue;
 
             var reward = new CGSRewardAfterCombat(player);
-            if (reward._choices.Length > 0)
+            if (CGSRestoreStaminaReward.CanOffer(player))
+            {
+                var restore = new CGSRestoreStaminaReward(player);
+                victory.Room.AddExtraReward(player, reward._choices.Length == 0
+                    ? restore
+                    : LinkedRewardSets.Create([reward, restore], player, LinkedRewardSelectionMode.ChooseOne));
+            }
+            else if (reward._choices.Length > 0)
                 victory.Room.AddExtraReward(player, reward);
         }
     }
@@ -126,9 +138,11 @@ public sealed class CGSRewardAfterCombat : ModCustomReward
         // The native selection screen marks each displayed card as seen when it opens.
     }
 
+    public override void OnSkipped() => _skipped = true;
+
     protected override async Task<bool> OnSelect()
     {
-        if (_choices.Length == 0)
+        if (_skipped || SuccessfullySelected || Player.Character is not CGSCharacter || _choices.Length == 0)
             return false;
 
         var selected = await CardSelectCmd.FromChooseACardScreen(
@@ -137,5 +151,46 @@ public sealed class CGSRewardAfterCombat : ModCustomReward
             return false;
 
         return (await CardPileCmd.Add(selected, PileType.Deck)).success;
+    }
+
+    [HarmonyPatch(typeof(CombatRoom), nameof(CombatRoom.FromSerializable))]
+    private static class RestoredRoomRewardsPatch
+    {
+        private static void Postfix(CombatRoom __result)
+        {
+            // Older saves can already contain rewards generated before the eligibility checks.
+            foreach (var (player, rewards) in __result.ExtraRewards)
+            {
+                bool canAdd = player.Character is CGSCharacter;
+                bool canRestore = CGSRestoreStaminaReward.CanOffer(player);
+                for (int i = rewards.Count - 1; i >= 0; i--)
+                {
+                    var group = rewards[i] as LinkedRewardSet;
+                    var children = group?.Rewards ?? [rewards[i]];
+                    var eligible = children.Where(reward => reward switch
+                    {
+                        CGSRewardAfterCombat => canAdd,
+                        CGSRestoreStaminaReward => canRestore,
+                        _ => true
+                    }).ToArray();
+
+                    if (eligible.Length == children.Count)
+                        continue;
+
+                    if (eligible.Length == 0)
+                        rewards.RemoveAt(i);
+                    else if (eligible.Length == 1)
+                    {
+                        eligible[0].ParentRewardSet = null;
+                        rewards[i] = eligible[0];
+                    }
+                    else if (group is not null)
+                    {
+                        foreach (var removed in children.Except(eligible))
+                            group.RemoveReward(removed);
+                    }
+                }
+            }
+        }
     }
 }

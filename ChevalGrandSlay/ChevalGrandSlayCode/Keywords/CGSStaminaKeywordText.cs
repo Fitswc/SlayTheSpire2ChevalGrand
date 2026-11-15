@@ -1,4 +1,5 @@
 using ChevalGrandSlay.Mechanics;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -16,8 +17,16 @@ public sealed class CGSStaminaKeywordText : ModelCapability, ICardDescriptionCon
             !CGSStamina.HasStamina(card))
             yield break;
 
-        // RitsuLib formats the fragment with this card's dynamic vars, including upgrade previews.
         var text = new LocString("card_keywords", "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.cardText");
+        if (card.Pile?.Type == PileType.Deck)
+        {
+            decimal remaining = CGSStamina.GetDeckStamina(card);
+            if (remaining < card.DynamicVars[CGSStamina.Uses].BaseValue)
+            {
+                text = new LocString("card_keywords", "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.deckText");
+                text.Add("RemainingStamina", remaining);
+            }
+        }
         text.Add("StaminaName", CGSKeywords.Stamina.GetModKeywordTitle());
         yield return new CardDescriptionFragment(text);
     }

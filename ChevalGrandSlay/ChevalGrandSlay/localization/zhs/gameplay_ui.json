@@ -1,3 +1,5 @@
 {
-  "CGSREWARDAFTERCOMBAT_REWARD_TOKEN": "选择一张[gold]体力牌[/gold]加入牌组"
+  "CGSREWARDAFTERCOMBAT_REWARD_TOKEN": "获得一张[gold]体力牌[/gold]",
+  "CGS_RESTORE_STAMINA_REWARD": "回满一张[gold]体力牌[/gold]的体力",
+  "CGS_RESTORE_STAMINA_REWARD_PROMPT": "选择一张体力未满的牌，将其体力回满"
 }
