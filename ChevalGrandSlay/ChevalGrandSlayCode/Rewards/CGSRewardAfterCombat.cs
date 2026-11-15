@@ -37,7 +37,7 @@ public sealed class CGSRewardAfterCombat : ModCustomReward
 
     public override RewardType ModRewardType => _rewardType;
 
-    protected override string RewardIconPath => "res://images/ui/reward_screen/reward_icon_card.png";
+    protected override string RewardIconPath => "res://images/ui/reward_screen/reward_icon_cheval.png";
     protected override string DescriptionLocKey => "CGSREWARDAFTERCOMBAT_REWARD_TOKEN";
 
     internal static void Register()
