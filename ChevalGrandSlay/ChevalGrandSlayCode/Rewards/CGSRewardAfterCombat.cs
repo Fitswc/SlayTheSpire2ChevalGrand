@@ -7,7 +7,6 @@ using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Random;
@@ -91,7 +90,7 @@ public sealed class CGSRewardAfterCombat : ModCustomReward
         var run = Player.RunState;
         // Also makes the fallback for older saves consistent across clients.
         var rng = new Rng(run.Rng.Seed, $"{Entry.ModId}.StaminaReward.{run.TotalFloor}.{run.GetPlayerSlotIndex(Player)}");
-        return pool
+        var candidates = pool
             .GetUnlockedCards(Player.UnlockState, run.CardMultiplayerConstraint)
             .Where(card => card.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare)
             .Where(card => card.IsAllowedInRun(run) &&
@@ -99,7 +98,27 @@ public sealed class CGSRewardAfterCombat : ModCustomReward
                 CGSStamina.HasStamina(card))
             .DistinctBy(card => card.Id)
             .OrderBy(card => card.Id)
-            .TakeRandom(ChoiceCount, rng);
+            .ToLookup(card => card.Rarity);
+
+        var buckets = new[]
+        {
+            (Cards: candidates[CardRarity.Common].ToList(), Weight: 50f),
+            (Cards: candidates[CardRarity.Uncommon].ToList(), Weight: 40f),
+            (Cards: candidates[CardRarity.Rare].ToList(), Weight: 10f)
+        }.Where(bucket => bucket.Cards.Count > 0).ToList();
+
+        // Each rarity has its own weight, independent of how many cards it contains.
+        for (int i = 0; i < ChoiceCount && buckets.Count > 0; i++)
+        {
+            var bucket = Rng.WeightedNextItem(rng.NextFloat(), buckets, item => item.Weight, buckets[^1]);
+            int index = rng.NextInt(bucket.Cards.Count);
+            var card = bucket.Cards[index];
+            bucket.Cards.RemoveAt(index);
+            if (bucket.Cards.Count == 0)
+                buckets.Remove(bucket);
+
+            yield return card;
+        }
     }
 
     public override void MarkContentAsSeen()
