@@ -1,5 +1,6 @@
 {
   "OPTION_CGS_FORGET.name": "遗忘",
-  "OPTION_CGS_FORGET.description": "从[gold]牌组[/gold]中[gold]移除[/gold]一张[gold]体力牌[/gold]。",
+  "OPTION_CGS_FORGET.description": "从[gold]牌组[/gold]中[gold]移除[/gold]最多[blue]4[/blue]张[gold]体力牌[/gold]。",
+  "OPTION_CGS_FORGET.prompt": "选择[blue]{MinCount}至{MaxCount}[/blue]张[gold]体力牌[/gold]来[gold]移除[/gold]。",
   "OPTION_CGS_FORGET.descriptionDisabled": "你的牌组中没有可移除的体力牌。"
 }

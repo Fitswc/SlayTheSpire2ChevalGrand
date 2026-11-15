@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Content;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
@@ -21,4 +22,15 @@ public sealed class CGSKeywords
 
     public static CardKeyword RestPile => ModKeywordRegistry.GetCardKeyword(
         ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, RestPileStem));
+
+    internal static void Register()
+    {
+        ModContentRegistry.For(Entry.ModId).ConfigureDefaultModelCapabilities<CardModel>(
+            "stamina-keyword-text", static (card, capabilities) =>
+            {
+                if (card.GetType().Assembly == typeof(CGSKeywords).Assembly &&
+                    card.CanonicalKeywords.Contains(Stamina))
+                    capabilities.Add<CGSStaminaKeywordText>();
+            });
+    }
 }

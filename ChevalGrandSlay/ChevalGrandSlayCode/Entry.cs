@@ -2,15 +2,14 @@ using System.Reflection;
 using ChevalGrandSlay.Cards;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Relics;
+using ChevalGrandSlayCode.Rewards;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using STS2RitsuLib;
 using STS2RitsuLib.Audio;
 using STS2RitsuLib.CardPiles;
-using STS2RitsuLib.Content;
 using STS2RitsuLib.Interop;
 using Logger = MegaCrit.Sts2.Core.Logging.Logger;
 
@@ -46,13 +45,9 @@ public partial class Entry
         // 卡牌构造时需要有效的资源标识。
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
 
-        ModContentRegistry.For(ModId).ConfigureDefaultModelCapabilities<CardModel>(
-            "stamina-keyword-text", (card, capabilities) =>
-            {
-                if (card.GetType().Assembly == assembly && card.CanonicalKeywords.Contains(CGSKeywords.Stamina))
-                    capabilities.Add<CGSStaminaKeywordText>();
-            });
+        CGSKeywords.Register();
 
+        //Fmod
         FmodStudioDeferredBankRegistration.RegisterBank($"{ResPath}/audios/ChevalGrandSlaySFX.bank");
         FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings($"{ResPath}/audios/GUIDs.txt");
 
@@ -60,7 +55,6 @@ public partial class Entry
         new Harmony(ModId).PatchAll(assembly);
 
         //CardPile
-        //Fate CardPile Register
         var registry = ModCardPileRegistry.For(ModId);
         CGSFatePile = registry.RegisterOwned("fate", new ModCardPileSpec
         {
@@ -82,11 +76,15 @@ public partial class Entry
             OnOpen = ctx => ctx.ShowDefaultPileScreen(),
             VisibleWhen = ctx => ctx.Player != null,
         }).PileType;
-        
+
+        //Reward
+        CGSRewardAfterCombat.Register();
+
+        //Vanilla Mapping
         RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<CGSForwardAStep, CGSLittleBravePlus>();
         RitsuLibFramework.RegisterTouchOfOrobasRefinementMapping<CGSStartRelic, CGSStartRelicPlus>();
-        
-        
-        Logger.Info("UmaChevalGrandMod initialized.");
+
+
+        Logger.Info("ChevalGrandMod initialized.");
     }
 }
