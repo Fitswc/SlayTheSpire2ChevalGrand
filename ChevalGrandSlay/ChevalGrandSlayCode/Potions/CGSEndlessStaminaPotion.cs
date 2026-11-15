@@ -13,7 +13,7 @@ namespace ChevalGrandSlay.Potions;
 [RegisterPotion(typeof(CGSPotionPool))]
 public sealed class CGSEndlessStaminaPotion : ModPotionTemplate
 {
-    public override PotionRarity Rarity => PotionRarity.Rare;
+    public override PotionRarity Rarity => PotionRarity.Uncommon;
     public override PotionUsage Usage => PotionUsage.CombatOnly;
     public override TargetType TargetType => TargetType.Self;
     
@@ -24,10 +24,9 @@ public sealed class CGSEndlessStaminaPotion : ModPotionTemplate
     ];
     */
 
-    // Reuse the game's potion art until dedicated artwork is available.
     public override PotionAssetProfile AssetProfile => new(
-        ImagePath: "res://images/potions/CGSEndlessStaminaPotion.png",
-        OutlinePath: "res://images/potions/CGSEndlessStaminaPotion.png");
+        ImagePath: $"{Entry.ResPath}/images/potions/CGSEndlessStaminaPotion.png",
+        OutlinePath: $"{Entry.ResPath}/images/potions/CGSEndlessStaminaPotion_outline.png");
 
     protected override async Task OnUse(PlayerChoiceContext choiceContext, Creature? target)
     {

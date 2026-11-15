@@ -20,8 +20,8 @@ public sealed class CGSPotentialPotion : ModPotionTemplate
     public override TargetType TargetType => TargetType.Self;
 
     public override PotionAssetProfile AssetProfile => new(
-        ImagePath: "res://images/potions/CGSPotentialPotion.png",
-        OutlinePath: "res://images/potions/CGSPotentialPotion.png");
+        ImagePath: $"{Entry.ResPath}/images/potions/CGSPotentialPotion.png",
+        OutlinePath: $"{Entry.ResPath}/images/potions/CGSPotentialPotion_outline.png");
 
     /*
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
