@@ -1,5 +1,6 @@
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -52,13 +53,12 @@ public sealed class CGSPotentialPotion : ModPotionTemplate
 
     private static bool IsEligibleStaminaCard(CardModel card) =>
         card.CanBeGeneratedInCombat && card.CanonicalKeywords.Contains(CGSKeywords.Stamina) &&
-        card.DynamicVars.ContainsKey("Uses") && card.DynamicVars.ContainsKey("MaxUses");
+        CGSStamina.HasStamina(card);
 
     private static void ApplyBonuses(CardModel card)
     {
         card.EnergyCost.SetThisCombat(0);
-        card.DynamicVars["MaxUses"].BaseValue = 999m;
-        card.DynamicVars["Uses"].BaseValue = 999m;
+        CGSStamina.SetMaximumAndFill(card, 999m);
         card.AddKeyword(CardKeyword.Retain);
     }
 }

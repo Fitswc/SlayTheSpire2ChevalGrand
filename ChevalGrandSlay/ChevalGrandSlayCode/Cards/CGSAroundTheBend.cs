@@ -1,5 +1,6 @@
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -30,6 +31,10 @@ public sealed class CGSAroundTheBend : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSAroundTheBend() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
     ];
@@ -37,22 +42,18 @@ public sealed class CGSAroundTheBend : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars => 
     [
         new CardsVar(1)
     ];
-
-    public CGSAroundTheBend() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
-    {
-    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
         
         var candidates = PileType.Hand.GetPile(Owner).Cards
-            .Where(card => card != this && card.DynamicVars.ContainsKey("Uses") && !card.EnergyCost.CostsX)
+            .Where(card => card != this && CGSStamina.HasStamina(card) && !card.EnergyCost.CostsX)
             .ToList();
         
         if (candidates.Count == 0)
@@ -78,5 +79,4 @@ public sealed class CGSAroundTheBend : ModCardTemplate
     {
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
-
 }

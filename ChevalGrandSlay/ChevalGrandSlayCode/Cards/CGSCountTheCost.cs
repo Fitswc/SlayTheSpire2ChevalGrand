@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：汗水会回应
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSCountTheCost : ModCardTemplate
+public sealed class CGSCountTheCost : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -31,6 +31,12 @@ public sealed class CGSCountTheCost : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    private int _fateEnteredTurn = -1;
+
+    public CGSCountTheCost() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
@@ -41,23 +47,17 @@ public sealed class CGSCountTheCost : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars => 
     [
-        new DynamicVar("Uses", 2m), 
-        new DynamicVar("MaxUses", 2m), 
+        new DynamicVar(CGSStamina.Uses, 2m),
+        new DynamicVar(CGSStamina.MaxUses, 2m),
         new CardsVar(2)
     ];
 
-    public CGSCountTheCost() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        var player = Owner ?? throw new InvalidOperationException("This card needs an owner.");
-        
-        CGSConsumeUse.Consume(this);
+        var player = Owner;
 
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, player);
         if (player.PlayerCombatState is { } state && _fateEnteredTurn == state.TurnNumber)
@@ -68,17 +68,9 @@ public sealed class CGSCountTheCost : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
-
-
-    private int _fateEnteredTurn = -1;
 
     public override Task AfterCardChangedPiles(CardModel card, PileType previousPile, AbstractModel? source)
     {

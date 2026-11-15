@@ -1,5 +1,6 @@
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -31,6 +32,10 @@ public sealed class CGSFinalKick : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSFinalKick() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override int MaxUpgradeLevel => 0;
 
     public override CardAssetProfile AssetProfile => new(
@@ -48,15 +53,11 @@ public sealed class CGSFinalKick : ModCardTemplate
     ];
 
     protected override bool IsPlayable => Owner.PlayerCombatState is { Energy: 0 } &&
-        !PileType.Draw.GetPile(Owner).Cards.Any(card => card.DynamicVars.ContainsKey("Uses")) &&
-        !PileType.Discard.GetPile(Owner).Cards.Any(card => card.DynamicVars.ContainsKey("Uses")) &&
+        !PileType.Draw.GetPile(Owner).Cards.Any(card => CGSStamina.HasStamina(card)) &&
+        !PileType.Discard.GetPile(Owner).Cards.Any(card => CGSStamina.HasStamina(card)) &&
         Entry.CGSFatePile.GetPile(Owner).Cards.Count > 0;
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
-
-    public CGSFinalKick() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
-    {
-    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

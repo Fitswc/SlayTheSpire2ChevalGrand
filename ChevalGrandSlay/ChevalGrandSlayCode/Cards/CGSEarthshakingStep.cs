@@ -1,7 +1,7 @@
-using ChevalGrandSlay.Utilities;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
+using ChevalGrandSlay.Utilities;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：小声的震撼
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSEarthshakingStep : ModCardTemplate
+public sealed class CGSEarthshakingStep : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 2;
@@ -31,6 +31,10 @@ public sealed class CGSEarthshakingStep : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSEarthshakingStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     // 美术暂缺，使用框架默认资源。
@@ -39,19 +43,13 @@ public sealed class CGSEarthshakingStep : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new DynamicVar("Uses", 1m), 
-            new DynamicVar("MaxUses", 1m), 
+            new DynamicVar(CGSStamina.Uses, 1m),
+            new DynamicVar(CGSStamina.MaxUses, 1m),
             new DamageVar(28m, ValueProp.Move)
         ];
 
-    public CGSEarthshakingStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-        
         ArgumentNullException.ThrowIfNull(CombatState);
         // 一次支付，伤害命令负责对全部敌人结算。
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
@@ -60,12 +58,7 @@ public sealed class CGSEarthshakingStep : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars["Damage"].UpgradeValueBy(8m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
 }

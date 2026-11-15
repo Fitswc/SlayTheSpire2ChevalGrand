@@ -13,7 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：躲开人群
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSSidewaysEvasion : ModCardTemplate
+public sealed class CGSSidewaysEvasion : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -30,30 +30,28 @@ public sealed class CGSSidewaysEvasion : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSSidewaysEvasion() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar("Uses", 3m), 
-            new DynamicVar("MaxUses", 3m), 
+            new DynamicVar(CGSStamina.Uses, 3m),
+            new DynamicVar(CGSStamina.MaxUses, 3m),
             new BlockVar(5m, ValueProp.Move)
         ];
 
-    public CGSSidewaysEvasion() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
         bool hasLimitedCard = PileType.Hand.GetPile(Owner).Cards.Any(card =>
-            card != this && card.DynamicVars.ContainsKey("Uses") && card.DynamicVars["Uses"].IntValue > 0);
+            card != this && CGSStamina.HasAtLeast(card, 1));
         
         if (!hasLimitedCard)
         {
@@ -63,14 +61,7 @@ public sealed class CGSSidewaysEvasion : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars.Block.UpgradeValueBy(3m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
-
-
 }

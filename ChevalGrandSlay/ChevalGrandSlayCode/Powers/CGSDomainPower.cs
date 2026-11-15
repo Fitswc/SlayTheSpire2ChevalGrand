@@ -1,4 +1,5 @@
 using ChevalGrandSlay.Keywords;
+using ChevalGrandSlay.Mechanics;
 using ChevalGrandSlay.Utilities;
 using Godot;
 using MegaCrit.Sts2.Core.Combat;
@@ -23,6 +24,8 @@ namespace ChevalGrandSlay.Powers;
 [RegisterPower]
 public sealed class CGSDomainPower : ModPowerTemplate, IHealthBarForecastSource
 {
+    public const decimal DamageBonusPercent = 25m;
+    public const int EnergyPerTurn = 4;
     private int _appliedTurnNumber;
     private bool _hasReachedNextTurn;
 
@@ -31,9 +34,6 @@ public sealed class CGSDomainPower : ModPowerTemplate, IHealthBarForecastSource
         HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
     ];
 
-    public const decimal DamageBonusPercent = 25m;
-    public const int EnergyPerTurn = 4;
-
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
@@ -41,6 +41,19 @@ public sealed class CGSDomainPower : ModPowerTemplate, IHealthBarForecastSource
         IconPath: $"{Entry.ResPath}/images/powers/small/CGSDomain.png",
         BigIconPath: $"{Entry.ResPath}/images/powers/CGSDomain.png"
     );
+
+    public IEnumerable<HealthBarForecastSegment> GetHealthBarForecastSegments(HealthBarForecastContext context)
+    {
+
+        int currentHp = context.Creature.CurrentHp;
+        
+        int coveredHp = _hasReachedNextTurn ? currentHp : currentHp / 2;
+        return HealthBarForecasts.Single(
+            coveredHp,
+            new Color(0.4f, 0.1f, 0.1f),
+            HealthBarForecastGrowthDirection.FromLeft
+        );
+    }
 
     public override async Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
@@ -61,9 +74,8 @@ public sealed class CGSDomainPower : ModPowerTemplate, IHealthBarForecastSource
             if (card.Pile?.Type != Entry.CGSFatePile)
                 continue;
 
-            if (card.DynamicVars.TryGetValue("Uses", out var uses) &&
-                card.DynamicVars.TryGetValue("MaxUses", out var maxUses))
-                uses.BaseValue = maxUses.BaseValue;
+            if (CGSStamina.HasStamina(card))
+                CGSStamina.RestoreFull(card);
 
             var destination = PileType.Hand.GetPile(player).Cards.Count < MaxHandSizeCalculator.Calculate(player)
                 ? PileType.Hand
@@ -107,18 +119,5 @@ public sealed class CGSDomainPower : ModPowerTemplate, IHealthBarForecastSource
             await PowerCmd.Decrement(this);
         else
             await CreatureCmd.Kill(Owner, force: true);
-    }
-
-    public IEnumerable<HealthBarForecastSegment> GetHealthBarForecastSegments(HealthBarForecastContext context)
-    {
-
-        int currentHp = context.Creature.CurrentHp;
-        
-        int coveredHp = _hasReachedNextTurn ? currentHp : currentHp / 2;
-        return HealthBarForecasts.Single(
-            coveredHp,
-            new Color(0.4f, 0.1f, 0.1f),
-            HealthBarForecastGrowthDirection.FromLeft
-        );
     }
 }

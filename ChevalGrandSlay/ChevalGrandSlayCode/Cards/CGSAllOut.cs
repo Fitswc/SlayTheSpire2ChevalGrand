@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：我想被记住
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSAllOut : ModCardTemplate
+public sealed class CGSAllOut : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 3;
@@ -31,17 +31,6 @@ public sealed class CGSAllOut : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
-
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [
-        new DynamicVar("Uses", 2m),
-        new DynamicVar("MaxUses", 2m)
-    ];
-
 //    protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
 //        PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
 
@@ -49,17 +38,26 @@ public sealed class CGSAllOut : ModCardTemplate
     {
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
+    public override CardAssetProfile AssetProfile => new(
+        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new DynamicVar(CGSStamina.Uses, 2m),
+        new DynamicVar(CGSStamina.MaxUses, 2m)
+    ];
+
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
         var selected = await CardSelectCmd.FromHand(
             choiceContext, Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1), IsCandidate, this);
         if (selected.FirstOrDefault() is not { } card)
             return;
 
         // Fix the play count before the selected card consumes any of its uses.
-        int playCount = card.DynamicVars["Uses"].IntValue;
+        int playCount = CGSStamina.GetRemaining(card);
         for (int i = 0; i < playCount; i++)
             await CardCmd.AutoPlay(choiceContext, card, null);
     }
@@ -69,10 +67,6 @@ public sealed class CGSAllOut : ModCardTemplate
         EnergyCost.UpgradeBy(-2);
     }
 
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
     private bool IsCandidate(CardModel card) =>
-        card != this && card.DynamicVars.ContainsKey("MaxUses") &&
-        card.DynamicVars.TryGetValue("Uses", out var uses) && uses.IntValue > 0;
+        card != this && CGSStamina.HasAtLeast(card, 1);
 }

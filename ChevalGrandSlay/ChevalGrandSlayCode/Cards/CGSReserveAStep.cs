@@ -17,7 +17,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：还能再钓一条
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSReserveAStep : ModCardTemplate
+public sealed class CGSReserveAStep : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -34,6 +34,10 @@ public sealed class CGSReserveAStep : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSReserveAStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
@@ -45,19 +49,13 @@ public sealed class CGSReserveAStep : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Uses", 3m),
-        new DynamicVar("MaxUses", 3m),
+        new DynamicVar(CGSStamina.Uses, 3m),
+        new DynamicVar(CGSStamina.MaxUses, 3m),
         new BlockVar(5m, ValueProp.Move)
     ];
 
-    public CGSReserveAStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
         var enchantment = ModelDb.Enchantment<CGSReserveStepEnchantment>();
         var candidates = PileType.Hand.GetPile(Owner).Cards
@@ -79,11 +77,7 @@ public sealed class CGSReserveAStep : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars.Block.UpgradeValueBy(2m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

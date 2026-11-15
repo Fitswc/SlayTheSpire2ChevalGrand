@@ -1,7 +1,9 @@
 using ChevalGrandSlay.Keywords;
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -15,6 +17,9 @@ namespace ChevalGrandSlay.Powers;
 [RegisterPower]
 public sealed class CGSOldPactPower : ModPowerTemplate
 {
+    private bool _pendingDraw;
+
+    private int _triggeredTurn = -1;
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
@@ -28,13 +33,10 @@ public sealed class CGSOldPactPower : ModPowerTemplate
         BigIconPath: $"{Entry.ResPath}/images/powers/CGSOldPact.png"
     );
 
-    private int _triggeredTurn = -1;
-    private bool _pendingDraw;
-
     public override async Task AfterCardChangedPiles(CardModel card, PileType previousPile, AbstractModel? source)
     {
         if (Owner.Player is not { } player || card.Owner != player || previousPile == Entry.CGSFatePile ||
-            card.Pile?.Type != Entry.CGSFatePile || !card.DynamicVars.ContainsKey("Uses") ||
+            card.Pile?.Type != Entry.CGSFatePile || !CGSStamina.HasStamina(card) ||
             player.PlayerCombatState is not { } state || _triggeredTurn == state.TurnNumber)
             return;
         _triggeredTurn = state.TurnNumber;
@@ -50,7 +52,7 @@ public sealed class CGSOldPactPower : ModPowerTemplate
     }
 
     public override async Task BeforeSideTurnEndEarly(PlayerChoiceContext choiceContext, CombatSide side,
-        IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.Creature> participants)
+        IEnumerable<Creature> participants)
     {
         if (side != CombatSide.Player || !participants.Contains(Owner) || !_pendingDraw ||
             Owner.Player is not { } player) return;

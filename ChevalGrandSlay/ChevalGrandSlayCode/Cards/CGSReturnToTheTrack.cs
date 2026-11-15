@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：重回起跑线
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSReturnToTheTrack : ModCardTemplate
+public sealed class CGSReturnToTheTrack : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 2;
@@ -29,6 +29,10 @@ public sealed class CGSReturnToTheTrack : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSReturnToTheTrack() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
@@ -41,20 +45,14 @@ public sealed class CGSReturnToTheTrack : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Uses", 2m),
-        new DynamicVar("MaxUses", 2m),
+        new DynamicVar(CGSStamina.Uses, 2m),
+        new DynamicVar(CGSStamina.MaxUses, 2m),
         new DynamicVar("RecoveryCount", 2m),
         new DynamicVar("Restore", 2m)
     ];
 
-    public CGSReturnToTheTrack() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-
         await CGSRandomRestRecovery.Recover(this, DynamicVars["RecoveryCount"].IntValue,
             DynamicVars["Restore"].BaseValue);
     }
@@ -63,7 +61,4 @@ public sealed class CGSReturnToTheTrack : ModCardTemplate
     {
         EnergyCost.UpgradeBy(-1);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

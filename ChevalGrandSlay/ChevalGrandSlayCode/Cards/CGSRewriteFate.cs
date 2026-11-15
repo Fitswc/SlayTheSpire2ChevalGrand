@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：重续青空约
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSRewriteFate : ModCardTemplate
+public sealed class CGSRewriteFate : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 2;
@@ -31,6 +31,10 @@ public sealed class CGSRewriteFate : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSRewriteFate() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
@@ -41,43 +45,29 @@ public sealed class CGSRewriteFate : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar("Uses", 1m),
-            new DynamicVar("MaxUses", 1m)
+            new DynamicVar(CGSStamina.Uses, 1m),
+            new DynamicVar(CGSStamina.MaxUses, 1m)
         ];
 
-    public CGSRewriteFate() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-
-        var candidates = Entry.CGSFatePile.GetPile(Owner).Cards.Where(card => card.DynamicVars.ContainsKey("Uses")).ToList();
+        var candidates = Entry.CGSFatePile.GetPile(Owner).Cards.Where(card => CGSStamina.HasStamina(card)).ToList();
         if (candidates.Count == 0) return;
         var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1, Math.Min(2, candidates.Count)));
         foreach (var card in selected)
         {
-            var uses = card.DynamicVars["Uses"];
-            uses.BaseValue = Math.Min(card.DynamicVars["MaxUses"].BaseValue, uses.BaseValue + 1m);
+            CGSStamina.Restore(card, 1m);
             await CardPileCmd.Add(card, PileType.Discard);
         }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         EnergyCost.UpgradeBy(-1);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
-
-
 }

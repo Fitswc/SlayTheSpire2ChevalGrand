@@ -8,11 +8,6 @@ namespace ChevalGrandSlay.Mechanics;
 
 internal static class CGSConsumeUse
 {
-    private sealed class PlayDecision(bool preserved)
-    {
-        public bool Preserved { get; } = preserved;
-    }
-
     private static readonly ConditionalWeakTable<CardModel, PlayDecision> Decisions = new();
 
     public static CardLocation GetResultLocationForCardPlay(CardModel card, CardLocation normalLocation)
@@ -22,7 +17,7 @@ internal static class CGSConsumeUse
         Decisions.Remove(card);
         Decisions.Add(card, new PlayDecision(preserved));
 
-        if (card.DynamicVars["Uses"].IntValue <= (preserved ? 0 : 1))
+        if (CGSStamina.GetRemaining(card) <= (preserved ? 0 : 1))
             normalLocation.pileType = Entry.CGSFatePile;
 
         return normalLocation;
@@ -39,12 +34,16 @@ internal static class CGSConsumeUse
         else if (TryPreserve(card))
             return;
 
-        var uses = card.DynamicVars["Uses"];
-        uses.BaseValue = Math.Max(0m, uses.BaseValue - 1m);
+        CGSStamina.Spend(card, 1m);
     }
 
     private static bool TryPreserve(CardModel card) =>
         // 无尽体力保护所有牌，再钓一条在本场战斗中保护指定的牌。
         card.Owner.Creature.HasPower<CGSEndlessStaminaPower>() ||
         (card.Enchantment is CGSReserveStepEnchantment enchantment && enchantment.PreservesStamina(card));
+
+    private sealed class PlayDecision(bool preserved)
+    {
+        public bool Preserved { get; } = preserved;
+    }
 }

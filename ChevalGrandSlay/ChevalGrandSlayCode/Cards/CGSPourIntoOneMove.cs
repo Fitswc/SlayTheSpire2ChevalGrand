@@ -16,7 +16,7 @@ namespace ChevalGrandSlay.Cards;
 // 卡牌：全力投球
 
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSPourIntoOneMove : ModCardTemplate
+public sealed class CGSPourIntoOneMove : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -33,17 +33,6 @@ public sealed class CGSPourIntoOneMove : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
-
-    public override CardAssetProfile AssetProfile =>
-        new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [
-            new DynamicVar("Uses", 2m),
-            new DynamicVar("MaxUses", 2m)
-        ];
-
     //protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
     //    PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
 
@@ -51,10 +40,19 @@ public sealed class CGSPourIntoOneMove : ModCardTemplate
     {
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
+
+    public override CardAssetProfile AssetProfile =>
+        new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [
+            new DynamicVar(CGSStamina.Uses, 2m),
+            new DynamicVar(CGSStamina.MaxUses, 2m)
+        ];
+
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        CGSConsumeUse.Consume(this);
-        
         var selected = await CardSelectCmd.FromHand(
             choiceContext,
             Owner,
@@ -69,7 +67,7 @@ public sealed class CGSPourIntoOneMove : ModCardTemplate
         
         var cost = attack.EnergyCost.GetWithModifiers(CostModifiers.All);
         await PlayerCmd.LoseEnergy(cost, Owner);
-        attack.DynamicVars["Uses"].BaseValue -= 1m;
+        CGSStamina.Spend(attack, 1m);
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         
         var power = await PowerCmd.Apply<CGSFirstStrikeTwicePower>(choiceContext, Owner.Creature,
@@ -89,16 +87,10 @@ public sealed class CGSPourIntoOneMove : ModCardTemplate
     protected override void OnUpgrade()
     {
         EnergyCost.UpgradeBy(-1);
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
     }
 
     private bool IsCandidate(CardModel card) =>
-        card.Type == CardType.Attack && card.DynamicVars.ContainsKey("Uses") &&
-        card.DynamicVars["Uses"].IntValue >= 2 &&
+        card.Type == CardType.Attack && CGSStamina.HasAtLeast(card, 2) &&
         card.EnergyCost.GetWithModifiers(CostModifiers.All) <= (Owner.PlayerCombatState?.Energy ?? 0);
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
 }

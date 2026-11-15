@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：让我来支撑
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSReadyReception : ModCardTemplate
+public sealed class CGSReadyReception : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -31,6 +31,10 @@ public sealed class CGSReadyReception : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSReadyReception() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
@@ -43,20 +47,15 @@ public sealed class CGSReadyReception : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Uses", 2m),
-        new DynamicVar("MaxUses", 2m),
+        new DynamicVar(CGSStamina.Uses, 2m),
+        new DynamicVar(CGSStamina.MaxUses, 2m),
         new DynamicVar("RecoveryCount", 1m),
         new DynamicVar("Restore", 1m),
         new BlockVar(7m, ValueProp.Move)
     ];
 
-    public CGSReadyReception() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
         await CGSRandomRestRecovery.Recover(this, DynamicVars["RecoveryCount"].IntValue,
@@ -67,7 +66,4 @@ public sealed class CGSReadyReception : ModCardTemplate
     {
         DynamicVars.Block.UpgradeValueBy(3m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

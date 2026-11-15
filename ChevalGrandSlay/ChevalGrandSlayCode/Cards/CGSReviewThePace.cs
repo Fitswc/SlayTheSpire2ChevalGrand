@@ -13,7 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：藏好期待
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSReviewThePace : ModCardTemplate
+public sealed class CGSReviewThePace : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -30,6 +30,10 @@ public sealed class CGSReviewThePace : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSReviewThePace() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     // 美术暂缺，使用框架默认资源。
@@ -38,18 +42,13 @@ public sealed class CGSReviewThePace : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Uses", 3m),
-        new DynamicVar("MaxUses", 3m),
+        new DynamicVar(CGSStamina.Uses, 3m),
+        new DynamicVar(CGSStamina.MaxUses, 3m),
         new CardsVar(2)
     ];
 
-    public CGSReviewThePace() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
         var retained = await CardSelectCmd.FromHand(choiceContext, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1), null, this);
@@ -61,11 +60,7 @@ public sealed class CGSReviewThePace : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars["Cards"].UpgradeValueBy(1m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

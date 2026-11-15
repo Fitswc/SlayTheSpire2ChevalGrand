@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：稳守本垒
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSMeasuredAdvanceAndRetreat : ModCardTemplate
+public sealed class CGSMeasuredAdvanceAndRetreat : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 2;
@@ -31,6 +31,10 @@ public sealed class CGSMeasuredAdvanceAndRetreat : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSMeasuredAdvanceAndRetreat() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
@@ -38,34 +42,23 @@ public sealed class CGSMeasuredAdvanceAndRetreat : ModCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new DynamicVar("Uses", 2m), 
-            new DynamicVar("MaxUses", 2m), 
+            new DynamicVar(CGSStamina.Uses, 2m),
+            new DynamicVar(CGSStamina.MaxUses, 2m),
             new DynamicVar("LossCap", 12m)
         ];
-    
-    public CGSMeasuredAdvanceAndRetreat() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-    
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-        
         await PowerCmd.Apply<CGSEnemyAttackLossCapPower>(choiceContext, Owner.Creature,
             DynamicVars["LossCap"].BaseValue, Owner.Creature, this);
     }
-    
+
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars["LossCap"].UpgradeValueBy(-4m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
 }

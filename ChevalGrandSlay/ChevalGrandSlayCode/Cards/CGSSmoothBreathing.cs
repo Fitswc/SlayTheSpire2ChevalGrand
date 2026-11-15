@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 // 卡牌：独处的节奏
 
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSSmoothBreathing : ModCardTemplate
+public sealed class CGSSmoothBreathing : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 0;
@@ -31,6 +31,10 @@ public sealed class CGSSmoothBreathing : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSSmoothBreathing() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
@@ -39,18 +43,12 @@ public sealed class CGSSmoothBreathing : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new CardsVar(2),
-        new DynamicVar("Uses", 2m),
-        new DynamicVar("MaxUses", 2m)
+        new DynamicVar(CGSStamina.Uses, 2m),
+        new DynamicVar(CGSStamina.MaxUses, 2m)
     ];
 
-    public CGSSmoothBreathing() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-
         await CardPileCmd.ShuffleIfNecessary(choiceContext, Owner);
         var drawPile = PileType.Draw.GetPile(Owner);
         var candidates = drawPile.Cards.Take(DynamicVars.Cards.IntValue).ToList();
@@ -83,10 +81,6 @@ public sealed class CGSSmoothBreathing : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

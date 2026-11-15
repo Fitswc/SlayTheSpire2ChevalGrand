@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 // 卡牌：传球
 
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSLendReserve : ModCardTemplate
+public sealed class CGSLendReserve : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -31,36 +31,31 @@ public sealed class CGSLendReserve : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSLendReserve() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar("Uses", 3m), 
-            new DynamicVar("MaxUses", 3m), 
+            new DynamicVar(CGSStamina.Uses, 3m),
+            new DynamicVar(CGSStamina.MaxUses, 3m),
             new CardsVar(1),
             new DynamicVar("Restore", 1m)
         ];
 
-    //protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
-    //    PileType.Hand.GetPile(Owner).Cards.Count(card => card != this && card.DynamicVars.ContainsKey("Uses")) >= 2;
-    
-    public CGSLendReserve() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-
         var firstChoice = await CardSelectCmd.FromHand(
             choiceContext, 
             Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1),
-            card => card != this && card.DynamicVars.ContainsKey("Uses") && card.DynamicVars["Uses"].IntValue > 0, 
+            card => card != this && CGSStamina.HasAtLeast(card, 1),
             this
             );
         
@@ -73,7 +68,7 @@ public sealed class CGSLendReserve : ModCardTemplate
             choiceContext, 
             Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1),
-            card => card != this && card != first && card.DynamicVars.ContainsKey("Uses"), 
+            card => card != this && card != first && CGSStamina.HasStamina(card),
             this
             );
         
@@ -82,25 +77,14 @@ public sealed class CGSLendReserve : ModCardTemplate
             return;
         }
         
-        first.DynamicVars["Uses"].BaseValue -= 1m;
-
-        if (first.DynamicVars["Uses"].IntValue == 0)
-        {
-            await CardPileCmd.Add(first, Entry.CGSFatePile);
-        }
-        var uses = second.DynamicVars["Uses"];
-        uses.BaseValue = Math.Min(second.DynamicVars["MaxUses"].BaseValue, uses.BaseValue + DynamicVars["Restore"].BaseValue);
+        await CGSStamina.SpendAndRestIfDepleted(first, 1m);
+        CGSStamina.Restore(second, DynamicVars["Restore"].BaseValue);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars["Restore"].UpgradeValueBy(1m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
 }

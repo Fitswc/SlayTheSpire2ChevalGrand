@@ -13,7 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：借来的从容
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSRepurposeBulwark : ModCardTemplate
+public sealed class CGSRepurposeBulwark : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -30,6 +30,10 @@ public sealed class CGSRepurposeBulwark : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSRepurposeBulwark() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     public override bool GainsBlock => true;
@@ -38,18 +42,13 @@ public sealed class CGSRepurposeBulwark : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new DynamicVar("Uses", 3m), 
-            new DynamicVar("MaxUses", 3m), 
+            new DynamicVar(CGSStamina.Uses, 3m),
+            new DynamicVar(CGSStamina.MaxUses, 3m),
             new DynamicVar("BlockLimit", 9m)
         ];
 
-    public CGSRepurposeBulwark() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         int removed = Math.Min(cardPlay.Target.Block, DynamicVars["BlockLimit"].IntValue);
         if (removed <= 0)
@@ -63,12 +62,7 @@ public sealed class CGSRepurposeBulwark : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars["BlockLimit"].UpgradeValueBy(4m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
 }

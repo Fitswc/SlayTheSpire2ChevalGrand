@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：该抬起头了
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSTurnDefenseToEdge : ModCardTemplate
+public sealed class CGSTurnDefenseToEdge : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 0;
@@ -31,6 +31,10 @@ public sealed class CGSTurnDefenseToEdge : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSTurnDefenseToEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
@@ -42,19 +46,13 @@ public sealed class CGSTurnDefenseToEdge : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar("Uses", 3m),
-            new DynamicVar("MaxUses", 3m),
+            new DynamicVar(CGSStamina.Uses, 3m),
+            new DynamicVar(CGSStamina.MaxUses, 3m),
             new DynamicVar("Transfer", 3m)
         ];
 
-    public CGSTurnDefenseToEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-        
         var dexterity = Owner.Creature.Powers.OfType<DexterityPower>().FirstOrDefault();
         decimal amount = Math.Min(Math.Max(0m, dexterity?.Amount ?? 0m), DynamicVars["Transfer"].BaseValue);
         if (amount == 0m || dexterity is null) return;
@@ -64,12 +62,7 @@ public sealed class CGSTurnDefenseToEdge : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars["Transfer"].UpgradeValueBy(2m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
 }

@@ -15,10 +15,8 @@ namespace ChevalGrandSlay.Cards;
 // 卡牌：静候咬钩
 
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSWaitAndSee : ModCardTemplate
+public sealed class CGSWaitAndSee : CGSStaminaCard
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
-
     // 基础耗能。
     private const int BaseEnergyCost = 1;
 
@@ -31,15 +29,20 @@ public sealed class CGSWaitAndSee : ModCardTemplate
     // 目标类型
     private const TargetType CardTarget = TargetType.Self;
 
-    public override bool GainsBlock => true;
-
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSWaitAndSee() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
+
+    public override bool GainsBlock => true;
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Uses", 2m), 
-        new DynamicVar("MaxUses", 2m),
+        new DynamicVar(CGSStamina.Uses, 2m),
+        new DynamicVar(CGSStamina.MaxUses, 2m),
         new CardsVar(2),
         new BlockVar(7m, ValueProp.Move),
     ];
@@ -52,15 +55,10 @@ public sealed class CGSWaitAndSee : ModCardTemplate
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Defend };
 
-    public CGSWaitAndSee() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
-    {
-    }
-
     // 打出时的效果逻辑。
     // 尖塔2使用了 async 和 await 来控制效果逻辑顺序执行，和尖塔1的 action 类似。
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        CGSConsumeUse.Consume(this);
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
         var drawCards = await CardPileCmd.Draw(
@@ -88,12 +86,7 @@ public sealed class CGSWaitAndSee : ModCardTemplate
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars.Block.UpgradeValueBy(2m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
 }

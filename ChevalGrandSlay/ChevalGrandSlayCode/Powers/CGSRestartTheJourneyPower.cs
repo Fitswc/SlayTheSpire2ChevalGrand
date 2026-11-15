@@ -1,4 +1,5 @@
 using ChevalGrandSlay.Keywords;
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -15,12 +16,11 @@ namespace ChevalGrandSlay.Powers;
 [RegisterPower]
 public sealed class CGSRestartTheJourneyPower : ModPowerTemplate
 {
+    private int _triggerCount;
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
     ];
-
-    private int _triggerCount;
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
@@ -33,13 +33,12 @@ public sealed class CGSRestartTheJourneyPower : ModPowerTemplate
     {
         if (player != Owner.Player || _triggerCount >= Amount) return;
         var candidates = Entry.CGSFatePile.GetPile(player).Cards
-            .Where(candidateCard => candidateCard.DynamicVars.ContainsKey("Uses")).ToList();
+            .Where(candidateCard => CGSStamina.HasStamina(candidateCard)).ToList();
         if (candidates.Count == 0) return;
         var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, player,
             new CardSelectorPrefs(SelectionScreenPrompt, 1));
         if (selected.FirstOrDefault() is not { } card) return;
-        var uses = card.DynamicVars["Uses"];
-        uses.BaseValue = Math.Min(card.DynamicVars["MaxUses"].BaseValue, uses.BaseValue + 1m);
+        CGSStamina.Restore(card, 1m);
         await CardPileCmd.Add(card, PileType.Discard);
         _triggerCount++;
     }

@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
+using ChevalGrandSlay.Mechanics;
 using ChevalGrandSlay.RestSiteOperation;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -62,14 +63,11 @@ public sealed class CGSStartRelicPlus : ModRelicTemplate
     private void ApplyStaminaBonus(CardModel card)
     {
         if (card.Owner != Owner || !card.CanonicalKeywords.Contains(CGSKeywords.Stamina) ||
-            StaminaBonuses.TryGetValue(card, out _) ||
-            !card.DynamicVars.TryGetValue("Uses", out var uses) ||
-            !card.DynamicVars.TryGetValue("MaxUses", out var maxUses))
+            StaminaBonuses.TryGetValue(card, out _) || !CGSStamina.HasStamina(card))
             return;
 
         var bonus = DynamicVars["BonusStamina"].BaseValue;
-        uses.BaseValue += bonus;
-        maxUses.BaseValue += bonus;
+        CGSStamina.IncreaseMaximumAndRemaining(card, bonus);
         StaminaBonuses.Add(card, new object());
     }
 
@@ -93,8 +91,8 @@ public sealed class CGSStartRelicPlus : ModRelicTemplate
 
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
     }
-    
-        
+
+
     public override bool TryModifyRestSiteOptions(
         Player player, ICollection<RestSiteOption> options)
     {

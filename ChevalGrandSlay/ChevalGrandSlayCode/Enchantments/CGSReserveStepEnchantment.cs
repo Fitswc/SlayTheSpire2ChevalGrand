@@ -1,3 +1,4 @@
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Enchantments;
 using MegaCrit.Sts2.Core.Models;
@@ -19,7 +20,7 @@ public sealed class CGSReserveStepEnchantment : ModEnchantmentTemplate
         IconPath: $"{Entry.ResPath}/images/enchantments/{GetType().Name}.png");
 
     public override bool CanEnchant(CardModel card) =>
-        card.DynamicVars.TryGetValue("Uses", out var uses) && uses.IntValue > 0 &&
+        CGSStamina.HasAtLeast(card, 1) &&
         (card.Enchantment is CGSReserveStepEnchantment || base.CanEnchant(card));
 
     protected override void OnEnchant()

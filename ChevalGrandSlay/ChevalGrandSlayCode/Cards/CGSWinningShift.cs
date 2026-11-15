@@ -12,7 +12,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：碧海航线
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSWinningShift : ModCardTemplate
+public sealed class CGSWinningShift : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 0;
@@ -29,6 +29,10 @@ public sealed class CGSWinningShift : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSWinningShift() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     public override CardAssetProfile AssetProfile => new(
@@ -36,31 +40,21 @@ public sealed class CGSWinningShift : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Uses", 1m), 
-        new DynamicVar("MaxUses", 1m),
+        new DynamicVar(CGSStamina.Uses, 1m),
+        new DynamicVar(CGSStamina.MaxUses, 1m),
         new EnergyVar(2),
         new CardsVar(1)
     ];
 
-    public CGSWinningShift() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
         await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
 }

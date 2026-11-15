@@ -1,5 +1,6 @@
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -31,46 +32,43 @@ public sealed class CGSTurnTheOldPage : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    //protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
+    //   PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
+
+
+    public CGSTurnTheOldPage() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
     ];
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
             new CardsVar(2)
         ];
-    
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => 
         [
             CardKeyword.Exhaust
         ];
-
-    //protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
-    //   PileType.Hand.GetPile(Owner).Cards.Any(IsCandidate);
-
-    
-    public CGSTurnTheOldPage() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
-    {
-    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var selected = await CardSelectCmd.FromHand(choiceContext, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1), IsCandidate, this);
         if (selected.FirstOrDefault() is not { } card) return;
-        var uses = card.DynamicVars["Uses"];
-        uses.BaseValue = Math.Max(0m, uses.BaseValue - 2m);
-        if (uses.IntValue == 0)
-            await CardPileCmd.Add(card, Entry.CGSFatePile);
+        await CGSStamina.SpendAndRestIfDepleted(card, 2m);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
 
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
 
     private static bool IsCandidate(CardModel card) =>
-        card.DynamicVars.ContainsKey("Uses") && card.DynamicVars["Uses"].IntValue >= 2 &&
+        CGSStamina.HasAtLeast(card, 2) &&
         card.DeckVersion is not null;
 }

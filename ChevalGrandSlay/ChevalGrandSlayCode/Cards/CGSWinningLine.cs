@@ -1,7 +1,7 @@
-using ChevalGrandSlay.Utilities;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
+using ChevalGrandSlay.Utilities;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：伸手可及
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSWinningLine : ModCardTemplate
+public sealed class CGSWinningLine : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 2;
@@ -31,9 +31,13 @@ public sealed class CGSWinningLine : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
-
     private const string BonusDamageVarName = "BonusDamage";
+
+    public CGSWinningLine() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
@@ -42,18 +46,12 @@ public sealed class CGSWinningLine : ModCardTemplate
     [
         new DamageVar(10m, ValueProp.Move),
         new DynamicVar(BonusDamageVarName, 4m),
-        new DynamicVar("Uses", 3m), 
-        new DynamicVar("MaxUses", 3m)
+        new DynamicVar(CGSStamina.Uses, 3m),
+        new DynamicVar(CGSStamina.MaxUses, 3m)
     ];
 
-    public CGSWinningLine() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-        
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         
         
@@ -69,14 +67,9 @@ public sealed class CGSWinningLine : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars.Damage.UpgradeValueBy(4m);
         DynamicVars[BonusDamageVarName].UpgradeValueBy(1m);
         EnergyCost.UpgradeBy(-1);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
 }

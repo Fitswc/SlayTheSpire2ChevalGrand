@@ -16,7 +16,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：不再躲藏
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSCutOffRetreat : ModCardTemplate
+public sealed class CGSCutOffRetreat : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -33,6 +33,10 @@ public sealed class CGSCutOffRetreat : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSCutOffRetreat() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
@@ -41,21 +45,15 @@ public sealed class CGSCutOffRetreat : ModCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar("Uses", 2m), 
-            new DynamicVar("MaxUses", 2m), 
+            new DynamicVar(CGSStamina.Uses, 2m),
+            new DynamicVar(CGSStamina.MaxUses, 2m),
             new DamageVar(8m, ValueProp.Move)
         ];
-
-    public CGSCutOffRetreat() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-        
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
@@ -67,12 +65,7 @@ public sealed class CGSCutOffRetreat : ModCardTemplate
     }
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars.Damage.UpgradeValueBy(3m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
 }

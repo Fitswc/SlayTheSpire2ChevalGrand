@@ -1,5 +1,6 @@
 using System.Reflection;
 using ChevalGrandSlay.Cards;
+using ChevalGrandSlay.Mechanics;
 using ChevalGrandSlay.Relics;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
@@ -41,14 +42,11 @@ internal static class CGSStaminaCopyPatch
             return;
 
         // 原卡与副本都必须具有完整的耐力变量。
-        if (!original.DynamicVars.TryGetValue("MaxUses", out var originalMaxUses) ||
-            !original.DynamicVars.TryGetValue("Uses", out var originalUses) ||
-            !copy.DynamicVars.TryGetValue("Uses", out var copiedUses) ||
-            !copy.DynamicVars.TryGetValue("MaxUses", out var copiedMaxUses))
+        if (!CGSStamina.HasStamina(original) || !CGSStamina.HasStamina(copy))
             return;
 
         // 耐力耗尽时，复制出来的是空卡牌，归属仍与原卡一致。
-        if (originalUses.BaseValue <= 0m)
+        if (CGSStamina.IsDepleted(original))
         {
             var emptyShell = ModelDb.Card<CGSEmptyShell>().ToMutable();
             emptyShell.Owner = original.Owner;
@@ -58,8 +56,7 @@ internal static class CGSStaminaCopyPatch
         }
 
         // 完整保留当前耐力与上限，包括升级和战斗中的修改。
-        copiedMaxUses.BaseValue = originalMaxUses.BaseValue;
-        copiedUses.BaseValue = originalUses.BaseValue;
+        CGSStamina.Copy(original, copy);
         CGSStartRelicPlus.InheritStaminaBonus(original, copy);
     }
 }

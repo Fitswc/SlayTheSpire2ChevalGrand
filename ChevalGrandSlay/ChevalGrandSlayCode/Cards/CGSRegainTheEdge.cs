@@ -1,7 +1,7 @@
-using ChevalGrandSlay.Utilities;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
+using ChevalGrandSlay.Utilities;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -15,7 +15,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：说我也可以
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSRegainTheEdge : ModCardTemplate
+public sealed class CGSRegainTheEdge : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -32,6 +32,10 @@ public sealed class CGSRegainTheEdge : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSRegainTheEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     public override CardAssetProfile AssetProfile => new(
@@ -39,20 +43,14 @@ public sealed class CGSRegainTheEdge : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new DynamicVar("Uses", 3m), 
-            new DynamicVar("MaxUses", 3m),
+            new DynamicVar(CGSStamina.Uses, 3m),
+            new DynamicVar(CGSStamina.MaxUses, 3m),
             new DamageVar(7m, ValueProp.Move),
             new DynamicVar("Cleanse", 1m)
         ];
 
-    public CGSRegainTheEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-        
         for (int i = 0; i < DynamicVars["Cleanse"].IntValue; i++)
         {
             var debuff = Owner.Creature.Powers.FirstOrDefault(power =>
@@ -70,13 +68,8 @@ public sealed class CGSRegainTheEdge : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars.Damage.UpgradeValueBy(3m);
         DynamicVars["Cleanse"].UpgradeValueBy(1m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
 }

@@ -1,4 +1,5 @@
 using ChevalGrandSlay.Keywords;
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -16,14 +17,14 @@ namespace ChevalGrandSlay.Powers;
 [RegisterPower]
 public sealed class CGSNoRegretsEndingPower : ModPowerTemplate
 {
+    private bool _boostNextAttack;
+
+    private int _triggeredTurn = -1;
+    private CardModel? _triggeringCard;
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
     ];
-
-    private int _triggeredTurn = -1;
-    private bool _boostNextAttack;
-    private CardModel? _triggeringCard;
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     protected override bool IsVisibleInternal => false;
@@ -36,7 +37,7 @@ public sealed class CGSNoRegretsEndingPower : ModPowerTemplate
     public override Task AfterCardChangedPiles(CardModel card, PileType previousPile, AbstractModel? source)
     {
         if (card.Owner == Owner.Player && card.Type == CardType.Attack &&
-            card.DynamicVars.ContainsKey("Uses") && previousPile != Entry.CGSFatePile &&
+            CGSStamina.HasStamina(card) && previousPile != Entry.CGSFatePile &&
             card.Pile?.Type == Entry.CGSFatePile &&
             Owner.Player?.PlayerCombatState is { } state && _triggeredTurn != state.TurnNumber)
         {

@@ -1,7 +1,7 @@
-using ChevalGrandSlay.Utilities;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
+using ChevalGrandSlay.Utilities;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -15,7 +15,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：汗水的痕迹
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSOldTraceReturnsEdge : ModCardTemplate
+public sealed class CGSOldTraceReturnsEdge : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -32,6 +32,10 @@ public sealed class CGSOldTraceReturnsEdge : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSOldTraceReturnsEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
@@ -42,23 +46,17 @@ public sealed class CGSOldTraceReturnsEdge : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars => 
     [
-        new DynamicVar("Uses", 3m), 
-        new DynamicVar("MaxUses", 3m), 
+        new DynamicVar(CGSStamina.Uses, 3m),
+        new DynamicVar(CGSStamina.MaxUses, 3m),
         new DamageVar(9m, ValueProp.Move),
         new DynamicVar("BonusBlock", 4m)
     ];
 
-    public CGSOldTraceReturnsEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
             .Targeting(cardPlay.Target).Execute(choiceContext);
@@ -71,15 +69,8 @@ public sealed class CGSOldTraceReturnsEdge : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars.Damage.UpgradeValueBy(3m);
         DynamicVars["BonusBlock"].UpgradeValueBy(2m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
-
-
 }

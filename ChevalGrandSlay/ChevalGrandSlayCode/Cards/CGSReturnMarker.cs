@@ -13,7 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：回垒记号
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSReturnMarker : ModCardTemplate
+public sealed class CGSReturnMarker : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 0;
@@ -30,34 +30,32 @@ public sealed class CGSReturnMarker : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSReturnMarker() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("Uses", 3m), 
-        new DynamicVar("MaxUses", 3m), 
+        new DynamicVar(CGSStamina.Uses, 3m),
+        new DynamicVar(CGSStamina.MaxUses, 3m),
         new CardsVar(1),
         new DynamicVar("Discount", 1m)
     ];
 
-    public CGSReturnMarker() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-
         var cardPref = new CardSelectorPrefs(SelectionScreenPrompt, 1);
         
         var selected = await CardSelectCmd.FromHand(
             choiceContext, 
             Owner,
             cardPref,
-            selectedCard => selectedCard != this && selectedCard.DynamicVars.ContainsKey("Uses") && selectedCard.DynamicVars["Uses"].IntValue >= 2,
+            selectedCard => selectedCard != this && CGSStamina.HasAtLeast(selectedCard, 2),
             this
             );
 
@@ -66,7 +64,7 @@ public sealed class CGSReturnMarker : ModCardTemplate
             return;
         }
             
-        card.DynamicVars["Uses"].BaseValue -= 1m;
+        CGSStamina.Spend(card, 1m);
         
         int discount = Math.Min(card.EnergyCost.GetWithModifiers(CostModifiers.All), DynamicVars["Discount"].IntValue);
         
@@ -78,11 +76,7 @@ public sealed class CGSReturnMarker : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars["Discount"].UpgradeValueBy(1m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

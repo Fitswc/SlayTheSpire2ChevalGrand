@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：今天的终点
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSDrawFinishLine : ModCardTemplate
+public sealed class CGSDrawFinishLine : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 0;
@@ -31,6 +31,10 @@ public sealed class CGSDrawFinishLine : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSDrawFinishLine() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
@@ -43,43 +47,29 @@ public sealed class CGSDrawFinishLine : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar("Uses", 2m),
-            new DynamicVar("MaxUses", 2m),
+            new DynamicVar(CGSStamina.Uses, 2m),
+            new DynamicVar(CGSStamina.MaxUses, 2m),
             new CardsVar(1)
         ];
 
-    public CGSDrawFinishLine() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-
         var selected = await CardSelectCmd.FromHand(choiceContext, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1),
-            selectedCard => selectedCard != this && selectedCard.DynamicVars.ContainsKey("Uses") && selectedCard.DynamicVars["Uses"].IntValue > 0, this);
+            selectedCard => selectedCard != this && CGSStamina.HasAtLeast(selectedCard, 1), this);
         if (selected.FirstOrDefault() is not { } card)
         {
             return;
         }
         
-        card.DynamicVars["Uses"].BaseValue = 0m;
-        await CardPileCmd.Add(card, Entry.CGSFatePile);
+        await CGSStamina.DepleteAndRest(card);
         await PlayerCmd.GainEnergy(2m, Owner);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
-
-
 }

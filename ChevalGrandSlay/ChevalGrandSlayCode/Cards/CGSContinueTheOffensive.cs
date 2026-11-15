@@ -13,7 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：下一棒上场
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSContinueTheOffensive : ModCardTemplate
+public sealed class CGSContinueTheOffensive : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 2;
@@ -30,25 +30,23 @@ public sealed class CGSContinueTheOffensive : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
-
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
-    protected override IEnumerable<DynamicVar> CanonicalVars => 
-    [
-        new DynamicVar("Uses", 2m), 
-        new DynamicVar("MaxUses", 2m)
-    ];
-
     public CGSContinueTheOffensive() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
+
+    public override CardAssetProfile AssetProfile => new(
+        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => 
+    [
+        new DynamicVar(CGSStamina.Uses, 2m),
+        new DynamicVar(CGSStamina.MaxUses, 2m)
+    ];
+
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        CGSConsumeUse.Consume(this);
-        
         var candidates = PileType.Draw.GetPile(Owner).Cards.ToList();
         if (candidates.Count == 0)
         {
@@ -70,11 +68,7 @@ public sealed class CGSContinueTheOffensive : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         EnergyCost.UpgradeBy(-1);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

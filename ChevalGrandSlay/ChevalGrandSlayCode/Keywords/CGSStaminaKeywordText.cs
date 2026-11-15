@@ -1,3 +1,4 @@
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -12,7 +13,7 @@ public sealed class CGSStaminaKeywordText : ModelCapability, ICardDescriptionCon
     public IEnumerable<CardDescriptionFragment> GetDescriptionFragments(CardDescriptionContext context)
     {
         if (Owner is not CardModel card || !card.Keywords.Contains(CGSKeywords.Stamina) ||
-            !card.DynamicVars.ContainsKey("Uses"))
+            !CGSStamina.HasStamina(card))
             yield break;
 
         // RitsuLib formats the fragment with this card's dynamic vars, including upgrade previews.

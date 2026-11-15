@@ -1,4 +1,5 @@
 using ChevalGrandSlay.Keywords;
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -15,12 +16,11 @@ namespace ChevalGrandSlay.Powers;
 [RegisterPower]
 public sealed class CGSFillTheGapPower : ModPowerTemplate
 {
+    private int _triggeredTurn = -1;
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
     ];
-
-    private int _triggeredTurn = -1;
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
     // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
@@ -32,13 +32,12 @@ public sealed class CGSFillTheGapPower : ModPowerTemplate
     public override async Task AfterCardChangedPiles(CardModel card, PileType previousPile, AbstractModel? source)
     {
         if (card.Owner != Owner.Player || previousPile != Entry.CGSFatePile ||
-            card.Pile?.Type == Entry.CGSFatePile || !card.DynamicVars.ContainsKey("Uses") ||
+            card.Pile?.Type == Entry.CGSFatePile || !CGSStamina.HasStamina(card) ||
             CombatState.CurrentSide != CombatSide.Player ||
             Owner.Player?.PlayerCombatState is not { } state || _triggeredTurn == state.TurnNumber)
             return;
         _triggeredTurn = state.TurnNumber;
-        var uses = card.DynamicVars["Uses"];
-        uses.BaseValue = Math.Min(card.DynamicVars["MaxUses"].BaseValue, uses.BaseValue + 1m);
+        CGSStamina.Restore(card, 1m);
         if (Amount > 1m) await PlayerCmd.GainEnergy(1m, Owner.Player);
     }
 }

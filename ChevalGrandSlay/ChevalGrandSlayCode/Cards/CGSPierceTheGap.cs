@@ -13,7 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：穿浪
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSPierceTheGap : ModCardTemplate
+public sealed class CGSPierceTheGap : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -30,6 +30,10 @@ public sealed class CGSPierceTheGap : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSPierceTheGap() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     public override CardAssetProfile AssetProfile => new(
@@ -37,18 +41,13 @@ public sealed class CGSPierceTheGap : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new DynamicVar("Uses", 3m), 
-            new DynamicVar("MaxUses", 3m), 
+            new DynamicVar(CGSStamina.Uses, 3m),
+            new DynamicVar(CGSStamina.MaxUses, 3m),
             new DamageVar(8m, ValueProp.Move | ValueProp.Unblockable)
         ];
 
-    public CGSPierceTheGap() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         
         VfxCmd.PlayOnCreatureCenter(cardPlay.Target, "vfx/vfx_attack_slash");
@@ -58,12 +57,7 @@ public sealed class CGSPierceTheGap : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars.Damage.UpgradeValueBy(3m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
 }

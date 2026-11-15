@@ -1,7 +1,7 @@
-using ChevalGrandSlay.Utilities;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
+using ChevalGrandSlay.Utilities;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -16,7 +16,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：迟来的疾驰
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSLongSprint : ModCardTemplate
+public sealed class CGSLongSprint : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 2;
@@ -32,6 +32,11 @@ public sealed class CGSLongSprint : ModCardTemplate
 
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
+    private int _lastRetainedTurn = -1;
+
+    public CGSLongSprint() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
 
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
@@ -45,20 +50,14 @@ public sealed class CGSLongSprint : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Uses", 3m),
-        new DynamicVar("MaxUses", 3m),
+        new DynamicVar(CGSStamina.Uses, 3m),
+        new DynamicVar(CGSStamina.MaxUses, 3m),
         new DamageVar(16m, ValueProp.Move),
         new DynamicVar("RetainedDamage", 8m)
     ];
 
-    public CGSLongSprint() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
-
         bool retainedLastTurn = _lastRetainedTurn == Owner.PlayerCombatState!.TurnNumber - 1;
 
         decimal damage = DynamicVars.Damage.BaseValue;
@@ -75,12 +74,10 @@ public sealed class CGSLongSprint : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars["Damage"].UpgradeValueBy(5m);
         DynamicVars["RetainedDamage"].UpgradeValueBy(2m);
     }
-    private int _lastRetainedTurn = -1;
 
     protected override void AfterCloned()
     {
@@ -96,7 +93,4 @@ public sealed class CGSLongSprint : ModCardTemplate
             _lastRetainedTurn = player.PlayerCombatState!.TurnNumber;
         return Task.CompletedTask;
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
 }

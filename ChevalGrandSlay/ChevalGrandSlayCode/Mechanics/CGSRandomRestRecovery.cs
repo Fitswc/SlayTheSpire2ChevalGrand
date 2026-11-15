@@ -10,8 +10,7 @@ internal static class CGSRandomRestRecovery
     {
         var candidates = Entry.CGSFatePile.GetPile(source.Owner).Cards
             .Where(card => card != source &&
-                card.DynamicVars.ContainsKey("Uses") &&
-                card.DynamicVars.ContainsKey("MaxUses") &&
+                CGSStamina.HasStamina(card) &&
                 (type is null || card.Type == type))
             .ToList();
         var selected = new List<CardModel>();
@@ -31,8 +30,7 @@ internal static class CGSRandomRestRecovery
             if (card.Pile?.Type != Entry.CGSFatePile)
                 continue;
 
-            var uses = card.DynamicVars["Uses"];
-            uses.BaseValue = Math.Min(card.DynamicVars["MaxUses"].BaseValue, uses.BaseValue + restore);
+            CGSStamina.Restore(card, restore);
             await CardPileCmd.Add(card, PileType.Hand);
         }
     }

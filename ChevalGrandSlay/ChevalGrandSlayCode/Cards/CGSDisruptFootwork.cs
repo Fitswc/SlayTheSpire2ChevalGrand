@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：别小看我
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSDisruptFootwork : ModCardTemplate
+public sealed class CGSDisruptFootwork : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 0;
@@ -31,6 +31,10 @@ public sealed class CGSDisruptFootwork : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public CGSDisruptFootwork() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    {
+    }
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
@@ -43,16 +47,11 @@ public sealed class CGSDisruptFootwork : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new PowerVar<WeakPower>(1m),
-        new DynamicVar("Uses", 2m), new DynamicVar("MaxUses", 2m)
+        new DynamicVar(CGSStamina.Uses, 2m), new DynamicVar(CGSStamina.MaxUses, 2m)
     ];
 
-    public CGSDisruptFootwork() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        CGSConsumeUse.Consume(this);
         if (CombatState is not { } combatState)
             return;
 
@@ -69,12 +68,7 @@ public sealed class CGSDisruptFootwork : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Uses"].UpgradeValueBy(1m);
-        DynamicVars["MaxUses"].UpgradeValueBy(1m);
+        UpgradeStamina(1m);
         DynamicVars.Weak.UpgradeValueBy(1m);
     }
-
-    protected override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
 }
