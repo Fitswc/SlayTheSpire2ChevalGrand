@@ -3,6 +3,7 @@ using ChevalGrandSlay.Cards;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
 using ChevalGrandSlay.Relics;
+using ChevalGrandSlay.Utilities;
 using ChevalGrandSlayCode.Rewards;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -77,9 +78,12 @@ public partial class Entry
             OnOpen = ctx => ctx.ShowDefaultPileScreen(),
             VisibleWhen = ctx => ctx.Player != null,
         }).PileType;
-        
+
         //Mechanism
         CGSStamina.Register();
+
+        //Visual
+        CGSLowHealthScreen.Register();
 
         //Reward
         CGSRewardAfterCombat.Register();
