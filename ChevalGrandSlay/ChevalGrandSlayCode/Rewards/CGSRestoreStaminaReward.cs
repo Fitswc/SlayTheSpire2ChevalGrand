@@ -16,7 +16,7 @@ internal sealed class CGSRestoreStaminaReward(Player player) : ModCustomReward(p
     private bool _skipped;
 
     public override RewardType ModRewardType => _rewardType;
-    protected override string RewardIconPath => $"{Entry.ResPath}/images/ui/reward_screen/reward_icon_cheval.png";
+    protected override string RewardIconPath => $"{Entry.ResPath}/images/ui/reward_screen/reward_icon_cheval_restore.png";
     protected override string DescriptionLocKey => "CGS_RESTORE_STAMINA_REWARD";
 
     internal static bool CanOffer(Player player) =>
@@ -47,6 +47,10 @@ internal sealed class CGSRestoreStaminaReward(Player player) : ModCustomReward(p
             RequireManualConfirmation = true
         };
         var selected = await CardSelectCmd.FromDeckGeneric(Player, preferences, CGSStamina.CanRestoreDeckCard);
-        return selected.FirstOrDefault() is { } card && CGSStamina.RestoreDeckCard(card);
+        if (selected.FirstOrDefault() is not { } card || !CGSStamina.RestoreDeckCard(card))
+            return false;
+
+        CardCmd.Preview(card, time: 0.2f);
+        return true;
     }
 }

@@ -7,43 +7,78 @@ using MegaCrit.Sts2.Core.Nodes.Rewards;
 
 namespace ChevalGrandSlay;
 
-[HarmonyPatch(typeof(NLinkedRewardSet), "Reload")]
+[HarmonyPatch]
 internal static class CGSLinkedRewardClaimPatch
 {
+    private static readonly MethodInfo? ReloadMethod = AccessTools.DeclaredMethod(typeof(NLinkedRewardSet), "Reload", Type.EmptyTypes);
+    private static bool _bindingReplaced;
+
     [HarmonyPrepare]
-    private static void Prepare(MethodBase? original)
+    private static bool Prepare()
     {
-        // original 为空时是整个补丁的回调，避免逐个目标重复输出。
-        if (original == null)
-            Entry.Logger.Info($"[Patch] {nameof(CGSLinkedRewardClaimPatch)} Star Patching");
+        if (ReloadMethod?.ReturnType == typeof(void))
+            return true;
+
+        Entry.Logger.Warn("[Linked rewards] UI patch skipped. Expected void NLinkedRewardSet.Reload().");
+        return false;
     }
+
+    [HarmonyTargetMethod]
+    private static MethodBase TargetMethod() => ReloadMethod!;
 
     [HarmonyCleanup]
     private static void Cleanup(MethodBase? original, Exception? exception)
     {
-        if (original != null)
+        if (original is not null)
             return;
 
-        // 游戏日志接口同时输出到控制台和日志；
-        if (exception == null)
-            Entry.Logger.Info($"[Patch] {nameof(CGSLinkedRewardClaimPatch)} Patch Successful");
-        else
-            Entry.Logger.Error($"[Patch] {nameof(CGSLinkedRewardClaimPatch)} Patch Failed: {exception}");
+        if (exception is not null)
+            Entry.Logger.Error($"[Linked rewards] Failed to patch NLinkedRewardSet.Reload(): {exception}");
+        else if (_bindingReplaced)
+            Entry.Logger.Info("[Linked rewards] Applied the claim callback fix to NLinkedRewardSet.Reload().");
     }
-    
+
     [HarmonyTranspiler]
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
-        var matcher = new CodeMatcher(instructions).MatchStartForward(
-            new CodeMatch(OpCodes.Ldftn, AccessTools.Method(typeof(NLinkedRewardSet), "GetReward")),
-            new CodeMatch(OpCodes.Newobj),
-            new CodeMatch(OpCodes.Call, AccessTools.Method(typeof(Callable), nameof(Callable.From), [typeof(Action)])));
+        _bindingReplaced = false;
+        var code = instructions.ToList();
+        var getReward = AccessTools.DeclaredMethod(typeof(NLinkedRewardSet), "GetReward", Type.EmptyTypes);
+        if (getReward?.ReturnType != typeof(void))
+        {
+            Entry.Logger.Warn("[Linked rewards] UI patch skipped. Expected void NLinkedRewardSet.GetReward().");
+            return code;
+        }
 
-        if (matcher.IsValid)
-            matcher.Advance(2).SetOperandAndAdvance(AccessTools.Method(
-                typeof(CGSLinkedRewardClaimPatch), nameof(CreateClaimCallback)));
+        var matches = FindClaimCallbacks(code, getReward);
+        if (matches.Count != 1)
+        {
+            Entry.Logger.Warn(
+                $"[Linked rewards] UI patch skipped. Expected one GetReward() → Action → Callable.From(Action) binding in NLinkedRewardSet.Reload(), found {matches.Count}.");
+            return code;
+        }
 
-        return matcher.InstructionEnumeration();
+        matches[0].operand = AccessTools.DeclaredMethod(
+            typeof(CGSLinkedRewardClaimPatch), nameof(CreateClaimCallback), [typeof(Action)]);
+        _bindingReplaced = true;
+        return code;
+    }
+
+    private static List<CodeInstruction> FindClaimCallbacks(IEnumerable<CodeInstruction> code, MethodInfo getReward)
+    {
+        var actionConstructor = AccessTools.Constructor(typeof(Action), [typeof(object), typeof(IntPtr)]);
+        var fromAction = AccessTools.DeclaredMethod(typeof(Callable), nameof(Callable.From), [typeof(Action)]);
+        var meaningful = code.Where(instruction => instruction.opcode != OpCodes.Nop).ToArray();
+        var matches = new List<CodeInstruction>();
+        for (int i = 2; i < meaningful.Length; i++)
+        {
+            if (meaningful[i - 2].opcode == OpCodes.Ldftn && Equals(meaningful[i - 2].operand, getReward) &&
+                meaningful[i - 1].opcode == OpCodes.Newobj && Equals(meaningful[i - 1].operand, actionConstructor) &&
+                meaningful[i].opcode == OpCodes.Call && Equals(meaningful[i].operand, fromAction))
+                matches.Add(meaningful[i]);
+        }
+
+        return matches;
     }
 
     private static Callable CreateClaimCallback(Action original)

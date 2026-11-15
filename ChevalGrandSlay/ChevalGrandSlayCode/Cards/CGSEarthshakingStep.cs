@@ -17,7 +17,7 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSEarthshakingStep : CGSStaminaCard
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 2;
+    private const int BaseEnergyCost = 3;
 
     // 卡牌类型。
     private const CardType CardKind = CardType.Attack;
