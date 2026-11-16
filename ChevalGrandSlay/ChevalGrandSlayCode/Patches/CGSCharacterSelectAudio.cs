@@ -10,7 +10,7 @@ namespace ChevalGrandSlay;
 
 internal sealed class CGSCharacterSelectAudio : IPatchMethod
 {
-    public static string PatchId => "character_select_audio";
+    public static string PatchId => "CGSCharacterSelectAudio";
 
     public static ModPatchTarget[] GetTargets() =>
         [new(typeof(SfxCmd), nameof(SfxCmd.Play), [typeof(string), typeof(float)])];

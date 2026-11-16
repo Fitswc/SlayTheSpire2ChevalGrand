@@ -8,7 +8,7 @@ namespace ChevalGrandSlay;
 // ShouldTakeExtraTurn 的模型钩子采用“任一同意即生效”，需在入口否决其他来源。
 internal sealed class CGSOneBeatAheadPatch : IPatchMethod
 {
-    public static string PatchId => "one_beat_ahead";
+    public static string PatchId => "CGSOneBeatAhead";
 
     public static ModPatchTarget[] GetTargets() =>
         [new(typeof(Hook), nameof(Hook.ShouldTakeExtraTurn))];

@@ -10,7 +10,7 @@ namespace ChevalGrandSlay;
 
 internal sealed class CGSLinkedRewardClaimPatch : IPatchMethod
 {
-    public static string PatchId => "linked_reward_claim";
+    public static string PatchId => "CGSLinkedRewardClaim";
 
     public static ModPatchTarget[] GetTargets()
     {

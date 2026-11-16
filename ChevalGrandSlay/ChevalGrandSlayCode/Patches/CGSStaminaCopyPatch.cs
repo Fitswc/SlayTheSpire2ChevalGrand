@@ -8,7 +8,7 @@ namespace ChevalGrandSlay;
 
 internal sealed class CGSStaminaCopyPatch : IPatchMethod
 {
-    public static string PatchId => "stamina_copy";
+    public static string PatchId => "CGSStaminaCopy";
 
     public static ModPatchTarget[] GetTargets() =>
         [new(typeof(AbstractModel), nameof(AbstractModel.MutableClone), Type.EmptyTypes)];
