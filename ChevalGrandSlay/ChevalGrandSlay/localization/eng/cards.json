@@ -14,7 +14,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_COUNTER_ATTACK.title": "I Can Fight Back, Too",
   "CHEVAL_GRAND_SLAY_CARD_CGS_COUNTER_ATTACK.description": "Gain {Block:diff()} Block.\nGain {RandomAttack:diff()} [gold]I Can Fight Back, Too[/gold].",
   "CHEVAL_GRAND_SLAY_CARD_CGS_STEADY_PACE.title": "Finding My Footing",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_STEADY_PACE.description": "Gain {Block:diff()} Block.\nIf you already have 8 Block, gain {EnhancedBlock:diff()} additional Block.",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_STEADY_PACE.description": "Gain {Block:diff()} Block.\nIf you already have 8 Block, gain {EnhancedBlock:diff()} Block.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_PREPARE_FOR_NEXT_STEP.title": "Same Time Tomorrow",
   "CHEVAL_GRAND_SLAY_CARD_CGS_PREPARE_FOR_NEXT_STEP.description": "Gain {Block:diff()} Block.\nGain {BlockNextTurn:diff()} Block next turn.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_SUB_ZERO.title": "Summer Calm",

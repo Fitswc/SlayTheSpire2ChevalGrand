@@ -14,7 +14,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_COUNTER_ATTACK.title": "我也会还手",
   "CHEVAL_GRAND_SLAY_CARD_CGS_COUNTER_ATTACK.description": "获得 {Block:diff()} 点格挡。\n获得{RandomAttack:diff()}层[gold]我也会还手[/gold]",
   "CHEVAL_GRAND_SLAY_CARD_CGS_STEADY_PACE.title": "慢慢站稳",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_STEADY_PACE.description": "获得 {Block:diff()} 点格挡。\n若已有8格挡则额外获得 {EnhancedBlock:diff()} 点格挡",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_STEADY_PACE.description": "获得 {Block:diff()} 点格挡。\n若已有8格挡则获得 {EnhancedBlock:diff()} 点格挡",
   "CHEVAL_GRAND_SLAY_CARD_CGS_PREPARE_FOR_NEXT_STEP.title": "明天仍然赴约",
   "CHEVAL_GRAND_SLAY_CARD_CGS_PREPARE_FOR_NEXT_STEP.description": "获得 {Block:diff()} 点格挡。\n下回合获得 {BlockNextTurn:diff()} 点格挡",
   "CHEVAL_GRAND_SLAY_CARD_CGS_SUB_ZERO.title": "夏凪",
