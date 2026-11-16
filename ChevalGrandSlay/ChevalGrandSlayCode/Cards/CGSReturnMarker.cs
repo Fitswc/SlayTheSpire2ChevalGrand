@@ -41,8 +41,8 @@ public sealed class CGSReturnMarker : CGSStaminaCard
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar(CGSStamina.Uses, 3m),
-        new DynamicVar(CGSStamina.MaxUses, 3m),
+        new DynamicVar(CGSStamina.Uses, 4m),
+        new DynamicVar(CGSStamina.MaxUses, 4m),
         new CardsVar(1),
         new DynamicVar("Discount", 1m)
     ];

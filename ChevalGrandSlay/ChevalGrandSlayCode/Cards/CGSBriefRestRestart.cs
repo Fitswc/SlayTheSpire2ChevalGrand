@@ -48,8 +48,8 @@ public sealed class CGSBriefRestRestart : CGSStaminaCard
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar(CGSStamina.Uses, 2m),
-            new DynamicVar(CGSStamina.MaxUses, 2m),
+            new DynamicVar(CGSStamina.Uses, 6m),
+            new DynamicVar(CGSStamina.MaxUses, 6m),
             new BlockVar(4m, ValueProp.Move)
         ];
 

@@ -44,8 +44,8 @@ public sealed class CGSChaseTheWind : CGSStaminaCard
     [
         new DamageVar(8m, ValueProp.Move),
         new CardsVar(1),
-        new DynamicVar(CGSStamina.Uses, 3m),
-        new DynamicVar(CGSStamina.MaxUses, 3m)
+        new DynamicVar(CGSStamina.Uses, 4m),
+        new DynamicVar(CGSStamina.MaxUses, 4m)
     ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

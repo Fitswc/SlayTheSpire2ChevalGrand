@@ -1,5 +1,5 @@
 {
   "CGSREWARDAFTERCOMBAT_REWARD_TOKEN": "Add a [gold]Stamina[/gold] card",
-  "CGS_RESTORE_STAMINA_REWARD": "Fully restore one [gold]Stamina[/gold] card",
-  "CGS_RESTORE_STAMINA_REWARD_PROMPT": "Choose a card with missing Stamina to fully restore"
+  "CGS_RESTORE_STAMINA_REWARD": "Fully restore a card's [gold]Stamina[/gold]",
+  "CGS_RESTORE_STAMINA_REWARD_PROMPT": "Choose a card with missing Stamina to restore to full"
 }

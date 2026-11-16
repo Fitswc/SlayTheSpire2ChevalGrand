@@ -43,8 +43,8 @@ public sealed class CGSSmoothBreathing : CGSStaminaCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new CardsVar(2),
-        new DynamicVar(CGSStamina.Uses, 2m),
-        new DynamicVar(CGSStamina.MaxUses, 2m)
+        new DynamicVar(CGSStamina.Uses, 4m),
+        new DynamicVar(CGSStamina.MaxUses, 4m)
     ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

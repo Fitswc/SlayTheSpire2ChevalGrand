@@ -16,7 +16,7 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSPrefectDefend : ModCardTemplate
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 3;
+    private const int BaseEnergyCost = 2;
 
     // 卡牌类型。
     private const CardType CardKind = CardType.Power;

@@ -4,5 +4,5 @@
   "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.cardText": "{StaminaName}:[pulse freq=0.8 color=#64c3c1 ease=-2.0]{CGSUses:diff()}[/pulse]",
   "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.deckText": "{StaminaName}:[pulse freq=0.8 color=#64c3c1 ease=-2.0]{RemainingStamina}[/pulse]",
   "CHEVAL_GRAND_SLAY_KEYWORD_REST_PILE.title": "Rest Pile",
-  "CHEVAL_GRAND_SLAY_KEYWORD_REST_PILE.description": "Cards enter this pile when their Stamina is depleted. Cards, Powers and Reward can restore their Stamina and move them out."
+  "CHEVAL_GRAND_SLAY_KEYWORD_REST_PILE.description": "Stamina cards enter this pile when they run out of Stamina. Cards and powers can restore their Stamina and move them out."
 }

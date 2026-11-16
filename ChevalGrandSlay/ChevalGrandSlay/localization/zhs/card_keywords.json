@@ -4,5 +4,5 @@
   "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.cardText": "{StaminaName}:[pulse freq=0.8 color=#64c3c1 ease=-2.0]{CGSUses:diff()}[/pulse]",
   "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.deckText": "{StaminaName}:[pulse freq=0.8 color=#64c3c1 ease=-2.0]{RemainingStamina}[/pulse]",
   "CHEVAL_GRAND_SLAY_KEYWORD_REST_PILE.title": "休整牌堆",
-  "CHEVAL_GRAND_SLAY_KEYWORD_REST_PILE.description": "体力耗尽的牌会进入这里。可通过卡牌，能力或结算奖励恢复体力并移出。"
+  "CHEVAL_GRAND_SLAY_KEYWORD_REST_PILE.description": "体力耗尽的牌会进入这里。卡牌和能力可以恢复这些牌的体力并将它们移出。"
 }

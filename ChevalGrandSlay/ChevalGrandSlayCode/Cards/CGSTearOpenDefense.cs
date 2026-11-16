@@ -49,8 +49,8 @@ public sealed class CGSTearOpenDefense : CGSStaminaCard
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [new DynamicVar(CGSStamina.Uses, 2m),
-        new DynamicVar(CGSStamina.MaxUses, 2m),
+    [new DynamicVar(CGSStamina.Uses, 4m),
+        new DynamicVar(CGSStamina.MaxUses, 4m),
         new DamageVar(5m, ValueProp.Move),
         new PowerVar<VulnerablePower>(1m),
         new DynamicVar(FirstAttackVulnerableVarName, 1m)

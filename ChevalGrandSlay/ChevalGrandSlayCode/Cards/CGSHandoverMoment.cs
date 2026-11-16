@@ -42,8 +42,8 @@ public sealed class CGSHandoverMoment : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar(CGSStamina.Uses, 2m),
-            new DynamicVar(CGSStamina.MaxUses, 2m),
+            new DynamicVar(CGSStamina.Uses, 6m),
+            new DynamicVar(CGSStamina.MaxUses, 6m),
             new CardsVar(2)
         ];
 

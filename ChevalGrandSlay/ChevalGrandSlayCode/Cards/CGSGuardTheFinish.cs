@@ -48,8 +48,8 @@ public sealed class CGSGuardTheFinish : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar(CGSStamina.Uses, 3m),
-            new DynamicVar(CGSStamina.MaxUses, 3m),
+            new DynamicVar(CGSStamina.Uses, 4m),
+            new DynamicVar(CGSStamina.MaxUses, 4m),
             new BlockVar(9m, ValueProp.Move), 
             new DynamicVar("BonusBlock", 4m)
         ];

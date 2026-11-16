@@ -1,6 +1,7 @@
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
+using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -50,11 +51,12 @@ public sealed class CGSRenewTheContest : CGSStaminaCard
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [
-            new DynamicVar(CGSStamina.Uses, 2m),
-            new DynamicVar(CGSStamina.MaxUses, 2m),
-            new DynamicVar("Restore", 1m)
-        ];
+    [
+        new DynamicVar(CGSStamina.Uses, 2m),
+        new DynamicVar(CGSStamina.MaxUses, 2m),
+        new DynamicVar("Restore", 1m),
+        new DynamicVar("BonusDamage", 4m)
+    ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -62,7 +64,14 @@ public sealed class CGSRenewTheContest : CGSStaminaCard
             new CardSelectorPrefs(SelectionScreenPrompt, 1));
         if (selected.FirstOrDefault() is not { } card) return;
         CGSStamina.Restore(card, DynamicVars["Restore"].BaseValue);
-        await CardPileCmd.Add(card, PileType.Hand);
+        if (!(await CardPileCmd.Add(card, PileType.Hand)).success)
+            return;
+
+        var creature = Owner.Creature;
+        var power = creature.GetPower<CGSRenewTheContestPower>() ??
+            await PowerCmd.Apply<CGSRenewTheContestPower>(choiceContext, creature,
+                DynamicVars["BonusDamage"].BaseValue, creature, this);
+        power?.BoostNextPlay(card);
     }
 
     protected override void OnUpgrade()

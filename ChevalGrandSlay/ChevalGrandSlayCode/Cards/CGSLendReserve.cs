@@ -43,8 +43,8 @@ public sealed class CGSLendReserve : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar(CGSStamina.Uses, 3m),
-            new DynamicVar(CGSStamina.MaxUses, 3m),
+            new DynamicVar(CGSStamina.Uses, 4m),
+            new DynamicVar(CGSStamina.MaxUses, 4m),
             new CardsVar(1),
             new DynamicVar("Restore", 1m)
         ];

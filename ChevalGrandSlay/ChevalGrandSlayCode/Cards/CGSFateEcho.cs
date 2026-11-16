@@ -48,8 +48,8 @@ public sealed class CGSFateEcho : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar(CGSStamina.Uses, 2m),
-            new DynamicVar(CGSStamina.MaxUses, 2m),
+            new DynamicVar(CGSStamina.Uses, 4m),
+            new DynamicVar(CGSStamina.MaxUses, 4m),
             new CardsVar(1)
         ];
 

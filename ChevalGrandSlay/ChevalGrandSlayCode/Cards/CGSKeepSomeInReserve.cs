@@ -3,7 +3,6 @@ using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -31,12 +30,6 @@ public sealed class CGSKeepSomeInReserve : ModCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
-    protected override IEnumerable<DynamicVar> CanonicalVars => 
-        [
-            new DynamicVar("RetainEnergy", 1m)
-        ];
-
     public CGSKeepSomeInReserve() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
@@ -44,15 +37,16 @@ public sealed class CGSKeepSomeInReserve : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<CGSEnergyReservePower>(
-            choiceContext, 
+            choiceContext,
             Owner.Creature,
-            DynamicVars["RetainEnergy"].BaseValue, 
-            Owner.Creature, 
+            1m,
+            Owner.Creature,
             this
-            );
+        );
     }
 
-    protected override void OnUpgrade() {
-        DynamicVars["RetainEnergy"].UpgradeValueBy(1m);
+    protected override void OnUpgrade()
+    {
+        EnergyCost.UpgradeBy(-1);
     }
 }

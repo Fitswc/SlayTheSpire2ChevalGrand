@@ -45,8 +45,8 @@ public sealed class CGSChainStep : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new DynamicVar(CGSStamina.Uses, 3m),
-            new DynamicVar(CGSStamina.MaxUses, 3m),
+            new DynamicVar(CGSStamina.Uses, 6m),
+            new DynamicVar(CGSStamina.MaxUses, 6m),
             new DamageVar(7m, ValueProp.Move)
         ];
 

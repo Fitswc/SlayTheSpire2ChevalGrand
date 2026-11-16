@@ -42,8 +42,8 @@ public sealed class CGSOldWallNewEdge : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar(CGSStamina.Uses, 3m),
-        new DynamicVar(CGSStamina.MaxUses, 3m),
+        new DynamicVar(CGSStamina.Uses, 4m),
+        new DynamicVar(CGSStamina.MaxUses, 4m),
         new DamageVar(8m, ValueProp.Move),
         new DynamicVar("BlockSpent", 12m)
     ];

@@ -47,8 +47,8 @@ public sealed class CGSReadyReception : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar(CGSStamina.Uses, 2m),
-        new DynamicVar(CGSStamina.MaxUses, 2m),
+        new DynamicVar(CGSStamina.Uses, 4m),
+        new DynamicVar(CGSStamina.MaxUses, 4m),
         new DynamicVar("RecoveryCount", 1m),
         new DynamicVar("Restore", 1m),
         new BlockVar(7m, ValueProp.Move)

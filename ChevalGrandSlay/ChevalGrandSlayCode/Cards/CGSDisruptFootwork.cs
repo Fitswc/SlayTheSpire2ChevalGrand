@@ -47,7 +47,7 @@ public sealed class CGSDisruptFootwork : CGSStaminaCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new PowerVar<WeakPower>(1m),
-        new DynamicVar(CGSStamina.Uses, 2m), new DynamicVar(CGSStamina.MaxUses, 2m)
+        new DynamicVar(CGSStamina.Uses, 4m), new DynamicVar(CGSStamina.MaxUses, 4m)
     ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

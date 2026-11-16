@@ -42,8 +42,8 @@ public sealed class CGSSidewaysEvasion : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar(CGSStamina.Uses, 3m),
-            new DynamicVar(CGSStamina.MaxUses, 3m),
+            new DynamicVar(CGSStamina.Uses, 6m),
+            new DynamicVar(CGSStamina.MaxUses, 6m),
             new BlockVar(5m, ValueProp.Move)
         ];
 

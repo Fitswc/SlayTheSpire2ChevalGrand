@@ -47,8 +47,8 @@ public sealed class CGSDrawFinishLine : CGSStaminaCard
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar(CGSStamina.Uses, 2m),
-            new DynamicVar(CGSStamina.MaxUses, 2m),
+            new DynamicVar(CGSStamina.Uses, 4m),
+            new DynamicVar(CGSStamina.MaxUses, 4m),
             new CardsVar(1)
         ];
 
@@ -63,7 +63,7 @@ public sealed class CGSDrawFinishLine : CGSStaminaCard
         }
         
         await CGSStamina.DepleteAndRest(card);
-        await PlayerCmd.GainEnergy(2m, Owner);
+        await PlayerCmd.GainEnergy(4m, Owner);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
 

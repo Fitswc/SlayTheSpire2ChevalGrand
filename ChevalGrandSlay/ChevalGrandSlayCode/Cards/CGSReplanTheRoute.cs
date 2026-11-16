@@ -41,8 +41,8 @@ public sealed class CGSReplanTheRoute : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new DynamicVar(CGSStamina.Uses, 3m),
-            new DynamicVar(CGSStamina.MaxUses, 3m),
+            new DynamicVar(CGSStamina.Uses, 4m),
+            new DynamicVar(CGSStamina.MaxUses, 4m),
             new DynamicVar("ShuffleCount", 3m), 
             new CardsVar(1)
         ];

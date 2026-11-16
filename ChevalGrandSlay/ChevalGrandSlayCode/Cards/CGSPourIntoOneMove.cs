@@ -46,30 +46,28 @@ public sealed class CGSPourIntoOneMove : CGSStaminaCard
         new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [
-            new DynamicVar(CGSStamina.Uses, 2m),
-            new DynamicVar(CGSStamina.MaxUses, 2m)
-        ];
+    [
+        new DynamicVar(CGSStamina.Uses, 2m),
+        new DynamicVar(CGSStamina.MaxUses, 2m)
+    ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var selected = await CardSelectCmd.FromHand(
             choiceContext,
             Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1), 
-            IsCandidate, 
+            new CardSelectorPrefs(SelectionScreenPrompt, 1),
+            IsCandidate,
             this);
-        
+
         if (selected.FirstOrDefault() is not { } attack)
         {
             return;
         }
-        
-        var cost = attack.EnergyCost.GetWithModifiers(CostModifiers.All);
-        await PlayerCmd.LoseEnergy(cost, Owner);
+
         CGSStamina.Spend(attack, 1m);
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        
+
         var power = await PowerCmd.Apply<CGSFirstStrikeTwicePower>(choiceContext, Owner.Creature,
             1m, Owner.Creature, this);
         power?.SetAttack(attack);
@@ -90,7 +88,6 @@ public sealed class CGSPourIntoOneMove : CGSStaminaCard
         UpgradeStamina(1m);
     }
 
-    private bool IsCandidate(CardModel card) =>
-        card.Type == CardType.Attack && CGSStamina.HasAtLeast(card, 2) &&
-        card.EnergyCost.GetWithModifiers(CostModifiers.All) <= (Owner.PlayerCombatState?.Energy ?? 0);
+    private static bool IsCandidate(CardModel card) =>
+        card.Type == CardType.Attack && CGSStamina.HasAtLeast(card, 2);
 }

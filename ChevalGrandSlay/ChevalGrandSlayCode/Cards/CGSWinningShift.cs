@@ -40,8 +40,8 @@ public sealed class CGSWinningShift : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar(CGSStamina.Uses, 1m),
-        new DynamicVar(CGSStamina.MaxUses, 1m),
+        new DynamicVar(CGSStamina.Uses, 2m),
+        new DynamicVar(CGSStamina.MaxUses, 2m),
         new EnergyVar(2),
         new CardsVar(1)
     ];

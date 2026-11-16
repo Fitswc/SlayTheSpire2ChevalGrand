@@ -46,8 +46,8 @@ public sealed class CGSWinningLine : CGSStaminaCard
     [
         new DamageVar(10m, ValueProp.Move),
         new DynamicVar(BonusDamageVarName, 4m),
-        new DynamicVar(CGSStamina.Uses, 3m),
-        new DynamicVar(CGSStamina.MaxUses, 3m)
+        new DynamicVar(CGSStamina.Uses, 2m),
+        new DynamicVar(CGSStamina.MaxUses, 2m)
     ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

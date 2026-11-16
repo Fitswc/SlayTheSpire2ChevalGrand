@@ -1,9 +1,5 @@
-using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -14,7 +10,7 @@ namespace ChevalGrandSlay.Powers;
 public sealed class CGSEnergyReservePower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
+    public override PowerStackType StackType => PowerStackType.Single;
     protected override bool IsVisibleInternal => false;
     // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
     public override PowerAssetProfile AssetProfile => new(
@@ -22,23 +18,5 @@ public sealed class CGSEnergyReservePower : ModPowerTemplate
         BigIconPath: $"{Entry.ResPath}/images/powers/CGSEnergyReserve.png"
     );
 
-    private int _saved;
-
-    public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side,
-        IEnumerable<Creature> participants)
-    {
-        if (side == CombatSide.Player && participants.Contains(Owner) &&
-            Owner.Player?.PlayerCombatState is { } state)
-            _saved = Math.Min(Math.Max(0, state.Energy), Amount);
-        return Task.CompletedTask;
-    }
-
-    // 回合开始Hook在能量初始化之后触发，独立于额外的能量重置。
-    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
-    {
-        if (player != Owner.Player || _saved == 0) return;
-        int energy = _saved;
-        _saved = 0;
-        await PlayerCmd.GainEnergy(energy, player);
-    }
+    public override bool ShouldPlayerResetEnergy(Player player) => player != Owner.Player;
 }
