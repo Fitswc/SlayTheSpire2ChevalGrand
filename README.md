@@ -22,9 +22,15 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=3840359479
    >需要 Windows 版《杀戮尖塔 2》、.NET 10 SDK 和 Godot 4.5.1 .NET 版。
 
 #### 首次配置: 
-1. 根目录执行 `Copy-Item .\ChevalGrandSlay\local.props.template .\ChevalGrandSlay\local.props`
-2. 在 `ChevalGrandSlay/local.props` 中填写 Sts2Dir（游戏安装目录）和 GodotExe（Godot 可执行文件的完整路径）。如果游戏程序集位于其他目录，一并调整 Sts2DataDir。
-3. 根目录执行 `dotnet build .\ChevalGrandSlay\ChevalGrandSlay.csproj -c Release`
+1. 根目录执行
+~~~powershell
+Copy-Item .\ChevalGrandSlay\local.props.template .\ChevalGrandSlay\local.props`
+~~~
+3. 在 `ChevalGrandSlay/local.props` 中填写 Sts2Dir（游戏安装目录）和 GodotExe（Godot 可执行文件的完整路径）。如果游戏程序集位于其他目录，一并调整 Sts2DataDir。
+4. 根目录执行
+~~~powershell
+`dotnet build .\ChevalGrandSlay\ChevalGrandSlay.csproj -c Release`
+~~~
 默认构建会编译 DLL、导出 PCK，并将 Mod 部署到游戏目录下的 mods/ChevalGrandSlay/。
 
 ## Credits
