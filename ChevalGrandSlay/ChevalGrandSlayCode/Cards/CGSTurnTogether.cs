@@ -8,6 +8,8 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -35,7 +37,7 @@ public sealed class CGSTurnTogether : ModCardTemplate
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile)
     ];
 
     // 美术暂缺，使用框架默认资源。
@@ -44,7 +46,7 @@ public sealed class CGSTurnTogether : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(0m, ValueProp.Move)
+        ModCardVars.Block(0m, ValueProp.Move)
     ];
 
     protected override void AddExtraArgsToDescription(LocString description)

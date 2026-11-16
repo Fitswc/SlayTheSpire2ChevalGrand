@@ -1,37 +1,18 @@
-using System.Reflection;
 using ChevalGrandSlay.Cards;
 using ChevalGrandSlay.Mechanics;
 using ChevalGrandSlay.Relics;
-using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Patching.Models;
 
 namespace ChevalGrandSlay;
 
-[HarmonyPatch(typeof(AbstractModel), nameof(AbstractModel.MutableClone))]
-internal static class CGSStaminaCopyPatch
+internal sealed class CGSStaminaCopyPatch : IPatchMethod
 {
-    [HarmonyPrepare]
-    private static void Prepare(MethodBase? original)
-    {
-        // original 为空时是整个补丁的回调，避免逐个目标重复输出。
-        if (original == null)
-            Entry.Logger.Info($"[Patch] {nameof(CGSStaminaCopyPatch)} Star Patching");
-    }
+    public static string PatchId => "stamina_copy";
 
-    [HarmonyCleanup]
-    private static void Cleanup(MethodBase? original, Exception? exception)
-    {
-        if (original != null)
-            return;
+    public static ModPatchTarget[] GetTargets() =>
+        [new(typeof(AbstractModel), nameof(AbstractModel.MutableClone), Type.EmptyTypes)];
 
-        // 游戏日志接口同时输出到控制台和日志；
-        if (exception == null)
-            Entry.Logger.Info($"[Patch] {nameof(CGSStaminaCopyPatch)} Patch Successful");
-        else
-            Entry.Logger.Error($"[Patch] {nameof(CGSStaminaCopyPatch)} Patch Failed: {exception}");
-    }
-
-    [HarmonyPostfix]
     public static void Postfix(AbstractModel __instance, ref AbstractModel __result)
     {
         if (__instance is not CardModel original || __result is not CardModel copy)

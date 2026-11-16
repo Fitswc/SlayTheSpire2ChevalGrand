@@ -4,44 +4,26 @@ using ChevalGrandSlayCode.Rewards;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes.Rewards;
+using STS2RitsuLib.Patching.Models;
 
 namespace ChevalGrandSlay;
 
-[HarmonyPatch]
-internal static class CGSLinkedRewardClaimPatch
+internal sealed class CGSLinkedRewardClaimPatch : IPatchMethod
 {
-    private static readonly MethodInfo? ReloadMethod = AccessTools.DeclaredMethod(typeof(NLinkedRewardSet), "Reload", Type.EmptyTypes);
-    private static bool _bindingReplaced;
+    public static string PatchId => "linked_reward_claim";
 
-    [HarmonyPrepare]
-    private static bool Prepare()
+    public static ModPatchTarget[] GetTargets()
     {
-        if (ReloadMethod?.ReturnType == typeof(void))
-            return true;
+        var target = typeof(NLinkedRewardSet);
+        if (AccessTools.DeclaredMethod(target, "Reload", Type.EmptyTypes)?.ReturnType == typeof(void))
+            return [new(target, "Reload", Type.EmptyTypes)];
 
         Entry.Logger.Warn("[Linked rewards] UI patch skipped. Expected void NLinkedRewardSet.Reload().");
-        return false;
+        return [];
     }
 
-    [HarmonyTargetMethod]
-    private static MethodBase TargetMethod() => ReloadMethod!;
-
-    [HarmonyCleanup]
-    private static void Cleanup(MethodBase? original, Exception? exception)
-    {
-        if (original is not null)
-            return;
-
-        if (exception is not null)
-            Entry.Logger.Error($"[Linked rewards] Failed to patch NLinkedRewardSet.Reload(): {exception}");
-        else if (_bindingReplaced)
-            Entry.Logger.Info("[Linked rewards] Applied the claim callback fix to NLinkedRewardSet.Reload().");
-    }
-
-    [HarmonyTranspiler]
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
-        _bindingReplaced = false;
         var code = instructions.ToList();
         var getReward = AccessTools.DeclaredMethod(typeof(NLinkedRewardSet), "GetReward", Type.EmptyTypes);
         if (getReward?.ReturnType != typeof(void))
@@ -60,7 +42,6 @@ internal static class CGSLinkedRewardClaimPatch
 
         matches[0].operand = AccessTools.DeclaredMethod(
             typeof(CGSLinkedRewardClaimPatch), nameof(CreateClaimCallback), [typeof(Action)]);
-        _bindingReplaced = true;
         return code;
     }
 

@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -45,7 +46,7 @@ public sealed class CGSLendReserve : CGSStaminaCard
         [
             new DynamicVar(CGSStamina.Uses, 4m),
             new DynamicVar(CGSStamina.MaxUses, 4m),
-            new CardsVar(1),
+            ModCardVars.Cards(1),
             new DynamicVar("Restore", 1m)
         ];
 

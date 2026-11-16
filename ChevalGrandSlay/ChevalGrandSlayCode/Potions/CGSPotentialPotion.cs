@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Potions;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -27,7 +28,7 @@ public sealed class CGSPotentialPotion : ModPotionTemplate
     /*
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina),
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.Stamina),
         HoverTipFactory.FromKeyword(CardKeyword.Retain)
     ];
     */

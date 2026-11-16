@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -41,7 +42,7 @@ public sealed class CGSSuppressTheirSpirit : ModCardTemplate
     
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DamageVar(8m, ValueProp.Move)
+            ModCardVars.Damage(8m, ValueProp.Move)
         ];
 
     public CGSSuppressTheirSpirit() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)

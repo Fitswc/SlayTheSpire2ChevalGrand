@@ -1,8 +1,10 @@
+using System.Runtime.CompilerServices;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib;
+using STS2RitsuLib.Content;
 using STS2RitsuLib.Models.Capabilities;
 
 namespace ChevalGrandSlay.Mechanics;
@@ -11,6 +13,8 @@ internal static class CGSStamina
 {
     internal const string Uses = "CGSUses";
     internal const string MaxUses = "CGSMaxUses";
+
+    private static readonly ConditionalWeakTable<ICombatState, object> PendingFirstTurns = new();
 
     private sealed record SpentStamina
     {
@@ -21,6 +25,13 @@ internal static class CGSStamina
 
     internal static void Register()
     {
+        ModContentRegistry.For(Entry.ModId).ConfigureDefaultModelCapabilities<CardModel>(
+            "stamina-result-pile", static (card, capabilities) =>
+            {
+                if (card is CGSStaminaCard)
+                    capabilities.Add<CGSConsumeUse>();
+            });
+
         _spentStamina = RitsuLibFramework.GetModelSavedDataStore(Entry.ModId)
             .Register<CardModel, SpentStamina>("spent-stamina", options: new ModelSavedDataOptions
             {
@@ -29,7 +40,7 @@ internal static class CGSStamina
             });
 
         RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>(LoadCombatStamina, replayCurrentState: false);
-        CombatManager.Instance.CombatBegan += MoveDepletedCardsToRest;
+        RitsuLibFramework.SubscribeLifecycle<SideTurnStartingEvent>(MoveDepletedCardsToRest, replayCurrentState: false);
     }
 
     public static bool HasStamina(CardModel card) =>
@@ -115,6 +126,8 @@ internal static class CGSStamina
         if (starting.CombatState is not { } state)
             return;
 
+        PendingFirstTurns.GetValue(state, static _ => new object());
+
         foreach (var player in state.Players)
         {
             if (player.PlayerCombatState is not { } combat)
@@ -129,10 +142,13 @@ internal static class CGSStamina
         }
     }
 
-    private static void MoveDepletedCardsToRest(CombatState combat)
+    private static void MoveDepletedCardsToRest(SideTurnStartingEvent starting)
     {
+        if (starting.Side != CombatSide.Player || !PendingFirstTurns.Remove(starting.CombatState))
+            return;
+
         // BeforeCombatStart hooks can grant temporary Stamina. Check after those hooks and before drawing.
-        foreach (var player in combat.Players)
+        foreach (var player in starting.CombatState.Players)
         {
             if (player.PlayerCombatState?.DrawPile is not { } drawPile)
                 continue;

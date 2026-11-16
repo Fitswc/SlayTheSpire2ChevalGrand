@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Cards.DynamicVars;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -36,7 +38,7 @@ public sealed class CGSAroundTheBend : ModCardTemplate
     }
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.Stamina)
     ];
 
     // 美术暂缺，使用框架默认资源。
@@ -45,7 +47,7 @@ public sealed class CGSAroundTheBend : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars => 
     [
-        new CardsVar(1)
+        ModCardVars.Cards(1)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

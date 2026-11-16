@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -48,8 +49,8 @@ public sealed class CGSClamToFight : ModCardTemplate
     // BlockVar 会绑定到本地化里的 {Block:diff()}，升级时文本会自动显示差值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(6m, ValueProp.Move),
-        new PowerVar<VigorPower>(3m)
+        ModCardVars.Block(6m, ValueProp.Move),
+        ModCardVars.Power<VigorPower>(3m)
     ];
 
     public CGSClamToFight() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)

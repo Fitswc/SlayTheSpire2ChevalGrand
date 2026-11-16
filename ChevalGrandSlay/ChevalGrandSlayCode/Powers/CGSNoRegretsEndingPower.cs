@@ -1,6 +1,4 @@
 using ChevalGrandSlay.Keywords;
-using ChevalGrandSlay.Mechanics;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -8,6 +6,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -17,13 +16,11 @@ namespace ChevalGrandSlay.Powers;
 [RegisterPower]
 public sealed class CGSNoRegretsEndingPower : ModPowerTemplate
 {
-    private bool _boostNextAttack;
-
-    private int _triggeredTurn = -1;
-    private CardModel? _triggeringCard;
+    private decimal _pendingBonus;
+    private Dictionary<CardPlay, decimal> _attackBonuses = new(ReferenceEqualityComparer.Instance);
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile)
     ];
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -34,44 +31,52 @@ public sealed class CGSNoRegretsEndingPower : ModPowerTemplate
         BigIconPath: $"{Entry.ResPath}/images/powers/CGSNoRegretsEnding.png"
     );
 
+    protected override void AfterCloned()
+    {
+        base.AfterCloned();
+        _pendingBonus = 0m;
+        _attackBonuses = new Dictionary<CardPlay, decimal>(ReferenceEqualityComparer.Instance);
+    }
+
     public override Task AfterCardChangedPiles(CardModel card, PileType previousPile, AbstractModel? source)
     {
-        if (card.Owner == Owner.Player && card.Type == CardType.Attack &&
-            CGSStamina.HasStamina(card) && previousPile != Entry.CGSFatePile &&
-            card.Pile?.Type == Entry.CGSFatePile &&
-            Owner.Player?.PlayerCombatState is { } state && _triggeredTurn != state.TurnNumber)
-        {
-            _triggeredTurn = state.TurnNumber;
-            _boostNextAttack = true;
-            _triggeringCard = card;
-        }
+        if (card.Owner == Owner.Player && previousPile != Entry.CGSFatePile &&
+            card.Pile?.Type == Entry.CGSFatePile)
+            _pendingBonus += Amount;
+
+        return Task.CompletedTask;
+    }
+
+    public override Task BeforeCardPlayed(CardPlay cardPlay)
+    {
+        var card = cardPlay.Card;
+        if (_pendingBonus <= 0m || card.Type != CardType.Attack || card.Owner != Owner.Player)
+            return Task.CompletedTask;
+
+        // Cards entering the Rest Pile during this attack charge the next attack.
+        _attackBonuses.Add(cardPlay, _pendingBonus);
+        _pendingBonus = 0m;
+
         return Task.CompletedTask;
     }
 
     public override decimal ModifyDamageAdditive(Creature? target, decimal damage, ValueProp props,
         Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
-        if (_boostNextAttack && cardSource?.Type == CardType.Attack && cardSource.Owner == Owner.Player)
-            return Amount;
-        return 0m;
+        if (dealer != Owner || cardSource?.Type != CardType.Attack || cardSource.Owner != Owner.Player ||
+            !props.IsPoweredAttack())
+            return 0m;
+
+        // Damage previews have no CardPlay and show the bonus available to the next attack.
+        if (cardPlay is null)
+            return _pendingBonus;
+
+        return ReferenceEquals(cardPlay.Card, cardSource) ? _attackBonuses.GetValueOrDefault(cardPlay) : 0m;
     }
 
     public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (_boostNextAttack && cardPlay.Card != _triggeringCard &&
-            cardPlay.Card.Type == CardType.Attack && cardPlay.Card.Owner == Owner.Player)
-            _boostNextAttack = false;
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side,
-        IEnumerable<Creature> participants)
-    {
-        if (side == CombatSide.Player && participants.Contains(Owner))
-        {
-            _boostNextAttack = false;
-            _triggeringCard = null;
-        }
+        _attackBonuses.Remove(cardPlay);
         return Task.CompletedTask;
     }
 }

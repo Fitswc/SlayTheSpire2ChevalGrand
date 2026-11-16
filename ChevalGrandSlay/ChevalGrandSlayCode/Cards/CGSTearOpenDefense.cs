@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -51,8 +52,8 @@ public sealed class CGSTearOpenDefense : CGSStaminaCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [new DynamicVar(CGSStamina.Uses, 4m),
         new DynamicVar(CGSStamina.MaxUses, 4m),
-        new DamageVar(5m, ValueProp.Move),
-        new PowerVar<VulnerablePower>(1m),
+        ModCardVars.Damage(5m, ValueProp.Move),
+        ModCardVars.Power<VulnerablePower>(1m),
         new DynamicVar(FirstAttackVulnerableVarName, 1m)
     ];
 

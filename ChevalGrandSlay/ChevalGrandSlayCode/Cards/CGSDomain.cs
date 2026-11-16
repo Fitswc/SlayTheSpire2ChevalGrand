@@ -6,6 +6,8 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Cards.DynamicVars;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -41,14 +43,14 @@ public sealed class CGSDomain : ModCardTemplate
     [
         new DynamicVar("Turns", 2m),
         new DynamicVar("DamageBonus", CGSDomainPower.DamageBonusPercent),
-        new EnergyVar(CGSDomainPower.EnergyPerTurn)
+        ModCardVars.Energy(CGSDomainPower.EnergyPerTurn)
     ];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromKeyword(CGSKeywords.RestPile),
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile),
         HoverTipFactory.FromPower<CGSDomainPower>(DynamicVars["Turns"].IntValue),
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.Stamina)
     ];
     
     public override IEnumerable<CardKeyword> CanonicalKeywords =>

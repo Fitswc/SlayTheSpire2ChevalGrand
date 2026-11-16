@@ -7,9 +7,6 @@ namespace ChevalGrandSlay.Mechanics;
 public abstract class CGSStaminaCard(int energyCost, CardType type, CardRarity rarity, TargetType target)
     : ModCardTemplate(energyCost, type, rarity, target)
 {
-    protected sealed override CardLocation GetResultLocationForCardPlay() =>
-        CGSConsumeUse.GetResultLocationForCardPlay(this, base.GetResultLocationForCardPlay());
-
     protected sealed override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (Owner is null)

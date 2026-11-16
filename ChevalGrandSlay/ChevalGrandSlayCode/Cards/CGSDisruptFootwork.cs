@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -37,7 +39,8 @@ public sealed class CGSDisruptFootwork : CGSStaminaCard
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
         HoverTipFactory.FromPower<WeakPower>()
     ];
 
@@ -46,7 +49,8 @@ public sealed class CGSDisruptFootwork : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<WeakPower>(1m),
+        ModCardVars.Power<WeakPower>(1m),
+        ModCardVars.Damage(9m, ValueProp.Move),
         new DynamicVar(CGSStamina.Uses, 4m), new DynamicVar(CGSStamina.MaxUses, 4m)
     ];
 
@@ -64,11 +68,15 @@ public sealed class CGSDisruptFootwork : CGSStaminaCard
                 Owner.Creature,
                 this);
         }
+
+        await CreatureCmd.Damage(choiceContext, combatState.HittableEnemies, DynamicVars.Damage.BaseValue,
+            ValueProp.Unpowered, Owner.Creature, this, cardPlay);
     }
 
     protected override void OnUpgrade()
     {
         UpgradeStamina(1m);
         DynamicVars.Weak.UpgradeValueBy(1m);
+        DynamicVars.Damage.UpgradeValueBy(3m);
     }
 }

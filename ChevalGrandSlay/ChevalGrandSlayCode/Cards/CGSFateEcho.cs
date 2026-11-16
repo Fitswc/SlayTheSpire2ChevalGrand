@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Cards.DynamicVars;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -37,7 +39,7 @@ public sealed class CGSFateEcho : CGSStaminaCard
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile)
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
@@ -46,12 +48,12 @@ public sealed class CGSFateEcho : CGSStaminaCard
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => 
-        [
-            new DynamicVar(CGSStamina.Uses, 4m),
-            new DynamicVar(CGSStamina.MaxUses, 4m),
-            new CardsVar(1)
-        ];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new DynamicVar(CGSStamina.Uses, 4m),
+        new DynamicVar(CGSStamina.MaxUses, 4m),
+        ModCardVars.Cards(1)
+    ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -63,7 +65,7 @@ public sealed class CGSFateEcho : CGSStaminaCard
             if (selected.FirstOrDefault() is { } card)
             {
                 CGSStamina.Restore(card, 1m);
-                await CardPileCmd.Add(card, PileType.Discard);
+                await CardPileCmd.Add(card, PileType.Draw);
             }
         }
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);

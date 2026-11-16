@@ -41,23 +41,28 @@ public sealed class CGSRepurposeBulwark : CGSStaminaCard
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [
-            new DynamicVar(CGSStamina.Uses, 6m),
-            new DynamicVar(CGSStamina.MaxUses, 6m),
-            new DynamicVar("BlockLimit", 9m)
-        ];
+    [
+        new DynamicVar(CGSStamina.Uses, 6m),
+        new DynamicVar(CGSStamina.MaxUses, 6m),
+        new DynamicVar("BlockLimit", 20m)
+    ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        int removed = Math.Min(cardPlay.Target.Block, DynamicVars["BlockLimit"].IntValue);
-        if (removed <= 0)
+
+        var blockToRemove = Math.Min(cardPlay.Target.Block, DynamicVars["BlockLimit"].IntValue);
+        if (blockToRemove > 0)
         {
-            return;
+            await CreatureCmd.LoseBlock(choiceContext, cardPlay.Target, blockToRemove, null);
+            await CreatureCmd.GainBlock(Owner.Creature, blockToRemove, ValueProp.Move, cardPlay);
+        }
+        else
+        {
+            await CreatureCmd.Damage(choiceContext, cardPlay.Target, 12m, ValueProp.Unblockable, Owner.Creature, this, cardPlay);
+            await CreatureCmd.GainBlock(Owner.Creature, 12m, ValueProp.Move, cardPlay);
         }
 
-        await CreatureCmd.LoseBlock(choiceContext, cardPlay.Target, removed, null);
-        await CreatureCmd.GainBlock(Owner.Creature, removed, ValueProp.Move, cardPlay);
     }
 
     protected override void OnUpgrade()

@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -44,7 +45,7 @@ public sealed class CGSOpportunisticPursuit : CGSStaminaCard
     [
         new DynamicVar(CGSStamina.Uses, 6m),
         new DynamicVar(CGSStamina.MaxUses, 6m),
-        new DamageVar(6m, ValueProp.Move),
+        ModCardVars.Damage(6m, ValueProp.Move),
         new DynamicVar("BonusDamage", 5m),
     ];
 

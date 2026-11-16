@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -37,7 +39,7 @@ public sealed class CGSGuardTheFinish : CGSStaminaCard
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile)
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
@@ -50,7 +52,7 @@ public sealed class CGSGuardTheFinish : CGSStaminaCard
         [
             new DynamicVar(CGSStamina.Uses, 4m),
             new DynamicVar(CGSStamina.MaxUses, 4m),
-            new BlockVar(9m, ValueProp.Move), 
+            ModCardVars.Block(9m, ValueProp.Move),
             new DynamicVar("BonusBlock", 4m)
         ];
 

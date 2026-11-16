@@ -5,7 +5,6 @@ using ChevalGrandSlay.Mechanics;
 using ChevalGrandSlay.Relics;
 using ChevalGrandSlay.Utilities;
 using ChevalGrandSlayCode.Rewards;
-using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
@@ -13,6 +12,7 @@ using STS2RitsuLib;
 using STS2RitsuLib.Audio;
 using STS2RitsuLib.CardPiles;
 using STS2RitsuLib.Interop;
+using STS2RitsuLib.Patching.Core;
 using Logger = MegaCrit.Sts2.Core.Logging.Logger;
 
 namespace ChevalGrandSlay;
@@ -54,7 +54,15 @@ public partial class Entry
         FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings($"{ResPath}/audios/GUIDs.txt");
 
         //Patch
-        new Harmony(ModId).PatchAll(assembly);
+        var patcher = new ModPatcher(ModId, Logger);
+        patcher.RegisterPatch<CGSCharacterSelectAudio>();
+        patcher.RegisterPatch<CGSCharacterSelectStopIntroPatch>();
+        patcher.RegisterPatch<CGSStaminaCopyPatch>();
+        patcher.RegisterPatch<CGSOneBeatAheadPatch>();
+        patcher.RegisterPatch<CGSLinkedRewardClaimPatch>();
+        patcher.RegisterPatch<CGSRewardAfterCombat.RestoredRoomRewardsPatch>();
+        if (!patcher.PatchAll())
+            throw new InvalidOperationException("ChevalGrandSlay failed to apply a required patch.");
 
         //CardPile
         var registry = ModCardPileRegistry.For(ModId);

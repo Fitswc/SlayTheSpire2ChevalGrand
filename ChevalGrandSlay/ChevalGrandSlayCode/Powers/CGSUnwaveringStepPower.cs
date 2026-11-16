@@ -30,7 +30,7 @@ public sealed class CGSUnwaveringStepPower : ModPowerTemplate
         var card = cardPlay.Card;
         if (player?.PlayerCombatState is { } state && CombatState.CurrentSide == CombatSide.Player &&
             card.Owner == player && card.Type == CardType.Attack && !card.EnergyCost.CostsX &&
-            card.EnergyCost.GetWithModifiers(CostModifiers.None) >= 2 &&
+            card.EnergyCost.GetWithModifiers(CostModifiers.None) >= 1 &&
             _triggeredTurn != state.TurnNumber)
         {
             // 先占用本回合的触发机会，等这张攻击牌结算完毕再获得格挡。

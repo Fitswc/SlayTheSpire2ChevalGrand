@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -31,17 +32,18 @@ public sealed class CGSRemainingUsesSense : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.RestPile),
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile),
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.Stamina)
     ];
 
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => 
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("PowerStacks", 1m)
+        new DynamicVar("PowerStacks", 6m)
     ];
 
     public CGSRemainingUsesSense() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
@@ -57,8 +59,6 @@ public sealed class CGSRemainingUsesSense : ModCardTemplate
     protected override void OnUpgrade()
     {
         EnergyCost.UpgradeBy(-1);
-        DynamicVars["PowerStacks"].UpgradeValueBy(1m);
+        DynamicVars["PowerStacks"].UpgradeValueBy(2m);
     }
-
-
 }

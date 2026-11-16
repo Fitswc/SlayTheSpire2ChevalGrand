@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -34,7 +36,7 @@ public sealed class CGSOldRoadWarmth : ModCardTemplate
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile)
     ];
 
     // 美术暂缺，使用框架默认资源。
@@ -43,7 +45,7 @@ public sealed class CGSOldRoadWarmth : ModCardTemplate
     
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new BlockVar(4m, ValueProp.Move)
+            ModCardVars.Block(4m, ValueProp.Move)
         ];
 
     public CGSOldRoadWarmth() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)

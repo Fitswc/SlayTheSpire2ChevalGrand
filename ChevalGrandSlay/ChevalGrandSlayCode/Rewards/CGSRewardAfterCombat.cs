@@ -4,7 +4,6 @@ using ChevalGrandSlay;
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
-using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -15,6 +14,7 @@ using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib;
 using STS2RitsuLib.Combat.Rewards;
+using STS2RitsuLib.Patching.Models;
 
 namespace ChevalGrandSlayCode.Rewards;
 
@@ -153,9 +153,13 @@ public sealed class CGSRewardAfterCombat : ModCustomReward
         return (await CardPileCmd.Add(selected, PileType.Deck)).success;
     }
 
-    [HarmonyPatch(typeof(CombatRoom), nameof(CombatRoom.FromSerializable))]
-    private static class RestoredRoomRewardsPatch
+    internal sealed class RestoredRoomRewardsPatch : IPatchMethod
     {
+        public static string PatchId => "restore_room_rewards";
+
+        public static ModPatchTarget[] GetTargets() =>
+            [new(typeof(CombatRoom), nameof(CombatRoom.FromSerializable))];
+
         private static void Postfix(CombatRoom __result)
         {
             // Older saves can already contain rewards generated before the eligibility checks.

@@ -8,6 +8,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Cards.DynamicVars;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -41,7 +43,7 @@ public sealed class CGSTurnTheOldPage : ModCardTemplate
     }
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.Stamina)
     ];
 
     public override CardAssetProfile AssetProfile => new(
@@ -49,7 +51,7 @@ public sealed class CGSTurnTheOldPage : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new CardsVar(2)
+            ModCardVars.Cards(2)
         ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => 

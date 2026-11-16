@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -51,7 +52,7 @@ public sealed class CGSReorganizeThePace : CGSStaminaCard
     [
         new DynamicVar(CGSStamina.Uses, 6m),
         new DynamicVar(CGSStamina.MaxUses, 6m),
-        new BlockVar(15m, ValueProp.Move),
+        ModCardVars.Block(15m, ValueProp.Move),
     ];
 
     // 打出时的效果逻辑，这里是获得格挡。

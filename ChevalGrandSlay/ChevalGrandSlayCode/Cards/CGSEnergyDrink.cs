@@ -45,7 +45,7 @@ public sealed class CGSEnergyDrink : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CreatureCmd.Heal(Owner.Creature, 4m, false);
+        await CreatureCmd.Heal(Owner.Creature, 8m, false);
     }
 
     protected override void OnUpgrade()

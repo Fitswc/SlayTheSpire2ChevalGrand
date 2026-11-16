@@ -1,4 +1,3 @@
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -9,7 +8,6 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
-
 
 // 能力：打向远方!
 [RegisterPower]
@@ -23,30 +21,18 @@ public sealed class CGSOverflowEchoPower : ModPowerTemplate
         BigIconPath: $"{Entry.ResPath}/images/powers/CGSOverflowEcho.png"
     );
 
-    private bool _usedThisTurn;
-
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants,
-        ICombatState combatState)
-    {
-        _usedThisTurn = false;
-        return Task.CompletedTask;
-    }
-
     public override async Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? target,
         DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (_usedThisTurn || dealer != Owner || target?.IsEnemy != true || !result.WasTargetKilled)
+        if (dealer != Owner || target?.IsEnemy != true || !result.WasTargetKilled)
             return;
-        _usedThisTurn = true;
-        if (result.OverkillDamage <= 0) return;
-
-        var others = CombatState.HittableEnemies.Where(enemy => enemy != target).ToArray();
-        if (others.Length == 0) return;
-        var other = Owner.Player?.RunState.Rng.CombatTargets.NextItem(others);
-        if (other is null) return;
 
         decimal damage = Math.Min(result.OverkillDamage, Amount);
-        await CreatureCmd.Damage(choiceContext, other, damage, ValueProp.Unpowered, Owner, null, null);
+        if (damage <= 0) return;
+
+        var others = CombatState.HittableEnemies.Where(enemy => enemy != target && enemy.IsAlive).ToArray();
+        if (others.Length == 0) return;
+
+        await CreatureCmd.Damage(choiceContext, others, damage, ValueProp.Unpowered, Owner);
     }
 }
-

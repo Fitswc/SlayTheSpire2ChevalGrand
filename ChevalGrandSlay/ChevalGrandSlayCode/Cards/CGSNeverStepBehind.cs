@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -57,8 +58,8 @@ public sealed class CGSNeverStepBehind : CGSStaminaCard
     [
         new DynamicVar(CGSStamina.Uses, 2m),
         new DynamicVar(CGSStamina.MaxUses, 2m),
-        new BlockVar(20m, ValueProp.Move),
-        new PowerVar<WeakPower>(2m)
+        ModCardVars.Block(20m, ValueProp.Move),
+        ModCardVars.Power<WeakPower>(2m)
     ];
 
     // 打出时的效果逻辑，这里是获得格挡。

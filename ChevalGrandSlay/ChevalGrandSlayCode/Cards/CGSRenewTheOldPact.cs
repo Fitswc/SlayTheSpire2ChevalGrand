@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -31,8 +32,8 @@ public sealed class CGSRenewTheOldPact : ModCardTemplate
     private const bool ShowInCardLibrary = true;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.RestPile),
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile),
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.Stamina)
     ];
 
     public override CardAssetProfile AssetProfile => new(

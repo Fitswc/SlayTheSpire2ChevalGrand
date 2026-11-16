@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -40,8 +41,8 @@ public sealed class CGSPrepareForNextStep : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(6m, ValueProp.Move),
-        new BlockVar("BlockNextTurn", 10m, ValueProp.Move)
+        ModCardVars.Block(6m, ValueProp.Move),
+        ModCardVars.Block("BlockNextTurn", 10m, ValueProp.Move)
     ];
 
     // 卡图资源。

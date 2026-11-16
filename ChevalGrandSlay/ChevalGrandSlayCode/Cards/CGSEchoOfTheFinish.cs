@@ -34,7 +34,7 @@ public sealed class CGSEchoOfTheFinish : ModCardTemplate
     
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar("OverflowCap", 12m)
+            new DynamicVar("OverflowCap", 16m)
         ];
 
     public CGSEchoOfTheFinish() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
@@ -47,5 +47,5 @@ public sealed class CGSEchoOfTheFinish : ModCardTemplate
             DynamicVars["OverflowCap"].BaseValue, Owner.Creature, this);
     }
 
-    protected override void OnUpgrade() => DynamicVars["OverflowCap"].UpgradeValueBy(6m);
+    protected override void OnUpgrade() => DynamicVars["OverflowCap"].UpgradeValueBy(4m);
 }

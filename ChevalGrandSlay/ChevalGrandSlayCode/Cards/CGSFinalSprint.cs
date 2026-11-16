@@ -8,6 +8,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -39,7 +41,7 @@ public sealed class CGSFinalSprint : CGSStaminaCard
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromKeyword(CGSKeywords.RestPile)
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile)
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
@@ -51,7 +53,7 @@ public sealed class CGSFinalSprint : CGSStaminaCard
         [
             new DynamicVar(CGSStamina.Uses, 2m),
             new DynamicVar(CGSStamina.MaxUses, 2m),
-            new DamageVar(14m, ValueProp.Move), 
+            ModCardVars.Damage(14m, ValueProp.Move),
             new DynamicVar("FateBonusCap", 8m)
         ];
 

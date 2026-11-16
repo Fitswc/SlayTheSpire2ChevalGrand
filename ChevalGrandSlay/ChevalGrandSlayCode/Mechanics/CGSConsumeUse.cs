@@ -3,27 +3,27 @@ using ChevalGrandSlay.Enchantments;
 using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Models.Capabilities;
 
 namespace ChevalGrandSlay.Mechanics;
 
-internal static class CGSConsumeUse
+[RegisterModelCapability]
+public sealed class CGSConsumeUse : ModelCapability, ICardPlayResultContributor
 {
     private static readonly ConditionalWeakTable<CardModel, PlayDecision> Decisions = new();
 
-    public static CardLocation GetResultLocationForCardPlay(CardModel card, CardLocation normalLocation)
+    public PileType? GetResultPileTypeForCardPlay(CardModel card)
     {
         // The game chooses the result pile before calling OnPlay, where Stamina is spent.
         bool preserved = TryPreserve(card);
         Decisions.Remove(card);
         Decisions.Add(card, new PlayDecision(preserved));
 
-        if (CGSStamina.GetRemaining(card) <= (preserved ? 0 : 1))
-            normalLocation.pileType = Entry.CGSFatePile;
-
-        return normalLocation;
+        return CGSStamina.GetRemaining(card) <= (preserved ? 0 : 1) ? Entry.CGSFatePile : null;
     }
 
-    public static void Consume(CardModel card)
+    internal static void Consume(CardModel card)
     {
         if (Decisions.TryGetValue(card, out var decision))
         {

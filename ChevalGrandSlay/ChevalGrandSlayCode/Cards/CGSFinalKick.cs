@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -43,13 +45,13 @@ public sealed class CGSFinalKick : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(20171126m, ValueProp.Move)
+        ModCardVars.Damage(20171126m, ValueProp.Move)
     ];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromKeyword(CGSKeywords.RestPile),
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile),
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.Stamina)
     ];
 
     protected override bool IsPlayable => Owner.PlayerCombatState is { Energy: 0 } &&

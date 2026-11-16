@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -31,8 +32,8 @@ public sealed class CGSNoRegretsEnding : ModCardTemplate
     private const bool ShowInCardLibrary = true;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CGSKeywords.RestPile),
-        HoverTipFactory.FromKeyword(CGSKeywords.Stamina)
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile),
+        ModKeywordRegistry.CreateHoverTip(CGSKeywords.Stamina)
     ];
 
     // 美术暂缺，使用框架默认资源。
@@ -55,6 +56,6 @@ public sealed class CGSNoRegretsEnding : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["PowerStacks"].UpgradeValueBy(4m);
+        DynamicVars["PowerStacks"].UpgradeValueBy(10m);
     }
 }
