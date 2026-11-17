@@ -53,23 +53,24 @@ public sealed class CGSFinalSprint : CGSStaminaCard
         [
             new DynamicVar(CGSStamina.Uses, 2m),
             new DynamicVar(CGSStamina.MaxUses, 2m),
-            ModCardVars.Damage(14m, ValueProp.Move),
-            new DynamicVar("FateBonusCap", 8m)
+            ModCardVars.Damage(18m, ValueProp.Move),
         ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(CombatState);
-        int cardsInFate = Entry.CGSFatePile.GetPile(Owner).Cards.Count;
-        decimal bonus = Math.Min(cardsInFate * 2m, DynamicVars["FateBonusCap"].BaseValue);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
-            .TargetingAllOpponents(CombatState).Execute(choiceContext);
+        if (CombatState is not { } combatState)
+            return;
+
+        int hitCount = 1 + Entry.CGSFatePile.GetPile(Owner).Cards.Count;
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(hitCount)
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
+            .TargetingAllOpponents(combatState)
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars.Damage.UpgradeValueBy(4m);
-        DynamicVars["FateBonusCap"].UpgradeValueBy(2m);
     }
 }

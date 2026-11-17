@@ -66,7 +66,6 @@ public sealed class CGSReplanTheRoute : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         EnergyCost.UpgradeBy(-1);
     }
 }

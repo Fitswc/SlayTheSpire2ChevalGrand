@@ -1,12 +1,13 @@
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
-using MegaCrit.Sts2.Core.CardSelection;
+using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using STS2RitsuLib.Cards.DynamicVars;
+using STS2RitsuLib.Combat.HandSize;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -38,6 +39,8 @@ public sealed class CGSLendReserve : CGSStaminaCard
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [HoverTipFactory.FromCard<CGSBall>()];
+
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
@@ -46,46 +49,23 @@ public sealed class CGSLendReserve : CGSStaminaCard
         [
             new DynamicVar(CGSStamina.Uses, 4m),
             new DynamicVar(CGSStamina.MaxUses, 4m),
-            ModCardVars.Cards(1),
-            new DynamicVar("Restore", 1m)
+            new DynamicVar("HandLimitBonus", 2m)
         ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var firstChoice = await CardSelectCmd.FromHand(
-            choiceContext, 
-            Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1),
-            card => card != this && CGSStamina.HasAtLeast(card, 1),
-            this
-            );
-        
-        if (firstChoice.FirstOrDefault() is not { } first)
-        {
+        if (CombatState is not { } combat)
             return;
-        }
-        
-        var secondChoice = await CardSelectCmd.FromHand(
-            choiceContext, 
-            Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1),
-            card => card != this && card != first && CGSStamina.HasStamina(card),
-            this
-            );
-        
-        if (secondChoice.FirstOrDefault() is not { } second)
-        {
-            return;
-        }
-        
-        await CGSStamina.SpendAndRestIfDepleted(first, 1m);
-        CGSStamina.Restore(second, DynamicVars["Restore"].BaseValue);
-        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
-    }
 
-    protected override void OnUpgrade()
-    {
-        UpgradeStamina(1m);
-        DynamicVars["Restore"].UpgradeValueBy(1m);
+        await PowerCmd.Apply<CGSLendReservePower>(
+            choiceContext, Owner.Creature, DynamicVars["HandLimitBonus"].BaseValue, Owner.Creature, this);
+
+        var hand = PileType.Hand.GetPile(Owner);
+        int emptySlots = MaxHandSizeCalculator.Calculate(Owner) - hand.Cards.Count;
+        if (emptySlots <= 0)
+            return;
+
+        var balls = Enumerable.Range(0, emptySlots).Select(_ => combat.CreateCard<CGSBall>(Owner)).ToArray();
+        await CardPileCmd.AddGeneratedCardsToCombat(balls, PileType.Hand, Owner);
     }
 }

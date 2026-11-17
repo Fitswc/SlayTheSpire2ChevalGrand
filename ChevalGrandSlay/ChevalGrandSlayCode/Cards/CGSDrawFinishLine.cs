@@ -18,7 +18,7 @@ namespace ChevalGrandSlay.Cards;
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSDrawFinishLine : CGSStaminaCard
 {
-    // 基础耗能。
+    // X 费卡由 HasEnergyCostX 决定耗能。
     private const int BaseEnergyCost = 0;
 
     // 卡牌类型。
@@ -43,6 +43,7 @@ public sealed class CGSDrawFinishLine : CGSStaminaCard
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
+    protected override bool HasEnergyCostX => true;
 
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
@@ -56,22 +57,24 @@ public sealed class CGSDrawFinishLine : CGSStaminaCard
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var selected = await CardSelectCmd.FromHand(choiceContext, Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1),
-            selectedCard => selectedCard != this && CGSStamina.HasAtLeast(selectedCard, 1), this);
-        if (selected.FirstOrDefault() is not { } card)
+        var candidates = Entry.CGSFatePile.GetPile(Owner).Cards.Where(CGSStamina.HasStamina).ToList();
+        int count = Math.Min(ResolveEnergyXValue(), candidates.Count);
+        if (count > 0)
         {
-            return;
+            var selected = await CardSelectCmd.FromSimpleGrid(
+                choiceContext, candidates, Owner, new CardSelectorPrefs(SelectionScreenPrompt, count));
+            foreach (var card in selected)
+            {
+                CGSStamina.Restore(card, Math.Ceiling(card.DynamicVars[CGSStamina.MaxUses].BaseValue / 2m));
+                await CardPileCmd.Add(card, PileType.Draw);
+            }
         }
-        
-        await CGSStamina.DepleteAndRest(card);
-        await PlayerCmd.GainEnergy(4m, Owner);
+
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }

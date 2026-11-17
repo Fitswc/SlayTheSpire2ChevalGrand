@@ -52,23 +52,24 @@ public sealed class CGSGuardTheFinish : CGSStaminaCard
         [
             new DynamicVar(CGSStamina.Uses, 4m),
             new DynamicVar(CGSStamina.MaxUses, 4m),
-            ModCardVars.Block(9m, ValueProp.Move),
+            ModCardVars.Block(12m, ValueProp.Move),
             new DynamicVar("BonusBlock", 4m)
         ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        if (Entry.CGSFatePile.GetPile(Owner).Cards.Count >= 2)
+        int restingCardCount = Entry.CGSFatePile.GetPile(Owner).Cards.Count;
+        if (restingCardCount > 0)
         {
-            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars["BonusBlock"].BaseValue, ValueProp.Move, cardPlay);
+            decimal bonusBlock = DynamicVars["BonusBlock"].BaseValue * restingCardCount;
+            await CreatureCmd.GainBlock(Owner.Creature, bonusBlock, ValueProp.Move, cardPlay);
         }
     }
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
-        DynamicVars.Block.UpgradeValueBy(3m);
+        DynamicVars.Block.UpgradeValueBy(4m);
         DynamicVars["BonusBlock"].UpgradeValueBy(2m);
     }
 }

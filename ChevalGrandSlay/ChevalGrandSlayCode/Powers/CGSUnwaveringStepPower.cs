@@ -21,20 +21,17 @@ public sealed class CGSUnwaveringStepPower : ModPowerTemplate
         BigIconPath: $"{Entry.ResPath}/images/powers/CGSUnwaveringStep.png"
     );
 
-    private int _triggeredTurn = -1;
     private CardPlay? _pendingPlay;
 
     public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
         var player = Owner.Player;
         var card = cardPlay.Card;
-        if (player?.PlayerCombatState is { } state && CombatState.CurrentSide == CombatSide.Player &&
+        if (player?.PlayerCombatState is not null && CombatState.CurrentSide == CombatSide.Player &&
             card.Owner == player && card.Type == CardType.Attack && !card.EnergyCost.CostsX &&
-            card.EnergyCost.GetWithModifiers(CostModifiers.None) >= 1 &&
-            _triggeredTurn != state.TurnNumber)
+            card.EnergyCost.GetWithModifiers(CostModifiers.None) >= 1)
         {
-            // 先占用本回合的触发机会，等这张攻击牌结算完毕再获得格挡。
-            _triggeredTurn = state.TurnNumber;
+            // 等这张攻击牌结算完毕再获得格挡。
             _pendingPlay = cardPlay;
         }
         return Task.CompletedTask;

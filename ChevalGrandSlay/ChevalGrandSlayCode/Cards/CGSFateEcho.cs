@@ -1,13 +1,11 @@
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -19,7 +17,7 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSFateEcho : CGSStaminaCard
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 1;
+    private const int BaseEnergyCost = 2;
 
     // 卡牌类型。
     private const CardType CardKind = CardType.Skill;
@@ -51,29 +49,21 @@ public sealed class CGSFateEcho : CGSStaminaCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar(CGSStamina.Uses, 4m),
-        new DynamicVar(CGSStamina.MaxUses, 4m),
-        ModCardVars.Cards(1)
+        new DynamicVar(CGSStamina.MaxUses, 4m)
     ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var candidates = Entry.CGSFatePile.GetPile(Owner).Cards.Where(card => CGSStamina.HasStamina(card)).ToList();
-        if (candidates.Count > 0)
-        {
-            var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, Owner,
-                new CardSelectorPrefs(SelectionScreenPrompt, 1));
-            if (selected.FirstOrDefault() is { } card)
-            {
-                CGSStamina.Restore(card, 1m);
-                await CardPileCmd.Add(card, PileType.Draw);
-            }
-        }
-        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
-    }
+        var restingCards = Entry.CGSFatePile.GetPile(Owner).Cards.ToArray();
+        if (restingCards.Length == 0)
+            return;
 
-    protected override void OnUpgrade()
-    {
-        UpgradeStamina(1m);
-        DynamicVars.Cards.UpgradeValueBy(1m);
+        foreach (var card in restingCards)
+        {
+            if (CGSStamina.HasStamina(card))
+                CGSStamina.RestoreFull(card);
+        }
+
+        await CardPileCmd.Add(restingCards, PileType.Draw);
     }
 }

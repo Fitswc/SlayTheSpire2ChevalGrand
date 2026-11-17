@@ -14,8 +14,6 @@ namespace ChevalGrandSlay.Powers;
 [RegisterPower]
 public sealed class CGSFullBlockCounterPower : ModPowerTemplate
 {
-    private int _charges = 1;
-    public void SetCharges(int charges) => _charges = charges;
     // 类型，Buff或Debuff
     public override PowerType Type => PowerType.Buff;
 
@@ -51,8 +49,6 @@ public sealed class CGSFullBlockCounterPower : ModPowerTemplate
         var enemies = CombatState.HittableEnemies.ToArray();
 
         var damage = Amount;
-        _charges--;
-        if (_charges <= 0) await PowerCmd.Remove(this);
 
         foreach (var enemy in enemies)
         {

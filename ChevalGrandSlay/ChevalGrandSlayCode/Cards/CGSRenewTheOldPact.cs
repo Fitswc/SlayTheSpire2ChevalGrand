@@ -1,12 +1,11 @@
 using ChevalGrandSlay.Characters;
-using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
-using STS2RitsuLib.Keywords;
+using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -32,8 +31,7 @@ public sealed class CGSRenewTheOldPact : ModCardTemplate
     private const bool ShowInCardLibrary = true;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile),
-        ModKeywordRegistry.CreateHoverTip(CGSKeywords.Stamina)
+        HoverTipFactory.FromPower<StrengthPower>()
     ];
 
     public override CardAssetProfile AssetProfile => new(

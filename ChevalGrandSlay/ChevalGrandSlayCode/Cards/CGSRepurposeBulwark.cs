@@ -22,7 +22,7 @@ public sealed class CGSRepurposeBulwark : CGSStaminaCard
     private const CardType CardKind = CardType.Skill;
 
     // 卡牌稀有度。
-    private const CardRarity CardRarityValue = CardRarity.Common;
+    private const CardRarity CardRarityValue = CardRarity.Uncommon;
 
     // 目标类型（AnyEnemy 表示任意敌人）。
     private const TargetType CardTarget = TargetType.AnyEnemy;
@@ -42,8 +42,8 @@ public sealed class CGSRepurposeBulwark : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar(CGSStamina.Uses, 6m),
-        new DynamicVar(CGSStamina.MaxUses, 6m),
+        new DynamicVar(CGSStamina.Uses, 4m),
+        new DynamicVar(CGSStamina.MaxUses, 4m),
         new DynamicVar("BlockLimit", 20m)
     ];
 
@@ -60,14 +60,12 @@ public sealed class CGSRepurposeBulwark : CGSStaminaCard
         else
         {
             await CreatureCmd.Damage(choiceContext, cardPlay.Target, 12m, ValueProp.Unblockable, Owner.Creature, this, cardPlay);
-            await CreatureCmd.GainBlock(Owner.Creature, 12m, ValueProp.Move, cardPlay);
         }
 
     }
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars["BlockLimit"].UpgradeValueBy(4m);
     }
 }

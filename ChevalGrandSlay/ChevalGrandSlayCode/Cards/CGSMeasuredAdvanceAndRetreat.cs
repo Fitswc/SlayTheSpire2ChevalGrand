@@ -58,7 +58,6 @@ public sealed class CGSMeasuredAdvanceAndRetreat : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars["LossCap"].UpgradeValueBy(-4m);
     }
 }

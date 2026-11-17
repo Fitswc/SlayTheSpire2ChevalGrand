@@ -1,17 +1,16 @@
 using ChevalGrandSlay.Characters;
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization;
-using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
 // 卡牌：多吃一口
-//Verify
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSBalanceTheWeight : ModCardTemplate
 {
@@ -38,19 +37,9 @@ public sealed class CGSBalanceTheWeight : ModCardTemplate
         CardKeyword.Exhaust
     ];
     
-    //protected override bool IsPlayable => base.IsPlayable && Owner is not null &&
-    //    PileType.Hand.GetPile(Owner).Cards.Count(card => card != this) >= 2 &&
-    //    PileType.Hand.GetPile(Owner).Cards.Any(CanDiscount);
+    protected override IEnumerable<DynamicVar> CanonicalVars => [ModCardVars.Energy(2)];
 
-    protected override void AddExtraArgsToDescription(LocString description)
-    {
-        base.AddExtraArgsToDescription(description);
-
-        var effect = new LocString("cards",
-            $"{Id.Entry}.{(IsUpgraded ? "upgradedEffect" : "baseEffect")}");
-        DynamicVars.AddTo(effect);
-        description.Add("Effect", effect);
-    }
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [HoverTipFactory.FromCard<CGSWeightGain>()];
 
     public CGSBalanceTheWeight() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
@@ -58,51 +47,16 @@ public sealed class CGSBalanceTheWeight : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var discounted = (await CardSelectCmd.FromHand(choiceContext, Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1), CanDiscount, this)).FirstOrDefault();
-        
-        if (discounted is null)
-        {
-            return;
-        }
-        
-        var increased = (await CardSelectCmd.FromHand(choiceContext, Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1), card => card != this && card != discounted, this))
-            .FirstOrDefault();
-        
-        if (increased is null)
-        {
-            return;
-        }
+        var combatState = CombatState ?? throw new InvalidOperationException("The card requires an active combat.");
+        await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
 
-        int amount = 1;
-        
-        if (IsUpgraded)
-        {
-            // 选中0、1或2张牌，选中张数就是本次费用转移量。
-            var amountChoice = await CardSelectCmd.FromSimpleGrid(
-                choiceContext,
-                new[] { discounted, increased }, 
-                Owner,
-                new CardSelectorPrefs(SelectionScreenPrompt, 0, 2)
-                );
-            
-            amount = amountChoice.Count();
-        }
-        
-        amount = Math.Min(amount, discounted.EnergyCost.GetWithModifiers(CostModifiers.All));
-        
-        if (amount == 0)
-        {
-            return;
-        }
-        
-        discounted.EnergyCost.AddThisTurn(-amount);
-        increased.EnergyCost.AddThisTurn(amount);
+        var weightGain = combatState.CreateCard<CGSWeightGain>(Owner);
+        await CardPileCmd.AddGeneratedCardToCombat(weightGain, PileType.Hand, Owner);
     }
 
-    protected override void OnUpgrade() { }
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Energy.UpgradeValueBy(1m);
+    }
 
-    private bool CanDiscount(CardModel card) => card != this && !card.EnergyCost.CostsX &&
-        card.EnergyCost.GetWithModifiers(CostModifiers.All) > 0;
 }

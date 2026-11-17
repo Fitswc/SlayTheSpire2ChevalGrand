@@ -6,12 +6,10 @@ namespace ChevalGrandSlay.Mechanics;
 
 internal static class CGSRandomRestRecovery
 {
-    public static async Task Recover(CardModel source, int count, decimal restore, CardType? type = null)
+    public static async Task RecoverFully(CardModel source, int count)
     {
         var candidates = Entry.CGSFatePile.GetPile(source.Owner).Cards
-            .Where(card => card != source &&
-                CGSStamina.HasStamina(card) &&
-                (type is null || card.Type == type))
+            .Where(card => card != source && CGSStamina.HasStamina(card))
             .ToList();
         var selected = new List<CardModel>();
 
@@ -30,7 +28,7 @@ internal static class CGSRandomRestRecovery
             if (card.Pile?.Type != Entry.CGSFatePile)
                 continue;
 
-            CGSStamina.Restore(card, restore);
+            CGSStamina.RestoreFull(card);
             await CardPileCmd.Add(card, PileType.Hand);
         }
     }

@@ -52,7 +52,7 @@ public sealed class CGSReorganizeThePace : CGSStaminaCard
     [
         new DynamicVar(CGSStamina.Uses, 6m),
         new DynamicVar(CGSStamina.MaxUses, 6m),
-        ModCardVars.Block(15m, ValueProp.Move),
+        ModCardVars.Block(20m, ValueProp.Move),
     ];
 
     // 打出时的效果逻辑，这里是获得格挡。
@@ -64,7 +64,6 @@ public sealed class CGSReorganizeThePace : CGSStaminaCard
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
-        DynamicVars.Block.UpgradeValueBy(3m);
+        DynamicVars.Block.UpgradeValueBy(4m);
     }
 }

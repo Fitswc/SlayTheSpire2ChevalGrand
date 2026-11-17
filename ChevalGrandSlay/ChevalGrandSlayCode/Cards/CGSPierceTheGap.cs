@@ -44,7 +44,7 @@ public sealed class CGSPierceTheGap : CGSStaminaCard
         [
             new DynamicVar(CGSStamina.Uses, 6m),
             new DynamicVar(CGSStamina.MaxUses, 6m),
-            ModCardVars.Damage(8m, ValueProp.Move | ValueProp.Unblockable)
+            ModCardVars.Damage(10m, ValueProp.Move | ValueProp.Unblockable)
         ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -58,7 +58,6 @@ public sealed class CGSPierceTheGap : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars.Damage.UpgradeValueBy(3m);
     }
 }

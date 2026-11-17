@@ -45,7 +45,7 @@ public sealed class CGSOldRoadWarmth : ModCardTemplate
     
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            ModCardVars.Block(4m, ValueProp.Move)
+            ModCardVars.Block(12m, ValueProp.Move)
         ];
 
     public CGSOldRoadWarmth() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)

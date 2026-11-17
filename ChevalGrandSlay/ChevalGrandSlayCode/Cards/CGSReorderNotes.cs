@@ -35,10 +35,12 @@ public sealed class CGSReorderNotes : ModCardTemplate
             new DynamicVar("HandSize", 5m)
         ];
     
+    /*
     public override IEnumerable<CardKeyword> CanonicalKeywords => 
     [
         CardKeyword.Exhaust
     ];
+    */
 
     public CGSReorderNotes() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {

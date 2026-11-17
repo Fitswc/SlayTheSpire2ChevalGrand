@@ -40,7 +40,7 @@ public sealed class CGSNeverStepBehind : CGSStaminaCard
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<WeakPower>()
+        HoverTipFactory.FromPower<VulnerablePower>()
     ];
 
     public override bool GainsBlock => true;
@@ -58,8 +58,8 @@ public sealed class CGSNeverStepBehind : CGSStaminaCard
     [
         new DynamicVar(CGSStamina.Uses, 2m),
         new DynamicVar(CGSStamina.MaxUses, 2m),
-        ModCardVars.Block(20m, ValueProp.Move),
-        ModCardVars.Power<WeakPower>(2m)
+        ModCardVars.Block(24m, ValueProp.Move),
+        ModCardVars.Power<VulnerablePower>(4m)
     ];
 
     // 打出时的效果逻辑，这里是获得格挡。
@@ -70,10 +70,10 @@ public sealed class CGSNeverStepBehind : CGSStaminaCard
         await CreatureCmd.GainBlock(
             Owner.Creature, DynamicVars.Block, cardPlay);
 
-        await PowerCmd.Apply<WeakPower>(
+        await PowerCmd.Apply<VulnerablePower>(
             choiceContext,
             combatState.HittableEnemies,
-            DynamicVars.Weak.BaseValue,
+            DynamicVars.Vulnerable.BaseValue,
             Owner.Creature,
             this);
     }
@@ -82,8 +82,6 @@ public sealed class CGSNeverStepBehind : CGSStaminaCard
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(6m);
-        DynamicVars.Weak.UpgradeValueBy(2m);
-        UpgradeStamina(1m);
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars.Vulnerable.UpgradeValueBy(2m);
     }
 }

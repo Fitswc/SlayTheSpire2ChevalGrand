@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Combat.HandSize;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -17,7 +18,7 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSAimForTheFinish : CGSStaminaCard
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 1;
+    private const int BaseEnergyCost = 0;
 
     // 卡牌类型。
     private const CardType CardKind = CardType.Skill;
@@ -44,7 +45,8 @@ public sealed class CGSAimForTheFinish : CGSStaminaCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar(CGSStamina.Uses, 4m),
-        new DynamicVar(CGSStamina.MaxUses, 4m)
+        new DynamicVar(CGSStamina.MaxUses, 4m),
+        new DynamicVar("SelectionCount", 1m)
     ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -52,28 +54,24 @@ public sealed class CGSAimForTheFinish : CGSStaminaCard
         var candidates = PileType.Draw.GetPile(Owner).Cards
             .Concat(PileType.Discard.GetPile(Owner).Cards).ToList();
 
-        if (candidates.Count == 0)
-        {
+        var hand = PileType.Hand.GetPile(Owner);
+        int availableSlots = MaxHandSizeCalculator.Calculate(Owner) - hand.Cards.Count;
+        int selectionCount = Math.Min(DynamicVars["SelectionCount"].IntValue, Math.Min(candidates.Count, availableSlots));
+        if (selectionCount <= 0)
             return;
-        }
-        
+
         var selected = await CardSelectCmd.FromSimpleGrid(
             choiceContext,
             candidates,
             Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1)
-            );
-        
+            new CardSelectorPrefs(SelectionScreenPrompt, selectionCount));
+
         foreach (var card in selected)
         {
-            await CardPileCmd.Add(card, PileType.Hand);
-            card.EnergyCost.AddThisTurn(-1);
+            if ((await CardPileCmd.Add(card, PileType.Hand)).success && card.Pile == hand)
+                card.EnergyCost.AddThisTurn(-1);
         }
     }
 
-    protected override void OnUpgrade()
-    {
-        UpgradeStamina(1m);
-        EnergyCost.UpgradeBy(-1);
-    }
+    protected override void OnUpgrade() => DynamicVars["SelectionCount"].UpgradeValueBy(1m);
 }

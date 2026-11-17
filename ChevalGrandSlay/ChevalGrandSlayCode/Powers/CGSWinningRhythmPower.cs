@@ -9,12 +9,10 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
-// 能力：快速进击
+// 能力：身手敏捷
 [RegisterPower]
 public sealed class CGSWinningRhythmPower : ModPowerTemplate
 {
-    private int _triggeredTurn = -1;
-    private int _timesThisTurn;
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
@@ -26,23 +24,12 @@ public sealed class CGSWinningRhythmPower : ModPowerTemplate
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var player = Owner.Player;
-        if (player?.PlayerCombatState is not { } state ||
+        if (player?.PlayerCombatState is null ||
             CombatState.CurrentSide != CombatSide.Player ||
-            cardPlay.Card.Owner != player || cardPlay.Card.Type != CardType.Attack)
+            cardPlay.Card.Owner != player || cardPlay.Card.Type != CardType.Skill)
             return;
 
-        if (_triggeredTurn != state.TurnNumber)
-        {
-            _triggeredTurn = state.TurnNumber;
-            _timesThisTurn = 0;
-        }
-        if (_timesThisTurn >= 3) return;
-        _timesThisTurn++;
         Flash();
-        foreach (var enemy in CombatState.HittableEnemies.ToArray())
-        {
-            if (enemy.IsAlive)
-                await CreatureCmd.Damage(choiceContext, enemy, Amount, ValueProp.Unpowered, Owner, null, null);
-        }
+        await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Move, null);
     }
 }

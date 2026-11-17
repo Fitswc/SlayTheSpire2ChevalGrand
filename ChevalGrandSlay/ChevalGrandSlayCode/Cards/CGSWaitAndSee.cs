@@ -1,6 +1,4 @@
 using ChevalGrandSlay.Characters;
-using ChevalGrandSlay.Keywords;
-using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -16,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 // 卡牌：静候咬钩
 
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSWaitAndSee : CGSStaminaCard
+public sealed class CGSWaitAndSee : ModCardTemplate
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -36,16 +34,12 @@ public sealed class CGSWaitAndSee : CGSStaminaCard
     public CGSWaitAndSee() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
-
     public override bool GainsBlock => true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar(CGSStamina.Uses, 4m),
-        new DynamicVar(CGSStamina.MaxUses, 4m),
         ModCardVars.Cards(2),
-        ModCardVars.Block(7m, ValueProp.Move),
+        ModCardVars.Block(12m, ValueProp.Move),
     ];
 
     // 卡图资源。
@@ -58,7 +52,7 @@ public sealed class CGSWaitAndSee : CGSStaminaCard
 
     // 打出时的效果逻辑。
     // 尖塔2使用了 async 和 await 来控制效果逻辑顺序执行，和尖塔1的 action 类似。
-    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
@@ -87,7 +81,6 @@ public sealed class CGSWaitAndSee : CGSStaminaCard
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars.Block.UpgradeValueBy(2m);
     }
 }

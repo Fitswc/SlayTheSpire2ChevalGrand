@@ -55,7 +55,7 @@ public sealed class CGSCushionLanding : CGSStaminaCard
         [
             new DynamicVar(CGSStamina.Uses, 6m),
             new DynamicVar(CGSStamina.MaxUses, 6m),
-            ModCardVars.Block(6m, ValueProp.Move)
+            ModCardVars.Block(8m, ValueProp.Move)
         ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -71,7 +71,6 @@ public sealed class CGSCushionLanding : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars.Block.UpgradeValueBy(3m);
     }
 

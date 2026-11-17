@@ -45,7 +45,7 @@ public sealed class CGSForwardAStep : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         ModCardVars.Damage(10m, ValueProp.Move),
-        ModCardVars.Block(6m, ValueProp.Move),
+        ModCardVars.Block(8m, ValueProp.Move),
     ];
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Strike };

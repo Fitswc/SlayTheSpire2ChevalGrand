@@ -9,9 +9,11 @@ using STS2RitsuLib.Models.Capabilities;
 namespace ChevalGrandSlay.Mechanics;
 
 [RegisterModelCapability]
-public sealed class CGSConsumeUse : ModelCapability, ICardPlayResultContributor
+public sealed class CGSConsumeUse : CardCapability, ICardPlayResultContributor
 {
     private static readonly ConditionalWeakTable<CardModel, PlayDecision> Decisions = new();
+
+    protected override void OnOwnerCardUpgraded(CardModel card) => CGSStamina.RestoreAfterUpgrade(card);
 
     public PileType? GetResultPileTypeForCardPlay(CardModel card)
     {

@@ -1,4 +1,6 @@
 using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Keywords;
+using ChevalGrandSlay.Mechanics;
 using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -16,7 +18,7 @@ namespace ChevalGrandSlay.Cards;
 // 卡牌：好胜的内心
 
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSNoConcession : ModCardTemplate
+public sealed class CGSNoConcession : CGSStaminaCard
 {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<CGSFullBlockCounterPower>()
@@ -38,6 +40,7 @@ public sealed class CGSNoConcession : ModCardTemplate
     private const bool ShowInCardLibrary = true;
 
     public override bool GainsBlock => true;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     // 卡图资源。
     // 如果你按这行代码写，文件名就对应 ChevalGrandSlay/images/cards/ChevalGrandSlayReorganizeThePace.png。
@@ -51,8 +54,9 @@ public sealed class CGSNoConcession : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         ModCardVars.Block(6m, ValueProp.Move),
-        new DynamicVar("CounterDamage", 9m), 
-        new DynamicVar("CounterCharges", 1m)
+        new DynamicVar("CounterDamage", 9m),
+        new DynamicVar(CGSStamina.Uses, 4m),
+        new DynamicVar(CGSStamina.MaxUses, 4m)
     ];
 
     public CGSNoConcession() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
@@ -60,7 +64,7 @@ public sealed class CGSNoConcession : ModCardTemplate
     }
 
     // 打出时的效果逻辑，这里是获得格挡。
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(
             Owner.Creature, DynamicVars.Block, cardPlay);
@@ -71,9 +75,6 @@ public sealed class CGSNoConcession : ModCardTemplate
             DynamicVars["CounterDamage"].BaseValue,
             Owner.Creature,
             this);
-        
-        Owner.Creature.Powers.OfType<CGSFullBlockCounterPower>().FirstOrDefault()
-            ?.SetCharges(DynamicVars["CounterCharges"].IntValue);
     }
 
     // 升级后的效果逻辑。
@@ -81,6 +82,5 @@ public sealed class CGSNoConcession : ModCardTemplate
     {
         DynamicVars.Block.UpgradeValueBy(3m);
         DynamicVars["CounterDamage"].UpgradeValueBy(3m);
-        DynamicVars["CounterCharges"].UpgradeValueBy(1m);
     }
 }

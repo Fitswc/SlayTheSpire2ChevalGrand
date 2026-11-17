@@ -1,7 +1,6 @@
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -45,26 +44,18 @@ public sealed class CGSHandoverMoment : CGSStaminaCard
         [
             new DynamicVar(CGSStamina.Uses, 6m),
             new DynamicVar(CGSStamina.MaxUses, 6m),
-            ModCardVars.Cards(2)
+            ModCardVars.Cards(2),
+            ModCardVars.Energy(2)
         ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var selected = await CardSelectCmd.FromHand(choiceContext, Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1),
-            selectedCard => selectedCard != this && CGSStamina.HasAtLeast(selectedCard, 2), this);
-        if (selected.FirstOrDefault() is not { } card)
-        {
-            return;
-        }
-        
-        await CGSStamina.SpendAndRestIfDepleted(card, 1m);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
+        await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
     }
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }

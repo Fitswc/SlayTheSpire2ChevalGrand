@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 卡牌：回垒记号
+// 卡牌：回垒的讯号
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSReturnMarker : CGSStaminaCard
 {
@@ -50,34 +50,17 @@ public sealed class CGSReturnMarker : CGSStaminaCard
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var cardPref = new CardSelectorPrefs(SelectionScreenPrompt, 1);
-        
         var selected = await CardSelectCmd.FromHand(
-            choiceContext, 
-            Owner,
-            cardPref,
-            selectedCard => selectedCard != this && CGSStamina.HasAtLeast(selectedCard, 2),
-            this
-            );
+            choiceContext, Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1), filter: null, source: this);
 
-        if (selected.FirstOrDefault() is not { } card)
-        {
-            return;
-        }
-            
-        CGSStamina.Spend(card, 1m);
-        
-        int discount = Math.Min(card.EnergyCost.GetWithModifiers(CostModifiers.All), DynamicVars["Discount"].IntValue);
-        
-        card.EnergyCost.AddThisTurn(-discount);
-        
+        if (selected.FirstOrDefault() is { } card)
+            card.EnergyCost.AddThisCombat(-DynamicVars["Discount"].IntValue);
+
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
-        
     }
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars["Discount"].UpgradeValueBy(1m);
     }
 }

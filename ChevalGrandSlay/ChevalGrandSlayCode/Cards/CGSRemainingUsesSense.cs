@@ -43,7 +43,7 @@ public sealed class CGSRemainingUsesSense : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("PowerStacks", 6m)
+        new DynamicVar("PowerStacks", 14m)
     ];
 
     public CGSRemainingUsesSense() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)

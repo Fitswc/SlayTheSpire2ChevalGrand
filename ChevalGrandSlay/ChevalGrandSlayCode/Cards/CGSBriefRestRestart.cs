@@ -69,24 +69,20 @@ public sealed class CGSBriefRestRestart : CGSStaminaCard
         }
         
         var selected = await CardSelectCmd.FromSimpleGrid(
-            choiceContext, 
-            candidates, 
+            choiceContext,
+            candidates,
             Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 0, 1)
-            );
-        
-        if (selected.FirstOrDefault() is not { } card)
+            new CardSelectorPrefs(SelectionScreenPrompt, 0, Math.Min(2, candidates.Count)));
+
+        foreach (var card in selected)
         {
-            return;
+            CGSStamina.RestoreFull(card);
+            await CardPileCmd.Add(card, PileType.Draw);
         }
-        
-        CGSStamina.Restore(card, 1m);
-        await CardPileCmd.Add(card, PileType.Discard);
     }
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars.Block.UpgradeValueBy(3m);
     }
 }

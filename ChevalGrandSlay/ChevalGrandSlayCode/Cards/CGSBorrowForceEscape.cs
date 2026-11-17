@@ -42,7 +42,7 @@ public sealed class CGSBorrowForceEscape : ModCardTemplate
     
     protected override IEnumerable<DynamicVar> CanonicalVars => 
     [
-        new DynamicVar("Reduction", 1m)
+        new DynamicVar("Reduction", 2m)
     ];
     
     public CGSBorrowForceEscape() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
@@ -57,6 +57,6 @@ public sealed class CGSBorrowForceEscape : ModCardTemplate
     
     protected override void OnUpgrade()
     {
-        DynamicVars["Reduction"].UpgradeValueBy(1m);
+        DynamicVars["Reduction"].UpgradeValueBy(2m);
     }
 }

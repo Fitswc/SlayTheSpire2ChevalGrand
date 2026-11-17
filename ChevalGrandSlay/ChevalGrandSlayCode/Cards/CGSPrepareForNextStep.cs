@@ -41,8 +41,8 @@ public sealed class CGSPrepareForNextStep : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        ModCardVars.Block(6m, ValueProp.Move),
-        ModCardVars.Block("BlockNextTurn", 10m, ValueProp.Move)
+        ModCardVars.Block(14m, ValueProp.Move),
+        ModCardVars.Block("BlockNextTurn", 16m, ValueProp.Move)
     ];
 
     // 卡图资源。

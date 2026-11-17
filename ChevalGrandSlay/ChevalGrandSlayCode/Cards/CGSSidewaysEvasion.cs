@@ -45,7 +45,7 @@ public sealed class CGSSidewaysEvasion : CGSStaminaCard
         [
             new DynamicVar(CGSStamina.Uses, 6m),
             new DynamicVar(CGSStamina.MaxUses, 6m),
-            ModCardVars.Block(5m, ValueProp.Move)
+            ModCardVars.Block(10m, ValueProp.Move)
         ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -56,13 +56,12 @@ public sealed class CGSSidewaysEvasion : CGSStaminaCard
         
         if (!hasLimitedCard)
         {
-            await CardPileCmd.Draw(choiceContext, 1m, Owner);
+            await CardPileCmd.Draw(choiceContext, 2m, Owner);
         }
     }
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars.Block.UpgradeValueBy(3m);
     }
 }

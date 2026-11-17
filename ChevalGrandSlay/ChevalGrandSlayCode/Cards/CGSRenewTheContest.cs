@@ -55,16 +55,17 @@ public sealed class CGSRenewTheContest : CGSStaminaCard
     [
         new DynamicVar(CGSStamina.Uses, 2m),
         new DynamicVar(CGSStamina.MaxUses, 2m),
-        new DynamicVar("Restore", 1m),
-        new DynamicVar("BonusDamage", 4m)
+        new DynamicVar("BonusDamage", 16m)
     ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, GetCandidates(), Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1));
-        if (selected.FirstOrDefault() is not { } card) return;
-        CGSStamina.Restore(card, DynamicVars["Restore"].BaseValue);
+        if (selected.FirstOrDefault() is not { } card) 
+            return;
+        CGSStamina.RestoreFull(card);
+        
         if (!(await CardPileCmd.Add(card, PileType.Hand)).success)
             return;
 
@@ -77,8 +78,7 @@ public sealed class CGSRenewTheContest : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
-        DynamicVars["Restore"].UpgradeValueBy(1m);
+        DynamicVars["BonusDamage"].UpgradeValueBy(4m);
     }
 
     private List<CardModel> GetCandidates()

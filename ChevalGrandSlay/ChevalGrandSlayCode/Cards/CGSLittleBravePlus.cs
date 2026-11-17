@@ -40,8 +40,8 @@ public sealed class CGSLittleBravePlus: ModCardTemplate
     // 添加一个 DamageVar 意为指定卡牌的基础伤害是多少；它会自动绑定到本地化里的 {Damage:diff()} 占位符。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        ModCardVars.Damage(16m, ValueProp.Move),
-        ModCardVars.Heal(16m)
+        ModCardVars.Damage(36m),
+        ModCardVars.Block(24m)
     ];
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Strike };
@@ -61,14 +61,14 @@ public sealed class CGSLittleBravePlus: ModCardTemplate
             .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
-        
-        await CreatureCmd.Heal(Owner.Creature, DynamicVars.Heal.BaseValue, false);
+
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
     }
 
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2);
-        DynamicVars.Heal.UpgradeValueBy(2);
+        DynamicVars.Damage.UpgradeValueBy(2m);
+        DynamicVars.Block.UpgradeValueBy(2m);
     }
 }

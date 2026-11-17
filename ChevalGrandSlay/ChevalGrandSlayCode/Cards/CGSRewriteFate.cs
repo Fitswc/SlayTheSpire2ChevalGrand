@@ -13,7 +13,8 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 卡牌：重续青空约
+// 卡牌：青空下的约定
+//Verify
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSRewriteFate : CGSStaminaCard
 {
@@ -58,17 +59,18 @@ public sealed class CGSRewriteFate : CGSStaminaCard
         var candidates = Entry.CGSFatePile.GetPile(Owner).Cards.Where(card => CGSStamina.HasStamina(card)).ToList();
         if (candidates.Count == 0) return;
         var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1, Math.Min(2, candidates.Count)));
+            new CardSelectorPrefs(SelectionScreenPrompt, 1, Math.Min(4, candidates.Count)));
         foreach (var card in selected)
         {
-            CGSStamina.Restore(card, 1m);
+            CGSStamina.RestoreFull(card);
+            await CardCmd.AutoPlay(choiceContext, card, null);
+            CGSStamina.RestoreFull(card);
             await CardPileCmd.Add(card, PileType.Discard);
         }
     }
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         EnergyCost.UpgradeBy(-1);
     }
 }

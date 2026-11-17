@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSPrepareEarly : ModCardTemplate
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 1;
+    private const int BaseEnergyCost = 0;
 
     // 卡牌类型。
     private const CardType CardKind = CardType.Skill;

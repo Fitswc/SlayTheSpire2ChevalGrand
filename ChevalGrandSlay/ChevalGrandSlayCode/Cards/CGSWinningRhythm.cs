@@ -9,7 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 卡牌：快速进击
+// 卡牌：身手敏捷
 
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSWinningRhythm : ModCardTemplate
@@ -29,14 +29,14 @@ public sealed class CGSWinningRhythm : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
-    private const string PowerDamageVarName = "PowerDamage";
+    private const string BlockVarName = "Block";
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new DynamicVar(PowerDamageVarName, 3m)
+            new DynamicVar(BlockVarName, 10m)
         ];
 
     public CGSWinningRhythm() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
@@ -48,13 +48,13 @@ public sealed class CGSWinningRhythm : ModCardTemplate
         await PowerCmd.Apply<CGSWinningRhythmPower>(
             choiceContext,
             Owner.Creature,
-            DynamicVars[PowerDamageVarName].BaseValue,
+            DynamicVars[BlockVarName].BaseValue,
             Owner.Creature,
             this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars[PowerDamageVarName].UpgradeValueBy(1m);
+        EnergyCost.UpgradeBy(-1);
     }
 }

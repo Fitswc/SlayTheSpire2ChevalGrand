@@ -21,7 +21,7 @@ public sealed class CGSSportsDrinkSupply : ModCardTemplate
     private const CardType CardKind = CardType.Skill;
 
     // 卡牌稀有度。
-    private const CardRarity CardRarityValue = CardRarity.Rare;
+    private const CardRarity CardRarityValue = CardRarity.Uncommon;
 
     // 目标类型（Self 表示自己）。
     private const TargetType CardTarget = TargetType.Self;

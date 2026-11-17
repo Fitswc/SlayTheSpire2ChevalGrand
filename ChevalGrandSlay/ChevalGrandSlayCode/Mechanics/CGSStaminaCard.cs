@@ -17,10 +17,4 @@ public abstract class CGSStaminaCard(int energyCost, CardType type, CardRarity r
     }
 
     protected abstract Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay);
-
-    protected void UpgradeStamina(decimal amount)
-    {
-        DynamicVars[CGSStamina.Uses].UpgradeValueBy(amount);
-        DynamicVars[CGSStamina.MaxUses].UpgradeValueBy(amount);
-    }
 }

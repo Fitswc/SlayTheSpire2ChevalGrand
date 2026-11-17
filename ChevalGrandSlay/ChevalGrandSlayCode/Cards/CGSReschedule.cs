@@ -14,7 +14,7 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSReschedule : ModCardTemplate
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 1;
+    private const int BaseEnergyCost = 0;
 
     // 卡牌类型。
     private const CardType CardKind = CardType.Skill;
@@ -33,7 +33,7 @@ public sealed class CGSReschedule : ModCardTemplate
     
     protected override IEnumerable<DynamicVar> CanonicalVars => 
     [
-        ModCardVars.Cards(2)
+        ModCardVars.Cards(3)
     ];
     
     public override IEnumerable<CardKeyword> CanonicalKeywords => 

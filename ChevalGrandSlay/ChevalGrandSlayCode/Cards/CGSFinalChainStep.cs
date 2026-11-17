@@ -43,7 +43,7 @@ public sealed class CGSFinalChainStep : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        ModCardVars.Damage(6m, ValueProp.Move),
+        ModCardVars.Damage(16m, ValueProp.Move),
         new DynamicVar(CGSStamina.Uses, 2m),
         new DynamicVar(CGSStamina.MaxUses, 2m)
     ];
@@ -51,7 +51,7 @@ public sealed class CGSFinalChainStep : CGSStaminaCard
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        int hitCount = CGSAttackChain.CountAttacksPlayedThisTurn(Owner, CombatState, cardPlay) >= 3 ? 4 : 2;
+        int hitCount = CGSAttackChain.CountAttacksPlayedThisTurn(Owner, CombatState, cardPlay) >= 1 ? 4 : 2;
         for (int i = 0; i < hitCount; i++)
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
@@ -63,7 +63,6 @@ public sealed class CGSFinalChainStep : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars.Damage.UpgradeValueBy(2m);
         EnergyCost.UpgradeBy(-1);
     }

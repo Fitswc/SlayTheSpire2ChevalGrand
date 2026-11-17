@@ -78,7 +78,6 @@ public sealed class CGSReserveAStep : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars.Block.UpgradeValueBy(2m);
     }
 }

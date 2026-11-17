@@ -45,8 +45,8 @@ public sealed class CGSWinningLine : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        ModCardVars.Damage(10m, ValueProp.Move),
-        new DynamicVar(BonusDamageVarName, 4m),
+        ModCardVars.Damage(16m, ValueProp.Move),
+        new DynamicVar(BonusDamageVarName, 8m),
         new DynamicVar(CGSStamina.Uses, 2m),
         new DynamicVar(CGSStamina.MaxUses, 2m)
     ];
@@ -56,7 +56,7 @@ public sealed class CGSWinningLine : CGSStaminaCard
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         
         
-        int previousAttacks = Math.Min(4, CGSAttackChain.CountAttacksPlayedThisTurn(Owner, CombatState, cardPlay));
+        int previousAttacks =  CGSAttackChain.CountAttacksPlayedThisTurn(Owner, CombatState, cardPlay);
         decimal damage = DynamicVars.Damage.BaseValue +
                          previousAttacks * DynamicVars[BonusDamageVarName].BaseValue;
 
@@ -68,7 +68,6 @@ public sealed class CGSWinningLine : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars.Damage.UpgradeValueBy(4m);
         DynamicVars[BonusDamageVarName].UpgradeValueBy(1m);
         EnergyCost.UpgradeBy(-1);

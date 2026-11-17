@@ -38,8 +38,7 @@ public sealed class CGSFillTheGapPower : ModPowerTemplate
             Owner.Player?.PlayerCombatState is not { } state || _triggeredTurn == state.TurnNumber)
             return;
         _triggeredTurn = state.TurnNumber;
-        CGSStamina.Restore(card, 1m);
+        CGSStamina.RestoreBeyondMaximum(card, 1m);
         if (Amount > 1m) await PlayerCmd.GainEnergy(1m, Owner.Player);
     }
 }
-

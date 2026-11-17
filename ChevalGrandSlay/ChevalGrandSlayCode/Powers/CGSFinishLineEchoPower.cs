@@ -17,6 +17,7 @@ namespace ChevalGrandSlay.Powers;
 
 
 // 能力：光的残响
+//Verify
 [RegisterPower]
 public sealed class CGSFinishLineEchoPower : ModPowerTemplate
 {
@@ -25,7 +26,6 @@ public sealed class CGSFinishLineEchoPower : ModPowerTemplate
         ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile)
     ];
 
-    private int _turnsRemaining;
     private int _pendingHits;
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -34,7 +34,6 @@ public sealed class CGSFinishLineEchoPower : ModPowerTemplate
         IconPath: $"{Entry.ResPath}/images/powers/small/CGSFinishLineEcho.png",
         BigIconPath: $"{Entry.ResPath}/images/powers/CGSFinishLineEcho.png"
     );
-    public void SetTurns(int turns) => _turnsRemaining = turns;
 
     public override Task AfterCardChangedPiles(CardModel card, PileType previousPile, AbstractModel? source)
     {
@@ -63,20 +62,10 @@ public sealed class CGSFinishLineEchoPower : ModPowerTemplate
     {
         while (_pendingHits-- > 0)
         {
-            var enemies = CombatState?.HittableEnemies;
-            if (enemies is not { Count: > 0 }) continue;
-            var enemy = Owner.Player?.RunState.Rng.CombatTargets.NextItem(enemies);
-            if (enemy is not null)
-                await CreatureCmd.Damage(choiceContext, enemy, Amount, ValueProp.Unpowered, Owner, null, null);
+            var enemies = CombatState?.HittableEnemies?.ToArray();
+            if (enemies is not { Length: > 0 }) continue;
+            await CreatureCmd.Damage(choiceContext, enemies, Amount, ValueProp.Unpowered, Owner, null, null);
         }
         _pendingHits = 0;
-    }
-
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side,
-        IEnumerable<Creature> participants)
-    {
-        if (side != CombatSide.Player || !participants.Contains(Owner)) return;
-        _turnsRemaining--;
-        if (_turnsRemaining <= 0) await PowerCmd.Remove(this);
     }
 }

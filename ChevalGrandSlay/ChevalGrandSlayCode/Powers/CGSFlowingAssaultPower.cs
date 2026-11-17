@@ -14,8 +14,6 @@ namespace ChevalGrandSlay.Powers;
 [RegisterPower]
 public sealed class CGSFlowingAssaultPower : ModPowerTemplate
 {
-    private int _triggeredTurn = -1;
-
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
@@ -31,11 +29,9 @@ public sealed class CGSFlowingAssaultPower : ModPowerTemplate
             CombatState.CurrentSide != CombatSide.Player ||
             cardPlay.Card.Owner != player ||
             cardPlay.Card.Type != CardType.Attack ||
-            _triggeredTurn == state.TurnNumber ||
-            CGSAttackChain.CountAttacksPlayedThisTurn(player, CombatState) < 3)
+            CGSAttackChain.CountAttacksPlayedThisTurn(player, CombatState) <= 3)
             return;
 
-        _triggeredTurn = state.TurnNumber;
         await CardPileCmd.Draw(choiceContext, Amount, player);
     }
 }

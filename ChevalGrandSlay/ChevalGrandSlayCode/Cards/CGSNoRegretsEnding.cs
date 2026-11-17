@@ -41,7 +41,7 @@ public sealed class CGSNoRegretsEnding : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar("PowerStacks", 8m)
+            new DynamicVar("PowerStacks", 10m)
         ];
 
     public CGSNoRegretsEnding() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)

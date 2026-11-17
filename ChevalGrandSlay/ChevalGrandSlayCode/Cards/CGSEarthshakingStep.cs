@@ -59,7 +59,6 @@ public sealed class CGSEarthshakingStep : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
-        DynamicVars["Damage"].UpgradeValueBy(8m);
+        DynamicVars["Damage"].UpgradeValueBy(4m);
     }
 }

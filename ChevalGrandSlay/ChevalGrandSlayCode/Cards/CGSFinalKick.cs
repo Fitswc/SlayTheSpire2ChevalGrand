@@ -54,6 +54,11 @@ public sealed class CGSFinalKick : ModCardTemplate
         ModKeywordRegistry.CreateHoverTip(CGSKeywords.Stamina)
     ];
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        CardKeyword.Retain
+    ];
+
     protected override bool IsPlayable => Owner.PlayerCombatState is { Energy: 0 } &&
         !PileType.Draw.GetPile(Owner).Cards.Any(card => CGSStamina.HasStamina(card)) &&
         !PileType.Discard.GetPile(Owner).Cards.Any(card => CGSStamina.HasStamina(card)) &&

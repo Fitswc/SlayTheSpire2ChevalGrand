@@ -34,55 +34,48 @@ public sealed class CGSTearOpenDefense : CGSStaminaCard
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
-    private const string FirstAttackVulnerableVarName = "FirstAttackVulnerable";
-
     public CGSTearOpenDefense() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<VulnerablePower>()
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromPower<WeakPower>()
     ];
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [new DynamicVar(CGSStamina.Uses, 4m),
+    [
+        new DynamicVar(CGSStamina.Uses, 4m),
         new DynamicVar(CGSStamina.MaxUses, 4m),
-        ModCardVars.Damage(5m, ValueProp.Move),
-        ModCardVars.Power<VulnerablePower>(1m),
-        new DynamicVar(FirstAttackVulnerableVarName, 1m)
+        ModCardVars.Damage(12m, ValueProp.Move),
+        ModCardVars.Cards(2)
     ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        bool isFirstAttack = CGSAttackChain.CountAttacksPlayedThisTurn(Owner, CombatState, cardPlay) == 0;
+        var target = cardPlay.Target;
+        ArgumentNullException.ThrowIfNull(target);
+        bool shouldDraw = target.GetPower<VulnerablePower>() is { Amount: > 0 } ||
+                          target.GetPower<WeakPower>() is { Amount: > 0 };
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
-            .Targeting(cardPlay.Target)
+            .Targeting(target)
             .Execute(choiceContext);
 
-        decimal vulnerable = DynamicVars.Vulnerable.BaseValue;
-        if (isFirstAttack)
-            vulnerable += DynamicVars[FirstAttackVulnerableVarName].BaseValue;
-        
-        await PowerCmd.Apply<VulnerablePower>(
-            choiceContext,
-            cardPlay.Target,
-            vulnerable,
-            Owner.Creature,
-            this);
+        if (shouldDraw)
+            await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
-        DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars[FirstAttackVulnerableVarName].UpgradeValueBy(1m);
+        DynamicVars.Damage.UpgradeValueBy(6m);
+        DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }

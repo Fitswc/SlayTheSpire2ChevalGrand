@@ -1,10 +1,11 @@
 using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Keywords;
+using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
-using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -12,7 +13,7 @@ namespace ChevalGrandSlay.Cards;
 
 // 卡牌：慢慢站稳
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSSteadyPace : ModCardTemplate
+public sealed class CGSSteadyPace : CGSStaminaCard
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -25,7 +26,7 @@ public sealed class CGSSteadyPace : ModCardTemplate
 
     // 目标类型（Self 表示自己）。
     private const TargetType CardTarget = TargetType.Self;
-
+    public override int MaxUpgradeLevel => 0;
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
@@ -33,26 +34,21 @@ public sealed class CGSSteadyPace : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     
     public override bool GainsBlock => true;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [
-            ModCardVars.Block(7m, ValueProp.Move),
-            ModCardVars.Block("EnhancedBlock", 11m, ValueProp.Move)
-        ];
+    [
+        new DynamicVar(CGSStamina.Uses, 4m),
+        new DynamicVar(CGSStamina.MaxUses, 4m)
+    ];
 
     public CGSSteadyPace() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var block = Owner.Creature.Block >= 8m ? (BlockVar)DynamicVars["EnhancedBlock"] : DynamicVars.Block;
-        await CreatureCmd.GainBlock(Owner.Creature, block, cardPlay);
-    }
-
-    protected override void OnUpgrade()
-    {
-        DynamicVars.Block.UpgradeValueBy(3m);
-        DynamicVars["EnhancedBlock"].UpgradeValueBy(3m);
+        var creature = Owner.Creature;
+        await CreatureCmd.GainBlock(creature, creature.Block, ValueProp.Move | ValueProp.Unpowered, cardPlay);
     }
 }

@@ -19,7 +19,7 @@ namespace ChevalGrandSlay.Cards;
 public sealed class CGSCountTheCost : CGSStaminaCard
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 1;
+    private const int BaseEnergyCost = 0;
 
     // 卡牌类型。
     private const CardType CardKind = CardType.Skill;
@@ -64,13 +64,12 @@ public sealed class CGSCountTheCost : CGSStaminaCard
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, player);
         if (player.PlayerCombatState is { } state && _fateEnteredTurn == state.TurnNumber)
         {
-            await PlayerCmd.GainEnergy(1m, player);
+            await PlayerCmd.GainEnergy(2m, player);
         }
     }
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
 

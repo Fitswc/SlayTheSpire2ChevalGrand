@@ -41,7 +41,7 @@ public sealed class CGSDisruptFootwork : CGSStaminaCard
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromPower<WeakPower>()
+        HoverTipFactory.FromPower<VulnerablePower>()
     ];
 
     public override CardAssetProfile AssetProfile => new(
@@ -49,8 +49,8 @@ public sealed class CGSDisruptFootwork : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        ModCardVars.Power<WeakPower>(1m),
-        ModCardVars.Damage(9m, ValueProp.Move),
+        ModCardVars.Power<VulnerablePower>(2m),
+        ModCardVars.Damage(12m, ValueProp.Move),
         new DynamicVar(CGSStamina.Uses, 4m), new DynamicVar(CGSStamina.MaxUses, 4m)
     ];
 
@@ -61,10 +61,10 @@ public sealed class CGSDisruptFootwork : CGSStaminaCard
 
         foreach (var enemy in combatState.Enemies.Where(enemy => enemy.IsAlive))
         {
-            await PowerCmd.Apply<WeakPower>(
+            await PowerCmd.Apply<VulnerablePower>(
                 choiceContext,
                 enemy,
-                DynamicVars.Weak.BaseValue,
+                DynamicVars.Vulnerable.BaseValue,
                 Owner.Creature,
                 this);
         }
@@ -75,8 +75,7 @@ public sealed class CGSDisruptFootwork : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
-        DynamicVars.Weak.UpgradeValueBy(1m);
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.Vulnerable.UpgradeValueBy(2m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
     }
 }

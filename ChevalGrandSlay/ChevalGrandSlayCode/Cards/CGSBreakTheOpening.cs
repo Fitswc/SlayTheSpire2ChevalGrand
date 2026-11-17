@@ -52,7 +52,7 @@ public sealed class CGSBreakTheOpening : CGSStaminaCard
     [
         new DynamicVar(CGSStamina.Uses, 4m),
         new DynamicVar(CGSStamina.MaxUses, 4m),
-        ModCardVars.Damage(7m, ValueProp.Move),
+        ModCardVars.Damage(10m, ValueProp.Move),
         ModCardVars.Power<VulnerablePower>(2m)
     ];
 
@@ -74,7 +74,6 @@ public sealed class CGSBreakTheOpening : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars["Damage"].UpgradeValueBy(3m);
         DynamicVars["VulnerablePower"].UpgradeValueBy(1m);
     }

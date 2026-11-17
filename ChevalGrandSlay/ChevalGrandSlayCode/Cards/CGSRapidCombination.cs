@@ -45,7 +45,7 @@ public sealed class CGSRapidCombination : CGSStaminaCard
     [
         new DynamicVar(CGSStamina.Uses, 4m),
         new DynamicVar(CGSStamina.MaxUses, 4m),
-        ModCardVars.Damage(4m, ValueProp.Move)
+        ModCardVars.Damage(10m, ValueProp.Move)
     ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -63,7 +63,6 @@ public sealed class CGSRapidCombination : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars.Damage.UpgradeValueBy(1m);
     }
 }

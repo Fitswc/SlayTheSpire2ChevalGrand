@@ -43,8 +43,8 @@ public sealed class CGSWinningShift : CGSStaminaCard
     [
         new DynamicVar(CGSStamina.Uses, 2m),
         new DynamicVar(CGSStamina.MaxUses, 2m),
-        ModCardVars.Energy(2),
-        ModCardVars.Cards(1)
+        ModCardVars.Energy(4),
+        ModCardVars.Cards(4)
     ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -55,7 +55,7 @@ public sealed class CGSWinningShift : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
-        DynamicVars.Cards.UpgradeValueBy(1m);
+        DynamicVars.Energy.UpgradeValueBy(2m);
+        DynamicVars.Cards.UpgradeValueBy(2m);
     }
 }

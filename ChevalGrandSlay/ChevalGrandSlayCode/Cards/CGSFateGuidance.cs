@@ -31,6 +31,8 @@ public sealed class CGSFateGuidance : CGSStaminaCard
 
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
+    
+    public override int MaxUpgradeLevel => 0;
 
     public CGSFateGuidance() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
@@ -51,7 +53,6 @@ public sealed class CGSFateGuidance : CGSStaminaCard
     [
         new DynamicVar(CGSStamina.Uses, 2m),
         new DynamicVar(CGSStamina.MaxUses, 2m),
-        new DynamicVar("Restore", 1m)
     ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -66,20 +67,19 @@ public sealed class CGSFateGuidance : CGSStaminaCard
         }
         
         var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1));
+            new CardSelectorPrefs(SelectionScreenPrompt, Math.Min(4,candidates.Count)));
         
         if (selected.FirstOrDefault() is not { } card)
         {
             return;
         }
-        CGSStamina.Restore(card, DynamicVars["Restore"].BaseValue);
+        CGSStamina.RestoreFull(card);
         await CardPileCmd.Add(card, PileType.Hand);
         card.EnergyCost.AddThisTurn(-1);
     }
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
-        DynamicVars["Restore"].UpgradeValueBy(1m);
+        
     }
 }

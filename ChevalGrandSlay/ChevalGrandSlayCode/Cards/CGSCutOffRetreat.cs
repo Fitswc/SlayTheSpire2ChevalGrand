@@ -51,7 +51,7 @@ public sealed class CGSCutOffRetreat : CGSStaminaCard
         [
             new DynamicVar(CGSStamina.Uses, 4m),
             new DynamicVar(CGSStamina.MaxUses, 4m),
-            ModCardVars.Damage(8m, ValueProp.Move)
+            ModCardVars.Damage(12m, ValueProp.Move)
         ];
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -66,7 +66,6 @@ public sealed class CGSCutOffRetreat : CGSStaminaCard
     }
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars.Damage.UpgradeValueBy(3m);
     }
 }

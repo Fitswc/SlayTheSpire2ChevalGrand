@@ -43,7 +43,6 @@ public sealed class CGSBorrowFromThePast : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     protected override IEnumerable<DynamicVar> CanonicalVars => 
     [
-        new DynamicVar("PowerStack", 6m)
     ];
 
     public CGSBorrowFromThePast() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
@@ -53,15 +52,13 @@ public sealed class CGSBorrowFromThePast : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<CGSBorrowFromThePastPower>(choiceContext, Owner.Creature,
-            DynamicVars["PowerStack"].BaseValue, Owner.Creature, this);
+            1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["PowerStack"].UpgradeValueBy(3m);
+        EnergyCost.UpgradeBy(-1);
     }
-
-
 }
 
 

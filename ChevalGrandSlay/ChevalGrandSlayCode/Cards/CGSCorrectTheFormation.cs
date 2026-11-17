@@ -1,6 +1,4 @@
 using ChevalGrandSlay.Characters;
-using ChevalGrandSlay.Keywords;
-using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -12,9 +10,9 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 卡牌：整理钓线
+// 卡牌：整理鞋带
 [RegisterCard(typeof(CGSCardPool))]
-public sealed class CGSCorrectTheFormation : CGSStaminaCard
+public sealed class CGSCorrectTheFormation : ModCardTemplate
 {
     // 基础耗能。
     private const int BaseEnergyCost = 0;
@@ -35,15 +33,8 @@ public sealed class CGSCorrectTheFormation : CGSStaminaCard
     {
     }
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
-
     public override CardAssetProfile AssetProfile => new(PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => 
-    [
-        new DynamicVar(CGSStamina.Uses, 4m),
-        new DynamicVar(CGSStamina.MaxUses, 4m),
-        new DynamicVar("Look", 4m)
-    ];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Look", 4m)];
 
     protected override void AddExtraArgsToDescription(LocString description)
     {
@@ -55,7 +46,7 @@ public sealed class CGSCorrectTheFormation : CGSStaminaCard
         description.Add("Effect", effect);
     }
 
-    protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var cards = PileType.Draw.GetPile(Owner).Cards.Take(DynamicVars["Look"].IntValue).ToList();
         int minimum = IsUpgraded ? 0 : Math.Min(2, cards.Count);
@@ -79,7 +70,6 @@ public sealed class CGSCorrectTheFormation : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars["Look"].UpgradeValueBy(2m);
     }
 }

@@ -5,7 +5,9 @@ using ChevalGrandSlay.Utilities;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -37,6 +39,7 @@ public sealed class CGSOldWallNewEdge : CGSStaminaCard
     }
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [HoverTipFactory.FromCard<Dazed>()];
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
@@ -45,27 +48,19 @@ public sealed class CGSOldWallNewEdge : CGSStaminaCard
     [
         new DynamicVar(CGSStamina.Uses, 4m),
         new DynamicVar(CGSStamina.MaxUses, 4m),
-        ModCardVars.Damage(12m, ValueProp.Move),
-        new DynamicVar("BlockSpent", 6m)
+        ModCardVars.Damage(12m, ValueProp.Move)
     ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        decimal spent = Math.Min(Owner.Creature.Block, DynamicVars["BlockSpent"].BaseValue);
-        if (spent > 0)
-        {
-            await CreatureCmd.LoseBlock(choiceContext, Owner.Creature, spent, null);
-        }
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + spent)
-            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
+        var combat = CombatState ?? throw new InvalidOperationException("The card requires an active combat.");
+        var added = await CardPileCmd.AddGeneratedCardsToCombat(
+            [combat.CreateCard<Dazed>(Owner), combat.CreateCard<Dazed>(Owner)],
+            PileType.Draw, Owner, CardPilePosition.Random);
+        CardCmd.PreviewCardPileAdd(added);
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue+ spent)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(2)
             .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
-    }
-
-    protected override void OnUpgrade()
-    {
-        UpgradeStamina(1m);
     }
 }

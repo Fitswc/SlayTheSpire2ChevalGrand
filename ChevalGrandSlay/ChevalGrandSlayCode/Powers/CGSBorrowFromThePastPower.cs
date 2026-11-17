@@ -23,7 +23,7 @@ public sealed class CGSBorrowFromThePastPower : ModPowerTemplate
     ];
 
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
+    public override PowerStackType StackType => PowerStackType.Single;
     // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
     public override PowerAssetProfile AssetProfile => new(
         IconPath: $"{Entry.ResPath}/images/powers/small/CGSBorrowFromThePast.png",
@@ -33,7 +33,8 @@ public sealed class CGSBorrowFromThePastPower : ModPowerTemplate
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player != Owner.Player) return;
-        int block = Math.Min(Entry.CGSFatePile.GetPile(player).Cards.Count, Amount);
-        if (block > 0) await CreatureCmd.GainBlock(Owner, block, ValueProp.Move, null);
+        int block = 2 * Entry.CGSFatePile.GetPile(player).Cards.Count;
+        if (block > 0) 
+            await CreatureCmd.GainBlock(Owner, block, ValueProp.Move, null);
     }
 }

@@ -41,8 +41,8 @@ public sealed class CGSUnwindMomentum : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            ModCardVars.Block(5m, ValueProp.Move),
-            ModCardVars.Power<WeakPower>(3m)
+            ModCardVars.Block(16m, ValueProp.Move),
+            ModCardVars.Power<WeakPower>(6m)
         ];
 
     public CGSUnwindMomentum() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)

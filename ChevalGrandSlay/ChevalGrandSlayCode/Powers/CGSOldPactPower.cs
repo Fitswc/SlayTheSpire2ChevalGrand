@@ -1,14 +1,9 @@
-using ChevalGrandSlay.Keywords;
-using ChevalGrandSlay.Mechanics;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Models;
-using STS2RitsuLib.Keywords;
+using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -18,12 +13,9 @@ namespace ChevalGrandSlay.Powers;
 [RegisterPower]
 public sealed class CGSOldPactPower : ModPowerTemplate
 {
-    private bool _pendingDraw;
-
-    private int _triggeredTurn = -1;
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile)
+        HoverTipFactory.FromPower<StrengthPower>()
     ];
 
     public override PowerType Type => PowerType.Buff;
@@ -34,30 +26,14 @@ public sealed class CGSOldPactPower : ModPowerTemplate
         BigIconPath: $"{Entry.ResPath}/images/powers/CGSOldPact.png"
     );
 
-    public override async Task AfterCardChangedPiles(CardModel card, PileType previousPile, AbstractModel? source)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        if (Owner.Player is not { } player || card.Owner != player || previousPile == Entry.CGSFatePile ||
-            card.Pile?.Type != Entry.CGSFatePile || !CGSStamina.HasStamina(card) ||
-            player.PlayerCombatState is not { } state || _triggeredTurn == state.TurnNumber)
+        if (player != Owner.Player)
             return;
-        _triggeredTurn = state.TurnNumber;
+
         await PlayerCmd.GainEnergy(1m, player);
-        _pendingDraw = Amount > 1m;
-    }
-
-    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        if (!_pendingDraw || Owner.Player is not { } player) return;
-        _pendingDraw = false;
-        await CardPileCmd.Draw(choiceContext, 1m, player);
-    }
-
-    public override async Task BeforeSideTurnEndEarly(PlayerChoiceContext choiceContext, CombatSide side,
-        IEnumerable<Creature> participants)
-    {
-        if (side != CombatSide.Player || !participants.Contains(Owner) || !_pendingDraw ||
-            Owner.Player is not { } player) return;
-        _pendingDraw = false;
-        await CardPileCmd.Draw(choiceContext, 1m, player);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, 4m, Owner, null);
+        if (Amount >= 2)
+            await CardPileCmd.Draw(choiceContext, 1m, player);
     }
 }

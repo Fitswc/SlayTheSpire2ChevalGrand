@@ -63,7 +63,7 @@ public sealed class CGSTurnTogetherUpgradedPower : ModPowerTemplate
         {
             _pendingDraws--;
             await CardPileCmd.Draw(choiceContext, 1m, Owner.Player!);
-            await CreatureCmd.GainBlock(Owner, 3m, ValueProp.Move, null);
+            await CreatureCmd.GainBlock(Owner, 10m, ValueProp.Move, null);
         }
         _pendingDraws = 0;
     }

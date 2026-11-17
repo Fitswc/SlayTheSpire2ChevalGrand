@@ -16,7 +16,6 @@ public sealed class CGSPerfectDefendPower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
-    private int _remainingBlockTurns = 2;
 
     // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
     public override PowerAssetProfile AssetProfile => new(
@@ -29,25 +28,14 @@ public sealed class CGSPerfectDefendPower : ModPowerTemplate
         IReadOnlyList<Creature> participants,
         ICombatState combatState)
     {
-        if (side == CombatSide.Player &&
-            participants.Contains(Owner) &&
-            _remainingBlockTurns > 0)
+        if (side == CombatSide.Player && participants.Contains(Owner))
         {
             await CreatureCmd.GainBlock(
                 Owner,
                 Amount,
                 ValueProp.Unpowered,
                 null);
-
-            _remainingBlockTurns--;
         }
-    }
-
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side,
-        IEnumerable<Creature> participants)
-    {
-        if (side == CombatSide.Enemy && _remainingBlockTurns == 0)
-            await PowerCmd.Remove(this);
     }
 
     public override async Task AfterDamageReceived(

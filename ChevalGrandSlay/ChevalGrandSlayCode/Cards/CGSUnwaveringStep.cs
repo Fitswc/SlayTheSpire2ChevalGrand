@@ -37,7 +37,7 @@ public sealed class CGSUnwaveringStep : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        ModCardVars.Block(6m, ValueProp.Move)
+        ModCardVars.Block(18m, ValueProp.Move)
     ];
 
     public CGSUnwaveringStep() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
@@ -52,6 +52,6 @@ public sealed class CGSUnwaveringStep : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Block"].UpgradeValueBy(3m);
+        DynamicVars["Block"].UpgradeValueBy(2m);
     }
 }

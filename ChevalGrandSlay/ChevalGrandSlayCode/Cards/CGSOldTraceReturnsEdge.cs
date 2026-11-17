@@ -53,26 +53,24 @@ public sealed class CGSOldTraceReturnsEdge : CGSStaminaCard
     [
         new DynamicVar(CGSStamina.Uses, 4m),
         new DynamicVar(CGSStamina.MaxUses, 4m),
-        ModCardVars.Damage(9m, ValueProp.Move),
-        new DynamicVar("BonusBlock", 4m)
+        ModCardVars.Damage(8m, ValueProp.Move)
     ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
+        int hitCount = Entry.CGSFatePile.GetPile(Owner).Cards.Count;
+        if (hitCount == 0)
+            return;
+
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(hitCount)
+            .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash")
             .Targeting(cardPlay.Target).Execute(choiceContext);
-        
-        if (Entry.CGSFatePile.GetPile(Owner).Cards.Count > 0)
-        {
-            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars["BonusBlock"].BaseValue, ValueProp.Move, cardPlay);
-        }
     }
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["BonusBlock"].UpgradeValueBy(2m);
     }
 }

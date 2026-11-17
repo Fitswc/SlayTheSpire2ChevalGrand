@@ -41,7 +41,7 @@ public sealed class CGSPrefectDefend : ModCardTemplate
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("StartTurnBlock", 12m)
+        new DynamicVar("StartTurnBlock", 16m)
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
@@ -63,13 +63,12 @@ public sealed class CGSPrefectDefend : ModCardTemplate
             DynamicVars["StartTurnBlock"].BaseValue,
             Owner.Creature,
             this);
-
     }
 
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars["StartTurnBlock"].UpgradeValueBy(3m);
+        DynamicVars["StartTurnBlock"].UpgradeValueBy(4m);
         EnergyCost.UpgradeBy(-1);
     }
 }

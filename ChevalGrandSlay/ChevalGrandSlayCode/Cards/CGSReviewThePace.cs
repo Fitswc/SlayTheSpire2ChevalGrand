@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
 
-// 卡牌：藏好期待
+// 卡牌：我的宝藏
 [RegisterCard(typeof(CGSCardPool))]
 public sealed class CGSReviewThePace : CGSStaminaCard
 {
@@ -61,7 +61,6 @@ public sealed class CGSReviewThePace : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
         DynamicVars["Cards"].UpgradeValueBy(1m);
     }
 }

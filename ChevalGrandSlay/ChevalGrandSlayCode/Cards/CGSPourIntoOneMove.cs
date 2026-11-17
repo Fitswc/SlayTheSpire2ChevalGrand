@@ -65,7 +65,7 @@ public sealed class CGSPourIntoOneMove : CGSStaminaCard
             return;
         }
 
-        CGSStamina.Spend(attack, 1m);
+        //CGSStamina.Spend(attack, 1m);
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
         var power = await PowerCmd.Apply<CGSFirstStrikeTwicePower>(choiceContext, Owner.Creature,
@@ -85,7 +85,6 @@ public sealed class CGSPourIntoOneMove : CGSStaminaCard
     protected override void OnUpgrade()
     {
         EnergyCost.UpgradeBy(-1);
-        UpgradeStamina(1m);
     }
 
     private static bool IsCandidate(CardModel card) =>

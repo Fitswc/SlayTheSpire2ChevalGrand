@@ -49,8 +49,8 @@ public sealed class CGSCounterAttack : ModCardTemplate
     // 添加一个 DamageVar 意为指定卡牌的基础伤害是多少；它会自动绑定到本地化里的 {Damage:diff()} 占位符。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("RandomAttack", 4m),
-        ModCardVars.Block(7m, ValueProp.Move),
+        new DynamicVar("RandomAttack", 6m),
+        ModCardVars.Block(10m, ValueProp.Move),
     ];
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Defend };
@@ -80,7 +80,7 @@ public sealed class CGSCounterAttack : ModCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars["RandomAttack"].UpgradeValueBy(2m);
-        DynamicVars.Block.UpgradeValueBy(3m);
+        DynamicVars.Block.UpgradeValueBy(4m);
     }
 }
 

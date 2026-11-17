@@ -19,6 +19,7 @@ internal static class CGSStamina
     private sealed record SpentStamina
     {
         public decimal Amount { get; init; }
+        public int? RestOrder { get; init; }
     }
 
     private static ModelSavedData<CardModel, SpentStamina> _spentStamina = null!;
@@ -40,7 +41,8 @@ internal static class CGSStamina
             });
 
         RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>(LoadCombatStamina, replayCurrentState: false);
-        RitsuLibFramework.SubscribeLifecycle<SideTurnStartingEvent>(MoveDepletedCardsToRest, replayCurrentState: false);
+        RitsuLibFramework.SubscribeLifecycle<SideTurnStartingEvent>(MoveStartingCardsToRest, replayCurrentState: false);
+        RitsuLibFramework.SubscribeLifecycle<CombatEndedEvent>(SaveRestOrder, replayCurrentState: false);
     }
 
     public static bool HasStamina(CardModel card) =>
@@ -52,6 +54,8 @@ internal static class CGSStamina
         HasStamina(card) && GetRemaining(card) >= amount;
 
     public static bool IsDepleted(CardModel card) => card.DynamicVars[Uses].BaseValue <= 0m;
+
+    public static bool IsFull(CardModel card) => card.DynamicVars[Uses].BaseValue >= card.DynamicVars[MaxUses].BaseValue;
 
     public static void Spend(CardModel card, decimal amount) =>
         SetRemaining(card, card.DynamicVars[Uses].BaseValue - amount);
@@ -72,8 +76,31 @@ internal static class CGSStamina
     public static void Restore(CardModel card, decimal amount) =>
         SetRemaining(card, card.DynamicVars[Uses].BaseValue + amount);
 
+    public static void RestoreBeyondMaximum(CardModel card, decimal amount) =>
+        SetRemaining(card, card.DynamicVars[Uses].BaseValue + amount, allowExceedMaximum: true);
+
     public static void RestoreFull(CardModel card) =>
         SetRemaining(card, card.DynamicVars[MaxUses].BaseValue);
+
+    internal static void RestoreAfterUpgrade(CardModel card)
+    {
+        if (!HasStamina(card))
+            return;
+
+        var remaining = card.DynamicVars[Uses];
+        var maximum = card.DynamicVars[MaxUses].BaseValue;
+        if (remaining.BaseValue != maximum)
+            remaining.UpgradeValueBy(maximum - remaining.BaseValue);
+
+        // Preview and deserialization clones are outside their owner's piles.
+        if (card.Pile is not { } pile)
+            return;
+
+        if (pile.Type == PileType.Deck)
+            RestoreDeckCard(card);
+        else if (card.DeckVersion is { } deckCard)
+            RestoreDeckCard(deckCard);
+    }
 
     internal static decimal GetDeckStamina(CardModel card) =>
         _spentStamina.TryGet(card, out var spent)
@@ -102,9 +129,11 @@ internal static class CGSStamina
         card.DynamicVars[Uses].BaseValue = ClampRemaining(card, remaining);
     }
 
-    private static void SetRemaining(CardModel card, decimal remaining)
+    private static void SetRemaining(CardModel card, decimal remaining, bool allowExceedMaximum = false)
     {
-        remaining = ClampRemaining(card, remaining);
+        remaining = allowExceedMaximum
+            ? Math.Max(0m, remaining)
+            : ClampRemaining(card, remaining);
         card.DynamicVars[Uses].BaseValue = remaining;
 
         if (card.DeckVersion is not { } deckCard || !HasStamina(deckCard))
@@ -115,7 +144,7 @@ internal static class CGSStamina
         if (spent == 0m)
             _spentStamina.Remove(deckCard);
         else
-            _spentStamina.Set(deckCard, new SpentStamina { Amount = spent });
+            _spentStamina.Set(deckCard, new SpentStamina { Amount = spent, RestOrder = GetRestOrder(deckCard) });
     }
 
     private static decimal ClampRemaining(CardModel card, decimal remaining) =>
@@ -142,7 +171,10 @@ internal static class CGSStamina
         }
     }
 
-    private static void MoveDepletedCardsToRest(SideTurnStartingEvent starting)
+    private static int? GetRestOrder(CardModel deckCard) =>
+        _spentStamina.TryGet(deckCard, out var spent) ? spent.RestOrder : null;
+
+    private static void MoveStartingCardsToRest(SideTurnStartingEvent starting)
     {
         if (starting.Side != CombatSide.Player || !PendingFirstTurns.Remove(starting.CombatState))
             return;
@@ -153,17 +185,50 @@ internal static class CGSStamina
             if (player.PlayerCombatState?.DrawPile is not { } drawPile)
                 continue;
 
-            var depleted = drawPile.Cards
-                .Where(card => card.DeckVersion is not null && HasStamina(card) && IsDepleted(card))
+            var restingCards = drawPile.Cards
+                .Where(card => card.DeckVersion is not null && HasStamina(card))
+                .Select(card => (Card: card, Order: GetRestOrder(card.DeckVersion!)))
+                .Where(entry => IsDepleted(entry.Card) || (entry.Order.HasValue && !IsFull(entry.Card)))
+                .OrderBy(entry => entry.Order ?? int.MaxValue)
+                .Select(entry => entry.Card)
                 .ToArray();
-            if (depleted.Length == 0)
+            if (restingCards.Length == 0)
                 continue;
 
             var restPile = Entry.CGSFatePile.GetPile(player);
-            foreach (var card in depleted)
+            foreach (var card in restingCards)
             {
                 drawPile.RemoveInternal(card);
                 restPile.AddInternal(card);
+            }
+        }
+    }
+
+    private static void SaveRestOrder(CombatEndedEvent ending)
+    {
+        if (ending.CombatState is not { } state)
+            return;
+
+        foreach (var player in state.Players)
+        {
+            if (player.PlayerCombatState is null)
+                continue;
+
+            var orderByDeckCard = new Dictionary<CardModel, int>(ReferenceEqualityComparer.Instance);
+            foreach (var card in Entry.CGSFatePile.GetPile(player).Cards)
+            {
+                if (card.DeckVersion is { } deckCard && HasStamina(card) && !IsFull(card))
+                    orderByDeckCard.TryAdd(deckCard, orderByDeckCard.Count);
+            }
+
+            foreach (var deckCard in player.Deck.Cards)
+            {
+                if (!_spentStamina.TryGet(deckCard, out var spent))
+                    continue;
+
+                int? restOrder = orderByDeckCard.TryGetValue(deckCard, out int index) ? index : null;
+                if (spent.RestOrder != restOrder)
+                    _spentStamina.Set(deckCard, spent with { RestOrder = restOrder });
             }
         }
     }

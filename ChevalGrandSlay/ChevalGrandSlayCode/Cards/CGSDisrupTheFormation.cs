@@ -31,7 +31,7 @@ public sealed class CGSDisrupTheFormation : ModCardTemplate
     private const CardType CardKind = CardType.Attack;
 
     // 卡牌稀有度。
-    private const CardRarity CardRarityValue = CardRarity.Uncommon;
+    private const CardRarity CardRarityValue = CardRarity.Common;
 
     // 目标类型（AnyEnemy 表示任意敌人）。
     private const TargetType CardTarget = TargetType.AnyEnemy;
@@ -49,7 +49,7 @@ public sealed class CGSDisrupTheFormation : ModCardTemplate
     // 添加一个 DamageVar 意为指定卡牌的基础伤害是多少；它会自动绑定到本地化里的 {Damage:diff()} 占位符。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        ModCardVars.Damage(6m, ValueProp.Move),
+        ModCardVars.Damage(10m, ValueProp.Move),
         ModCardVars.Power<WeakPower>(2m)
     ];
 

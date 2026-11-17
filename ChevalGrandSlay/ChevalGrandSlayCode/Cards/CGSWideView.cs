@@ -1,10 +1,13 @@
 using ChevalGrandSlay.Characters;
+using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Cards;
@@ -32,9 +35,14 @@ public sealed class CGSWideView : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile)];
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("HandLimitBonus", 2m)
+        new DynamicVar("HandLimitBonus", 2m),
+        new DynamicVar(CGSWideViewPower.RecoveryCountVar, CGSWideViewPower.BaseRecoveryCount),
+        new DynamicVar(CGSWideViewPower.RecoveryAmountVar, CGSWideViewPower.BaseRecoveryAmount)
     ];
 
     public CGSWideView() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
@@ -44,9 +52,16 @@ public sealed class CGSWideView : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
 
-        await PowerCmd.Apply<CGSWideViewPower>(choiceContext, Owner.Creature,
+        var power = await PowerCmd.Apply<CGSWideViewPower>(choiceContext, Owner.Creature,
             DynamicVars["HandLimitBonus"].BaseValue, Owner.Creature, this);
+        power?.SetRecovery(
+            DynamicVars[CGSWideViewPower.RecoveryCountVar].IntValue,
+            DynamicVars[CGSWideViewPower.RecoveryAmountVar].BaseValue);
     }
 
-    protected override void OnUpgrade() => DynamicVars["HandLimitBonus"].UpgradeValueBy(1m);
+    protected override void OnUpgrade()
+    {
+        DynamicVars[CGSWideViewPower.RecoveryCountVar].UpgradeValueBy(1m);
+        DynamicVars[CGSWideViewPower.RecoveryAmountVar].UpgradeValueBy(1m);
+    }
 }

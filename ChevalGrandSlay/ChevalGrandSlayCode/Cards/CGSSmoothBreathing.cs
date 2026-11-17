@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Cards.DynamicVars;
+using STS2RitsuLib.Combat.HandSize;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -43,7 +44,8 @@ public sealed class CGSSmoothBreathing : CGSStaminaCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        ModCardVars.Cards(2),
+        ModCardVars.Cards(4),
+        new DynamicVar("SelectCount", 1m),
         new DynamicVar(CGSStamina.Uses, 4m),
         new DynamicVar(CGSStamina.MaxUses, 4m)
     ];
@@ -53,35 +55,21 @@ public sealed class CGSSmoothBreathing : CGSStaminaCard
         await CardPileCmd.ShuffleIfNecessary(choiceContext, Owner);
         var drawPile = PileType.Draw.GetPile(Owner);
         var candidates = drawPile.Cards.Take(DynamicVars.Cards.IntValue).ToList();
-        if (candidates.Count < 2)
-        {
-            await CardPileCmd.Draw(choiceContext, Owner);
+        var hand = PileType.Hand.GetPile(Owner);
+        int availableSlots = MaxHandSizeCalculator.Calculate(Owner) - hand.Cards.Count;
+        int selectCount = Math.Min(DynamicVars["SelectCount"].IntValue, Math.Min(candidates.Count, availableSlots));
+        if (selectCount <= 0)
             return;
-        }
 
-        var selected = await CardSelectCmd.FromSimpleGrid(
-            choiceContext, candidates, Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1));
-        var chosen = selected.SingleOrDefault();
-        if (chosen == null)
-        {
-            return;
-        }
-
-        var originalTop = candidates[0];
-        if (chosen != originalTop)
-        {
-            await CardPileCmd.Add(chosen, drawPile, CardPilePosition.Top);
-        }
-
-        var drawn = await CardPileCmd.Draw(choiceContext, Owner);
-        if (drawn == null && chosen != originalTop)
-        {
-            await CardPileCmd.Add(originalTop, drawPile, CardPilePosition.Top);
-        }
+        var selected = selectCount == candidates.Count
+            ? candidates
+            : await CardSelectCmd.FromSimpleGrid(
+                choiceContext, candidates, Owner, new CardSelectorPrefs(SelectionScreenPrompt, selectCount));
+        await CardPileCmd.Add(selected, hand);
     }
 
     protected override void OnUpgrade()
     {
-        UpgradeStamina(1m);
+        DynamicVars["SelectCount"].UpgradeValueBy(1m);
     }
 }
