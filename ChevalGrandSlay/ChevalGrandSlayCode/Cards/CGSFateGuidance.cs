@@ -67,15 +67,14 @@ public sealed class CGSFateGuidance : CGSStaminaCard
         }
         
         var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, Math.Min(4,candidates.Count)));
-        
-        if (selected.FirstOrDefault() is not { } card)
+            new CardSelectorPrefs(SelectionScreenPrompt, 1, Math.Min(4, candidates.Count)));
+
+        foreach (var card in selected)
         {
-            return;
+            CGSStamina.RestoreFull(card);
+            if ((await CardPileCmd.Add(card, PileType.Hand)).success)
+                card.EnergyCost.AddThisTurn(-1);
         }
-        CGSStamina.RestoreFull(card);
-        await CardPileCmd.Add(card, PileType.Hand);
-        card.EnergyCost.AddThisTurn(-1);
     }
 
     protected override void OnUpgrade()
