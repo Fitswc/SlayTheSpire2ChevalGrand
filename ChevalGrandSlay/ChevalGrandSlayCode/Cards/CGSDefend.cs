@@ -45,7 +45,7 @@ public sealed class CGSDefend : ModCardTemplate
     // BlockVar 会绑定到本地化里的 {Block:diff()}，升级时文本会自动显示差值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        ModCardVars.Block(8m, ValueProp.Move)
+        ModCardVars.Block(5m, ValueProp.Move)
     ];
 
     public CGSDefend() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
