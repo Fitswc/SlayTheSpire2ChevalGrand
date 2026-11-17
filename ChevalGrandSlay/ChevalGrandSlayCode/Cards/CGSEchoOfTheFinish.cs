@@ -34,7 +34,7 @@ public sealed class CGSEchoOfTheFinish : ModCardTemplate
     
     protected override IEnumerable<DynamicVar> CanonicalVars => 
         [
-            new DynamicVar("OverflowCap", 99999999m),
+            new DynamicVar("OverflowCap", 999m),
         ];
 
     public CGSEchoOfTheFinish() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
