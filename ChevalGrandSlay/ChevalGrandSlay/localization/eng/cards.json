@@ -193,7 +193,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_FATE_ECHO.title": "The Tide Calls Again",
   "CHEVAL_GRAND_SLAY_CARD_CGS_FATE_ECHO.description": "Fully restore the Stamina of all cards in your [gold]Rest Pile[/gold] and put them into your Draw Pile.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_LEND_RESERVE.title": "Pass the Ball",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_LEND_RESERVE.description": "Increase your hand limit by {HandLimitBonus:diff()} this combat. Fill your hand with [gold]Balls[/gold].",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_LEND_RESERVE.description": "Fill your hand with [gold]Balls[/gold].",
   "CHEVAL_GRAND_SLAY_CARD_CGS_BALL.title": "Ball",
   "CHEVAL_GRAND_SLAY_CARD_CGS_BALL.description": "Deal {Damage:diff()} damage.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_DRAW_FINISH_LINE.title": "Today's Finish Line",

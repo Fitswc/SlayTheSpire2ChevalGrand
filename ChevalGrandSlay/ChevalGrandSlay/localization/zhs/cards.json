@@ -193,7 +193,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_FATE_ECHO.title": "潮声再起",
   "CHEVAL_GRAND_SLAY_CARD_CGS_FATE_ECHO.description": "恢复[gold]休整牌堆[/gold]中所有牌的全部体力，并将它们放入抽牌堆。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_LEND_RESERVE.title": "传球",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_LEND_RESERVE.description": "本场战斗的手牌上限增加{HandLimitBonus:diff()}张。用[gold]球[/gold]填满手牌。",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_LEND_RESERVE.description": "用[gold]球[/gold]填满手牌。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_BALL.title": "球",
   "CHEVAL_GRAND_SLAY_CARD_CGS_BALL.description": "造成{Damage:diff()}点伤害。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_DRAW_FINISH_LINE.title": "今天的终点",

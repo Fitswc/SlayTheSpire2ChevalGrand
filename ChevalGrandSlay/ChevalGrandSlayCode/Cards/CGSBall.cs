@@ -19,7 +19,7 @@ public sealed class CGSBall() : ModCardTemplate(0, CardType.Attack, CardRarity.T
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/CGSLendReserve.png");
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [ModCardVars.Damage(8m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [ModCardVars.Damage(6m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
