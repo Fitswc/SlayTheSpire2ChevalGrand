@@ -3,6 +3,7 @@ using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -30,7 +31,8 @@ public sealed class CGSRenewTheOldPact : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
         HoverTipFactory.FromPower<StrengthPower>()
     ];
 
@@ -44,6 +46,7 @@ public sealed class CGSRenewTheOldPact : ModCardTemplate
 
         var effect = new LocString("cards",
             $"{Id.Entry}.{(IsUpgraded ? "upgradedEffect" : "baseEffect")}");
+        effect.Add("energyPrefix", EnergyIconHelper.GetPrefix(this));
         description.Add("Effect", effect);
     }
 

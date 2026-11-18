@@ -5,9 +5,7 @@ using ChevalGrandSlay.Utilities;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -40,10 +38,6 @@ public sealed class CGSCutOffRetreat : CGSStaminaCard
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CGSKeywords.Stamina];
 
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<NoBlockPower>()
-    ];
-
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
@@ -61,8 +55,9 @@ public sealed class CGSCutOffRetreat : CGSStaminaCard
             .Targeting(cardPlay.Target)
             .CGSWithVfx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        
-        await PowerCmd.Apply<NoBlockPower>(choiceContext, cardPlay.Target, 1m, Owner.Creature, this);
+
+        if (cardPlay.Target is { IsMonster: true, IsAlive: true })
+            await CreatureCmd.Stun(cardPlay.Target);
     }
     protected override void OnUpgrade()
     {

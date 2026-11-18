@@ -31,6 +31,8 @@ public sealed class CGSRegainTheEdge : CGSStaminaCard
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public override int MaxUpgradeLevel => 0;
+
     public CGSRegainTheEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
@@ -58,8 +60,7 @@ public sealed class CGSRegainTheEdge : CGSStaminaCard
         int removedStacks = 0;
         for (int i = 0; i < cleanseLimit; i++)
         {
-            var debuff = creature.Powers.FirstOrDefault(power =>
-                power.Type == PowerType.Debuff && power.Amount > 0);
+            var debuff = creature.Powers.FirstOrDefault(power => power.Type == PowerType.Debuff && power.Amount > 0);
             if (debuff is null)
                 break;
 

@@ -64,7 +64,7 @@ public sealed class CGSAllOut : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-2);
+        EnergyCost.UpgradeBy(-1);
     }
 
     private bool IsCandidate(CardModel card) =>

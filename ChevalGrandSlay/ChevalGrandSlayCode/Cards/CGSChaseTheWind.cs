@@ -140,6 +140,7 @@ public abstract class CGSChaseTheWindPileChoice()
     : ModCardTemplate(0, CardType.Skill, CardRarity.Token, TargetType.Self, false)
 {
     internal abstract PileType SourcePile { get; }
+    public override int MaxUpgradeLevel => 0;
     public override bool CanBeGeneratedInCombat => false;
     protected override bool IsPlayable => false;
 

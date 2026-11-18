@@ -49,7 +49,6 @@ public sealed class CGSSportsDrinkSupply : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var combatState = CombatState ?? throw new InvalidOperationException("The card requires an active combat.");
-//        int count = IsUpgraded ? 3 : 2;
         for (int i = 0; i < DynamicVars["CardNumber"].IntValue; i++)
         {
             var drink = combatState.CreateCard<CGSEnergyDrink>(Owner);
@@ -59,6 +58,6 @@ public sealed class CGSSportsDrinkSupply : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["CardNumber"].UpgradeValueBy(2m);
+        DynamicVars["CardNumber"].UpgradeValueBy(1m);
     }
 }

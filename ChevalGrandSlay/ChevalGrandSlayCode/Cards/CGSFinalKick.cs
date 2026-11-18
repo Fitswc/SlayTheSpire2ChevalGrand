@@ -23,7 +23,7 @@ public sealed class CGSFinalKick : ModCardTemplate
     private const int BaseEnergyCost = 0;
 
     // 卡牌类型。
-    private const CardType CardKind = CardType.Skill;
+    private const CardType CardKind = CardType.Attack;
 
     // 卡牌稀有度。
     private const CardRarity CardRarityValue = CardRarity.Rare;
