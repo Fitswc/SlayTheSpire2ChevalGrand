@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -34,12 +35,22 @@ public sealed class CGSOneBeatAheadPower : ModPowerTemplate
         return Task.CompletedTask;
     }
 
+    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
+    {
+        if (player != Owner.Player || !IsExtraTurnActive ||
+            player.PlayerCombatState?.TurnNumber != _extraTurnNumber)
+            return;
+
+        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, 1m, Owner, null);
+        await PowerCmd.Apply<DexterityPower>(choiceContext, Owner, 1m, Owner, null);
+    }
+
     public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side,
         IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         // 保留至额外回合判定结束，不能在回合结束钩子中提前移除封锁。
         if (IsExtraTurnActive && (side != CombatSide.Player || !participants.Contains(Owner) ||
-            Owner.Player?.PlayerCombatState?.TurnNumber != _extraTurnNumber))
+                Owner.Player?.PlayerCombatState?.TurnNumber != _extraTurnNumber))
             await PowerCmd.Remove(this);
     }
 }

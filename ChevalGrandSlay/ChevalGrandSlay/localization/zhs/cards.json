@@ -212,5 +212,5 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.description": "选择手中另1张仍有体力的牌。按其剩余体力次数免费打出。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.selectionScreenPrompt": "选择1张体力牌，按剩余体力免费打出",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ONE_BEAT_AHEAD.title": "憧憬的前方",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_ONE_BEAT_AHEAD.description": "本回合结束后，立即获得一个额外回合。\n该额外回合不能获得额外回合。"
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ONE_BEAT_AHEAD.description": "本回合结束后，立即获得一个额外回合。该额外回合开始时，获得1点[gold]力量[/gold]和1点[gold]敏捷[/gold]。"
 }

@@ -212,5 +212,5 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.description": "Choose another card in your hand with Stamina remaining. Play it for free once per point of Stamina it has remaining.",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.selectionScreenPrompt": "Choose a Stamina card to play for free once per remaining Stamina",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ONE_BEAT_AHEAD.title": "Beyond Admiration",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_ONE_BEAT_AHEAD.description": "At the end of this turn, immediately take an extra turn.\nDuring that turn, you cannot take extra turns."
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ONE_BEAT_AHEAD.description": "At the end of this turn, immediately take an extra turn. At the start of that turn, gain 1 [gold]Strength[/gold] and 1 [gold]Dexterity[/gold]."
 }
