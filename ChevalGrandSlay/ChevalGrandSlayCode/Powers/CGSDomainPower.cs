@@ -25,7 +25,7 @@ namespace ChevalGrandSlay.Powers;
 [RegisterPower]
 public sealed class CGSDomainPower : ModPowerTemplate, IHealthBarForecastSource
 {
-    public const decimal DamageBonusPercent = 25m;
+    public const decimal DamageBonusPercent = 80m;
     public const int EnergyPerTurn = 4;
     private int _appliedTurnNumber;
     private bool _hasReachedNextTurn;
