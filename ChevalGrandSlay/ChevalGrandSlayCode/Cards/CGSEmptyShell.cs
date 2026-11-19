@@ -27,7 +27,7 @@ public sealed class CGSEmptyShell : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = false;
 
-    public override int MaxUpgradeLevel => 0;
+
 
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
