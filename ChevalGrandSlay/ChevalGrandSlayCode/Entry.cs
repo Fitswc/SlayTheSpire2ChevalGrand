@@ -1,5 +1,6 @@
 using System.Reflection;
 using ChevalGrandSlay.Cards;
+using ChevalGrandSlay.Configs;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
 using ChevalGrandSlay.Relics;
@@ -48,6 +49,8 @@ public partial class Entry
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
 
         CGSKeywords.Register();
+        
+        CGSMainConfigPage.Register();
 
         //Fmod
         FmodStudioDeferredBankRegistration.RegisterBank($"{ResPath}/audios/ChevalGrandSlaySFX.bank");

@@ -48,6 +48,7 @@
         <Reference Include="0Harmony" HintPath="$(Sts2DataDir)\0Harmony.dll" Private="True"/>
         <Reference Include="sts2" HintPath="$(Sts2DataDir)\sts2.dll" Private="True"/>
         <Reference Include="Steamworks.NET" HintPath="$(Sts2DataDir)\Steamworks.NET.dll" Private="True"/>
+        <Reference Include="AutoAnthony" HintPath="D:/SteamLibrary/steamapps/workshop/content/2868840/3786611028/AutoAnthony.dll" Private="False"/>
     </ItemGroup>
 
     <ItemGroup>
