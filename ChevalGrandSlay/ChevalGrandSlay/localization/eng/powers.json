@@ -3,8 +3,8 @@
   "CHEVAL_GRAND_SLAY_POWER_CGS_ENDLESS_STAMINA_POWER.description": "This turn, playing [gold]Stamina[/gold] cards does not consume Stamina.",
   "CHEVAL_GRAND_SLAY_POWER_CGS_ENDLESS_STAMINA_POWER.smartDescription": "This turn, playing [gold]Stamina[/gold] cards does not consume Stamina.",
   "CHEVAL_GRAND_SLAY_POWER_CGS_DOMAIN_POWER.title": "Domain",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_DOMAIN_POWER.description": "Attack cards deal 25% more attack damage. Gain 4 Energy immediately and at the start of each of your subsequent turns. On entering, fully restore the Stamina of cards in your [gold]Rest Pile[/gold] and add them to your hand, or your draw pile if your hand is full.\nThe countdown includes the turn you enter Domain. If combat is still ongoing when it expires, you die.",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_DOMAIN_POWER.smartDescription": "Attack cards deal 25% more attack damage. Gain 4 Energy immediately and at the start of each of your subsequent turns. On entering, fully restore the Stamina of cards in your [gold]Rest Pile[/gold] and add them to your hand, or your draw pile if your hand is full.\nYou have {Amount:plural:[blue]{}[/blue] turn|[blue]{}[/blue] turns} left, including this turn. If combat is still ongoing when it expires, you die.",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_DOMAIN_POWER.description": "Attack cards deal 80% more attack damage. Gain 4 Energy immediately and at the start of each of your subsequent turns. On entering, fully restore the Stamina of cards in your [gold]Rest Pile[/gold] and add them to your hand, or your draw pile if your hand is full.\nThe countdown includes the turn you enter Domain. If combat is still ongoing when it expires, you die.",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_DOMAIN_POWER.smartDescription": "Attack cards deal 80% more attack damage. Gain 4 Energy immediately and at the start of each of your subsequent turns. On entering, fully restore the Stamina of cards in your [gold]Rest Pile[/gold] and add them to your hand, or your draw pile if your hand is full.\nYou have {Amount:plural:[blue]{}[/blue] turn|[blue]{}[/blue] turns} left, including this turn. If combat is still ongoing when it expires, you die.",
   "CHEVAL_GRAND_SLAY_POWER_CGS_BORROW_FROM_THE_PAST_POWER.title": "A Silhouette of Light",
   "CHEVAL_GRAND_SLAY_POWER_CGS_BORROW_FROM_THE_PAST_POWER.description": "At the start of your turn, gain 2 [gold]Block[/gold] for each card in your [gold]Rest Pile[/gold].",
   "CHEVAL_GRAND_SLAY_POWER_CGS_BORROW_FROM_THE_PAST_POWER.smartDescription": "At the start of your turn, gain 2 [gold]Block[/gold] for each card in your [gold]Rest Pile[/gold].",
@@ -80,13 +80,10 @@
   "CHEVAL_GRAND_SLAY_POWER_CGS_WIDE_VIEW_POWER.title": "The Blue I Dream Of",
   "CHEVAL_GRAND_SLAY_POWER_CGS_WIDE_VIEW_POWER.description": "Increase your hand limit by [blue]X[/blue]. At the start of your turn, restore Stamina to the oldest Stamina cards in your [gold]Rest Pile[/gold]. Move each to your Draw Pile when its Stamina is full.",
   "CHEVAL_GRAND_SLAY_POWER_CGS_WIDE_VIEW_POWER.smartDescription": "Increase your hand limit by [blue]{Amount}[/blue]. At the start of your turn, restore [blue]{RecoveryAmount}[/blue] Stamina to the [blue]{RecoveryCount}[/blue] oldest Stamina cards in your [gold]Rest Pile[/gold]. Move each to your Draw Pile when its Stamina is full.",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_LEND_RESERVE_POWER.title": "Pass the Ball",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_LEND_RESERVE_POWER.description": "Increase your hand limit by [blue]X[/blue].",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_LEND_RESERVE_POWER.smartDescription": "Increase your hand limit by [blue]{Amount}[/blue].",
   "CHEVAL_GRAND_SLAY_POWER_CGS_WINNING_RHYTHM_POWER.title": "Nimble",
   "CHEVAL_GRAND_SLAY_POWER_CGS_WINNING_RHYTHM_POWER.description": "During your turn, whenever you play a Skill, gain [blue]X[/blue] Block.",
   "CHEVAL_GRAND_SLAY_POWER_CGS_WINNING_RHYTHM_POWER.smartDescription": "During your turn, whenever you play a Skill, gain [blue]{Amount}[/blue] Block.",
   "CHEVAL_GRAND_SLAY_POWER_CGS_ONE_BEAT_AHEAD_POWER.title": "Beyond Admiration",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_ONE_BEAT_AHEAD_POWER.description": "Take an extra turn after this turn. During that extra turn, you cannot take extra turns.",
-  "CHEVAL_GRAND_SLAY_POWER_CGS_ONE_BEAT_AHEAD_POWER.smartDescription": "Take an extra turn after this turn. During that extra turn, you cannot take extra turns."
+  "CHEVAL_GRAND_SLAY_POWER_CGS_ONE_BEAT_AHEAD_POWER.description": "Take an extra turn after this turn. At the start of that turn, gain 1 [gold]Strength[/gold] and 1 [gold]Dexterity[/gold].",
+  "CHEVAL_GRAND_SLAY_POWER_CGS_ONE_BEAT_AHEAD_POWER.smartDescription": "Take an extra turn after this turn. At the start of that turn, gain 1 [gold]Strength[/gold] and 1 [gold]Dexterity[/gold]."
 }

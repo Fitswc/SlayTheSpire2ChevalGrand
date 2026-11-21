@@ -9,7 +9,6 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
-using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -35,6 +34,9 @@ public sealed class CGSLongSprint : CGSStaminaCard
     private const bool ShowInCardLibrary = true;
     private int _lastRetainedTurn = -1;
 
+    private bool WasRetainedLastTurn => _lastRetainedTurn >= 0 &&
+        Owner?.PlayerCombatState is { } combat && _lastRetainedTurn == combat.TurnNumber - 1;
+
     public CGSLongSprint() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
@@ -53,30 +55,23 @@ public sealed class CGSLongSprint : CGSStaminaCard
     [
         new DynamicVar(CGSStamina.Uses, 4m),
         new DynamicVar(CGSStamina.MaxUses, 4m),
-        ModCardVars.Damage(12m, ValueProp.Move),
-        new DynamicVar("RetainedDamage", 4m)
+        new CalculationBaseVar(12m),
+        new ExtraDamageVar(4m),
+        new CalculatedDamageVar(ValueProp.Move)
+            .WithMultiplier(static (card, _) => ((CGSLongSprint)card).WasRetainedLastTurn ? 1m : 0m)
     ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        bool retainedLastTurn = _lastRetainedTurn == Owner.PlayerCombatState!.TurnNumber - 1;
-
-        decimal damage = DynamicVars.Damage.BaseValue;
-
-        if (retainedLastTurn)
-        {
-            damage += DynamicVars["RetainedDamage"].BaseValue;
-        }
-
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(damage)
+        await DamageCmd.Attack(DynamicVars.CalculatedDamage)
             .FromCard(this, cardPlay).CGSWithVfx("vfx/vfx_attack_slash").Targeting(cardPlay.Target).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Damage"].UpgradeValueBy(5m);
-        DynamicVars["RetainedDamage"].UpgradeValueBy(2m);
+        DynamicVars.CalculationBase.UpgradeValueBy(5m);
+        DynamicVars.ExtraDamage.UpgradeValueBy(2m);
     }
 
     protected override void AfterCloned()

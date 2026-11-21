@@ -33,7 +33,7 @@ public sealed class CGSCounterAttack : ModCardTemplate
     private const CardRarity CardRarityValue = CardRarity.Common;
 
     // 目标类型（AnyEnemy 表示任意敌人）。
-    private const TargetType CardTarget = TargetType.AnyEnemy;
+    private const TargetType CardTarget = TargetType.Self;
 
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;

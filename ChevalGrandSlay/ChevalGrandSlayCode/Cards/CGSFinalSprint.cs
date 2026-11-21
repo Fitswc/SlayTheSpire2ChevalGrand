@@ -53,7 +53,7 @@ public sealed class CGSFinalSprint : CGSStaminaCard
         [
             new DynamicVar(CGSStamina.Uses, 2m),
             new DynamicVar(CGSStamina.MaxUses, 2m),
-            ModCardVars.Damage(18m, ValueProp.Move),
+            ModCardVars.Damage(10m, ValueProp.Move),
         ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -71,6 +71,6 @@ public sealed class CGSFinalSprint : CGSStaminaCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
     }
 }

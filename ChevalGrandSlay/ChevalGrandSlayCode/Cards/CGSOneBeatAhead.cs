@@ -30,7 +30,7 @@ public sealed class CGSOneBeatAhead : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    //public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     public CGSOneBeatAhead() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {

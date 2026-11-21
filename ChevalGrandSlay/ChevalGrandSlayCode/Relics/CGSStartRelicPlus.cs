@@ -25,7 +25,7 @@ public sealed class CGSStartRelicPlus : ModRelicTemplate
     private static readonly ConditionalWeakTable<CardModel, object> StaminaBonuses = new();
 
     // 稀有度。
-    public override RelicRarity Rarity => RelicRarity.Uncommon;
+    public override RelicRarity Rarity => RelicRarity.Starter;
 
     // 遗物的数值。这里会替换本地化中的 {Energy}。
     protected override IEnumerable<DynamicVar> CanonicalVars =>

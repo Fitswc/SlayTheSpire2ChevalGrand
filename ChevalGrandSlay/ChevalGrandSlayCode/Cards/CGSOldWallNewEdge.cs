@@ -34,6 +34,8 @@ public sealed class CGSOldWallNewEdge : CGSStaminaCard
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public override int MaxUpgradeLevel => 0;
+
     public CGSOldWallNewEdge() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }

@@ -22,7 +22,7 @@ public sealed class CGSDisruptFootwork : CGSStaminaCard
     private const int BaseEnergyCost = 0;
 
     // 卡牌类型。
-    private const CardType CardKind = CardType.Skill;
+    private const CardType CardKind = CardType.Attack;
 
     // 卡牌稀有度。
     private const CardRarity CardRarityValue = CardRarity.Uncommon;
@@ -50,7 +50,7 @@ public sealed class CGSDisruptFootwork : CGSStaminaCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         ModCardVars.Power<VulnerablePower>(2m),
-        ModCardVars.Damage(12m, ValueProp.Move),
+        ModCardVars.Damage(8m, ValueProp.Move),
         new DynamicVar(CGSStamina.Uses, 4m), new DynamicVar(CGSStamina.MaxUses, 4m)
     ];
 

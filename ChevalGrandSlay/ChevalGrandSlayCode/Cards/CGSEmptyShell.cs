@@ -26,11 +26,13 @@ public sealed class CGSEmptyShell : ModCardTemplate
 
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = false;
-    
+
+
+
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     public CGSEmptyShell() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)

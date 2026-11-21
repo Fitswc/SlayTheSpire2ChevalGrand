@@ -4,6 +4,7 @@ using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -33,7 +34,8 @@ public sealed class CGSFillTheGap : ModCardTemplate
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
         ModKeywordRegistry.CreateHoverTip(CGSKeywords.RestPile),
         ModKeywordRegistry.CreateHoverTip(CGSKeywords.Stamina)
     ];
@@ -41,7 +43,8 @@ public sealed class CGSFillTheGap : ModCardTemplate
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
         new DynamicVar("PowerStack", 1m)
     ];
 
@@ -51,6 +54,7 @@ public sealed class CGSFillTheGap : ModCardTemplate
 
         var effect = new LocString("cards",
             $"{Id.Entry}.{(IsUpgraded ? "upgradedEffect" : "baseEffect")}");
+        effect.Add("energyPrefix", EnergyIconHelper.GetPrefix(this));
         description.Add("Effect", effect);
     }
 
@@ -61,15 +65,15 @@ public sealed class CGSFillTheGap : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<CGSFillTheGapPower>(
-            choiceContext, 
+            choiceContext,
             Owner.Creature,
-            DynamicVars["PowerStack"].BaseValue, 
-            Owner.Creature, 
+            DynamicVars["PowerStack"].BaseValue,
+            Owner.Creature,
             this);
     }
 
     protected override void OnUpgrade()
     {
-       DynamicVars["PowerStack"].UpgradeValueBy(1m);
+        DynamicVars["PowerStack"].UpgradeValueBy(1m);
     }
 }

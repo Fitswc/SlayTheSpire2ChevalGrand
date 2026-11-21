@@ -1,7 +1,6 @@
 using ChevalGrandSlay.Characters;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
-using ChevalGrandSlay.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -33,6 +32,8 @@ public sealed class CGSLendReserve : CGSStaminaCard
     // 是否在卡牌图鉴中显示。
     private const bool ShowInCardLibrary = true;
 
+    public override int MaxUpgradeLevel => 0;
+
     public CGSLendReserve() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
@@ -45,20 +46,16 @@ public sealed class CGSLendReserve : CGSStaminaCard
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => 
-        [
-            new DynamicVar(CGSStamina.Uses, 4m),
-            new DynamicVar(CGSStamina.MaxUses, 4m),
-            new DynamicVar("HandLimitBonus", 2m)
-        ];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new DynamicVar(CGSStamina.Uses, 4m),
+        new DynamicVar(CGSStamina.MaxUses, 4m)
+    ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (CombatState is not { } combat)
             return;
-
-        await PowerCmd.Apply<CGSLendReservePower>(
-            choiceContext, Owner.Creature, DynamicVars["HandLimitBonus"].BaseValue, Owner.Creature, this);
 
         var hand = PileType.Hand.GetPile(Owner);
         int emptySlots = MaxHandSizeCalculator.Calculate(Owner) - hand.Cards.Count;
