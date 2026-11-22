@@ -1,0 +1,5 @@
+{
+  "CGSREWARDAFTERCOMBAT_REWARD_TOKEN": "[gold]体力カード[/gold]を1枚入手する",
+  "CGS_RESTORE_STAMINA_REWARD": "[gold]体力カード[/gold]1枚の体力を全回復する",
+  "CGS_RESTORE_STAMINA_REWARD_PROMPT": "体力が減っているカードを1枚選び、体力を全回復する。"
+}

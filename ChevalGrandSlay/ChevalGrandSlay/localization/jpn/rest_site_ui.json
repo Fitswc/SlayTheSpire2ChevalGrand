@@ -1,0 +1,6 @@
+{
+  "OPTION_CGS_FORGET.name": "忘却",
+  "OPTION_CGS_FORGET.description": "[gold]デッキ[/gold]から[gold]体力カード[/gold]を最大[blue]4[/blue]枚[gold]削除[/gold]する。",
+  "OPTION_CGS_FORGET.prompt": "[gold]削除[/gold]する[gold]体力カード[/gold]を[blue]{MinCount}～{MaxCount}[/blue]枚選ぶ。",
+  "OPTION_CGS_FORGET.descriptionDisabled": "デッキに削除できる体力カードがない。"
+}

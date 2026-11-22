@@ -1,6 +1,6 @@
 {
   "OPTION_CGS_FORGET.name": "Forget",
-  "OPTION_CGS_FORGET.description": "[gold]Remove[/gold] up to [blue]4[/blue] cards with [gold]Stamina[/gold] from your deck.",
+  "OPTION_CGS_FORGET.description": "[gold]Remove[/gold] up to [blue]4[/blue] cards with [gold]Stamina[/gold] from your [gold]deck[/gold].",
   "OPTION_CGS_FORGET.prompt": "Choose [blue]{MinCount} to {MaxCount}[/blue] cards with [gold]Stamina[/gold] to [gold]Remove[/gold].",
   "OPTION_CGS_FORGET.descriptionDisabled": "There are no removable Stamina cards in your deck."
 }
