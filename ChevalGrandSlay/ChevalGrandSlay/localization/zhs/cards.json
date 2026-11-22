@@ -65,7 +65,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_COUNT_THE_COST.description": "抽{Cards:diff()}张牌。若本回合已有牌进入[gold]休整牌堆[/gold]，获得{energyPrefix:energyIcons(2)}。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.title": "青空下的约定",
   "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.description": "从[gold]休整牌堆[/gold]选择至多4张体力牌，恢复全部体力并免费打出，并置入弃牌堆。",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.selectionScreenPrompt": "选择1至2张休整牌堆中的牌恢复体力",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_REWRITE_FATE.selectionScreenPrompt": "选择1至4张休整牌堆中的体力牌恢复体力",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.title": "以后...再一起跑吧",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.description": "{Effect}",
   "CHEVAL_GRAND_SLAY_CARD_CGS_TURN_TOGETHER.baseEffect": "你的回合中，每有1张你的牌从[gold]休整牌堆[/gold]移出，抽1张牌。",
@@ -197,7 +197,7 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_BALL.title": "球",
   "CHEVAL_GRAND_SLAY_CARD_CGS_BALL.description": "造成{Damage:diff()}点伤害。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_DRAW_FINISH_LINE.title": "今天的终点",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_DRAW_FINISH_LINE.description": "从[gold]休整牌堆[/gold]选择X张体力牌。各恢复其体力上限的一半，并放入抽牌堆。抽{Cards:diff()}张牌。",
+  "CHEVAL_GRAND_SLAY_CARD_CGS_DRAW_FINISH_LINE.description": "从[gold]休整牌堆[/gold]选择X张体力牌（不足则全选）。各恢复其体力上限的一半（向上取整），并放入抽牌堆。抽{Cards:diff()}张牌。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_DRAW_FINISH_LINE.selectionScreenPrompt": "选择要恢复体力并放入抽牌堆的牌",
   "CHEVAL_GRAND_SLAY_CARD_CGS_FATE_GUIDANCE.title": "Tidebreaker",
   "CHEVAL_GRAND_SLAY_CARD_CGS_FATE_GUIDANCE.description": "从[gold]休整牌堆[/gold]选择至多4张体力牌，恢复它们的全部体力并加入手牌。它们本回合的费用各减少1。",
@@ -212,5 +212,5 @@
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.description": "选择手中另1张仍有体力的牌。按其剩余体力次数免费打出。",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ALL_OUT.selectionScreenPrompt": "选择1张体力牌，按剩余体力免费打出",
   "CHEVAL_GRAND_SLAY_CARD_CGS_ONE_BEAT_AHEAD.title": "憧憬的前方",
-  "CHEVAL_GRAND_SLAY_CARD_CGS_ONE_BEAT_AHEAD.description": "本回合结束后，立即获得一个额外回合。该额外回合开始时，获得1点[gold]力量[/gold]和1点[gold]敏捷[/gold]。"
+  "CHEVAL_GRAND_SLAY_CARD_CGS_ONE_BEAT_AHEAD.description": "本回合结束后，立即获得一个额外回合。该额外回合开始时，获得1点[gold]力量[/gold]和1点[gold]敏捷[/gold]。该额外回合不能再获得额外回合。"
 }

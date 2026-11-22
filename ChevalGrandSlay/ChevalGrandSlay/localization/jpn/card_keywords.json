@@ -1,0 +1,8 @@
+{
+  "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.title": "体力",
+  "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.description": "プレイするたびに体力を1消費する。体力は戦闘をまたいで持ち越される。体力が尽きたカードは、回復するまで[gold]休息の山[/gold]に入る。",
+  "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.cardText": "{StaminaName}:[pulse freq=0.8 color=#64c3c1 ease=-2.0]{CGSUses:diff()}[/pulse]",
+  "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.deckText": "{StaminaName}:[pulse freq=0.8 color=#64c3c1 ease=-2.0]{RemainingStamina}[/pulse]",
+  "CHEVAL_GRAND_SLAY_KEYWORD_REST_PILE.title": "休息の山",
+  "CHEVAL_GRAND_SLAY_KEYWORD_REST_PILE.description": "体力が尽きたカードはここに入る。カードやパワーの効果で体力を回復させ、ここから取り出すことができる。"
+}

@@ -1,0 +1,6 @@
+{
+  "CHEVAL_GRAND_SLAY_POTION_CGS_POTENTIAL_POTION.title": "潜在力のポーション",
+  "CHEVAL_GRAND_SLAY_POTION_CGS_POTENTIAL_POTION.description": "生成可能な[gold]体力[/gold]カードがランダムに3枚提示される。その中から1枚選び、手札に加える。この戦闘中のみ存在し、エナジーコストは0、体力と最大体力は999になり、[gold]保留[/gold]を得る。",
+  "CHEVAL_GRAND_SLAY_POTION_CGS_ENDLESS_STAMINA_POTION.title": "無尽の体力ポーション",
+  "CHEVAL_GRAND_SLAY_POTION_CGS_ENDLESS_STAMINA_POTION.description": "このターン、[gold]体力[/gold]カードをプレイしても体力を消費しない。"
+}

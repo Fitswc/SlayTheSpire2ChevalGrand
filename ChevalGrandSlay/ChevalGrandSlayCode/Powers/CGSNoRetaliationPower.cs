@@ -8,7 +8,6 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace ChevalGrandSlay.Powers;
 
-
 // 能力：安心出手
 [RegisterPower]
 public sealed class CGSNoRetaliationPower : ModPowerTemplate
@@ -22,12 +21,12 @@ public sealed class CGSNoRetaliationPower : ModPowerTemplate
     );
     protected override bool IsVisibleInternal => false;
 
-    public override decimal ModifyHpLostAfterOsty(Creature target, decimal hpLoss, ValueProp props,
+    public override decimal ModifyHpLostAfterOsty(Creature target, decimal amount, ValueProp props,
         Creature? dealer, CardModel? cardSource)
     {
         return target == Owner && dealer?.IsEnemy == true && CombatState.CurrentSide == CombatSide.Player &&
             !props.IsPoweredAttack()
                 ? 0m
-                : hpLoss;
+                : amount;
     }
 }

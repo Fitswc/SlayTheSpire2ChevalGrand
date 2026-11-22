@@ -23,13 +23,13 @@ public sealed class CGSEnemyAttackLossCapPower : ModPowerTemplate
     );
     private decimal _lost;
 
-    public override decimal ModifyHpLostAfterOsty(Creature target, decimal hpLoss, ValueProp props,
+    public override decimal ModifyHpLostAfterOsty(Creature target, decimal amount, ValueProp props,
         Creature? dealer, CardModel? cardSource)
     {
         if (target != Owner || dealer?.IsEnemy != true || !props.IsPoweredAttack() ||
-            CombatState.CurrentSide != CombatSide.Enemy) return hpLoss;
+            CombatState.CurrentSide != CombatSide.Enemy) return amount;
         decimal allowed = Math.Max(0m, Amount - _lost);
-        decimal actual = Math.Min(hpLoss, allowed);
+        decimal actual = Math.Min(amount, allowed);
         _lost += actual;
         return actual;
     }

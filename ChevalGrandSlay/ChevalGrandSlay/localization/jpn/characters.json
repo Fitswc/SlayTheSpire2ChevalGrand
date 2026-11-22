@@ -1,0 +1,20 @@
+{
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.aromaPrinciple": "[sine][blue]負けられない……[/blue][/sine]",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.banter.alive.endTurnPing": "あ、あの……",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.banter.dead.endTurnPing": "……",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.cardsModifierDescription": "シュヴァルグランのカードが報酬やショップに出現するようになる。",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.cardsModifierTitle": "シュヴァルグランのカード",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.defeatMessage": "どうしてこんなことに……",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.description": "なぜここに来たのか分からないウマ娘。\nきっと食べすぎたせいだ……",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.eventDeathPrevention": "もう休めました……",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.goldMonologue": "このお金で、お姉ちゃんとヴィブロスにプレゼントを買えるかも……",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.possessiveAdjective": "彼女の",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.pronounObject": "彼女",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.pronounPossessive": "彼女のもの",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.pronounSubject": "彼女",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.selectMessage": "シュヴァルグランの準備ができた。",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.title": "シュヴァルグラン",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.titleObject": "シュヴァルグラン",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.unlockText": "[pink]{Prerequisite}[/pink]で1回プレイすると、このキャラクターがアンロックされる。",
+  "CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.victoryMessage": "私だって強いんだから。ふふっ。"
+}
