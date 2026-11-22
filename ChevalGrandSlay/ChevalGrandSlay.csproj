@@ -16,6 +16,8 @@
         <GodotExportPreset>Windows Desktop</GodotExportPreset>
         <Sts2Dir Condition="'$(Sts2Dir)' == ''">$(MSBuildProgramFiles32)\Steam\steamapps\common\Slay the Spire 2</Sts2Dir>
         <Sts2DataDir Condition="'$(Sts2DataDir)' == ''">$(Sts2Dir)\data_sts2_windows_x86_64</Sts2DataDir>
+        <AutoAnthonyDll Condition="'$(AutoAnthonyDll)' == '' and Exists('$(Sts2Dir)/mods/AutoAnthony/AutoAnthony.dll')">$(Sts2Dir)/mods/AutoAnthony/AutoAnthony.dll</AutoAnthonyDll>
+        <AutoAnthonyDll Condition="'$(AutoAnthonyDll)' == ''">$(Sts2Dir)/../../workshop/content/2868840/3786611028/AutoAnthony.dll</AutoAnthonyDll>
         <ModOutputDir>$(Sts2Dir)\mods\$(MSBuildProjectName)\</ModOutputDir>
         <ModPckPath>$(ModOutputDir)$(MSBuildProjectName).pck</ModPckPath>
         <!-- 本机测试时 RitsuLib 包/构建逻辑会使用这个目录把 RitsuLib 部署到游戏 mods/STS2-RitsuLib。 -->
@@ -37,7 +39,7 @@
 
     <ItemGroup>
         <PackageReference Include="Krafs.Publicizer" Version="2.3.2" PrivateAssets="all"/>
-        <PackageReference Include="STS2.RitsuLib" Version="0.6.13" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.6.13"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -48,7 +50,7 @@
         <Reference Include="0Harmony" HintPath="$(Sts2DataDir)\0Harmony.dll" Private="True"/>
         <Reference Include="sts2" HintPath="$(Sts2DataDir)\sts2.dll" Private="True"/>
         <Reference Include="Steamworks.NET" HintPath="$(Sts2DataDir)\Steamworks.NET.dll" Private="True"/>
-        <Reference Include="AutoAnthony" HintPath="D:/SteamLibrary/steamapps/workshop/content/2868840/3786611028/AutoAnthony.dll" Private="False"/>
+        <Reference Include="AutoAnthony" HintPath="$(AutoAnthonyDll)" Private="False"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -83,6 +85,7 @@
 
     <Target Name="ValidateSts2GameInstall" BeforeTargets="ResolveAssemblyReferences">
         <Error Condition="!Exists('$(Sts2DataDir)\sts2.dll')" Text="Could not find sts2.dll under '$(Sts2DataDir)'. Copy local.props.template to local.props and set Sts2Dir/Sts2DataDir for your local game install."/>
+        <Error Condition="!Exists('$(AutoAnthonyDll)')" Text="Could not find AutoAnthony.dll. Install AutoAnthony or set AutoAnthonyDll in local.props."/>
     </Target>
 
     <Target Name="CopyMod" AfterTargets="Build" Condition="'$(CopyModOnBuild)' != 'false'">

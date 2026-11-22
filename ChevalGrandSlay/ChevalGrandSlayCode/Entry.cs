@@ -1,5 +1,6 @@
 using System.Reflection;
 using ChevalGrandSlay.Cards;
+using ChevalGrandSlay.Compatibility;
 using ChevalGrandSlay.Configs;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
@@ -49,7 +50,7 @@ public partial class Entry
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
 
         CGSKeywords.Register();
-        
+
         CGSMainConfigPage.Register();
 
         //Fmod
@@ -103,6 +104,7 @@ public partial class Entry
         RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<CGSForwardAStep, CGSLittleBravePlus>();
         RitsuLibFramework.RegisterTouchOfOrobasRefinementMapping<CGSStartRelic, CGSStartRelicPlus>();
 
+        CGSAutoAnthonySupport.Register();
 
         Logger.Info("ChevalGrandMod initialized.");
     }

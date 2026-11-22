@@ -5,6 +5,7 @@ using ChevalGrandSlay.Utilities;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -66,56 +67,63 @@ public sealed class CGSChaseTheWind : CGSStaminaCard
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 
-        if (CombatState is not { } combatState || CombatManager.Instance.IsOverOrEnding)
-            return;
-
-        var options = new List<CardModel>();
-        AddPileOption<CGSChaseTheWindDrawPile>(options, PileType.Draw);
-        AddPileOption<CGSChaseTheWindDiscardPile>(options, PileType.Discard);
-        AddPileOption<CGSChaseTheWindRestPile>(options, Entry.CGSFatePile);
-        if (options.Count == 0)
-            return;
-
-        var selected = await CardSelectCmd.FromChooseACardScreen(choiceContext, options, Owner, canSkip: false);
-        if (selected is not CGSChaseTheWindPileChoice choice)
-            return;
-
-        int count = DynamicVars.Cards.IntValue;
-        var pile = choice.SourcePile.GetPile(Owner);
-        if (choice.SourcePile == PileType.Draw)
-            await CardPileCmd.Draw(choiceContext, Math.Min(count, pile.Cards.Count), Owner);
-        else
-            await DrawFromPile(choiceContext, combatState, pile, count);
+        await DrawFromChosenPile(this, choiceContext, DynamicVars.Cards.IntValue);
     }
 
-    private void AddPileOption<T>(List<CardModel> options, PileType pile) where T : CGSChaseTheWindPileChoice
+    internal static async Task<IReadOnlyList<CardModel>> DrawFromChosenPile(CardModel source,
+        PlayerChoiceContext choiceContext, int count)
     {
-        if (pile.GetPile(Owner).Cards.Count == 0)
+        if (count <= 0 || source.CombatState is not { } combatState || CombatManager.Instance.IsOverOrEnding)
+            return [];
+
+        var player = source.Owner;
+        var options = new List<CardModel>();
+        AddPileOption<CGSChaseTheWindDrawPile>(options, player, PileType.Draw);
+        AddPileOption<CGSChaseTheWindDiscardPile>(options, player, PileType.Discard);
+        AddPileOption<CGSChaseTheWindRestPile>(options, player, Entry.CGSFatePile);
+        if (options.Count == 0)
+            return [];
+
+        var selected = await CardSelectCmd.FromChooseACardScreen(choiceContext, options, player, canSkip: false);
+        if (selected is not CGSChaseTheWindPileChoice choice)
+            return [];
+
+        var pile = choice.SourcePile.GetPile(player);
+        if (choice.SourcePile == PileType.Draw)
+            return (await CardPileCmd.Draw(choiceContext, Math.Min(count, pile.Cards.Count), player)).ToArray();
+        return await DrawFromPile(choiceContext, combatState, player, pile, count);
+    }
+
+    private static void AddPileOption<T>(List<CardModel> options, Player player, PileType pile) where T : CGSChaseTheWindPileChoice
+    {
+        if (pile.GetPile(player).Cards.Count == 0)
             return;
 
         var option = ModelDb.Card<T>().ToMutable();
-        option.Owner = Owner;
+        option.Owner = player;
         options.Add(option);
     }
 
-    private async Task DrawFromPile(PlayerChoiceContext choiceContext, ICombatState combatState, CardPile pile, int count)
+    private static async Task<IReadOnlyList<CardModel>> DrawFromPile(PlayerChoiceContext choiceContext,
+        ICombatState combatState, Player player, CardPile pile, int count)
     {
-        if (!Hook.ShouldDraw(combatState, Owner, false, out var modifier))
+        if (!Hook.ShouldDraw(combatState, player, false, out var modifier))
         {
             if (modifier is not null)
                 await Hook.AfterPreventingDraw(combatState, modifier);
-            return;
+            return [];
         }
 
         var candidates = pile.Cards.ToList();
-        var hand = PileType.Hand.GetPile(Owner);
+        var hand = PileType.Hand.GetPile(player);
+        var drawn = new List<CardModel>();
         var combatManager = CombatManager.Instance;
         for (int i = 0; i < count && candidates.Count > 0; i++)
         {
-            if (combatManager.IsOverOrEnding || hand.Cards.Count >= MaxHandSizeCalculator.Calculate(Owner))
+            if (combatManager.IsOverOrEnding || hand.Cards.Count >= MaxHandSizeCalculator.Calculate(player))
                 break;
 
-            var card = Owner.RunState.Rng.CombatCardSelection.NextItem(candidates);
+            var card = player.RunState.Rng.CombatCardSelection.NextItem(candidates);
             if (card is null)
                 break;
 
@@ -126,7 +134,10 @@ public sealed class CGSChaseTheWind : CGSStaminaCard
             combatManager.History.CardDrawn(combatState, card, false);
             await Hook.AfterCardDrawn(combatState, choiceContext, card, false);
             card.InvokeDrawn();
+            drawn.Add(card);
         }
+
+        return drawn;
     }
 
     protected override void OnUpgrade()

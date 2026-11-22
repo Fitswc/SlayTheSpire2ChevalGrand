@@ -55,7 +55,7 @@ public sealed class CGSSubZero : ModCardTemplate
         ModCardVars.Power<PlatingPower>(16m),
         new DynamicVar("Restore", 1m)
     ];
-    
+
     public CGSSubZero() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget)
     {
     }
@@ -81,17 +81,8 @@ public sealed class CGSSubZero : ModCardTemplate
         await PowerCmd.Apply<PlatingPower>(
             choiceContext, Owner.Creature, DynamicVars["PlatingPower"].BaseValue, Owner.Creature, this);
 
-        var restingCards = Entry.CGSFatePile.GetPile(Owner).Cards.Where(CGSStamina.HasStamina).ToArray();
-        decimal restore = DynamicVars["Restore"].BaseValue;
-        foreach (var card in restingCards)
-        {
-            if (card.Pile?.Type != Entry.CGSFatePile)
-                continue;
-
-            CGSStamina.Restore(card, restore);
-            if (card.DynamicVars[CGSStamina.Uses].BaseValue >= card.DynamicVars[CGSStamina.MaxUses].BaseValue)
-                await CardPileCmd.Add(card, PileType.Draw);
-        }
+        await CGSStamina.RecoverRestingCardsToDraw(Entry.CGSFatePile.GetPile(Owner).Cards,
+            DynamicVars["Restore"].BaseValue);
     }
 
     // 升级后的效果逻辑。

@@ -1,3 +1,4 @@
+using ChevalGrandSlay.Compatibility;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Content;
@@ -28,8 +29,8 @@ public sealed class CGSKeywords
         ModContentRegistry.For(Entry.ModId).ConfigureDefaultModelCapabilities<CardModel>(
             "stamina-keyword-text", static (card, capabilities) =>
             {
-                if (card.GetType().Assembly == typeof(CGSKeywords).Assembly &&
-                    card.CanonicalKeywords.Contains(Stamina))
+                if (card is ICGSGeneratedCard || (card.GetType().Assembly == typeof(CGSKeywords).Assembly &&
+                        card.CanonicalKeywords.Contains(Stamina)))
                     capabilities.Add<CGSStaminaKeywordText>();
             });
     }

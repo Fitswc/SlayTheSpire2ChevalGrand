@@ -12,6 +12,9 @@ public abstract class CGSStaminaCard(int energyCost, CardType type, CardRarity r
         if (Owner is null)
             throw new InvalidOperationException("This card needs an owner.");
 
+        if (CGSStamina.IsEmptyCopy(this))
+            return;
+
         CGSConsumeUse.Consume(this);
         await OnStaminaPlay(choiceContext, cardPlay);
     }

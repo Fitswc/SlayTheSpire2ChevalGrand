@@ -4,9 +4,11 @@ using ChevalGrandSlay.Mechanics;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Keywords;
@@ -48,34 +50,41 @@ public sealed class CGSBriefRestRestart : CGSStaminaCard
     // 美术暂缺，使用框架默认资源。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => 
-        [
-            new DynamicVar(CGSStamina.Uses, 6m),
-            new DynamicVar(CGSStamina.MaxUses, 6m),
-            ModCardVars.Block(4m, ValueProp.Move)
-        ];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new DynamicVar(CGSStamina.Uses, 6m),
+        new DynamicVar(CGSStamina.MaxUses, 6m),
+        ModCardVars.Block(4m, ValueProp.Move)
+    ];
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        
-        var candidates = Entry.CGSFatePile.GetPile(Owner).Cards
+        await RecoverSkills(choiceContext, Owner, 2);
+    }
+
+    internal static async Task RecoverSkills(PlayerChoiceContext choiceContext, Player player, int maximum)
+    {
+        var pile = Entry.CGSFatePile.GetPile(player);
+        var candidates = pile.Cards
             .Where(selectedCard => selectedCard.Type == CardType.Skill && CGSStamina.HasStamina(selectedCard))
             .ToList();
-        
-        if (candidates.Count == 0)
-        {
+
+        if (candidates.Count == 0 || maximum <= 0)
             return;
-        }
-        
+
         var selected = await CardSelectCmd.FromSimpleGrid(
             choiceContext,
             candidates,
-            Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 0, Math.Min(2, candidates.Count)));
+            player,
+            new CardSelectorPrefs(ModelDb.Card<CGSBriefRestRestart>().SelectionScreenPrompt, 0,
+                Math.Min(maximum, candidates.Count)));
 
         foreach (var card in selected)
         {
+            if (card.Pile != pile)
+                continue;
+
             CGSStamina.RestoreFull(card);
             await CardPileCmd.Add(card, PileType.Draw);
         }

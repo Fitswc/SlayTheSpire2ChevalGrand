@@ -1,4 +1,6 @@
 using System.Runtime.CompilerServices;
+using ChevalGrandSlay.Compatibility;
+using ChevalGrandSlay.Relics;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -15,6 +17,7 @@ internal static class CGSStamina
     internal const string MaxUses = "CGSMaxUses";
 
     private static readonly ConditionalWeakTable<ICombatState, object> PendingFirstTurns = new();
+    private static readonly ConditionalWeakTable<CardModel, object> EmptyCopies = new();
 
     private sealed record SpentStamina
     {
@@ -29,7 +32,7 @@ internal static class CGSStamina
         ModContentRegistry.For(Entry.ModId).ConfigureDefaultModelCapabilities<CardModel>(
             "stamina-result-pile", static (card, capabilities) =>
             {
-                if (card is CGSStaminaCard)
+                if (card is CGSStaminaCard or ICGSGeneratedCard)
                     capabilities.Add<CGSConsumeUse>();
             });
 
@@ -40,9 +43,34 @@ internal static class CGSStamina
                 WritePolicy = ModelSavedDataWritePolicy.WhenNonDefault
             });
 
+        RitsuLibFramework.GetModelCloneRegistry(Entry.ModId)
+            .Register<CardModel>("copy-stamina", OnCardCloned);
+
         RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>(LoadCombatStamina, replayCurrentState: false);
         RitsuLibFramework.SubscribeLifecycle<SideTurnStartingEvent>(MoveStartingCardsToRest, replayCurrentState: false);
         RitsuLibFramework.SubscribeLifecycle<CombatEndedEvent>(SaveRestOrder, replayCurrentState: false);
+    }
+
+    internal static bool IsEmptyCopy(CardModel card) => EmptyCopies.TryGetValue(card, out _);
+
+    private static void OnCardCloned(CardModel original, CardModel copy)
+    {
+        if (original is not (CGSStaminaCard or ICGSGeneratedCard) || !HasStamina(original))
+            return;
+
+        if (IsEmptyCopy(original) || IsDepleted(original))
+        {
+            EmptyCopies.GetOrCreateValue(copy);
+            foreach (var keyword in copy.Keywords.ToArray())
+                copy.RemoveKeyword(keyword);
+            copy.AddKeyword(CardKeyword.Exhaust);
+            if (!copy.EnergyCost.CostsX)
+                copy.EnergyCost.SetThisCombat(0);
+            return;
+        }
+
+        Copy(original, copy);
+        CGSStartRelicPlus.InheritStaminaBonus(original, copy);
     }
 
     public static bool HasStamina(CardModel card) =>
@@ -81,6 +109,19 @@ internal static class CGSStamina
 
     public static void RestoreFull(CardModel card) =>
         SetRemaining(card, card.DynamicVars[MaxUses].BaseValue);
+
+    internal static async Task RecoverRestingCardsToDraw(IEnumerable<CardModel> cards, decimal amount)
+    {
+        foreach (var card in cards.ToArray())
+        {
+            if (card.Pile?.Type != Entry.CGSFatePile || !HasStamina(card))
+                continue;
+
+            Restore(card, amount);
+            if (IsFull(card))
+                await CardPileCmd.Add(card, PileType.Draw);
+        }
+    }
 
     internal static void RestoreAfterUpgrade(CardModel card)
     {
