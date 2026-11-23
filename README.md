@@ -19,7 +19,7 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=3840359479
 3. 启动游戏，按提示允许加载 Mod，然后在角色选择界面选择高尚骏逸。
 
 ### 从源码构建
-   >需要 Windows 版《杀戮尖塔 2》、.NET 10 SDK 和 Godot 4.5.1 .NET 版。
+   >需要 Windows 版《杀戮尖塔 2》、.NET 10 SDK 、Godot 4.5.1 .NET 版 以及东尼算法。
 
 #### 首次配置: 
 1. 根目录执行
