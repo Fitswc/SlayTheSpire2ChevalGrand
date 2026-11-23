@@ -17,8 +17,8 @@ public sealed class CGSConsumeUse : CardCapability, ICardPlayResultContributor
 
     public PileType? GetResultPileTypeForCardPlay(CardModel card)
     {
-        if (CGSStamina.IsEmptyCopy(card))
-            return PileType.Exhaust;
+        if (!CGSStamina.HasStamina(card))
+            return null;
 
         // The game chooses the result pile before calling OnPlay, where Stamina is spent.
         bool preserved = TryPreserve(card);

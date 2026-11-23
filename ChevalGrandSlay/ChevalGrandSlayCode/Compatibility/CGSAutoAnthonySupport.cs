@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
 using MegaCrit.Sts2.Core.Modding;
 
-[assembly: InternalsVisibleTo("ChevalGrandSlay.AutoAnthony")]
+[assembly: InternalsVisibleTo("ChevalGrandSlay.AutoAnthony.Bridge")]
 
 namespace ChevalGrandSlay.Compatibility;
 
@@ -12,7 +12,7 @@ internal interface ICGSGeneratedCard;
 internal static class CGSAutoAnthonySupport
 {
     private const string ModId = "AutoAnthony";
-    private const string BridgeFile = "ChevalGrandSlay.AutoAnthony.dll";
+    private const string BridgeRelativePath = "Compat/ChevalGrandSlay.AutoAnthony.Bridge.dll";
     private const string BridgeEntry = "ChevalGrandSlay.Compatibility.AutoAnthony.ChevalAutoAnthonyIntegration";
 
     internal static bool IsAvailable { get; private set; }
@@ -32,35 +32,46 @@ internal static class CGSAutoAnthonySupport
             return;
 
         ModManager.OnModDetected -= OnModDetected;
-        if (!ModManager.GetLoadedMods().Contains(mod))
+        if (!ModManager.GetLoadedMods().Contains(mod) ||
+            !mod.assemblies.Any(assembly => assembly.GetName().Name == ModId))
             return;
-
-        var mainAssembly = typeof(Entry).Assembly;
-        var location = Path.GetDirectoryName(mainAssembly.Location);
-        if (location is null)
-            return;
-
-        var bridgePath = Path.Combine(location, BridgeFile);
-        if (!File.Exists(bridgePath))
-        {
-            Entry.Logger.Warn("[AutoAnthony] Compatibility module is missing.");
-            return;
-        }
 
         try
         {
-            var loadContext = AssemblyLoadContext.GetLoadContext(mainAssembly) ?? AssemblyLoadContext.Default;
-            var bridge = loadContext.LoadFromAssemblyPath(bridgePath);
-            var register = bridge.GetType(BridgeEntry, throwOnError: true)!
-                    .GetMethod("Register", BindingFlags.Public | BindingFlags.Static)?.CreateDelegate<Action>()
+            var mainAssembly = typeof(Entry).Assembly;
+            var integration = mainAssembly.GetType(BridgeEntry) ?? LoadBridgeEntry(mainAssembly);
+            if (integration is null)
+                return;
+
+            var register = integration.GetMethod("Register", BindingFlags.Public | BindingFlags.Static)
+                    ?.CreateDelegate<Action>()
                 ?? throw new MissingMethodException(BridgeEntry, "Register");
             register();
-            ModManager.AssociateAssemblyWithMod(Entry.ModId, bridge);
+            if (integration.Assembly != mainAssembly)
+                ModManager.AssociateAssemblyWithMod(Entry.ModId, integration.Assembly);
+
             IsAvailable = true;
         }
         catch (Exception error)
         {
             Entry.Logger.Warn($"[AutoAnthony] Compatibility unavailable: {error.GetBaseException().Message}");
         }
+    }
+
+    private static Type? LoadBridgeEntry(Assembly mainAssembly)
+    {
+        string? location = Path.GetDirectoryName(mainAssembly.Location);
+        if (location is null)
+            return null;
+
+        string bridgePath = Path.Combine(location, BridgeRelativePath);
+        if (!File.Exists(bridgePath))
+        {
+            Entry.Logger.Warn($"[AutoAnthony] Compatibility module is missing: {bridgePath}");
+            return null;
+        }
+
+        var loadContext = AssemblyLoadContext.GetLoadContext(mainAssembly) ?? AssemblyLoadContext.Default;
+        return loadContext.LoadFromAssemblyPath(bridgePath).GetType(BridgeEntry, throwOnError: true);
     }
 }

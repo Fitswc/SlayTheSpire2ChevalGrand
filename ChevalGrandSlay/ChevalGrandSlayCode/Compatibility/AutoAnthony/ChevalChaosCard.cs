@@ -14,13 +14,14 @@ namespace ChevalGrandSlay.Compatibility.AutoAnthony;
 
 public abstract class ChevalChaosCard : ExternalChaosCardModel, ICGSGeneratedCard
 {
-    private const int StartingStamina = 4;
     private int _discountedTurn = -1;
     private int _restEnteredTurn = -1;
     private int _retainedTurn = -1;
     private string? _cachedHistoryPayload;
     private ChaosCardDefinition? _cachedHistoryDefinition;
     internal bool IsResolving { get; private set; }
+
+    private int StartingStamina => ChevalChaosSlots.Layout[Slot].StartingStamina;
 
     internal bool RestEnteredThisTurn => Owner?.PlayerCombatState?.TurnNumber == _restEnteredTurn;
     internal bool RetainedLastTurn => _retainedTurn >= 0 && Owner?.PlayerCombatState is { } state &&
@@ -36,9 +37,6 @@ public abstract class ChevalChaosCard : ExternalChaosCardModel, ICGSGeneratedCar
 
     protected override sealed ChaosCardDefinition ResolveDefinition()
     {
-        if (CGSStamina.IsEmptyCopy(this))
-            return ChevalHistory.Placeholder(Slot);
-
         if (ChevalRun.IsActive)
             return base.ResolveDefinition();
 
@@ -68,17 +66,26 @@ public abstract class ChevalChaosCard : ExternalChaosCardModel, ICGSGeneratedCar
         CGSStamina.RestoreDeckCard(this);
     }
 
-    protected override sealed IEnumerable<DynamicVar> CanonicalVars =>
-        base.CanonicalVars.Concat([
-            new DynamicVar(CGSStamina.Uses, StartingStamina),
-            new DynamicVar(CGSStamina.MaxUses, StartingStamina)
-        ]);
+    protected override sealed IEnumerable<DynamicVar> CanonicalVars
+    {
+        get
+        {
+            int stamina = StartingStamina;
+            return stamina > 0
+                ? base.CanonicalVars.Concat([
+                    new DynamicVar(CGSStamina.Uses, stamina),
+                    new DynamicVar(CGSStamina.MaxUses, stamina)
+                ])
+                : base.CanonicalVars;
+        }
+    }
 
     public override sealed IEnumerable<CardKeyword> CanonicalKeywords
     {
         get
         {
-            yield return CGSKeywords.Stamina;
+            if (StartingStamina > 0)
+                yield return CGSKeywords.Stamina;
             var generated = base.CanonicalKeywords;
             if (HasEffect(ChevalComponents.RetainedDamage) || HasEffect(ChevalComponents.FinalKick))
                 generated = generated.Append(CardKeyword.Retain);
@@ -100,13 +107,11 @@ public abstract class ChevalChaosCard : ExternalChaosCardModel, ICGSGeneratedCar
 
     protected override async sealed Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (CGSStamina.IsEmptyCopy(this))
-            return;
-
         IsResolving = true;
         try
         {
-            CGSConsumeUse.Consume(this);
+            if (StartingStamina > 0)
+                CGSConsumeUse.Consume(this);
             await base.OnPlay(choiceContext, cardPlay);
         }
         finally

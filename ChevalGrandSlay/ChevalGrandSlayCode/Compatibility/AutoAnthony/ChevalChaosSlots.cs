@@ -5,17 +5,32 @@ namespace ChevalGrandSlay.Compatibility.AutoAnthony;
 
 internal static class ChevalChaosSlots
 {
-    internal static IReadOnlyList<(GeneratedRarity Rarity, GeneratedCardType Type)> Layout { get; } =
+    internal static IReadOnlyList<(GeneratedRarity Rarity, GeneratedCardType Type, int StartingStamina)> Layout { get; } =
     [
-        .. Enumerable.Repeat((GeneratedRarity.Common, GeneratedCardType.Attack), 5),
-        .. Enumerable.Repeat((GeneratedRarity.Common, GeneratedCardType.Skill), 14),
-        .. Enumerable.Repeat((GeneratedRarity.Uncommon, GeneratedCardType.Attack), 11),
-        .. Enumerable.Repeat((GeneratedRarity.Uncommon, GeneratedCardType.Skill), 21),
-        .. Enumerable.Repeat((GeneratedRarity.Uncommon, GeneratedCardType.Power), 4),
-        .. Enumerable.Repeat((GeneratedRarity.Rare, GeneratedCardType.Attack), 5),
-        .. Enumerable.Repeat((GeneratedRarity.Rare, GeneratedCardType.Skill), 8),
-        .. Enumerable.Repeat((GeneratedRarity.Rare, GeneratedCardType.Power), 14)
+        .. CreateSlots(GeneratedRarity.Common, GeneratedCardType.Attack, 5, staminaCount: 3),
+        .. CreateSlots(GeneratedRarity.Common, GeneratedCardType.Skill, 14, staminaCount: 7),
+        .. CreateSlots(GeneratedRarity.Uncommon, GeneratedCardType.Attack, 11, staminaCount: 10),
+        .. CreateSlots(GeneratedRarity.Uncommon, GeneratedCardType.Skill, 21, staminaCount: 13),
+        .. CreateSlots(GeneratedRarity.Uncommon, GeneratedCardType.Power, 4, staminaCount: 0),
+        .. CreateSlots(GeneratedRarity.Rare, GeneratedCardType.Attack, 5, staminaCount: 4),
+        .. CreateSlots(GeneratedRarity.Rare, GeneratedCardType.Skill, 8, staminaCount: 7),
+        .. CreateSlots(GeneratedRarity.Rare, GeneratedCardType.Power, 14, staminaCount: 0)
     ];
+
+    private static IEnumerable<(GeneratedRarity Rarity, GeneratedCardType Type, int StartingStamina)> CreateSlots(
+        GeneratedRarity rarity, GeneratedCardType type, int totalCount, int staminaCount)
+    {
+        int startingStamina = rarity switch
+        {
+            GeneratedRarity.Rare => 2,
+            GeneratedRarity.Uncommon => 4,
+            GeneratedRarity.Common => 6,
+            _ => throw new ArgumentOutOfRangeException(nameof(rarity))
+        };
+
+        return Enumerable.Repeat((rarity, type, startingStamina), staminaCount)
+            .Concat(Enumerable.Repeat((rarity, type, 0), totalCount - staminaCount));
+    }
 
     private static readonly Type[] Types = typeof(ChevalChaosCard).Assembly.GetTypes()
         .Where(type => type.IsSubclassOf(typeof(ChevalChaosCard)) && !type.IsAbstract)

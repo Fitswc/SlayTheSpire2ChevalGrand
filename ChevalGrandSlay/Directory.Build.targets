@@ -1,0 +1,66 @@
+<Project TreatAsLocalProperty="AutoAnthonyDll">
+    <PropertyGroup>
+        <!-- Use the path captured by local.props before the project evaluates its fallback paths. -->
+        <AutoAnthonyDll Condition="'$(MSBuildProjectName)' == 'ChevalGrandSlay'">$(_AutoAnthonyDllFromLocalProps)</AutoAnthonyDll>
+        <_AutoAnthonyBridgeRelativePath>Compat/ChevalGrandSlay.AutoAnthony.Bridge.dll</_AutoAnthonyBridgeRelativePath>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(MSBuildProjectName)' == 'ChevalGrandSlay'">
+        <!-- RitsuLib expects embedded translations to be named Settings.&lt;language&gt;.json. -->
+        <EmbeddedResource Include="ChevalGrandSlay/localization/*/setting.json"
+                          WithCulture="false"
+                          LogicalName="ChevalGrandSlay.Settings.$([System.IO.Path]::GetFileName($([System.IO.Path]::GetDirectoryName('%(FullPath)')))).json"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(MSBuildProjectName)' == 'ChevalGrandSlay' and '$(DesignTimeBuild)' != 'true'">
+        <AutoAnthonyBridgeSources Include="ChevalGrandSlayCode/Compatibility/AutoAnthony/*.cs"/>
+        <Compile Remove="@(AutoAnthonyBridgeSources)"/>
+        <Reference Remove="AutoAnthony"/>
+    </ItemGroup>
+
+    <Target Name="CompileAutoAnthonyBridge" AfterTargets="CoreCompile"
+            Condition="'@(AutoAnthonyBridgeSources)' != '' and Exists('$(AutoAnthonyDll)')">
+        <PropertyGroup>
+            <_AutoAnthonyBridgeAssembly>$(IntermediateOutputPath)$(_AutoAnthonyBridgeRelativePath)</_AutoAnthonyBridgeAssembly>
+        </PropertyGroup>
+        <ItemGroup>
+            <_AutoAnthonyPublicizerSource Include="@(Compile)"
+                                          Condition="'%(Compile.Filename)' == 'IgnoresAccessChecksToAttribute'"/>
+        </ItemGroup>
+
+        <MakeDir Directories="$([System.IO.Path]::GetDirectoryName('$(_AutoAnthonyBridgeAssembly)'))"/>
+        <!-- Give the compatibility assembly the same game-member access as the main assembly. -->
+        <Csc Sources="@(AutoAnthonyBridgeSources);$(GeneratedGlobalUsingsFile);$(GeneratedAssemblyInfoFile);@(_AutoAnthonyPublicizerSource)"
+             References="@(ReferencePathWithRefAssemblies);$(AutoAnthonyDll);@(IntermediateAssembly)"
+             OutputAssembly="$(_AutoAnthonyBridgeAssembly)"
+             TargetType="Library"
+             LangVersion="$(LangVersion)"
+             DefineConstants="$(DefineConstants)"
+             Optimize="$(Optimize)"
+             NoStandardLib="true"
+             DisabledWarnings="1701;$(NoWarn)"
+             Deterministic="true"
+             PathMap="$(PathMap)"/>
+        <Copy SourceFiles="$(_AutoAnthonyBridgeAssembly)"
+              DestinationFiles="$(TargetDir)$(_AutoAnthonyBridgeRelativePath)"
+              SkipUnchangedFiles="true"/>
+        <ItemGroup>
+            <FileWrites Include="$(_AutoAnthonyBridgeAssembly);$(TargetDir)$(_AutoAnthonyBridgeRelativePath)"/>
+        </ItemGroup>
+    </Target>
+
+    <Target Name="PublishAutoAnthonyBridge" BeforeTargets="ComputeFilesToPublish"
+            Condition="'@(AutoAnthonyBridgeSources)' != '' and Exists('$(TargetDir)$(_AutoAnthonyBridgeRelativePath)')">
+        <ItemGroup>
+            <ResolvedFileToPublish Include="$(TargetDir)$(_AutoAnthonyBridgeRelativePath)"
+                                   RelativePath="$(_AutoAnthonyBridgeRelativePath)"
+                                   CopyToPublishDirectory="PreserveNewest"/>
+        </ItemGroup>
+    </Target>
+
+    <Target Name="CopyAutoAnthonyBridge" AfterTargets="CopyMod"
+            Condition="'@(AutoAnthonyBridgeSources)' != '' and '$(CopyModOnBuild)' != 'false' and Exists('$(AutoAnthonyDll)')">
+        <Copy SourceFiles="$(TargetDir)$(_AutoAnthonyBridgeRelativePath)"
+              DestinationFiles="$(ModOutputDir)/$(_AutoAnthonyBridgeRelativePath)"/>
+    </Target>
+</Project>

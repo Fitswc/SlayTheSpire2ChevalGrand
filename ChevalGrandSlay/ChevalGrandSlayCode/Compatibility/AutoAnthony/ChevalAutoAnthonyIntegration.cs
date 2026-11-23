@@ -62,16 +62,17 @@ public static class ChevalAutoAnthonyIntegration
 
         try
         {
+            var marker = run.Modifiers.OfType<ChevalAutoAnthonyRunSnapshot>().LastOrDefault();
             bool legacy = !_pool.TryGet(run, out var saved) || string.IsNullOrEmpty(saved?.Data);
-            string? payload = !legacy
-                ? saved!.Data
-                : run.Modifiers.OfType<ChevalAutoAnthonyRunSnapshot>().LastOrDefault()?.VerifiedPayload;
-            if (payload is null)
+            var payload = legacy ? marker?.VerifiedPayload : saved!.Data;
+            if (string.IsNullOrEmpty(payload))
                 return;
 
             ChevalRun.Install(payload);
             _pool.Set(run, new ChevalDefinitionPayload { Data = payload });
             ChevalHistory.CaptureDecks(run, rebuild: legacy);
+            if (marker is not null && run.Modifiers is List<ModifierModel> modifiers)
+                modifiers.Remove(marker);
         }
         catch (Exception error)
         {

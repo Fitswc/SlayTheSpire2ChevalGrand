@@ -37,16 +37,25 @@ public static class CGSMainConfigPage
             defaultFactory: () => new CGSMainConfig(),
             autoCreateIfMissing: true);
 
+        var localization = RitsuLibFramework.CreateModLocalization(
+            Entry.ModId, "settings", resourceFolders: [$"{Entry.ModId}.Settings"],
+            resourceAssembly: typeof(CGSMainConfigPage).Assembly);
+
         // 注册页面UI
         RitsuLibFramework.RegisterModSettings(Entry.ModId, page => page
-            .WithTitle(ModSettingsText.Literal("ChevalGrand"))
-            .WithModDisplayName(ModSettingsText.Literal("ChevalGrand Mod"))
+            .WithTitle(Localize("cgs.page.title"))
+            .WithModDisplayName(Localize("cgs.page.modName"))
             .WithVisibleOnHostSurfaces(
                 ModSettingsHostSurface.MainMenu | ModSettingsHostSurface.RunPause)
             .AddSection("general", section => section
-                .WithTitle(ModSettingsText.Literal("兼容"))
-                .WithDescription(ModSettingsText.Literal("东尼算法加载成功后可修改此开关。"))
+                .WithTitle(Localize("cgs.compatibility.title"))
                 .WithEnabledWhen(static () => CGSAutoAnthonySupport.IsAvailable)
-                .AddToggle("disabled", ModSettingsText.Literal("东尼算法兼容"), CGSAutoAnthonyBinding)));
+                .AddToggle("disabled",
+                    Localize("cgs.autoAnthony.label"),
+                    CGSAutoAnthonyBinding,
+                    Localize("cgs.autoAnthony.description"))));
+        return;
+
+        ModSettingsText Localize(string key) => ModSettingsText.I18N(localization, key, key);
     }
 }

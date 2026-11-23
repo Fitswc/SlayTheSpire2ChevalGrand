@@ -26,7 +26,7 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=3840359479
 ~~~powershell
 Copy-Item .\ChevalGrandSlay\local.props.template .\ChevalGrandSlay\local.props`
 ~~~
-3. 在 `ChevalGrandSlay/local.props` 中填写 Sts2Dir（游戏安装目录）和 GodotExe（Godot 可执行文件的完整路径）。如果游戏程序集位于其他目录，一并调整 Sts2DataDir。
+3. 在 `ChevalGrandSlay/local.props` 中填写 `Sts2Dir`（游戏安装目录）、`GodotExe`（Godot 可执行文件的完整路径）和 `AutoAnthonyDll`（东尼算法原版 DLL 的完整路径）。如果游戏程序集位于其他目录，一并调整 `Sts2DataDir`。
 4. 根目录执行
 ~~~powershell
 `dotnet build .\ChevalGrandSlay\ChevalGrandSlay.csproj -c Release`

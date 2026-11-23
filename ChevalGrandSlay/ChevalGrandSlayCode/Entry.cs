@@ -57,7 +57,6 @@ public partial class Entry
         FmodStudioDeferredBankRegistration.RegisterBank($"{ResPath}/audios/ChevalGrandSlaySFX.bank");
         FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings($"{ResPath}/audios/GUIDs.txt");
 
-        //Patch
         var patcher = new ModPatcher(ModId, Logger);
         patcher.RegisterPatch<CGSCharacterSelectAudio>();
         patcher.RegisterPatch<CGSCharacterSelectStopIntroPatch>();
@@ -66,7 +65,7 @@ public partial class Entry
         patcher.RegisterPatch<CGSLinkedRewardClaimPatch>();
         patcher.RegisterPatch<CGSRewardAfterCombat.RestoredRoomRewardsPatch>();
         if (!patcher.PatchAll())
-            throw new InvalidOperationException("ChevalGrandSlay failed to apply a required patch.");
+            throw new InvalidOperationException("ChevalGrandSlay failed to apply a required RitsuLib patch.");
 
         //CardPile
         var registry = ModCardPileRegistry.For(ModId);

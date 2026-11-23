@@ -1,0 +1,7 @@
+{
+  "cgs.page.title": "高尚骏逸",
+  "cgs.page.modName": "高尚骏逸 Mod",
+  "cgs.compatibility.title": "兼容",
+  "cgs.autoAnthony.label": "东尼算法兼容",
+  "cgs.autoAnthony.description": "开启后，使用高尚骏逸开始新的单人游戏时，会按东尼算法的设置生成随机卡牌。东尼算法加载成功后才可修改此开关。"
+}

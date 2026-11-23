@@ -70,7 +70,7 @@ internal static class ChevalRun
         var chineseNames = names.Recipes.Select(recipe => recipe.ChineseTitle).ToHashSet(StringComparer.Ordinal);
         var englishNames = names.Recipes.Select(recipe => recipe.EnglishTitle).ToHashSet(StringComparer.Ordinal);
         var definitions = new List<ChaosCardDefinition>(ChevalChaosSlots.Layout.Count);
-        foreach (var (rarity, type) in ChevalChaosSlots.Layout)
+        foreach (var (rarity, type, _) in ChevalChaosSlots.Layout)
         {
             var card = generators[type].Generate(rarity);
             if (card.Type != type)
@@ -213,37 +213,38 @@ internal static class ChevalRun
 
     private static ChaosCardDefinition RestoreDefinition(CardPayload entry, int i)
     {
-            var definition = entry.Definition;
-            var card = definition.Card;
-            var upgrade = card.Upgrade;
-            int operationCount = card.Operations.Count;
-            if (definition.Slot != i || (card.Rarity, card.Type) != ChevalChaosSlots.Layout[i]
-                || card.Character != ChevalComponents.Archetype || operationCount == 0
-                || definition.RuntimeSpecs?.Count != operationCount || entry.TextTemplates?.Length != operationCount
-                || definition.UpgradeValueSlots?.Count != (upgrade?.Effects.Count ?? 0))
-                throw new InvalidDataException($"Invalid Cheval AutoAnthony definition for slot {i}.");
+        var definition = entry.Definition;
+        var card = definition.Card;
+        var upgrade = card.Upgrade;
+        var slot = ChevalChaosSlots.Layout[i];
+        int operationCount = card.Operations.Count;
+        if (definition.Slot != i || (card.Rarity, card.Type) != (slot.Rarity, slot.Type)
+            || card.Character != ChevalComponents.Archetype || operationCount == 0
+            || definition.RuntimeSpecs?.Count != operationCount || entry.TextTemplates?.Length != operationCount
+            || definition.UpgradeValueSlots?.Count != (upgrade?.Effects.Count ?? 0))
+            throw new InvalidDataException($"Invalid Cheval AutoAnthony definition for slot {i}.");
 
-            var operations = new GeneratorOperation[operationCount];
-            for (int opIndex = 0; opIndex < operationCount; opIndex++)
+        var operations = new GeneratorOperation[operationCount];
+        for (int opIndex = 0; opIndex < operationCount; opIndex++)
+        {
+            var spec = definition.RuntimeSpecs[opIndex];
+            var template = entry.TextTemplates[opIndex];
+            spec.Validate();
+            template?.Validate(spec);
+            if (spec.Opcode == ChevalComponents.RuntimeOpcode && !ComponentRuntimeApi.HasRoute(spec.Opcode, spec.Variant))
+                throw new InvalidDataException($"Unsupported Cheval AutoAnthony effect {spec.Variant}.");
+            operations[opIndex] = card.Operations[opIndex] with { RuntimeSpec = spec, LocalizedText = template };
+        }
+
+        if (upgrade is not null)
+            upgrade = upgrade with
             {
-                var spec = definition.RuntimeSpecs[opIndex];
-                var template = entry.TextTemplates[opIndex];
-                spec.Validate();
-                template?.Validate(spec);
-                if (spec.Opcode == ChevalComponents.RuntimeOpcode && !ComponentRuntimeApi.HasRoute(spec.Opcode, spec.Variant))
-                    throw new InvalidDataException($"Unsupported Cheval AutoAnthony effect {spec.Variant}.");
-                operations[opIndex] = card.Operations[opIndex] with { RuntimeSpec = spec, LocalizedText = template };
-            }
-
-            if (upgrade is not null)
-                upgrade = upgrade with
+                Effects = upgrade.Effects.Select((effect, index) => effect with
                 {
-                    Effects = upgrade.Effects.Select((effect, index) => effect with
-                    {
-                        ValueSlotId = definition.UpgradeValueSlots[index]
-                    }).ToArray()
-                };
+                    ValueSlotId = definition.UpgradeValueSlots[index]
+                }).ToArray()
+            };
 
-            return definition with { Card = card with { Operations = operations, Upgrade = upgrade } };
+        return definition with { Card = card with { Operations = operations, Upgrade = upgrade } };
     }
 }
