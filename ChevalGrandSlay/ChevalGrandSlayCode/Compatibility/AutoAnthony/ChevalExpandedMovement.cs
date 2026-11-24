@@ -81,7 +81,7 @@ internal static partial class ChevalComponents
                     await CardPileCmd.Add(card, PileType.Draw);
                 return true;
             case "rest_half_to_draw":
-                var recoverHalf = await ChooseCards(context, rest.Cards.Where(CGSStamina.HasStamina),
+                var recoverHalf = await ChooseCards(context, rest.Cards.Where(CGSStamina.CanRecoverStamina),
                     ModelDb.Card<CGSDrawFinishLine>().SelectionScreenPrompt, SelectionLimit(context, amount));
                 foreach (var card in recoverHalf)
                 {
@@ -92,14 +92,14 @@ internal static partial class ChevalComponents
                 }
                 return true;
             case "rest_all_full_to_draw":
-                var resting = rest.Cards.ToArray();
+                var resting = rest.Cards.Where(card => !CGSStamina.IsLocked(card)).ToArray();
                 foreach (var card in resting.Where(CGSStamina.HasStamina))
                     CGSStamina.RestoreFull(card);
                 if (resting.Length > 0)
                     await CardPileCmd.Add(resting, PileType.Draw);
                 return true;
             case "rest_to_hand_discount":
-                var returnCards = await ChooseCards(context, rest.Cards.Where(CGSStamina.HasStamina),
+                var returnCards = await ChooseCards(context, rest.Cards.Where(CGSStamina.CanRecoverStamina),
                     ModelDb.Card<CGSFateGuidance>().SelectionScreenPrompt, Math.Min(amount, FreeHandSlots(source)),
                     optional: true, minimum: 1);
                 foreach (var card in returnCards)
@@ -146,7 +146,7 @@ internal static partial class ChevalComponents
                 return true;
             case "empower_resting_attack":
                 var empowered = await ChooseCards(context,
-                    rest.Cards.Where(card => card.Type == CardType.Attack && CGSStamina.HasStamina(card)),
+                    rest.Cards.Where(card => card.Type == CardType.Attack && CGSStamina.CanRecoverStamina(card)),
                     ModelDb.Card<CGSRenewTheContest>().SelectionScreenPrompt, 1);
                 if (empowered.FirstOrDefault() is { } restored && restored.Pile == rest && FreeHandSlots(source) > 0)
                 {
@@ -185,7 +185,7 @@ internal static partial class ChevalComponents
                 return true;
             case "play_restored_cards":
                 var replayed = await ChooseCards(context,
-                    rest.Cards.Where(card => CGSStamina.HasStamina(card) &&
+                    rest.Cards.Where(card => CGSStamina.CanRecoverStamina(card) &&
                         card is not ChevalChaosCard { IsResolving: true }),
                     ModelDb.Card<CGSRewriteFate>().SelectionScreenPrompt, amount, optional: true, minimum: 1);
                 foreach (var card in replayed)

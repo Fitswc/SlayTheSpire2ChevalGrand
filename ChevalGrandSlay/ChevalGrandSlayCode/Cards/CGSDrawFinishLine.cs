@@ -57,7 +57,7 @@ public sealed class CGSDrawFinishLine : CGSStaminaCard
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var candidates = Entry.CGSFatePile.GetPile(Owner).Cards.Where(CGSStamina.HasStamina).ToList();
+        var candidates = Entry.CGSFatePile.GetPile(Owner).Cards.Where(CGSStamina.CanRecoverStamina).ToList();
         int count = Math.Min(ResolveEnergyXValue(), candidates.Count);
         if (count > 0)
         {

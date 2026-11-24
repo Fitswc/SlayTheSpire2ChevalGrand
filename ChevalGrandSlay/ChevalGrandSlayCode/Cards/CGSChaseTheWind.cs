@@ -96,7 +96,7 @@ public sealed class CGSChaseTheWind : CGSStaminaCard
 
     private static void AddPileOption<T>(List<CardModel> options, Player player, PileType pile) where T : CGSChaseTheWindPileChoice
     {
-        if (pile.GetPile(player).Cards.Count == 0)
+        if (!pile.GetPile(player).Cards.Any(card => !CGSStamina.IsLocked(card)))
             return;
 
         var option = ModelDb.Card<T>().ToMutable();
@@ -114,7 +114,7 @@ public sealed class CGSChaseTheWind : CGSStaminaCard
             return [];
         }
 
-        var candidates = pile.Cards.ToList();
+        var candidates = pile.Cards.Where(card => !CGSStamina.IsLocked(card)).ToList();
         var hand = PileType.Hand.GetPile(player);
         var drawn = new List<CardModel>();
         var combatManager = CombatManager.Instance;

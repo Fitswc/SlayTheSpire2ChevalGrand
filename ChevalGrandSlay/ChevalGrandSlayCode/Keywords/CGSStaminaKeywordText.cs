@@ -18,7 +18,11 @@ public sealed class CGSStaminaKeywordText : ModelCapability, ICardDescriptionCon
             yield break;
 
         var text = new LocString("card_keywords", "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.cardText");
-        if (card.Pile?.Type == PileType.Deck)
+        if (CGSStamina.IsLocked(card))
+        {
+            text = new LocString("card_keywords", "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.lockedText");
+        }
+        else if (card.Pile?.Type == PileType.Deck)
         {
             decimal remaining = CGSStamina.GetDeckStamina(card);
             if (remaining < card.DynamicVars[CGSStamina.Uses].BaseValue)

@@ -1,9 +1,12 @@
 {
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_VEGATABLE_JUICE.title": "青汁",
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_VEGATABLE_JUICE.description": "休憩所の[blue]忘却[/blue]が変化する。[gold]体力[/gold]カードを最大4枚ロックし、体力を0にする。それらのカードは毎戦闘の開始時に[gold]休息の山[/gold]に入り、体力を回復できず、そこから取り出せない。",
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_VEGATABLE_JUICE.flavor": "すごく苦い",
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.title": "シュヴァルグランの帽子",
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.description": "各戦闘の最初のターンに{Energy:energyIcons()}を得る。\n休憩所で[blue]忘却[/blue]を選び、デッキから体力カードを最大4枚削除できる。",
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.flavor": "ここはどこ？",
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC_PLUS.title": "シュヴァルグランの帽子+",
-  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC_PLUS.description": "各戦闘の最初のターンに{Energy:energyIcons()}を得る。\nこの戦闘中、すべての[gold]体力[/gold]カードの体力と最大体力が{BonusStamina}増える。戦闘中に生成されたカードも含む。\n休憩所で[blue]忘却[/blue]を選び、デッキから体力カードを最大4枚削除できる。",
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC_PLUS.description": "各戦闘の最初のターンに{Energy:energyIcons()}を得る。\nこの戦闘中、すべての[gold]体力[/gold]カードの体力と最大体力が{BonusStamina}増える。\n休憩所で[blue]忘却[/blue]を選び、デッキから体力カードを最大4枚削除できる。",
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC_PLUS.flavor": "今度こそ、絶対に……",
   "SEA_GLASS.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.title": "蒼いガラス"
 }

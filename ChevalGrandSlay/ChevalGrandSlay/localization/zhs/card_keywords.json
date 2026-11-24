@@ -1,4 +1,5 @@
 {
+  "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.lockedText": "{StaminaName}：[gold]0 \n（已锁定）[/gold]",
   "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.title": "体力",
   "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.description": "每次打出消耗1点体力。体力跨战斗保留。体力耗尽时，该牌进入[gold]休整牌堆[/gold]，直到将其恢复。",
   "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.cardText": "{StaminaName}:[pulse freq=0.8 color=#64c3c1 ease=-2.0]{CGSUses:diff()}[/pulse]",

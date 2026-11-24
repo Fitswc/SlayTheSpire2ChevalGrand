@@ -67,7 +67,7 @@ public sealed class CGSBriefRestRestart : CGSStaminaCard
     {
         var pile = Entry.CGSFatePile.GetPile(player);
         var candidates = pile.Cards
-            .Where(selectedCard => selectedCard.Type == CardType.Skill && CGSStamina.HasStamina(selectedCard))
+            .Where(selectedCard => selectedCard.Type == CardType.Skill && CGSStamina.CanRecoverStamina(selectedCard))
             .ToList();
 
         if (candidates.Count == 0 || maximum <= 0)

@@ -1,4 +1,8 @@
 {
+  "OPTION_CGS_FORGET_LOCK.name": "遗忘",
+  "OPTION_CGS_FORGET_LOCK.description": "锁定至多4张[gold]体力[/gold]牌，这些牌将会进入[gold]休整牌堆[/gold]，且无法恢复或移出。",
+  "OPTION_CGS_FORGET_LOCK.prompt": "选择[blue]{MinCount}至{MaxCount}[/blue]张要锁定的[gold]体力[/gold]牌。",
+  "OPTION_CGS_FORGET_LOCK.descriptionDisabled": "你的牌组中没有可以锁定的体力牌。",
   "OPTION_CGS_FORGET.name": "遗忘",
   "OPTION_CGS_FORGET.description": "从[gold]牌组[/gold]中[gold]移除[/gold]最多[blue]4[/blue]张[gold]体力牌[/gold]。",
   "OPTION_CGS_FORGET.prompt": "选择[blue]{MinCount}至{MaxCount}[/blue]张[gold]体力牌[/gold]来[gold]移除[/gold]。",

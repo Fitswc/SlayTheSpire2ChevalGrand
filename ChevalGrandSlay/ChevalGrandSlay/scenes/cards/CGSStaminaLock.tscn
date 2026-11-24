@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=3 uid="uid://cf2rors5y7quh"]
+
+[ext_resource type="Texture2D" uid="uid://ccmgtac5vnfqw" path="res://ChevalGrandSlay/images/ui/cardpile/CGSStaminaLock.svg" id="1_lock"]
+
+[sub_resource type="Shader" id="Shader_grayscale"]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform sampler2D card_pixels : hint_screen_texture, repeat_disable, filter_nearest;
+
+void fragment() {
+	// The card frame occupies 300 x 422 units around the card center.
+	vec2 point = UV * vec2(334.0, 440.0) - vec2(167.0, 228.0);
+	vec2 corner = abs(point) - vec2(126.0, 187.0);
+	float frame = length(max(corner, vec2(0.0))) + min(max(corner.x, corner.y), 0.0) - 24.0;
+	float energy = length(point - vec2(-134.0, -195.0)) - 31.0;
+	float banner_width = mix(149.0, 162.0, smoothstep(-149.0, -125.0, point.y));
+	float banner = max(abs(point.x - 0.5) - banner_width, max(-149.0 - point.y, point.y + 125.0));
+	float shape = min(frame, min(energy, banner));
+	float edge = max(fwidth(shape), 0.01);
+	float coverage = 1.0 - smoothstep(-edge, 0.0, shape);
+	vec3 rgb = textureLod(card_pixels, SCREEN_UV, 0.0).rgb;
+	float gray = dot(rgb, vec3(0.2126, 0.7152, 0.0722));
+	COLOR = vec4(vec3(gray), coverage);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_grayscale"]
+shader = SubResource("Shader_grayscale")
+
+[node name="CGSStaminaLock" type="Control"]
+z_index = 1
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="CaptureCard" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="Grayscale" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_grayscale")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -167.0
+offset_top = -228.0
+offset_right = 167.0
+offset_bottom = 212.0
+mouse_filter = 2
+
+[node name="Padlock" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = -38.0
+offset_right = 38.0
+offset_bottom = 38.0
+mouse_filter = 2
+texture = ExtResource("1_lock")
+expand_mode = 1
+stretch_mode = 5

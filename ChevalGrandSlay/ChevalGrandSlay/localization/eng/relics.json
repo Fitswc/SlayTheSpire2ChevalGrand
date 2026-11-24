@@ -1,10 +1,13 @@
 {
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_VEGATABLE_JUICE.title": "Vegetable Juice",
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_VEGATABLE_JUICE.description": "At Rest Sites, [blue]Forget[/blue] instead locks up to 4 [gold]Stamina[/gold] cards and sets their Stamina to 0. They start each combat in the [gold]Rest Pile[/gold] and cannot recover Stamina or leave it.",
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_VEGATABLE_JUICE.flavor": "Super bitter",
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.title": "Cheval Grand's Hat",
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.description": "On the first turn of each combat, gain {Energy:energyIcons()}.\nAt Rest Sites, you can [blue]Forget[/blue] to remove up to 4 Stamina cards from your deck.",
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC.flavor": "Where am I?",
 
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC_PLUS.title": "Cheval Grand's Hat+",
-  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC_PLUS.description": "On the first turn of each combat, gain {Energy:energyIcons()}.\nYour [gold]Stamina[/gold] cards gain {BonusStamina} additional Stamina and maximum Stamina this combat, including cards generated during combat.\nAt Rest Sites, you can [blue]Forget[/blue] to remove up to 4 Stamina cards from your deck.",
+  "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC_PLUS.description": "On the first turn of each combat, gain {Energy:energyIcons()}.\nYour [gold]Stamina[/gold] cards gain {BonusStamina} additional Stamina and maximum Stamina this combat.\nAt Rest Sites, you can [blue]Forget[/blue] to remove up to 4 Stamina cards from your deck.",
   "CHEVAL_GRAND_SLAY_RELIC_CGS_START_RELIC_PLUS.flavor": "This time, I have to...",
 
   "SEA_GLASS.CHEVAL_GRAND_SLAY_CHARACTER_CGS_CHARACTER.title": "Azure Glass"
