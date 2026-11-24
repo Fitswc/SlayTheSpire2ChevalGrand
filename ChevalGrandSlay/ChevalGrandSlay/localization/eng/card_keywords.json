@@ -1,4 +1,5 @@
 {
+  "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.lockedText": "{StaminaName}: [gold]0 \n(Locked)[/gold]",
   "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.title": "Stamina",
   "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.description": "Each play consumes 1 Stamina. Stamina carries over between combats. At 0 Stamina, the card enters the [gold]Rest Pile[/gold], until you recover it.",
   "CHEVAL_GRAND_SLAY_KEYWORD_STAMINA.cardText": "{StaminaName}:[pulse freq=0.8 color=#64c3c1 ease=-2.0]{CGSUses:diff()}[/pulse]",

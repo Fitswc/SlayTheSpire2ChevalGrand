@@ -58,7 +58,7 @@ public sealed class CGSFateGuidance : CGSStaminaCard
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var candidates = Entry.CGSFatePile.GetPile(Owner).Cards
-            .Where(targetCard => CGSStamina.HasStamina(targetCard))
+            .Where(CGSStamina.CanRecoverStamina)
             .ToList();
         
         if (candidates.Count == 0)

@@ -1,4 +1,8 @@
 {
+  "OPTION_CGS_FORGET_LOCK.name": "Forget",
+  "OPTION_CGS_FORGET_LOCK.description": "Lock up to 4 [gold]Stamina[/gold] cards. They go into the [gold]Rest Pile[/gold], where they cannot recover Stamina or be removed.",
+  "OPTION_CGS_FORGET_LOCK.prompt": "Choose [blue]{MinCount} to {MaxCount}[/blue] [gold]Stamina[/gold] cards to lock.",
+  "OPTION_CGS_FORGET_LOCK.descriptionDisabled": "There are no Stamina cards in your deck that can be locked.",
   "OPTION_CGS_FORGET.name": "Forget",
   "OPTION_CGS_FORGET.description": "[gold]Remove[/gold] up to [blue]4[/blue] cards with [gold]Stamina[/gold] from your [gold]deck[/gold].",
   "OPTION_CGS_FORGET.prompt": "Choose [blue]{MinCount} to {MaxCount}[/blue] cards with [gold]Stamina[/gold] to [gold]Remove[/gold].",

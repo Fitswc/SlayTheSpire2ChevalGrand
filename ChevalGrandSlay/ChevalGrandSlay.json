@@ -4,7 +4,7 @@
   "pck_name": "ChevalGrandSlay",
   "author": "Fitswc",
   "description": "A character mod of Cheval Grand",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "has_pck": true,
   "has_dll": true,
   "affects_gameplay": true,

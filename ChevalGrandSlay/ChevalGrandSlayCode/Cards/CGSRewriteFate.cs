@@ -56,7 +56,7 @@ public sealed class CGSRewriteFate : CGSStaminaCard
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var candidates = Entry.CGSFatePile.GetPile(Owner).Cards.Where(card => CGSStamina.HasStamina(card)).ToList();
+        var candidates = Entry.CGSFatePile.GetPile(Owner).Cards.Where(CGSStamina.CanRecoverStamina).ToList();
         if (candidates.Count == 0) return;
         var selected = await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1, Math.Min(4, candidates.Count)));

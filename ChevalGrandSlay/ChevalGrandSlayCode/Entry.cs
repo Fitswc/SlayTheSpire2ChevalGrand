@@ -1,5 +1,7 @@
 using System.Reflection;
 using ChevalGrandSlay.Cards;
+using ChevalGrandSlay.Compatibility;
+using ChevalGrandSlay.Configs;
 using ChevalGrandSlay.Keywords;
 using ChevalGrandSlay.Mechanics;
 using ChevalGrandSlay.Relics;
@@ -49,11 +51,12 @@ public partial class Entry
 
         CGSKeywords.Register();
 
+        CGSMainConfigPage.Register();
+
         //Fmod
         FmodStudioDeferredBankRegistration.RegisterBank($"{ResPath}/audios/ChevalGrandSlaySFX.bank");
         FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings($"{ResPath}/audios/GUIDs.txt");
 
-        //Patch
         var patcher = new ModPatcher(ModId, Logger);
         patcher.RegisterPatch<CGSCharacterSelectAudio>();
         patcher.RegisterPatch<CGSCharacterSelectStopIntroPatch>();
@@ -62,7 +65,7 @@ public partial class Entry
         patcher.RegisterPatch<CGSLinkedRewardClaimPatch>();
         patcher.RegisterPatch<CGSRewardAfterCombat.RestoredRoomRewardsPatch>();
         if (!patcher.PatchAll())
-            throw new InvalidOperationException("ChevalGrandSlay failed to apply a required patch.");
+            throw new InvalidOperationException("ChevalGrandSlay failed to apply a required RitsuLib patch.");
 
         //CardPile
         var registry = ModCardPileRegistry.For(ModId);
@@ -100,6 +103,7 @@ public partial class Entry
         RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<CGSForwardAStep, CGSLittleBravePlus>();
         RitsuLibFramework.RegisterTouchOfOrobasRefinementMapping<CGSStartRelic, CGSStartRelicPlus>();
 
+        CGSAutoAnthonySupport.Register();
 
         Logger.Info("ChevalGrandMod initialized.");
     }

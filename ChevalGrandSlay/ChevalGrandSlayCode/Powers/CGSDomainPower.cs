@@ -72,7 +72,7 @@ public sealed class CGSDomainPower : ModPowerTemplate, IHealthBarForecastSource
         var restingCards = Entry.CGSFatePile.GetPile(player).Cards.ToArray();
         foreach (var card in restingCards)
         {
-            if (card.Pile?.Type != Entry.CGSFatePile)
+            if (card.Pile?.Type != Entry.CGSFatePile || CGSStamina.IsLocked(card))
                 continue;
 
             if (CGSStamina.HasStamina(card))

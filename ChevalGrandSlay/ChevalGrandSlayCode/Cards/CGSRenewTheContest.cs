@@ -88,6 +88,6 @@ public sealed class CGSRenewTheContest : CGSStaminaCard
 
     private static bool IsCandidate(CardModel card)
     {
-        return card.Type == CardType.Attack && CGSStamina.HasStamina(card);
+        return card.Type == CardType.Attack && CGSStamina.CanRecoverStamina(card);
     }
 }

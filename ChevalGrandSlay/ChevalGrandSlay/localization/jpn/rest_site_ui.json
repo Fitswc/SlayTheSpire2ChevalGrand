@@ -1,4 +1,8 @@
 {
+  "OPTION_CGS_FORGET_LOCK.name": "忘却",
+  "OPTION_CGS_FORGET_LOCK.description": "[gold]体力[/gold]カードを最大4枚ロックする。ロックしたカードは[gold]休息の山[/gold]に入り、体力を回復できず、そこから取り出せない。",
+  "OPTION_CGS_FORGET_LOCK.prompt": "ロックする[gold]体力[/gold]カードを[blue]{MinCount}～{MaxCount}枚[/blue]選ぶ。",
+  "OPTION_CGS_FORGET_LOCK.descriptionDisabled": "デッキにロックできる体力カードがない。",
   "OPTION_CGS_FORGET.name": "忘却",
   "OPTION_CGS_FORGET.description": "[gold]デッキ[/gold]から[gold]体力カード[/gold]を最大[blue]4[/blue]枚[gold]削除[/gold]する。",
   "OPTION_CGS_FORGET.prompt": "[gold]削除[/gold]する[gold]体力カード[/gold]を[blue]{MinCount}～{MaxCount}[/blue]枚選ぶ。",

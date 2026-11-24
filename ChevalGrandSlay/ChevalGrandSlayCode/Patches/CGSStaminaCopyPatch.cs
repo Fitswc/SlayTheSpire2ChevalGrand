@@ -1,4 +1,5 @@
 using ChevalGrandSlay.Cards;
+using ChevalGrandSlay.Compatibility;
 using ChevalGrandSlay.Mechanics;
 using ChevalGrandSlay.Relics;
 using MegaCrit.Sts2.Core.Models;
@@ -10,6 +11,7 @@ internal sealed class CGSStaminaCopyPatch : IPatchMethod
 {
     public static string PatchId => "CGSStaminaCopy";
 
+    // 在可变克隆创建后处理体力。原版克隆流程先运行，补丁随后补齐或替换其返回值。
     public static ModPatchTarget[] GetTargets() =>
         [new(typeof(AbstractModel), nameof(AbstractModel.MutableClone), Type.EmptyTypes)];
 
@@ -18,25 +20,24 @@ internal sealed class CGSStaminaCopyPatch : IPatchMethod
         if (__instance is not CardModel original || __result is not CardModel copy)
             return;
 
-        // 只处理本模组的卡牌。
-        if (original.GetType().Assembly != typeof(CGSStaminaCopyPatch).Assembly)
+        // 只处理本模组的牌及兼容层生成牌。后者可能由 AutoAnthony 程序集定义。
+        if (original is not ICGSGeneratedCard && original.GetType().Assembly != typeof(CGSStaminaCopyPatch).Assembly)
             return;
 
-        // 原卡与副本都必须具有完整的耐力变量。
         if (!CGSStamina.HasStamina(original) || !CGSStamina.HasStamina(copy))
             return;
 
-        // 耐力耗尽时，复制出来的是空卡牌，归属仍与原卡一致。
+        // 原卡体力耗尽时，用归属同一玩家的空壳替换克隆结果。
         if (CGSStamina.IsDepleted(original))
         {
             var emptyShell = ModelDb.Card<CGSEmptyShell>().ToMutable();
             emptyShell.Owner = original.Owner;
-            // 副本仍由调用方注册到对应的卡牌作用域。
+            // 由调用方将空壳注册到对应的卡牌作用域。
             __result = emptyShell;
             return;
         }
 
-        // 完整保留当前耐力与上限，包括升级和战斗中的修改。
+        // 有体力的副本继承原卡的当前体力、上限和升级版起始遗物提供的体力加成。
         CGSStamina.Copy(original, copy);
         CGSStartRelicPlus.InheritStaminaBonus(original, copy);
     }

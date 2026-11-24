@@ -162,7 +162,7 @@ public sealed class CGSRewardAfterCombat : ModCustomReward
 
         private static void Postfix(CombatRoom __result)
         {
-            // Older saves can already contain rewards generated before the eligibility checks.
+            // A restored room may contain offers made before its eligibility checks.
             foreach (var (player, rewards) in __result.ExtraRewards)
             {
                 bool canAdd = player.Character is CGSCharacter;
@@ -190,7 +190,7 @@ public sealed class CGSRewardAfterCombat : ModCustomReward
                     }
                     else if (group is not null)
                     {
-                        foreach (var removed in children.Except(eligible))
+                        foreach (var removed in children.Except(eligible).ToArray())
                             group.RemoveReward(removed);
                     }
                 }

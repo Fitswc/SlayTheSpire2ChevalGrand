@@ -56,7 +56,7 @@ public sealed class CGSFateEcho : CGSStaminaCard
 
     protected override async Task OnStaminaPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var restingCards = Entry.CGSFatePile.GetPile(Owner).Cards.ToArray();
+        var restingCards = Entry.CGSFatePile.GetPile(Owner).Cards.Where(card => !CGSStamina.IsLocked(card)).ToArray();
         if (restingCards.Length == 0)
             return;
 

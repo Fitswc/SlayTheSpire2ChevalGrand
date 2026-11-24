@@ -1,0 +1,7 @@
+{
+  "cgs.page.title": "Cheval Grand",
+  "cgs.page.modName": "Cheval Grand Mod",
+  "cgs.compatibility.title": "Compatibility",
+  "cgs.autoAnthony.label": "AutoAnthony Compatibility",
+  "cgs.autoAnthony.description": "When enabled, starting a new single-player run as Cheval Grand generates random cards according to your AutoAnthony settings. This setting becomes available once AutoAnthony has loaded."
+}

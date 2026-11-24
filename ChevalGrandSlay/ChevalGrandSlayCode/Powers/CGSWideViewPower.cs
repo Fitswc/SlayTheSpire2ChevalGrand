@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Combat.HandSize;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -13,7 +14,7 @@ namespace ChevalGrandSlay.Powers;
 
 // 能力：我憧憬的蓝
 [RegisterPower]
-public sealed class CGSWideViewPower : ModPowerTemplate, IMaxHandSizeModifier
+public sealed class CGSWideViewPower : ModPowerTemplate, IMaxHandSizeModifier, ICGSStaminaRecoverySource
 {
     internal const string RecoveryCountVar = "RecoveryCount";
     internal const string RecoveryAmountVar = "RecoveryAmount";
@@ -42,16 +43,24 @@ public sealed class CGSWideViewPower : ModPowerTemplate, IMaxHandSizeModifier
         recoveryAmount.BaseValue = Math.Max(recoveryAmount.BaseValue, amount);
     }
 
+    // 卡面标记与回合结算共用同一份目标规则，按休整牌堆的顺序分配恢复名额。
+    private IEnumerable<CardModel> GetRecoveryTargets(CardPile restPile) =>
+        restPile.Cards
+            .Where(CGSStamina.CanRecoverStamina)
+            .Take(DynamicVars[RecoveryCountVar].IntValue);
+
+    bool ICGSStaminaRecoverySource.IsRecoveringStamina(CardModel card) =>
+        Owner.Player is { } player &&
+        GetRecoveryTargets(Entry.CGSFatePile.GetPile(player)).Contains(card, ReferenceEqualityComparer.Instance) &&
+        !CGSStamina.IsFull(card);
+
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player != Owner.Player)
             return;
 
         var restPile = Entry.CGSFatePile.GetPile(player);
-        var restingCards = restPile.Cards
-            .Where(CGSStamina.HasStamina)
-            .Take(DynamicVars[RecoveryCountVar].IntValue)
-            .ToArray();
+        var restingCards = GetRecoveryTargets(restPile).ToArray();
         decimal amount = DynamicVars[RecoveryAmountVar].BaseValue;
         foreach (var card in restingCards)
         {

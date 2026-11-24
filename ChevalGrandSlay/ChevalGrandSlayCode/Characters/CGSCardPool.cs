@@ -1,4 +1,6 @@
 using Godot;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Content;
 using STS2RitsuLib.Utils;
@@ -7,6 +9,29 @@ namespace ChevalGrandSlay.Characters;
 
 public sealed class CGSCardPool : TypeListCardPoolModel, IModColorfulPhilosophersCardPool
 {
+    private CardModel[]? _activeRewardPool;
+
+    public override IEnumerable<CardModel> AllCards => _activeRewardPool ?? base.AllCards;
+
+    internal void SetGeneratedCards(IReadOnlyList<CardModel> generated, bool preserveOriginalCards)
+    {
+        _activeRewardPool = base.AllCards
+            .Where(card => preserveOriginalCards ||
+                card.Rarity is not (CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare))
+            .Concat(generated)
+            .ToArray();
+        InvalidateCardCache();
+    }
+
+    internal void ClearGeneratedCards()
+    {
+        if (_activeRewardPool is null)
+            return;
+
+        _activeRewardPool = null;
+        InvalidateCardCache();
+    }
+
     private static readonly Material? PoolFrameTintMaterial = MaterialUtils.CreateReplaceHueShaderMaterial(0.4f, 0.76f, 0.76f);
     //MaterialUtils.CreateRgbShaderMaterial(0.42f, 0.65f, 0.72f);
 

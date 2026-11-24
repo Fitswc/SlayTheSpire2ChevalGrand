@@ -1,0 +1,7 @@
+{
+  "cgs.page.title": "シュヴァルグラン",
+  "cgs.page.modName": "シュヴァルグラン MOD",
+  "cgs.compatibility.title": "互換性",
+  "cgs.autoAnthony.label": "AutoAnthony 連携",
+  "cgs.autoAnthony.description": "オンにすると、シュヴァルグランで新しくシングルプレイを始めたときに、AutoAnthony の設定に従ってランダムなカードが生成されます。AutoAnthony が正常に読み込まれると、この設定を変更できます。"
+}

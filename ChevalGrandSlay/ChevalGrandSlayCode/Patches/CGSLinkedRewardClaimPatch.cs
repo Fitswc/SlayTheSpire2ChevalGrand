@@ -12,6 +12,7 @@ internal sealed class CGSLinkedRewardClaimPatch : IPatchMethod
 {
     public static string PatchId => "CGSLinkedRewardClaim";
 
+    // Reload 会重绑奖励按钮。仅在找到预期的无参 void 方法时安装补丁。
     public static ModPatchTarget[] GetTargets()
     {
         var target = typeof(NLinkedRewardSet);
@@ -22,6 +23,7 @@ internal sealed class CGSLinkedRewardClaimPatch : IPatchMethod
         return [];
     }
 
+    // 校验奖励领取方法及绑定点。只有唯一匹配时才替换 Callable 工厂，保留其余指令。
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         var code = instructions.ToList();
@@ -45,6 +47,7 @@ internal sealed class CGSLinkedRewardClaimPatch : IPatchMethod
         return code;
     }
 
+    // 忽略 Nop，查找把 GetReward 封装为 Action 再交给 Callable.From 的连续指令。
     private static List<CodeInstruction> FindClaimCallbacks(IEnumerable<CodeInstruction> code, MethodInfo getReward)
     {
         var actionConstructor = AccessTools.Constructor(typeof(Action), [typeof(object), typeof(IntPtr)]);
@@ -64,11 +67,12 @@ internal sealed class CGSLinkedRewardClaimPatch : IPatchMethod
 
     private static Callable CreateClaimCallback(Action original)
     {
+        // 普通奖励组沿用原领取回调。包含本模组战后奖励或体力恢复奖励时，使用下方的联动回调。
         if (original.Target is not NLinkedRewardSet node ||
             !node.LinkedRewardSet.Rewards.Any(reward => reward is CGSRewardAfterCombat or CGSRestoreStaminaReward))
             return Callable.From(original);
 
-        // The child sends its button. The screen expects the linked node and removes it when notified.
+        // 子按钮发出按钮实例，奖励界面按联动奖励节点移除整组。先标记整组已跳过，再发出节点信号。
         return Callable.From<NRewardButton>(_ =>
         {
             if (node.IsQueuedForDeletion())

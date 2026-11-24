@@ -12,6 +12,7 @@ internal sealed class CGSCharacterSelectAudio : IPatchMethod
 {
     public static string PatchId => "CGSCharacterSelectAudio";
 
+    // 拦截接收事件路径和音量的 SfxCmd.Play 重载，以便持有介绍语音的播放句柄。
     public static ModPatchTarget[] GetTargets() =>
         [new(typeof(SfxCmd), nameof(SfxCmd.Play), [typeof(string), typeof(float)])];
 
@@ -25,16 +26,17 @@ internal sealed class CGSCharacterSelectAudio : IPatchMethod
         if (sfx != Intro && sfx != Transition)
             return true;
 
-        // 新的介绍或转场开始前，先停止上一次介绍；转场也覆盖多人同步出发。
+        // 新的介绍或转场开始前，先停止上一次介绍。多人同步出发时也会播放转场音效。
         StopIntro();
 
         if (sfx == Transition)
             return true;
 
-        // 保留 SfxCmd 原有的播放条件。
+        // 非交互模式或战斗结束过程中，跳过介绍语音。
         if (NonInteractiveMode.IsActive || CombatManager.Instance.IsEnding)
             return false;
 
+        // 由补丁创建并持有 FMOD 实例。启动失败时及时清理，方便下次播放。
         _introHandle = FmodStudioEventInstances.TryCreateHandle(
             AudioSource.Event(Intro), new AudioPlaybackOptions());
         if (_introHandle == null)
@@ -52,6 +54,7 @@ internal sealed class CGSCharacterSelectAudio : IPatchMethod
         return false;
     }
 
+    // 先清空缓存的句柄，再立即停止并释放实例。多处界面回调可以重复请求停止。
     internal static void StopIntro()
     {
         var handle = _introHandle;
@@ -69,7 +72,7 @@ internal sealed class CGSCharacterSelectStopIntroPatch : IPatchMethod
 
     public static ModPatchTarget[] GetTargets()
     {
-        //Version require
+        // 随机切换角色的回调在不同游戏版本中使用不同名称，按当前版本选择补丁目标。
         var screen = typeof(NCharacterSelectScreen);
         var randomCharacterMethod = AccessTools.DeclaredMethod(screen, "DoRandomCharacterChange") is not null
             ? "DoRandomCharacterChange"

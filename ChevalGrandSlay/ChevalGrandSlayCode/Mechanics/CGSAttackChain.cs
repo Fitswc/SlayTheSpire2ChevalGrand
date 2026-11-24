@@ -6,6 +6,7 @@ namespace ChevalGrandSlay.Mechanics;
 
 internal static class CGSAttackChain
 {
+    // 从战斗历史统计本回合已开始打出的攻击牌。调用方可排除正在结算的那次出牌。
     public static int CountAttacksPlayedThisTurn(
         Player? player,
         ICombatState? combatState,
